@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "828206577726",
+    "firebase_url": "https://skln01.firebaseio.com",
+    "project_id": "skln01",
+    "storage_bucket": "skln01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828206577726:android:7ff5b23dc17054b9",
+        "android_client_info": {
+          "package_name": "com.autohub.skln"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "828206577726-1l9v4l95hfttoiar53lokjvd37u0uut3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB47npWQnNm3HrcGAzZXg0t9q15RX9bJLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "828206577726-1l9v4l95hfttoiar53lokjvd37u0uut3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
