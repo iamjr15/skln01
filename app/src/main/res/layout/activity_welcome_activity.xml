@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        style="@style/welcome_on_board"
+        android:id="@+id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:layout_marginStart="22dp"
+        android:text="@string/welcome_onboard"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        style="@style/s_"
+        android:id="@+id/tvS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:text="@string/s_"
+        app:layout_constraintTop_toTopOf="@id/tvWelcome"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        style="@style/enter_your_phonenum"
+        android:id="@+id/tvEnterPhonenum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginBottom="21dp"
+        android:text="@string/enter_your_phonenum"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/llPhoneNumber" />
+
+    <LinearLayout
+        android:id="@+id/llPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
+        android:background="@drawable/border_shadow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/codePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:ccp_rememberLastSelection="true"
+            app:ccp_showNameCode="false"
+            app:ccp_autoDetectCountry="true"
+            app:ccp_autoDetectLanguage="true"
+            app:ccp_textSize="20sp"
+            app:ccp_showFlag="true"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="@color/black" />
+
+        <EditText
+            style="@style/signup_general_hint_style"
+            android:id="@+id/etPhoneNumber"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:gravity="start|center_vertical"
+            android:inputType="phone"
+            android:textAlignment="viewStart"
+            />
+
+        <ImageButton
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="13dp"
+            android:background="@drawable/welcome_next"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

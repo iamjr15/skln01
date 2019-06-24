@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:fitsSystemWindows="true">
+
+    <TextView
+        style="@style/s_small"
+        android:id="@+id/tvS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:padding="15dp"
+        android:background="@drawable/border_round_rect"
+        android:text="@string/s_" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="14dp" >
+
+        <TextView
+            style="@style/enter_the_otp"
+            android:id="@+id/tvEnterOtp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="27dp"
+            android:text="@string/enter_otp" />
+
+        <LinearLayout
+            android:id="@+id/llNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="31dp"
+            android:layout_below="@+id/tvEnterOtp"
+            android:orientation="horizontal">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/codePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:ccp_rememberLastSelection="true"
+                app:ccp_showNameCode="false"
+                app:ccp_autoDetectCountry="true"
+                app:ccp_autoDetectLanguage="true"
+                app:ccp_textSize="20sp"
+                app:ccp_showFlag="true"
+                />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:background="@color/black" />
+
+            <TextView
+                style="@style/signup_general_hint_style"
+                android:id="@+id/tvPhoneNumber"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:gravity="start|center_vertical"
+                android:textAlignment="viewStart" />
+        </LinearLayout>
+
+        <com.goodiebag.pinview.Pinview
+            android:id="@+id/pinView"
+            app:pinBackground="@drawable/border_circle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llNumber"
+            app:pinWidth="45dp"
+            app:pinHeight="45dp"
+            app:pinLength="6"
+            app:cursorVisible="true"
+            app:forceKeyboard="true"
+            app:hint=""
+            app:inputType="number"
+            app:password="false"/>
+
+        <Button
+            style="@style/resend_code"
+            android:id="@+id/btnResendCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pinView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="21dp"
+            android:paddingStart="70dp"
+            android:paddingEnd="70dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:background="@drawable/border_rectangle"
+            android:gravity="center"
+            android:text="@string/resend_code" />
+    </RelativeLayout>
+
+    <Button
+        style="@style/otp_next"
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_background_red"
+        android:text="@string/next"
+        android:padding="10dp"
+        android:gravity="end|center_vertical" />
+</RelativeLayout>
