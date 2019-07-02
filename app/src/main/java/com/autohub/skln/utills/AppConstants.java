@@ -68,18 +68,9 @@ public class AppConstants {
     public static final String KEY_BOARD = "board";
     public static final String KEY_QUALIFICATION = "qualification";
     public static final String KEY_AREA_QUALIFICATION = "area_qualification";
-//    public static final String KEY_UNIVERSITY = "university";
-//    public static final String KEY_SPECIALISATION = "specialisation";
-//    public static final String KEY_QUALIFICATION_YEAR = "qualification_year";
-//    public static final String KEY_ACADEMIC_EXPERINCE = "academic_experince";
-//    public static final String KEY_HOURS_AVAILABLE = "hours_available";
     public static final String KEY_BIODATA = "biodata";
-    public static final String KEY_CLASSES_PLACE = "classes_place";
-    public static final String KEY_CHARGES_TYPE = "charges_type";
-    public static final String KEY_CHARGES_DOUBT = "charges_doubt";
-    public static final String PROFILE_IMAGE = "profile_image";
-    public static final String PROOF_DOCUMENT_IMAGE = "proof_document_image";
-    public static final String CERTIFICATE_IMAGE = "certificate_image";
-
-
+    public static final String KEY_CLASS_TYPE = "class_type";
+    public static final String KEY_NO_OF_CLASSES = "no_of_classes";
+    public static final String KEY_CLASS_FREQUENCY = "class_frequency";
+    public static final String KEY_MAX_STUDENTS = "max_students_capacity";
 }
