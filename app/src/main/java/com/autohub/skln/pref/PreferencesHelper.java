@@ -47,16 +47,16 @@ public interface PreferencesHelper {
 
     String getProofImage();
 
-    void setTutorMainInfo(String firstName, String lastName, String password);
+    void setTutorPrimaryInfo(String firstName, String lastName, String password);
 
-    void setTutorId(String id);
+    void setUserId(String id);
 
-    void setTutorPhoneNumber(String phone);
+    void setUserPhoneNumber(String phone);
 
-    void setUserScreenSix(String occupation, String experince, String qualification, String area, String university, String specialisation, String year, String profileImage, String certificateImage, String proofImage);
+    void setTutorPicture(String profileImage, String occupation, String experince);
 
 
-    void setUserScreenSeven(String board, String experinceLevel, String workingHour);
+    void setTutorTargetedBoard(String board, String experinceLevel, String workingHour);
 
 //    void setUserScreenSevenForHobbies(String experinceLevel, String workingHour);
 
@@ -67,6 +67,8 @@ public interface PreferencesHelper {
     void setScreenNine(String classesPlace);
 
     void setScreenFour(String classes);
+
+    void setSeniorTutor(boolean val);
 
     void setTutorSubject(String subjects);
 }

@@ -26,7 +26,7 @@
         android:paddingEnd="29dp"
         android:background="@drawable/button_background_black"
         android:gravity="center"
-        android:text="@string/Tutor" />
+        android:text="@string/teacher" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
@@ -38,8 +38,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:layout_below="@id/tvTutor"
-        android:background="@drawable/border_progressbar"
-        android:progressDrawable="@drawable/green_drawable_progressbar"
+        android:progressDrawable="@drawable/progress_drawable"
         android:max="8"
         android:progress="2"/>
 
@@ -79,21 +78,18 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rlAcademics"
-                android:background="@mipmap/layers_academicsxhdpi">
-            </RelativeLayout>
+                android:background="@mipmap/layers_academicsxhdpi" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:id="@+id/rlHobby"
-                android:background="@mipmap/layers_hobbyxhdpi">
-            </RelativeLayout>
+                android:background="@mipmap/layers_hobbyxhdpi" />
 
         </LinearLayout>
 

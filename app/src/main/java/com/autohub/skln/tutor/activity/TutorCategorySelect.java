@@ -3,15 +3,24 @@ package com.autohub.skln.tutor.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.RelativeLayout;
+import android.support.annotation.NonNull;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.SetOptions;
 
-import butterknife.BindView;
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import static com.autohub.skln.utills.AppConstants.CATEGORY_ACADEMICS;
+import static com.autohub.skln.utills.AppConstants.CATEGORY_HOBBY;
+import static com.autohub.skln.utills.AppConstants.KEY_CATEGORY;
 
 public class TutorCategorySelect extends BaseActivity {
 
@@ -23,16 +32,41 @@ public class TutorCategorySelect extends BaseActivity {
     }
 
     @OnClick(R.id.rlAcademics)
-    public void onAcademicClick()
-    {
-        getAppPreferenceHelper().setTutorCategory(getString(R.string.academics));
-        startActivity(new Intent(this, TutorClassSelect.class));
+    public void onAcademicClick() {
+        getAppPreferenceHelper().setTutorCategory(CATEGORY_ACADEMICS);
+        goToNext(true);
     }
 
     @OnClick(R.id.rlHobby)
     public void onHobbyClick() {
-        getAppPreferenceHelper().setTutorCategory(getString(R.string.hobby));
-        startActivity(new Intent(this, TutorHobbySelect.class));
+        getAppPreferenceHelper().setTutorCategory(CATEGORY_HOBBY);
+        goToNext(false);
+    }
+
+    private void goToNext(final boolean toAcademics) {
+        showLoading();
+
+        Map<String, Object> user = new HashMap<>();
+        user.put(KEY_CATEGORY, toAcademics ? CATEGORY_ACADEMICS : CATEGORY_HOBBY);
+
+        getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        hideLoading();
+                        if (toAcademics)
+                            startActivity(new Intent(TutorCategorySelect.this, TutorClassSelect.class));
+                        else
+                            startActivity(new Intent(TutorCategorySelect.this, TutorHobbySelect.class));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        hideLoading();
+                        showSnackError(e.getMessage());
+                    }
+                });
     }
 
     @Override

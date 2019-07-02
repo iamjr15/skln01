@@ -37,6 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="31dp"
             android:layout_below="@+id/tvEnterOtp"
+            android:gravity="center_vertical"
+            android:background="@drawable/shadow_rect"
             android:orientation="horizontal">
 
             <com.hbb20.CountryCodePicker
@@ -48,13 +50,14 @@
                 app:ccp_autoDetectCountry="true"
                 app:ccp_autoDetectLanguage="true"
                 app:ccp_textSize="20sp"
-                app:ccp_showFlag="true"
-                />
+                app:ccp_showFlag="true" />
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
                 android:background="@color/black" />
 
             <TextView
@@ -77,6 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/llNumber"
+            app:textSize="8dp"
             app:pinWidth="45dp"
             app:pinHeight="45dp"
             app:pinLength="6"

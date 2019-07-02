@@ -1,15 +1,31 @@
 package com.autohub.skln;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
+import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.autohub.skln.pref.PreferencesImpl;
 import com.autohub.skln.utills.AppConstants;
+
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -17,8 +33,9 @@ public class BaseActivity extends AppCompatActivity {
     protected static final int FONT_TYPE_CERAPRO_BOLD = 1;
     protected static final int FONT_TYPE_MONTSERRAT_REGULAR = 2;
 
-
+    private FirebaseAuth mFirebaseAuth;
     private FirebaseFirestore mFirebaseFirestore;
+
     private PreferencesImpl mPreferencesImpl;
 
     private ProgressDialog mProgressDialog;
@@ -26,22 +43,27 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseFirestore = FirebaseFirestore.getInstance();
         mPreferencesImpl = new PreferencesImpl(this, AppConstants.PREF_NAME);
     }
 
-    public FirebaseFirestore getFirebaseStore() {
+    protected FirebaseAuth getFirebaseAuth() {
+        return mFirebaseAuth;
+    }
+
+    protected FirebaseFirestore getFirebaseStore() {
         return mFirebaseFirestore;
     }
 
-    public PreferencesImpl getAppPreferenceHelper() {
+    protected PreferencesImpl getAppPreferenceHelper() {
         return mPreferencesImpl;
     }
 
     /*
     t@ngel : show loading progress
      */
-    public void showLoading() {
+    protected void showLoading() {
         try {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage("Please wait...");
@@ -57,10 +79,47 @@ public class BaseActivity extends AppCompatActivity {
     /*
     t@ngel : hide progress dialog
      */
-    public void hideLoading() {
+    protected void hideLoading() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.cancel();
         }
+    }
+
+    /*
+    t@ngel : show error message using snack bar
+    param : message to be shown as a String resource id
+     */
+    protected void showSnackError(int resId) {
+        Snackbar snackbar = Snackbar.make((findViewById(android.R.id.content)), getString(resId), Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(getResources().getColor(R.color.snack_back_color));
+        TextView textView = snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
+    }
+
+    /*
+    t@ngel : show error message using snack bar
+    param : message as a String
+     */
+    protected void showSnackError(String message) {
+        Snackbar snackbar = Snackbar.make((findViewById(android.R.id.content)), message, Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(getResources().getColor(R.color.snack_back_color));
+        TextView textView = snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
+    }
+
+    /*
+    t@ngel : encrypt password
+     */
+    protected static String encrypt(String value) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(AppConstants.KEY.getBytes(), AppConstants.ALGORITHM);
+        Cipher cipher = Cipher.getInstance(AppConstants.MODE);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, new IvParameterSpec(AppConstants.IV.getBytes()));
+        byte[] values = cipher.doFinal(value.getBytes());
+        return Base64.encodeToString(values, Base64.DEFAULT);
     }
 
     /*

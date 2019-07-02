@@ -26,7 +26,7 @@
 
     <Button
         android:id="@+id/btnTutor"
-        style="@style/login"
+        style="@style/signup_title_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

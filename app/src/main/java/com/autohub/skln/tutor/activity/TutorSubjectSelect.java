@@ -2,45 +2,34 @@ package com.autohub.skln.tutor.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+import android.support.annotation.NonNull;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static com.autohub.skln.utills.AppConstants.KEY_SUBJECTS;
+import static com.autohub.skln.utills.AppConstants.SUBJECT_COMPUTER_SCIENCE;
+import static com.autohub.skln.utills.AppConstants.SUBJECT_ENGLISH;
+import static com.autohub.skln.utills.AppConstants.SUBJECT_LANGUAGES;
+import static com.autohub.skln.utills.AppConstants.SUBJECT_MATHS;
+import static com.autohub.skln.utills.AppConstants.SUBJECT_SCIENCE;
+import static com.autohub.skln.utills.AppConstants.SUBJECT_SOCIAL_STUDIES;
+
 public class TutorSubjectSelect extends BaseActivity {
-
-    /*Referencing the widgets through the bind view API*/
-    /*Start*/
-    @BindView(R.id.LLScience)
-    LinearLayout LLScience;
-
-    @BindView(R.id.LLEnglish)
-    LinearLayout LLEnglish;
-
-    @BindView(R.id.LLMaths)
-    LinearLayout LLMaths;
-
-    @BindView(R.id.LLSocialStudies)
-    LinearLayout LLSocialStudies;
-
-    @BindView(R.id.LLLanguages)
-    LinearLayout LLLanguages;
-
-    @BindView(R.id.LLComputerScience)
-    LinearLayout LLComputerScience;
 
     @BindView(R.id.ivScience)
     ImageView ivScience;
@@ -59,127 +48,126 @@ public class TutorSubjectSelect extends BaseActivity {
 
     @BindView(R.id.ivComputerScience)
     ImageView ivComputerScience;
-    /*end*/
-    /*Declaration of Variables*/
-    private ArrayList<String> stringArrayList;
-    private StringBuilder stringBuilder;
+
+    private ArrayList<String> selectedSubjects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor_subject_select);
         ButterKnife.bind(this);
-        /*Initialization*/
-        stringArrayList = new ArrayList<>();
+
+        ivScience.setEnabled(false);
+        ivEnglish.setEnabled(false);
+        ivMaths.setEnabled(false);
+        ivSocialStudies.setEnabled(false);
+        ivLanguages.setEnabled(false);
+        ivComputerScience.setEnabled(false);
+
+        selectedSubjects = new ArrayList<>();
     }
-    /*The below method is for to validate the user to select the subjects or subject*/
+
     @OnClick(R.id.btnNext)
     public void onNextClick() {
-        stringBuilder = new StringBuilder();
-        int size = stringArrayList.size();
-        if (size > 0) {
-            stringBuilder.append(stringArrayList.get(0));
-            for (int i = 1; i < stringArrayList.size(); i++) {
-                stringBuilder.append(", ").append(stringArrayList.get(i));
+        StringBuilder stringBuilder = new StringBuilder();
+        if (selectedSubjects.size() > 0) {
+            stringBuilder.append(selectedSubjects.get(0));
+            for (int i = 1; i < selectedSubjects.size(); i++) {
+                stringBuilder.append(", ").append(selectedSubjects.get(i));
             }
-
         }
 
         if (stringBuilder.length() == 0) {
-            Snackbar snackbar;
-            snackbar = Snackbar.make((findViewById(android.R.id.content)), getString(R.string.choose_subjects), Snackbar.LENGTH_LONG);
-            View view = snackbar.getView();
-            TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-            view.setBackgroundColor(Color.parseColor("#ba0505"));
-            textView.setTextColor(Color.WHITE);
-            snackbar.show();
+            showSnackError(R.string.choose_subjects);
             return;
         }
-        getAppPreferenceHelper().setTutorSubject(stringBuilder.toString());
-        Intent intent = new Intent(this, TutorPictureUpload.class);
-        intent.putExtra("category", getString(R.string.academics));
 
-        startActivity(intent);
+        showLoading();
+
+        Map<String, Object> user = new HashMap<>();
+        user.put(KEY_SUBJECTS, stringBuilder.toString());
+
+        getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        hideLoading();
+                        startActivity(new Intent(TutorSubjectSelect.this, TutorPictureUpload.class));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        hideLoading();
+                        showSnackError(e.getMessage());
+                    }
+                });
     }
-    /*The below method is for select the subject Science*/
+
     @OnClick(R.id.LLScience)
     public void onScienceClick() {
-        if (!ivScience.isShown()) {
-            if (!stringArrayList.contains("science")) {
-                stringArrayList.add("science");
-            }
-            ivScience.setVisibility(View.VISIBLE);
+        if (!ivScience.isEnabled()) {
+            selectedSubjects.add(SUBJECT_SCIENCE);
+            ivScience.setEnabled(true);
         } else {
-            stringArrayList.remove("science");
-            ivScience.setVisibility(View.GONE);
+            selectedSubjects.remove(SUBJECT_SCIENCE);
+            ivScience.setEnabled(false);
         }
     }
-    /*The below method is for select the subject English*/
+
     @OnClick(R.id.LLEnglish)
     public void onEnglishClick() {
-        if (!ivEnglish.isShown()) {
-            if (!stringArrayList.contains("english")) {
-                stringArrayList.add("english");
-            }
-            ivEnglish.setVisibility(View.VISIBLE);
+        if (!ivEnglish.isEnabled()) {
+            selectedSubjects.add(SUBJECT_ENGLISH);
+            ivEnglish.setEnabled(true);
         } else {
-            stringArrayList.remove("english");
-            ivEnglish.setVisibility(View.GONE);
+            selectedSubjects.remove(SUBJECT_ENGLISH);
+            ivEnglish.setEnabled(false);
         }
     }
-    /*The below method is for select the subject Math*/
+
     @OnClick(R.id.LLMaths)
     public void onMathsClick() {
-        if (!ivMaths.isShown()) {
-            if (!stringArrayList.contains("maths")) {
-                stringArrayList.add("maths");
-            }
-            ivMaths.setVisibility(View.VISIBLE);
+        if (!ivMaths.isEnabled()) {
+            selectedSubjects.add(SUBJECT_MATHS);
+            ivMaths.setEnabled(true);
         } else {
-            stringArrayList.remove("maths");
-            ivMaths.setVisibility(View.GONE);
+            selectedSubjects.remove(SUBJECT_MATHS);
+            ivMaths.setEnabled(false);
         }
     }
 
-    /*The below method is for select the subject SocailStudies*/
     @OnClick(R.id.LLSocialStudies)
     public void onSocialClick() {
-        if (!ivSocialStudies.isShown()) {
-            if (!stringArrayList.contains("socialstudies")) {
-                stringArrayList.add("socialstudies");
-            }
-            ivSocialStudies.setVisibility(View.VISIBLE);
+        if (!ivSocialStudies.isEnabled()) {
+            selectedSubjects.add(SUBJECT_SOCIAL_STUDIES);
+            ivSocialStudies.setEnabled(true);
         } else {
-            stringArrayList.remove("socialstudies");
-            ivSocialStudies.setVisibility(View.GONE);
+            selectedSubjects.remove(SUBJECT_SOCIAL_STUDIES);
+            ivSocialStudies.setEnabled(false);
         }
     }
-    /*The below method is for select the subject Lanuages*/
+
     @OnClick(R.id.LLLanguages)
     public void onLanguagesClick() {
-        if (!ivLanguages.isShown()) {
-            if (!stringArrayList.contains("languages")) {
-                stringArrayList.add("languages");
-            }
-            ivLanguages.setVisibility(View.VISIBLE);
+        if (!ivLanguages.isEnabled()) {
+            selectedSubjects.add(SUBJECT_LANGUAGES);
+            ivLanguages.setEnabled(true);
         } else {
-            stringArrayList.remove("languages");
-            ivLanguages.setVisibility(View.GONE);
+            selectedSubjects.remove(SUBJECT_LANGUAGES);
+            ivLanguages.setEnabled(false);
         }
     }
-    /*The below method is for select the subject Computer Science*/
+
     @OnClick(R.id.LLComputerScience)
     public void onComputerClick() {
-        if (!ivComputerScience.isShown()) {
-            if (!stringArrayList.contains("computer science")) {
-                stringArrayList.add("computer science");
-            }
-            ivComputerScience.setVisibility(View.VISIBLE);
+        if (!ivComputerScience.isEnabled()) {
+            selectedSubjects.add(SUBJECT_COMPUTER_SCIENCE);
+            ivComputerScience.setEnabled(true);
         } else {
-            stringArrayList.remove("computerscience");
-            ivComputerScience.setVisibility(View.GONE);
+            selectedSubjects.remove(SUBJECT_COMPUTER_SCIENCE);
+            ivComputerScience.setEnabled(false);
         }
-
     }
 
     @Override
