@@ -2,18 +2,12 @@ package com.autohub.skln.tutor.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -21,19 +15,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.autohub.skln.BaseActivity;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.UploadTask;
 import com.autohub.skln.R;
-import com.autohub.skln.utills.AppConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,13 +30,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-import static com.autohub.skln.utills.AppConstants.KEY_AREA_QUALIFICATION;
-import static com.autohub.skln.utills.AppConstants.KEY_BOARD;
 import static com.autohub.skln.utills.AppConstants.KEY_CLASS_FREQUENCY;
 import static com.autohub.skln.utills.AppConstants.KEY_CLASS_TYPE;
 import static com.autohub.skln.utills.AppConstants.KEY_MAX_STUDENTS;
 import static com.autohub.skln.utills.AppConstants.KEY_NO_OF_CLASSES;
-import static com.autohub.skln.utills.AppConstants.KEY_QUALIFICATION;
 
 public class TutorCreatePackage extends BaseActivity {
     private static final String TAG = "TutorCreatePackage";
