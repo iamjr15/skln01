@@ -33,6 +33,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnCheckedChanged;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.autohub.skln.utills.AppConstants.BOARD_CBSE;
@@ -143,25 +144,25 @@ public class TutorTargetBoardSelect extends BaseActivity {
         radioGroupBoards.check(R.id.radioState);
     }
 
-    @OnClick(R.id.radioCBSE)
-    public void onCBSEClick() {
-        mSelectedTargetBoard = BOARD_CBSE;
-    }
+    @OnCheckedChanged(R.id.board_group)
+    public void onBoardCheckedChanged() {
+        switch (radioGroupBoards.getCheckedRadioButtonId()) {
+            case R.id.radioCBSE:
+                mSelectedTargetBoard = BOARD_CBSE;
+                break;
 
-    @OnClick(R.id.radioICSE)
-    public void onICSEClick() {
-        mSelectedTargetBoard = BOARD_ICSE;
-    }
+            case R.id.radioICSE:
+                mSelectedTargetBoard = BOARD_ICSE;
+                break;
 
-    @OnClick(R.id.radioState)
-    public void onStateClick() {
-        mSelectedTargetBoard = BOARD_STATE;
-        /*tvCBSE.setBackgroundResource(R.drawable.reactangle_cert);
-        tvCBSE.setTextColor(Color.parseColor("#000000"));
-        radioICSE.setBackgroundResource(R.drawable.reactangle_cert);
-        radioICSE.setTextColor(Color.parseColor("#000000"));
-        radioState.setBackgroundResource(R.drawable.reactangle_cert_black);
-        radioState.setTextColor(Color.parseColor("#ffffff"));*/
+            case R.id.radioState:
+                mSelectedTargetBoard = BOARD_STATE;
+                break;
+
+            default:
+                mSelectedTargetBoard = "";
+                break;
+        }
     }
 
     @OnClick(R.id.tvSelectQualification)
