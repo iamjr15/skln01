@@ -37,7 +37,6 @@
         <item>N/A</item>
     </string-array>
 
-
     <string-array name="area_qualifi_arrays_1">
         <item>B.A</item>
         <item>B.A.F</item>
@@ -69,6 +68,16 @@
         <item>L.L.B</item>
         <item>M.B.B.S</item>
         <item>N/A</item>
+    </string-array>
+
+    <string-array name="class_types_array">
+        <item>Group class</item>
+        <item>Individual class</item>
+    </string-array>
+
+    <string-array name="class_freqs_array">
+        <item>Weekly</item>
+        <item>Monthly</item>
     </string-array>
 
     <string name="first_name">First Name</string>
@@ -229,4 +238,9 @@
     <string name="hint_select_area_qualification">select area of qualification</string>
     <string name="select_qualification_first">Please select valid qualification first.</string>
     <string name="fill_biodata">Please fill your professional biodata.</string>
+    <string name="specify_max_students">SPECIFY MAX. STUDENTS CAPACITY</string>
+    <string name="select_class_type">Please select your class type.</string>
+    <string name="select_number_of_class">Please select No. of classes per week/month.</string>
+    <string name="select_class_freq">Please select your class frequency.</string>
+    <string name="select_max_students_capacity">Please specify maximum students capacity.</string>
 </resources>

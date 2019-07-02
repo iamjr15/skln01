@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -80,7 +81,10 @@ public class TutorTargetBoardSelect extends BaseActivity {
         ButterKnife.bind(this);
 
         qualifications = getResources().getStringArray(R.array.qualification_arrays);
-//        areasQualifies = getResources().getStringArray(R.array.area_qualifi_arrays);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        width = displayMetrics.widthPixels;
     }
 
     @OnClick(R.id.btnNext)
@@ -99,11 +103,6 @@ public class TutorTargetBoardSelect extends BaseActivity {
             showSnackError(R.string.select_area_qualification);
             return;
         }
-
-//        getAppPreferenceHelper().setTutorTargetedBoard(mSelectedTargetBoard, tvSelectQualification.getText().toString(),
-//                tvSelectAreaQualification.getText().toString());
-//
-//        startActivity(new Intent(this, TutorBiodata.class));
 
         showLoading();
 

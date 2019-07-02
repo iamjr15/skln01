@@ -140,6 +140,23 @@
                     android:background="@drawable/border_rectangle"/>
 
                 <TextView
+                    android:id="@+id/tvMaxStudents"
+                    style="@style/package_item_text_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:paddingStart="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:paddingEnd="12dp"
+                    android:text="@string/specify_max_students"
+                    android:drawableEnd="@drawable/drop_down_arrow"
+                    android:background="@drawable/border_rectangle"
+                    android:visibility="gone" />
+
+                <TextView
                     style="@style/package_item_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
