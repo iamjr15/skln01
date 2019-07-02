@@ -9,4 +9,7 @@
     <color name="white">#ffffffff</color>
     <color name="light_grey">#ff707070</color>
     <color name="green">#ff03cc40</color>
+    <color name="selectedGreen">#ff71b72d</color>
+    <color name="blue">#ff2929f1</color>
+    <color name="snack_back_color">#ba0505</color>
 </resources>

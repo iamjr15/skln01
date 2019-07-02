@@ -45,7 +45,8 @@
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="30dp"
         android:orientation="horizontal"
-        android:background="@drawable/border_shadow"
+        android:background="@drawable/shadow_rect"
+        android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -59,13 +60,14 @@
             app:ccp_autoDetectCountry="true"
             app:ccp_autoDetectLanguage="true"
             app:ccp_textSize="20sp"
-            app:ccp_showFlag="true"
-            />
+            app:ccp_showFlag="true" />
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@color/black" />
 
         <EditText

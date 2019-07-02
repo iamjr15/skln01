@@ -11,76 +11,75 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <!-- Text style for "login" -->
-    <!-- Add this snippet to styles.xml. -->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <!-- Text style for "welcome_on" -->
+    <style name="welcome_on_board">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">33sp</item>
+    </style>
+
+    <style name="s_">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="s_small">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
     <style name="login">
-        <item name="android:textColor">#cc000000</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">29sp</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <!-- Text style for "academics." -->
-    <!-- Add this snippet to styles.xml. -->
-    <style name="academics">
-        <item name="android:textColor">#ccffffff</item>
-        <item name="android:textSize">24sp</item>
+    <style name="welcome_back">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- Text style for "hobby." -->
-    <!-- Add this snippet to styles.xml. -->
-    <style name="hobby">
-        <item name="android:textColor">#ccffffff</item>
-        <item name="android:textSize">24sp</item>
-    </style>
-
-    <!-- Text style for "academics" -->
-    <!-- Add this snippet to styles.xml. -->
     <style name="academics2">
-        <item name="android:textColor">#cc000000</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <!-- Text style for "select_the" -->
-    <!-- Add this snippet to styles.xml. -->
     <style name="select_the_class">
-        <item name="android:textColor">#ff000000</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">24sp</item>
     </style>
 
-    <!-- Text style for "class_1._" -->
-    <!-- Add this snippet to styles.xml. -->
     <style name="class_text">
-        <item name="android:textColor">#ccffffff</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- Text style for "next" -->
-    <!-- Add this snippet to styles.xml. -->
     <style name="next">
-        <item name="android:textColor">#cc000000</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="personal_v">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
-
-    <style name="upload_you">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="upload_a_p">
-        <item name="android:textColor">#ff000000</item>
+    <style name="signup_hint_small_style">
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
     </style>
 
     <style name="upload_you_cert">
-        <item name="android:textColor">#cc000000</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">22sp</item>
     </style>
 
@@ -169,19 +168,9 @@
         <item name="android:textSize">22sp</item>
     </style>
 
-    <style name="setup_your">
-        <item name="android:textColor">#ff000000</item>
-        <item name="android:textSize">27sp</item>
-    </style>
-
     <style name="how_would_">
         <item name="android:textColor">#cc000000</item>
         <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="select_al">
-        <item name="android:textColor">#ff000000</item>
-        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="adding_a_d">
@@ -189,34 +178,6 @@
         <item name="android:textSize">15sp</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <!-- Text style for "welcome_on" -->
-    <style name="welcome_on_board">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">33sp</item>
-    </style>
-
-    <!-- Text style for "s." -->
-    <style name="s_">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
-
-    <!-- Text style for "s." -->
-    <style name="s_small">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">13sp</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
 
     <!-- Text style for "enter_your" -->
     <style name="enter_your_phonenum">
@@ -270,6 +231,11 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="forgot_pass">
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <!-- Text style for "male" -->
     <style name="sex">
         <item name="android:textColor">@color/black</item>
@@ -283,4 +249,49 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">15sp</item>
     </style>
+
+    <style name="title_style">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="package_item_text_style">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="tab_item_text_style">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="hey_tutor_style">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="home_stats_style">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="home_stats_value_style">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="home_feed_text_style">
+        <item name="android:textColor">#ffe55353</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
 </resources>

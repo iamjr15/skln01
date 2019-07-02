@@ -1,6 +1,5 @@
 package com.autohub.skln.tutor.activity;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,12 +14,10 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -29,187 +26,143 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autohub.skln.BaseActivity;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 import com.autohub.skln.R;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import static com.autohub.skln.utills.AppConstants.CATEGORY_ACADEMICS;
+import static com.autohub.skln.utills.AppConstants.KEY_EXPERIENCE;
+import static com.autohub.skln.utills.AppConstants.KEY_OCCUPATION;
+import static com.autohub.skln.utills.AppConstants.KEY_PROFILE_PICTURE;
 
 /*This Activity is not in use*/
 public class TutorPictureUpload extends BaseActivity {
     private static final String TAG = "TutorPictureUpload";
-    /*Referencing the widgets through the bind view API*/
-    /*Start*/
+
     @BindView(R.id.tvSelectOccupation)
     TextView tvSelectOccupation;
 
-    @BindView(R.id.tvSelectExp)
-    TextView tvSelectExp;
-
-    @BindView(R.id.tvSelectQualification)
-    TextView tvSelectQualification;
-
-    @BindView(R.id.tvSelectAreaQualification)
-    TextView tvSelectAreaQualification;
-
-    @BindView(R.id.edtUniversity)
-    EditText edtUniversity;
-
-    @BindView(R.id.imageForDocument)
-    ImageView imageForDocument;
-
-    @BindView(R.id.imageForOriginalDocument)
-    ImageView imageForOriginalDocument;
+    @BindView(R.id.tvSelectExperience)
+    TextView tvSelectExperience;
 
     @BindView(R.id.Picture)
-    CircleImageView imageView;
+    ImageView imageView;
 
-    @BindView(R.id.tvAddPicture)
-    TextView addPics;
-    int f, s, t ;
+    @BindView(R.id.addProfilePicture)
+    RelativeLayout addPics;
 
-    @BindView(R.id.edtSpecialisation)
-    EditText edtSpecialisation;
-
-    @BindView(R.id.edtQualification)
-    EditText edtQualification;
-
-    @BindView(R.id.mainLayout)
-    RelativeLayout relativeLayout;
-    /*end*/
-
-    /*Declaration of Variables*/
-    private StorageReference mStorage;
-    private PopupWindow popupWindowOccupation;
+    private StorageReference mStorageRef;
+    private PopupWindow popupWindowOccp;
     private PopupWindow popupWindowExp;
-    private PopupWindow popupWindowQualification;
-    private PopupWindow popupWindowArea;
-    private String[] selectedOccupation;
-    private String[] selectedExp;
-    private String[] selectedQualification;
-    private String[] selectedArea;
-    private int width;
-    private boolean isImageFitToScreen;
-    private String profileImageUrl, certificateImageUrl, proofImageUrl;
-    private Uri resultUri;
 
+    private String[] occupations;
+    private String[] experiences;
+    private String mSelectedOccp = "";
+    private String mSelectedExp = "";
+    private String mProfileImageUrl = "";
+
+    private int width;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor_picture_upload);
         ButterKnife.bind(this);
-        /*Initialization*/
-        selectedOccupation = getResources().getStringArray(R.array.occupation_arrays);
-        selectedExp = getResources().getStringArray(R.array.exp_arrays);
-        selectedQualification = getResources().getStringArray(R.array.qualification_arrays);
-        selectedArea = getResources().getStringArray(R.array.area_arrays_for_grad);
-        tvSelectOccupation.setText(selectedOccupation[0]);
-        tvSelectExp.setText(selectedExp[0]);
-        tvSelectQualification.setText(selectedQualification[0]);
-        tvSelectAreaQualification.setText(selectedArea[0]);
+
+        occupations = getResources().getStringArray(R.array.occupation_arrays);
+        experiences = getResources().getStringArray(R.array.experience_arrays);
+
+        tvSelectOccupation.setText(R.string.select_occupation);
+        tvSelectExperience.setText(R.string.select_experience);
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
-        mStorage = FirebaseStorage.getInstance().getReference();
-        profileImageUrl = "";
-        certificateImageUrl = "";
-        proofImageUrl = "";
-        /*Initialization End*/
 
+        mStorageRef = FirebaseStorage.getInstance().getReference();
     }
+
     @OnClick(R.id.btnNext)
     public void onNextClick() {
-        if (edtUniversity.getText().length() == 0) {
-            Toast.makeText(this, R.string.enter_university, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (edtSpecialisation.getText().length() == 0) {
-            Toast.makeText(this, R.string.enter_specialisation, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (edtQualification.getText().length() == 0) {
-            Toast.makeText(this, R.string.enter_qualification_year, Toast.LENGTH_SHORT).show();
-            return;
-        }if(TextUtils.isEmpty(profileImageUrl)){
+        if(TextUtils.isEmpty(mProfileImageUrl)){
             Toast.makeText(this, R.string.profile_image, Toast.LENGTH_SHORT).show();
             return;
-        }if(TextUtils.isEmpty(certificateImageUrl)){
-            Toast.makeText(this, R.string.certificate, Toast.LENGTH_SHORT).show();
-            return;
-        }if(TextUtils.isEmpty(proofImageUrl)){
-            Toast.makeText(this, R.string.proof_document, Toast.LENGTH_SHORT).show();
+        }
+
+        if (TextUtils.isEmpty(mSelectedOccp)) {
+            showSnackError(R.string.warning_choose_occp);
             return;
         }
 
-        Log.d(TAG, "onNextClick: " + profileImageUrl);
-        Log.d(TAG, "onNextClick: " + certificateImageUrl);
-        Log.d(TAG, "onNextClick: " + proofImageUrl);
-        getAppPreferenceHelper().setUserScreenSix(tvSelectOccupation.getText().toString(), tvSelectExp.getText().toString(), tvSelectQualification.getText().toString(),
-                tvSelectAreaQualification.getText().toString(), edtUniversity.getText().toString()
-                , edtSpecialisation.getText().toString(), edtQualification.getText().toString()
-                ,profileImageUrl, certificateImageUrl, proofImageUrl
-        );
+        if (TextUtils.isEmpty(mSelectedExp)) {
+            showSnackError(R.string.warning_choose_exp);
+            return;
+        }
 
-        startActivity(new Intent(this, TutorTargetBoardSelect.class));
+        showLoading();
+
+        Map<String, Object> user = new HashMap<>();
+        user.put(KEY_PROFILE_PICTURE, mProfileImageUrl);
+        user.put(KEY_OCCUPATION, mSelectedOccp);
+        user.put(KEY_EXPERIENCE, mSelectedExp);
+
+        getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        hideLoading();
+                        if (getAppPreferenceHelper().getTutorCategory().equals(CATEGORY_ACADEMICS))
+                            startActivity(new Intent(TutorPictureUpload.this, TutorTargetBoardSelect.class));
+                        else
+                            startActivity(new Intent(TutorPictureUpload.this, TutorBiodata.class));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        hideLoading();
+                        showSnackError(e.getMessage());
+                    }
+                });
     }
 
-    @OnClick(R.id.tvAddCert)
-    public void setOnAddCert(){
-
-        getImageFromAlbum(1);
-
-    }
-
-    @OnClick(R.id.tvAddProof)
-    public void setOnAddProof(){
-        getImageFromAlbum(2);
-
-    }
-
-    @OnClick(R.id.tvAddPicture)
-    public void setOnAddpicture(){
+    @OnClick(R.id.addProfilePicture)
+    public void onAddPicture() {
         getImageFromAlbum(0);
     }
-    private void getImageFromAlbum(int i){
+
+    private void getImageFromAlbum(int i) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, i);
     }
+
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
-        if(data == null){
+        if (data == null) {
             return;
         }
 
-        String des = "Croped" +".jpg";
-
-        if(reqCode == 0){
-            f = reqCode;
-        }else if(reqCode == 1){
-            f = reqCode;
-        }else if(reqCode == 2){
-            f = reqCode;
-        }
+        String des = "Croped" + ".jpg";
 
         final Uri imageUri = data.getData();
-        setImages(f, imageUri);
+        setImages(imageUri);
         /*UCrop.of(imageUri, Uri.fromFile(new File(getCacheDir(), des)))
                 .withAspectRatio(4, 3)
                 .withMaxResultSize(450 , 450)
@@ -228,123 +181,74 @@ public class TutorPictureUpload extends BaseActivity {
 
     }
 
-    void setImages(int req, Uri result) {
-        if (req == 0) {
-            resultUri = result;
-            Bitmap newImage = null;
-            try {
-                newImage = getResizedBitmap(getBitmapFromUri(resultUri),64, 64 );
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            imageView.requestLayout();
-            imageView.getLayoutParams().height = 550;
-            imageView.getLayoutParams().width = 550;
-            imageView.setImageBitmap(newImage);
-//            Picasso.get().load(resultUri).fit().centerCrop().into(imageView);
-            addPics.setVisibility(View.GONE);
-            threadForProfile.start();
-
-        }else if(req == 1){
-            resultUri = result;
-            Uri resultUri = result;
-            Bitmap newImage = null;
-            try {
-                newImage = getResizedBitmap(getBitmapFromUri(resultUri),64, 64 );
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            imageForDocument.setVisibility(View.VISIBLE);
-            Picasso.get().load(resultUri).fit().centerCrop().into(imageForDocument);
-//            imageForDocument.setImageBitmap(newImage);
-//            imageForDocument.setScaleType(ImageView.ScaleType.FIT_XY);
-            mStorage = mStorage.child("users/profiles/certifcates/" + FirebaseAuth.getInstance().getCurrentUser().getUid()+"Certificates");
-            UploadTask uploadTask =  mStorage.putFile(resultUri);
-            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    // Continue with the task to get the download URL
-                    return mStorage.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        certificateImageUrl = downloadUri.toString();
-                        Log.d(TAG, "onComplete: "+ certificateImageUrl);
-                        mStorage = FirebaseStorage.getInstance().getReference();
-
-                    } else {
-                        // Handle failures
-                        // ...
-                    }
-                }
-
-            });
-
-
-            try {
-                threadForCertificates.start();
-            }catch (IllegalThreadStateException e){
-                Toast.makeText(this, "Sorry, try again", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            }
-
-        }else if(req == 2){
-            resultUri = result;
-            Uri resultUri = result;
-            final InputStream imageStream;
-            Bitmap newImage = null;
-            try {
-                newImage = getResizedBitmap(getBitmapFromUri(resultUri),64, 64 );
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            imageForOriginalDocument.setVisibility(View.VISIBLE);
-            Picasso.get().load(resultUri).fit().centerCrop().into(imageForOriginalDocument);
-            mStorage = mStorage.child("users/profiles/proof_document/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "Original");
-            UploadTask uploadTask =  mStorage.putFile(resultUri);
-            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    // Continue with the task to get the download URL
-                    return mStorage.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        proofImageUrl = downloadUri.toString();
-                        Log.d(TAG, "onComplete: "+ proofImageUrl);
-                        mStorage = FirebaseStorage.getInstance().getReference();
-                    } else {
-                        // Handle failures
-                        // ...
-                    }
-                }
-
-            });
-//            imageForOriginalDocument.setImageBitmap(newImage);
-//            imageForDocument.setScaleType(ImageView.ScaleType.FIT_XY);
-
+    void setImages(Uri resultUri) {
+        Bitmap newImage = null;
+        try {
+            newImage = getResizedBitmap(getBitmapFromUri(resultUri), 64, 64);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        imageView.requestLayout();
+        imageView.getLayoutParams().height = 550;
+        imageView.getLayoutParams().width = 550;
+        imageView.setImageBitmap(newImage);
+//      Picasso.get().load(resultUri).fit().centerCrop().into(imageView);
+//      addPics.setVisibility(View.GONE);
+//      try {
+        //threadForProfile.start();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        final StorageReference picRef = mStorageRef.child("tutor/" +
+                getFirebaseAuth().getCurrentUser().getUid() + ".jpg");
+
+        /*UploadTask uploadTask =  picRef.putFile(resultUri);
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                // Continue with the task to get the download URL
+                return picRef.getDownloadUrl();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                mProfileImageUrl = uri.toString();
+                Toast.makeText(TutorPictureUpload.this, "Uploading Successful.", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(TutorPictureUpload.this, "Uploading Failed.", Toast.LENGTH_LONG).show();
+            }
+        });*/
+
+        picRef.putFile(resultUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Uri downloadUrl = taskSnapshot.getUploadSessionUri();
+                        mProfileImageUrl = downloadUrl.toString();
+                        Toast.makeText(TutorPictureUpload.this, "Uploading Successful.", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(TutorPictureUpload.this, "Uploading Failed.", Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                });
     }
 
-    public Bitmap getResizedBitmap(Bitmap image, int bitmapWidth,
-                                   int bitmapHeight) {
-        return Bitmap.createScaledBitmap(image, bitmapWidth, bitmapHeight,
-                true);
+    public Bitmap getResizedBitmap(Bitmap image, int bitmapWidth, int bitmapHeight) {
+        return Bitmap.createScaledBitmap(image, bitmapWidth, bitmapHeight, true);
     }
+
     private Bitmap getBitmapFromUri(Uri uri) throws IOException {
         ParcelFileDescriptor parcelFileDescriptor =
                 getContentResolver().openFileDescriptor(uri, "r");
@@ -375,236 +279,92 @@ public class TutorPictureUpload extends BaseActivity {
         return resizedBitmap;
     }*/
 
-    Thread threadForProofDocument = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            final InputStream imageStream;
-
-
-                mStorage = mStorage.child("users/profiles/proof_document/" + FirebaseAuth.getInstance().getCurrentUser().getUid()+ "proofDocument");
-                UploadTask uploadTask =  mStorage.putFile(resultUri);
-                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if (!task.isSuccessful()) {
-                            throw task.getException();
-                        }
-
-                        // Continue with the task to get the download URL
-                        return mStorage.getDownloadUrl();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        if (task.isSuccessful()) {
-                            Uri downloadUri = task.getResult();
-                            proofImageUrl = downloadUri.toString();
-                            Log.d(TAG, "onComplete: "+ proofImageUrl);
-                        } else {
-                            // Handle failures
-                            // ...
-                        }
-                    }
-
-                });
-            mStorage = FirebaseStorage.getInstance().getReference();
-//            threadForCertificates.suspend();
-
-
-
-        }
-    });
-
-
-    Thread threadForCertificates = new Thread(new Runnable() {
-        @Override
-        public void run() {
-
-            mStorage = mStorage.child("users/profiles/certifcates/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "certificate");
-            mStorage.putFile(resultUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    // Continue with the task to get the download URL
-                    return mStorage.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        certificateImageUrl = downloadUri.toString();
-                        Log.d(TAG, "onComplete: "+ certificateImageUrl);
-
-                    } else {
-                        // Handle failures
-                        // ...
-                    }
-                }
-
-
-            });;
-mStorage = FirebaseStorage.getInstance().getReference();
-//threadForCertificates.suspend();
-
-
-        }
-    });
-
-
-    Thread threadForProfile = new Thread(new Runnable() {
-        @Override
-        public void run() {
-
-            mStorage = mStorage.child("users/profiles/profile_image/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "UserImage");
-            UploadTask uploadTask =  mStorage.putFile(resultUri);
-            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-
-                    // Continue with the task to get the download URL
-                    return mStorage.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        profileImageUrl = downloadUri.toString();
-                        Log.d(TAG, "onComplete: "+ profileImageUrl);
-
-                    } else {
-                        // Handle failures
-                        // ...
-                    }
-                }
-
-            });
-            mStorage = FirebaseStorage.getInstance().getReference();
-//            threadForCertificates.suspend();
-
-        }
-    });
-
-
-
-
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @OnClick(R.id.tvSelectOccupation)
     public void onOccupationClick(View v) {
-        Drawable img = this.getResources().getDrawable( R.mipmap.chevron_with_circle_upxhdpi );
-        img.setBounds( 0, 0, 120, 120 );
-        tvSelectOccupation.setCompoundDrawables(null,null, img,null);
+        Drawable img = this.getResources().getDrawable(R.drawable.chevron_with_circle_up);
+        img.setBounds(0, 0, 120, 120);
+        tvSelectOccupation.setCompoundDrawables(null, null, img, null);
         PopupWindow popUp = popupOccupation(v);
         popUp.showAsDropDown(v, 0, 10);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @OnClick(R.id.tvSelectExp)
+    @OnClick(R.id.tvSelectExperience)
     public void onExpClick(View v) {
-        Drawable img = this.getResources().getDrawable( R.mipmap.chevron_with_circle_upxhdpi );
-        img.setBounds( 0, 0, 120, 120 );
-        tvSelectExp.setCompoundDrawables(null,null, img,null);
+        Drawable img = this.getResources().getDrawable(R.drawable.chevron_with_circle_up);
+        img.setBounds(0, 0, 120, 120);
+        tvSelectExperience.setCompoundDrawables(null, null, img, null);
         PopupWindow popUp = popupWindowExp();
         popUp.showAsDropDown(v, 0, 10);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @OnClick(R.id.tvSelectQualification)
-    public void onQualificationClick(View v) {
-        Drawable img = this.getResources().getDrawable( R.mipmap.chevron_with_circle_upxhdpi );
-        img.setBounds( 0, 0, 120, 120 );
-        tvSelectQualification.setCompoundDrawables(null,null,img,null);
-
-        PopupWindow popUp = popupWindowQualification();
-        popUp.showAsDropDown(v, 0, 10);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @OnClick(R.id.tvSelectAreaQualification)
-    public void onAreaClick(View v) {
-        Drawable img = this.getResources().getDrawable( R.mipmap.chevron_with_circle_upxhdpi );
-        img.setBounds( 0, 0, 120, 120 );
-        tvSelectAreaQualification.setCompoundDrawables(null,null, img,null);
-        PopupWindow popUp = popupWindowArea();
-        popUp.showAsDropDown(v, 0, 10);
-    }
-
-    // initialize a pop up window type
     private PopupWindow popupOccupation(View view) {
-
-        popupWindowOccupation = new PopupWindow(this);
-        popupWindowOccupation.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.reactangle_cert));
+        popupWindowOccp = new PopupWindow(this);
+        popupWindowOccp.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.reactangle_cert));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_dropdown_items,
                 getResources().getStringArray(R.array.occupation_arrays));
-        popupWindowOccupation.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        popupWindowOccp.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onDismiss() {
-                Drawable img = getDrawable( R.mipmap.chevron_with_circle_downxhdpi );
-                img.setBounds( 0, 0, 120, 120 );
-                tvSelectOccupation.setCompoundDrawables(null,null,img,null);
+                Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
+                img.setBounds(0, 0, 120, 120);
+                tvSelectOccupation.setCompoundDrawables(null, null, img, null);
 
             }
         });
         ListView listViewSort = new ListView(this);
         listViewSort.setDivider(null);
         listViewSort.setAdapter(adapter);
-        listViewSort.setOnItemClickListener(onItemClickListener());
-        setPopWidth(popupWindowOccupation);
-        popupWindowOccupation.setFocusable(true);
-        popupWindowOccupation.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        popupWindowOccupation.setContentView(listViewSort);
-
-        return popupWindowOccupation;
-    }
-
-    private AdapterView.OnItemClickListener onItemClickListener() {
-        return new AdapterView.OnItemClickListener() {
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        listViewSort.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
-                Drawable img = getDrawable( R.mipmap.chevron_with_circle_downxhdpi );
-                img.setBounds( 0, 0, 120, 120 );
-                tvSelectOccupation.setText(selectedOccupation[position]);
-                tvSelectOccupation.setCompoundDrawables(null,null,img,null);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
+                img.setBounds(0, 0, 120, 120);
+                tvSelectOccupation.setText(mSelectedOccp = occupations[position]);
+                tvSelectOccupation.setCompoundDrawables(null, null, img, null);
 
-                if (popupWindowOccupation != null) {
-                    popupWindowOccupation.dismiss();
+                if (popupWindowOccp != null) {
+                    popupWindowOccp.dismiss();
                 }
             }
-        };
+        });
+        setPopWidth(popupWindowOccp);
+        popupWindowOccp.setFocusable(true);
+        popupWindowOccp.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popupWindowOccp.setContentView(listViewSort);
+
+        return popupWindowOccp;
     }
 
-    // initialize a pop up window type
     private PopupWindow popupWindowExp() {
         popupWindowExp = new PopupWindow(this);
         popupWindowExp.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.reactangle_cert));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_dropdown_items,
-                getResources().getStringArray(R.array.exp_arrays));
+                getResources().getStringArray(R.array.experience_arrays));
         ListView listViewSort = new ListView(this);
         listViewSort.setDivider(null);
         listViewSort.setAdapter(adapter);
-        listViewSort.setOnItemClickListener(onItemClickListenerExp());
+        listViewSort.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
+                img.setBounds(0, 0, 120, 120);
+                tvSelectExperience.setText(mSelectedExp = experiences[position]);
+                tvSelectExperience.setCompoundDrawables(null, null, img, null);
+
+                if (popupWindowExp != null) {
+                    popupWindowExp.dismiss();
+                }
+            }
+        });
         setPopWidth(popupWindowExp);
         popupWindowExp.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onDismiss() {
-                Drawable img = getDrawable( R.mipmap.chevron_with_circle_downxhdpi );
-                img.setBounds( 0, 0, 120, 120 );
-                tvSelectExp.setCompoundDrawables(null,null,img,null);
+                Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
+                img.setBounds(0, 0, 120, 120);
+                tvSelectExperience.setCompoundDrawables(null, null, img, null);
 
             }
         });
@@ -613,116 +373,6 @@ mStorage = FirebaseStorage.getInstance().getReference();
         popupWindowExp.setContentView(listViewSort);
 
         return popupWindowExp;
-    }
-
-    private AdapterView.OnItemClickListener onItemClickListenerExp() {
-        return new AdapterView.OnItemClickListener() {
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
-                Drawable img = getDrawable( R.mipmap.chevron_with_circle_downxhdpi );
-                img.setBounds( 0, 0, 120, 120 );
-                tvSelectExp.setText(selectedExp[position]);
-                tvSelectExp.setCompoundDrawables(null,null, img,null);
-
-                if (popupWindowExp != null) {
-                    popupWindowExp.dismiss();
-                }
-            }
-        };
-    }
-
-    // initialize a pop up window type
-    private PopupWindow popupWindowQualification() {
-        popupWindowQualification = new PopupWindow(this);
-        popupWindowQualification.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.reactangle_cert));
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_dropdown_items,
-                getResources().getStringArray(R.array.qualification_arrays));
-        ListView listViewSort = new ListView(this);
-        listViewSort.setDivider(null);
-        listViewSort.setAdapter(adapter);
-        listViewSort.setOnItemClickListener(onItemClickListenerQualification());
-        setPopWidth(popupWindowQualification);
-        popupWindowQualification.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onDismiss() {
-                Drawable img = getDrawable( R.mipmap.chevron_with_circle_downxhdpi );
-                img.setBounds( 0, 0, 120, 120 );
-                tvSelectQualification.setCompoundDrawables(null,null,img,null);
-
-            }
-        });
-        popupWindowQualification.setFocusable(true);
-        popupWindowQualification.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        popupWindowQualification.setContentView(listViewSort);
-
-        return popupWindowQualification;
-    }
-
-    private AdapterView.OnItemClickListener onItemClickListenerQualification() {
-        return new AdapterView.OnItemClickListener() {
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
-                Drawable img = getDrawable( R.mipmap.chevron_with_circle_downxhdpi );
-                img.setBounds( 0, 0, 120, 120 );
-                tvSelectQualification.setText(selectedQualification[position]);
-                tvSelectQualification.setCompoundDrawables(null,null, img,null);
-
-                if (popupWindowQualification != null) {
-                    popupWindowQualification.dismiss();
-                }
-            }
-        };
-    }
-
-    // initialize a pop up window type
-    private PopupWindow popupWindowArea() {
-        popupWindowArea = new PopupWindow(this);
-        popupWindowArea.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.reactangle_cert));
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_dropdown_items,
-                getResources().getStringArray(R.array.area_arrays_for_grad));
-        ListView listViewSort = new ListView(this);
-        listViewSort.setDivider(null);
-        listViewSort.setAdapter(adapter);
-        listViewSort.setOnItemClickListener(onItemClickListenerArea());
-        setPopWidth(popupWindowArea);
-        popupWindowArea.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onDismiss() {
-                Drawable img = getDrawable( R.mipmap.chevron_with_circle_downxhdpi );
-                img.setBounds( 0, 0, 120, 120 );
-                tvSelectAreaQualification.setCompoundDrawables(null,null,img,null);
-
-            }
-        });
-        popupWindowArea.setFocusable(true);
-        popupWindowArea.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        popupWindowArea.setContentView(listViewSort);
-
-        return popupWindowArea;
-    }
-
-    private AdapterView.OnItemClickListener onItemClickListenerArea() {
-        return new AdapterView.OnItemClickListener() {
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
-                Drawable img = getDrawable( R.mipmap.chevron_with_circle_downxhdpi );
-                img.setBounds( 0, 0, 120, 120 );
-                tvSelectAreaQualification.setText(selectedArea[position]);
-                tvSelectAreaQualification.setCompoundDrawables(null,null, img,null);
-
-                if (popupWindowArea != null) {
-                    popupWindowArea.dismiss();
-                }
-            }
-        };
     }
 
     // Set Pop up width according to resolution
@@ -737,6 +387,7 @@ mStorage = FirebaseStorage.getInstance().getReference();
             popupWindow.setWidth(width - 100);
         }
     }
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));

@@ -2,26 +2,24 @@ package com.autohub.skln;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.autohub.skln.tutor.activity.TutorCategorySelect;
+import com.autohub.skln.tutor.activity.TutorLogin;
+import com.autohub.skln.tutor.activity.TutorOrStudent;
 import com.goodiebag.pinview.Pinview;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.hbb20.CountryCodePicker;
 
 import java.util.concurrent.TimeUnit;
@@ -30,6 +28,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import static com.autohub.skln.utills.AppConstants.KEY_ACCOUNT_TYPE;
+import static com.autohub.skln.utills.AppConstants.KEY_PHONE_NUMBER;
+import static com.autohub.skln.utills.AppConstants.TYPE_TUTOR;
+
 
 public class NumberVerificationActivity extends BaseActivity {
     @BindView(R.id.tvPhoneNumber)
@@ -45,9 +48,9 @@ public class NumberVerificationActivity extends BaseActivity {
     Button btnNext;
 
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-    private FirebaseAuth mFirebaseAuth;
 
     private String verificationId;
+
     private String countryCode;
     private String phoneNum;
 
@@ -61,10 +64,10 @@ public class NumberVerificationActivity extends BaseActivity {
         phoneNum = getIntent().getExtras().getString("phone_number");
 
         codePicker.setFullNumber(countryCode);
+        codePicker.setClickable(false);
+        codePicker.setFocusable(false);
         codePicker.setEnabled(false);
         tvPhoneNumber.setText(phoneNum);
-
-        mFirebaseAuth = FirebaseAuth.getInstance();
 
         setCallback();
 
@@ -87,43 +90,29 @@ public class NumberVerificationActivity extends BaseActivity {
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-                if (e instanceof FirebaseAuthInvalidCredentialsException) {
-
-                } else if (e instanceof FirebaseTooManyRequestsException) {
-
-                }
             }
 
             @Override
             public void onCodeSent(String id, PhoneAuthProvider.ForceResendingToken token) {
+                Toast.makeText(NumberVerificationActivity.this, R.string.sent, Toast.LENGTH_SHORT).show();
                 verificationId = id;
             }
         };
-
     }
-    /*The below method is for to validate the user the contact number is either valid or not*/
 
     @OnClick(R.id.btnNext)
     public void onNextClick() {
-        /*The below method is for to validate the user from the client*/
-
         if (pinView.getValue().length() != pinView.getPinLength()) {
-            Snackbar snackbar;
-            snackbar = Snackbar.make((findViewById(android.R.id.content)), getString(R.string.enter_correct_otp), Snackbar.LENGTH_LONG);
-            View view = snackbar.getView();
-            TextView textView = view.findViewById(android.support.design.R.id.snackbar_text);
-            view.setBackgroundColor(Color.parseColor("#ba0505"));
-            textView.setTextColor(Color.WHITE);
-            snackbar.show();
+            showSnackError(R.string.enter_correct_otp);
             return;
         }
+
         showLoading();
-        /*The below Code is for to validate the user from the server side*/
+
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, pinView.getValue());
         signInWithPhoneAuthCredential(credential);
     }
 
-    /*This is resend function is for sending the sms to the Contact number */
     @OnClick(R.id.btnResendCode)
     public void onResendClick() {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -135,21 +124,38 @@ public class NumberVerificationActivity extends BaseActivity {
         Toast.makeText(this, R.string.sending, Toast.LENGTH_SHORT).show();
     }
 
-    // Verifying OTP
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        mFirebaseAuth.signInWithCredential(credential)
+        getFirebaseAuth().signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            hideLoading();
-                            getAppPreferenceHelper().setTutorId(task.getResult().getUser().getUid());
-                            getAppPreferenceHelper().setTutorPhoneNumber(countryCode + phoneNum);
-                            startActivity(new Intent(NumberVerificationActivity.this, TutorCategorySelect.class));
+                            getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    hideLoading();
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot snapshot = task.getResult();
+                                        String phoneNumber = snapshot.getString(KEY_PHONE_NUMBER);
+                                        String accountType = snapshot.getString(KEY_ACCOUNT_TYPE);
+
+                                        if (!TextUtils.isEmpty(phoneNumber) && phoneNumber.equals(countryCode + phoneNum) &&
+                                        !TextUtils.isEmpty(accountType) && accountType.equals(TYPE_TUTOR)) {
+                                            startActivity(new Intent(NumberVerificationActivity.this, TutorLogin.class));
+                                            finish();
+                                        }
+                                    }
+
+                                    getAppPreferenceHelper().setUserPhoneNumber(countryCode + phoneNum);
+                                    startActivity(new Intent(NumberVerificationActivity.this, TutorOrStudent.class));
+                                    finish();
+                                }
+                            });
                         } else {
-                            if (task.getException() instanceof
-                                    FirebaseAuthInvalidCredentialsException) {
-                                hideLoading();
+                            if (task.getException() instanceof FirebaseAuthException) {
+                                showSnackError(task.getException().getMessage());
+                            } else {
+                                showSnackError(getString(R.string.error));
                             }
                         }
                     }

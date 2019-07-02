@@ -3,270 +3,289 @@ package com.autohub.skln.tutor.activity;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static com.autohub.skln.utills.AppConstants.BOARD_CBSE;
+import static com.autohub.skln.utills.AppConstants.BOARD_ICSE;
+import static com.autohub.skln.utills.AppConstants.BOARD_STATE;
+import static com.autohub.skln.utills.AppConstants.KEY_AREA_QUALIFICATION;
+import static com.autohub.skln.utills.AppConstants.KEY_BOARD;
+import static com.autohub.skln.utills.AppConstants.KEY_QUALIFICATION;
+
 public class TutorTargetBoardSelect extends BaseActivity {
-    /*Referencing the widgets through the bind view API*/
-    /*Start*/
-    @BindView(R.id.tvSelectExperince)
-    TextView tvSelectExperince;
 
-    @BindView(R.id.tvSelectWorkingHours)
-    TextView tvSelectWorkingHours;
+    @BindView(R.id.tvSelectQualification)
+    TextView tvSelectQualification;
 
-    @BindView(R.id.tvStartingOut)
-    TextView tvStartingOut;
+    @BindView(R.id.tvSelectAreaQualification)
+    TextView tvSelectAreaQualification;
 
-    @BindView(R.id.tvIntermediate)
-    TextView tvIntermediate;
+    @BindView(R.id.radioCBSE)
+    RadioButton radioCBSE;
 
-    @BindView(R.id.tvExpert)
-    TextView tvExpert;
+    @BindView(R.id.radioICSE)
+    RadioButton radioICSE;
 
-    @BindView(R.id.tvmoreThan30Hour)
-    TextView tvmoreThan30Hour;
+    @BindView(R.id.radioState)
+    RadioButton radioState;
 
-    @BindView(R.id.tvlessThan30Hour)
-    TextView tvlessThan30Hour;
+    @BindView(R.id.board_group)
+    RadioGroup radioGroupBoards;
 
-    @BindView(R.id.tvasWhenNeeded)
-    TextView tvasWhenNeeded;
+    private String[] qualifications;
+    private String[] areasQualifies;
 
-    @BindView(R.id.tvCBSE)
-    TextView tvCBSE;
+    private String mSelectedTargetBoard = "";
+    private String mSelectedQualification = "";
+    private String mSelectedArea = "";
 
-    @BindView(R.id.tvICSE)
-    TextView tvICSE;
+    private PopupWindow popupWindowQualification;
+    private PopupWindow popupWindowArea;
 
-    @BindView(R.id.tvStateBoard)
-    TextView tvStateBoard;
-
-    @BindView(R.id.LLExpDropdown)
-    LinearLayout LLExpDropdown;
-
-    @BindView(R.id.LLWorkingHours)
-    LinearLayout LLWorkingHours;
-
-    @BindView(R.id.LLStartingOut)
-    LinearLayout LLStartingOut;
-
-    @BindView(R.id.LLIntermediate)
-    LinearLayout LLIntermediate;
-
-    @BindView(R.id.LLExpert)
-    LinearLayout LLExpert;
-    /*end*/
-    /*Declaration and initialization of Variables*/
-    private String board = "";
-    private String experince = "";
-    private String workingHour = "";
+    private int width;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor_target_board);
         ButterKnife.bind(this);
+
+        qualifications = getResources().getStringArray(R.array.qualification_arrays);
+//        areasQualifies = getResources().getStringArray(R.array.area_qualifi_arrays);
     }
 
-    /*The below method is for to validate the user to select the board, experience and working hour then store the data
-    * in the shared preferences
-    * */
     @OnClick(R.id.btnNext)
     public void onNextClick() {
-        if (board.equals("")) {
-            Snackbar snackbar;
-            snackbar = Snackbar.make((findViewById(android.R.id.content)), getString(R.string.select_board_message), Snackbar.LENGTH_LONG);
-            View view = snackbar.getView();
-            TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-            view.setBackgroundColor(Color.parseColor("#ba0505"));
-            textView.setTextColor(Color.WHITE);
-            snackbar.show();
+        if (TextUtils.isEmpty(mSelectedTargetBoard)) {
+            showSnackError(R.string.select_board_message);
             return;
         }
-        if (experince.equals("")) {
-            Snackbar snackbar;
-            snackbar = Snackbar.make((findViewById(android.R.id.content)), getString(R.string.select_exp_message), Snackbar.LENGTH_LONG);
-            View view = snackbar.getView();
-            TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-            view.setBackgroundColor(Color.parseColor("#ba0505"));
-            textView.setTextColor(Color.WHITE);
-            snackbar.show();
-            return;
-        }
-        if (workingHour.equals("")) {
-            Snackbar snackbar;
-            snackbar = Snackbar.make((findViewById(android.R.id.content)), getString(R.string.select_hour_message), Snackbar.LENGTH_LONG);
-            View view = snackbar.getView();
-            TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-            view.setBackgroundColor(Color.parseColor("#ba0505"));
-            textView.setTextColor(Color.WHITE);
-            snackbar.show();
-            return;
-        }
-        getAppPreferenceHelper().setUserScreenSeven(board, experince, workingHour);
 
-        startActivity(new Intent(this, TutorBiodata.class));
+        if (TextUtils.isEmpty(mSelectedQualification)) {
+            showSnackError(R.string.select_qualification);
+            return;
+        }
+
+        if (TextUtils.isEmpty(mSelectedArea)) {
+            showSnackError(R.string.select_area_qualification);
+            return;
+        }
+
+//        getAppPreferenceHelper().setTutorTargetedBoard(mSelectedTargetBoard, tvSelectQualification.getText().toString(),
+//                tvSelectAreaQualification.getText().toString());
+//
+//        startActivity(new Intent(this, TutorBiodata.class));
+
+        showLoading();
+
+        Map<String, Object> user = new HashMap<>();
+        user.put(KEY_BOARD, mSelectedTargetBoard);
+        user.put(KEY_QUALIFICATION, mSelectedQualification);
+        user.put(KEY_AREA_QUALIFICATION, mSelectedArea);
+
+        getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        hideLoading();
+                        startActivity(new Intent(TutorTargetBoardSelect.this, TutorBiodata.class));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        hideLoading();
+                        showSnackError(e.getMessage());
+                    }
+                });
     }
-    /*The below method is to select the board and deselect the another ones*/
-    @OnClick(R.id.tvCBSE)
+
+    @OnClick(R.id.rlCBSE)
+    public void onRlCBSEClick() {
+        radioGroupBoards.check(R.id.radioCBSE);
+    }
+
+    @OnClick(R.id.rlICSE)
+    public void onRlICSEClick() {
+        radioGroupBoards.check(R.id.radioICSE);
+    }
+
+    @OnClick(R.id.rlSTATE)
+    public void onRlStateClick() {
+        radioGroupBoards.check(R.id.radioState);
+    }
+
+    @OnClick(R.id.radioCBSE)
     public void onCBSEClick() {
-        board = "CBSE";
-        tvCBSE.setBackgroundResource(R.drawable.reactangle_cert_black);
-        tvCBSE.setTextColor(Color.parseColor("#ffffff"));
-        tvICSE.setBackgroundResource(R.drawable.reactangle_cert);
-        tvICSE.setTextColor(Color.parseColor("#000000"));
-        tvStateBoard.setBackgroundResource(R.drawable.reactangle_cert);
-        tvStateBoard.setTextColor(Color.parseColor("#000000"));
+        mSelectedTargetBoard = BOARD_CBSE;
     }
-    /*The below method is to select the board and deselect the another ones*/
-    @OnClick(R.id.tvICSE)
+
+    @OnClick(R.id.radioICSE)
     public void onICSEClick() {
-        board = "ICSE";
-        tvCBSE.setBackgroundResource(R.drawable.reactangle_cert);
-        tvCBSE.setTextColor(Color.parseColor("#000000"));
-        tvICSE.setBackgroundResource(R.drawable.reactangle_cert_black);
-        tvICSE.setTextColor(Color.parseColor("#ffffff"));
-        tvStateBoard.setBackgroundResource(R.drawable.reactangle_cert);
-        tvStateBoard.setTextColor(Color.parseColor("#000000"));
+        mSelectedTargetBoard = BOARD_ICSE;
     }
-    /*The below method is to select the board and deselect the another ones*/
-    @OnClick(R.id.tvStateBoard)
-    public void onStateBoardClick() {
-        board = "State Board";
-        tvCBSE.setBackgroundResource(R.drawable.reactangle_cert);
+
+    @OnClick(R.id.radioState)
+    public void onStateClick() {
+        mSelectedTargetBoard = BOARD_STATE;
+        /*tvCBSE.setBackgroundResource(R.drawable.reactangle_cert);
         tvCBSE.setTextColor(Color.parseColor("#000000"));
-        tvICSE.setBackgroundResource(R.drawable.reactangle_cert);
-        tvICSE.setTextColor(Color.parseColor("#000000"));
-        tvStateBoard.setBackgroundResource(R.drawable.reactangle_cert_black);
-        tvStateBoard.setTextColor(Color.parseColor("#ffffff"));
+        radioICSE.setBackgroundResource(R.drawable.reactangle_cert);
+        radioICSE.setTextColor(Color.parseColor("#000000"));
+        radioState.setBackgroundResource(R.drawable.reactangle_cert_black);
+        radioState.setTextColor(Color.parseColor("#ffffff"));*/
     }
-    /*Show drop down menu*/
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @OnClick(R.id.tvSelectExperince)
-    public void onExpClick() {
-        if (!LLExpDropdown.isShown()) {
-            /*Setting responsive icon*/
-            tvSelectExperince.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.chevron_with_circle_upxhdpi, 0);
 
-            LLExpDropdown.setVisibility(View.VISIBLE);
-        } else {
-            LLExpDropdown.setVisibility(View.GONE);
-            /*Setting responsive icon*/
-            tvSelectExperince.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.chevron_with_circle_downxhdpi, 0);
+    @OnClick(R.id.tvSelectQualification)
+    public void onQualificationClick(View v) {
+        Drawable img = this.getResources().getDrawable(R.drawable.chevron_with_circle_up);
+        img.setBounds(0, 0, 120, 120);
+        tvSelectQualification.setCompoundDrawables(null, null, img, null);
+        PopupWindow popUp = popupWindowQualification();
+        popUp.showAsDropDown(v, 0, 10);
+    }
 
+    @OnClick(R.id.tvSelectAreaQualification)
+    public void onAreaClick(View v) {
+        if (TextUtils.isEmpty(mSelectedQualification) || mSelectedQualification.equals(qualifications[2])) {
+            showSnackError(R.string.select_qualification_first);
+            return;
         }
 
+        Drawable img = this.getResources().getDrawable(R.drawable.chevron_with_circle_up);
+        img.setBounds(0, 0, 120, 120);
+        tvSelectAreaQualification.setCompoundDrawables(null, null, img, null);
+        PopupWindow popUp = popupWindowArea();
+        popUp.showAsDropDown(v, 0, 10);
     }
-    /*Show drop down menu*/
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @OnClick(R.id.tvSelectWorkingHours)
-    public void onHoursClick() {
-        if (!LLWorkingHours.isShown()) {
-            LLWorkingHours.setVisibility(View.VISIBLE);
-            /*Setting responsive icon*/
-            tvSelectWorkingHours.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.chevron_with_circle_upxhdpi, 0);
 
+    private PopupWindow popupWindowQualification() {
+        popupWindowQualification = new PopupWindow(this);
+        popupWindowQualification.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.reactangle_cert));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_dropdown_items,
+                getResources().getStringArray(R.array.qualification_arrays));
+        ListView listViewSort = new ListView(this);
+        listViewSort.setDivider(null);
+        listViewSort.setAdapter(adapter);
+        listViewSort.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
+                img.setBounds(0, 0, 120, 120);
+                tvSelectQualification.setText(mSelectedQualification = qualifications[position]);
+                tvSelectQualification.setCompoundDrawables(null, null, img, null);
+
+                if (mSelectedQualification.equals(qualifications[0]))
+                    areasQualifies = getResources().getStringArray(R.array.area_qualifi_arrays_1);
+                else if (mSelectedQualification.equals(qualifications[1]))
+                    areasQualifies = getResources().getStringArray(R.array.area_qualifi_arrays_2);
+                else if (mSelectedQualification.equals(qualifications[2])) {
+                    tvSelectAreaQualification.setText(mSelectedArea = "N/A");
+                }
+
+                if (popupWindowQualification != null) {
+                    popupWindowQualification.dismiss();
+                }
+            }
+        });
+        setPopWidth(popupWindowQualification);
+        popupWindowQualification.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onDismiss() {
+                Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
+                img.setBounds(0, 0, 120, 120);
+                tvSelectQualification.setCompoundDrawables(null, null, img, null);
+
+            }
+        });
+        popupWindowQualification.setFocusable(true);
+        popupWindowQualification.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popupWindowQualification.setContentView(listViewSort);
+
+        return popupWindowQualification;
+    }
+
+    // initialize a pop up window type
+    private PopupWindow popupWindowArea() {
+        popupWindowArea = new PopupWindow(this);
+        popupWindowArea.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.reactangle_cert));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_dropdown_items, areasQualifies);
+        ListView listViewSort = new ListView(this);
+        listViewSort.setDivider(null);
+        listViewSort.setAdapter(adapter);
+        listViewSort.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
+                img.setBounds(0, 0, 120, 120);
+                tvSelectAreaQualification.setText(areasQualifies[position]);
+                tvSelectAreaQualification.setCompoundDrawables(null, null, img, null);
+
+                if (popupWindowArea != null) {
+                    popupWindowArea.dismiss();
+                }
+            }
+        });
+        setPopWidth(popupWindowArea);
+        popupWindowArea.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onDismiss() {
+                Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
+                img.setBounds(0, 0, 120, 120);
+                tvSelectAreaQualification.setCompoundDrawables(null, null, img, null);
+
+            }
+        });
+        popupWindowArea.setFocusable(true);
+        popupWindowArea.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popupWindowArea.setContentView(listViewSort);
+
+        return popupWindowArea;
+    }
+
+    private void setPopWidth(PopupWindow popupWindow) {
+        if (width == 1440) {
+            popupWindow.setWidth(width - 200);
+        } else if (width == 1080) {
+            popupWindow.setWidth(width - 150);
+        } else if (width == 720) {
+            popupWindow.setWidth(width - 100);
         } else {
-            LLWorkingHours.setVisibility(View.GONE);
-            /*Setting responsive icon*/
-            tvSelectWorkingHours.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.chevron_with_circle_downxhdpi, 0);
-
+            popupWindow.setWidth(width - 100);
         }
-
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @OnClick(R.id.LLStartingOut)
-    public void onStartingOutClick() {
-        experince = tvStartingOut.getText().toString();
-        /*Setting responsive icon*/
-
-        tvSelectExperince.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.chevron_with_circle_downxhdpi, 0);
-
-        tvSelectExperince.setText(tvStartingOut.getText().toString());
-        LLExpDropdown.setVisibility(View.GONE);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @OnClick(R.id.LLIntermediate)
-    public void onIntermediateClick() {
-        experince = tvIntermediate.getText().toString();
-        /*Setting responsive icon*/
-
-        tvSelectExperince.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.chevron_with_circle_downxhdpi, 0);
-
-        tvSelectExperince.setText(tvIntermediate.getText().toString());
-        LLExpDropdown.setVisibility(View.GONE);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @OnClick(R.id.LLExpert)
-    public void onExpertClick() {
-        experince = tvExpert.getText().toString();
-        /*Setting responsive icon*/
-        tvSelectExperince.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.chevron_with_circle_downxhdpi, 0);
-
-        tvSelectExperince.setText(tvExpert.getText().toString());
-        LLExpDropdown.setVisibility(View.GONE);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @OnClick(R.id.tvmoreThan30Hour)
-    public void onMoreClick() {
-        workingHour = tvmoreThan30Hour.getText().toString();
-                   /*Setting responsive icon*/
-
-        tvSelectWorkingHours.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.chevron_with_circle_downxhdpi, 0);
-
-        tvSelectWorkingHours.setText(tvmoreThan30Hour.getText().toString());
-        LLWorkingHours.setVisibility(View.GONE);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @OnClick(R.id.tvlessThan30Hour)
-    public void onLessClick() {
-        workingHour = tvlessThan30Hour.getText().toString();
-        /*Setting responsive icon*/
-        tvSelectWorkingHours.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.chevron_with_circle_downxhdpi, 0);
-
-        tvSelectWorkingHours.setText(tvlessThan30Hour.getText().toString());
-        LLWorkingHours.setVisibility(View.GONE);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @OnClick(R.id.tvasWhenNeeded)
-    public void onNeededClick() {
-        workingHour = tvasWhenNeeded.getText().toString();
-        /*Setting responsive icon*/
-        tvSelectWorkingHours.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.chevron_with_circle_downxhdpi, 0);
-
-        tvSelectWorkingHours.setText(tvasWhenNeeded.getText().toString());
-        LLWorkingHours.setVisibility(View.GONE);
-    }
-    /*The below function is for Same font to the whole Activity*/
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));

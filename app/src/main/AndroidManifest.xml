@@ -25,17 +25,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".tutor.activity.LoginVerification"></activity>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".tutor.activity.LoginForTutor"
+            android:name=".tutor.activity.TutorLogin"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".tutor.activity.Screen5ForSenior"
+            android:name=".tutor.activity.TutorSubjectSelect_Senior"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -62,10 +61,6 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".tutor.activity.TutorClassSelect"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".tutor.activity.Screen7ForHobby"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity

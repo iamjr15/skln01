@@ -10,297 +10,229 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="10dp"
         android:text="@string/sign_up" />
 
     <TextView
-        android:id="@+id/tvAcademics"
-        style="@style/academics2"
-        android:layout_width="189dp"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
+        android:id="@+id/tvPersonalVerification"
+        style="@style/signup_second_title_style"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvSignup"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/reactangle_circle_style"
+        android:layout_marginTop="23dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="3dp"
+        android:paddingStart="28dp"
+        android:paddingEnd="29dp"
+        android:background="@drawable/button_background_black"
         android:gravity="center"
-        android:layout_marginBottom="30dp"
-        android:text="@string/academicss" />
+        android:text="@string/personal_verification" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/pbSignupProgress"
+        android:layout_width="match_parent"
+        android:layout_height="9dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_below="@id/tvPersonalVerification"
+        android:progressDrawable="@drawable/progress_drawable"
+        android:max="8"
+        android:progress="6"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvAcademics"
-        android:layout_margin="10dp"
-        android:background="@drawable/reactangle_circle_style"
-        android:fillViewport="true">
+        android:layout_below="@id/pbSignupProgress"
+        android:layout_margin="12dp"
+        android:fillViewport="true" >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content" >
 
             <TextView
-                android:id="@+id/tvPersonalVerification"
+                android:id="@+id/tvSelectTargetBoard"
                 style="@style/signup_general_hint_style"
-                android:layout_width="280dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="31dp"
                 android:gravity="center"
                 android:text="@string/select_board" />
+            
+            <RadioGroup
+                android:id="@+id/board_group"
+                android:layout_width="match_parent"
+                android:layout_height="148dp"
+                android:layout_below="@+id/tvSelectTargetBoard"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal" >
 
+                <RelativeLayout
+                    android:id="@+id/rlCBSE"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/border_round_rect" >
+
+                    <TextView
+                        style="@style/title_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="13dp"
+                        android:text="@string/cbse" />
+                    <RadioButton
+                        android:id="@+id/radioCBSE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="end"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlICSE"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/border_round_rect" >
+
+                    <TextView
+                        style="@style/title_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="13dp"
+                        android:text="@string/icse" />
+                    <RadioButton
+                        android:id="@+id/radioICSE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="end"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlSTATE"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/border_round_rect" >
+
+                    <TextView
+                        style="@style/title_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="13dp"
+                        android:text="@string/state_board" />
+                    <RadioButton
+                        android:id="@+id/radioState"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="end"/>
+                </RelativeLayout>
+
+            </RadioGroup>
 
             <TextView
-                android:id="@+id/tvCBSE"
-                style="@style/signup_general_hint_style"
-                android:layout_width="263dp"
-                android:layout_height="50dp"
-                android:layout_below="@+id/tvPersonalVerification"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/reactangle_cert"
-                android:gravity="center"
-                android:text="@string/cbse" />
-
-
-            <TextView
-                android:id="@+id/tvICSE"
-                style="@style/signup_general_hint_style"
-                android:layout_width="263dp"
-                android:layout_height="50dp"
-                android:layout_below="@+id/tvCBSE"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/reactangle_cert"
-                android:gravity="center"
-                android:text="@string/icse" />
-
-            <TextView
-                android:id="@+id/tvStateBoard"
-                style="@style/signup_general_hint_style"
-                android:layout_width="263dp"
-                android:layout_height="50dp"
-                android:layout_below="@+id/tvICSE"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/reactangle_cert"
-                android:gravity="center"
-                android:text="@string/state_board"
-                android:textAllCaps="true" />
-
-            <TextView
-                android:id="@+id/SelectExp"
-                style="@style/select_you_exp"
-                android:layout_width="263dp"
-                android:layout_height="50dp"
-                android:layout_below="@+id/tvStateBoard"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:gravity="center"
-                android:text="@string/select_exp" />
-
-            <TextView
-                android:id="@+id/tvSelectExperince"
-                style="@style/select_you_exp_"
-                android:layout_width="320dp"
-                android:layout_height="52dp"
-                android:layout_below="@+id/SelectExp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/reactangle_cert"
-                android:drawableRight="@mipmap/chevron_with_circle_downxhdpi"
-                android:gravity="center"
-                android:paddingStart="20dp"
-                android:paddingLeft="20dp"
-                android:paddingEnd="10dp"
-                android:paddingRight="10dp"
-                android:text="@string/select_exp_"
-                tools:ignore="RtlSymmetry" />
-
-            <LinearLayout
-                android:id="@+id/LLExpDropdown"
+                android:id="@+id/tvQualification"
+                style="@style/whats_you"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvSelectExperince"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:id="@+id/LLStartingOut"
-                    android:layout_width="300dp"
-                    android:layout_height="52dp"
-                    android:background="@drawable/reactangle_cert"
-                    android:orientation="vertical"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:id="@+id/tvStartingOut"
-                        style="@style/starting_o"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/starting_out" />
-
-                    <TextView
-                        style="@style/one_three_years_e"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/one_three_years_e" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/LLIntermediate"
-                    android:layout_width="300dp"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/reactangle_cert"
-                    android:orientation="vertical"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:id="@+id/tvIntermediate"
-                        style="@style/starting_o"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/intermediate" />
-
-                    <TextView
-                        style="@style/one_three_years_e"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/four_ten_years_e" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/LLExpert"
-                    android:layout_width="300dp"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/reactangle_cert"
-                    android:orientation="vertical"
-                    tools:ignore="UselessParent">
-
-                    <TextView
-                        android:id="@+id/tvExpert"
-                        style="@style/starting_o"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/expert" />
-
-                    <TextView
-                        style="@style/one_three_years_e"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/eleven_year_e" />
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_below="@id/board_group"
+                android:layout_marginStart="15dp"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="43dp"
+                android:text="@string/select_qualification" />
 
             <TextView
-                android:id="@+id/howManyHours"
-                style="@style/how_many_h"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/LLExpDropdown"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:gravity="center"
-                android:text="@string/how_many_hours" />
-
-            <TextView
-                android:id="@+id/tvSelectWorkingHours"
-                style="@style/select_you_exp_"
-                android:layout_width="320dp"
-                android:layout_height="52dp"
-                android:layout_below="@+id/howManyHours"
-                android:layout_centerHorizontal="true"
+                android:id="@+id/tvSelectQualification"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/tvQualification"
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/reactangle_cert"
-                android:drawableRight="@mipmap/chevron_with_circle_downxhdpi"
-                android:gravity="center"
-                android:paddingStart="20dp"
-                android:paddingLeft="20dp"
+                android:background="@drawable/border_round_rect"
+                android:drawableEnd="@drawable/chevron_with_circle_down"
                 android:paddingEnd="10dp"
-                android:paddingRight="10dp"
-                android:text="@string/select_working_hours"
+                android:gravity="start|center"
+                android:paddingStart="20dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:text="@string/hint_select_qualification"
                 tools:ignore="RtlSymmetry" />
 
-            <LinearLayout
-                android:id="@+id/LLWorkingHours"
+            <TextView
+                android:id="@+id/tvAreaQualification"
+                style="@style/whats_you"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvSelectWorkingHours"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:layout_below="@+id/tvSelectQualification"
+                android:layout_marginStart="15dp"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"
+                android:text="@string/select_area_qualification" />
 
-                <TextView
-                    android:id="@+id/tvmoreThan30Hour"
-                    style="@style/more_than_"
-                    android:layout_width="300dp"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/reactangle_cert"
-                    android:gravity="center"
-                    android:text="@string/more_than_30_hour"
-                    tools:ignore="RtlSymmetry" />
+            <TextView
+                android:id="@+id/tvSelectAreaQualification"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/tvAreaQualification"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/border_round_rect"
+                android:drawableEnd="@drawable/chevron_with_circle_down"
+                android:gravity="start|center"
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
+                android:text="@string/hint_select_area_qualification"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tvlessThan30Hour"
-                    style="@style/more_than_"
-                    android:layout_width="300dp"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/reactangle_cert"
-                    android:gravity="center"
-                    android:text="@string/less_than_30_hour"
-                    tools:ignore="RtlSymmetry" />
-
-                <TextView
-                    android:id="@+id/tvasWhenNeeded"
-                    style="@style/more_than_"
-                    android:layout_width="300dp"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/reactangle_cert"
-                    android:gravity="center"
-                    android:text="@string/as_when_needed"
-                    tools:ignore="RtlSymmetry" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/btnNext"
-                style="@style/next"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_below="@+id/LLWorkingHours"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/reactangle_circle_style"
-                android:text="@string/next"
-                android:textAllCaps="false" />
         </RelativeLayout>
     </ScrollView>
+
+    <ImageButton
+        android:id="@+id/btnNext"
+        style="@style/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="26dp"
+        android:layout_marginEnd="27dp"
+        android:background="@drawable/next"
+        android:contentDescription="@string/next" />
 
 </RelativeLayout>

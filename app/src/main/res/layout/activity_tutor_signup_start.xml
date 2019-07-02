@@ -28,7 +28,7 @@
         android:paddingEnd="29dp"
         android:background="@drawable/button_background_black"
         android:gravity="center"
-        android:text="@string/Tutor" />
+        android:text="@string/teacher" />
     
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
@@ -40,8 +40,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:layout_below="@id/tvTutor"
-        android:background="@drawable/border_progressbar"
-        android:progressDrawable="@drawable/green_drawable_progressbar"
+        android:progressDrawable="@drawable/progress_drawable"
         android:max="8"
         android:progress="1"/>
 
@@ -106,16 +105,18 @@
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/radioMale"
                     style="@style/sex"
-                    android:layout_width="0dp"
+                    android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
                     android:background="@drawable/border_rectangle"
                     android:text="@string/male" />
 
                 <RadioButton
+                    android:id="@+id/radioFemale"
                     style="@style/sex"
-                    android:layout_width="0dp"
+                    android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
                     android:background="@drawable/border_rectangle"

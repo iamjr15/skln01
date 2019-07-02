@@ -2,24 +2,79 @@ package com.autohub.skln.tutor.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static com.autohub.skln.utills.AppConstants.CLASS_1;
+import static com.autohub.skln.utills.AppConstants.CLASS_10;
+import static com.autohub.skln.utills.AppConstants.CLASS_11;
+import static com.autohub.skln.utills.AppConstants.CLASS_12;
+import static com.autohub.skln.utills.AppConstants.CLASS_2;
+import static com.autohub.skln.utills.AppConstants.CLASS_3;
+import static com.autohub.skln.utills.AppConstants.CLASS_4;
+import static com.autohub.skln.utills.AppConstants.CLASS_5;
+import static com.autohub.skln.utills.AppConstants.CLASS_6;
+import static com.autohub.skln.utills.AppConstants.CLASS_7;
+import static com.autohub.skln.utills.AppConstants.CLASS_8;
+import static com.autohub.skln.utills.AppConstants.CLASS_9;
+import static com.autohub.skln.utills.AppConstants.KEY_CLASSES;
+
 public class TutorClassSelect extends BaseActivity {
 
-    private ArrayList<String> stringArrayList;
+    @BindView(R.id.ivClass1)
+    ImageView ivClass1;
+
+    @BindView(R.id.ivClass2)
+    ImageView ivClass2;
+
+    @BindView(R.id.ivClass3)
+    ImageView ivClass3;
+
+    @BindView(R.id.ivClass4)
+    ImageView ivClass4;
+
+    @BindView(R.id.ivClass5)
+    ImageView ivClass5;
+
+    @BindView(R.id.ivClass6)
+    ImageView ivClass6;
+
+    @BindView(R.id.ivClass7)
+    ImageView ivClass7;
+
+    @BindView(R.id.ivClass8)
+    ImageView ivClass8;
+
+    @BindView(R.id.ivClass9)
+    ImageView ivClass9;
+
+    @BindView(R.id.ivClass10)
+    ImageView ivClass10;
+
+    @BindView(R.id.ivClass11)
+    ImageView ivClass11;
+
+    @BindView(R.id.ivClass12)
+    ImageView ivClass12;
+
+    private ArrayList<String> selectedClasses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,395 +82,310 @@ public class TutorClassSelect extends BaseActivity {
         setContentView(R.layout.activity_tutor_class_select);
         ButterKnife.bind(this);
 
-        stringArrayList = new ArrayList<>();
+        ivClass1.setEnabled(false);
+        ivClass2.setEnabled(false);
+        ivClass3.setEnabled(false);
+        ivClass4.setEnabled(false);
+        ivClass5.setEnabled(false);
+        ivClass6.setEnabled(false);
+        ivClass7.setEnabled(false);
+        ivClass8.setEnabled(false);
+        ivClass9.setEnabled(false);
+        ivClass10.setEnabled(false);
+        ivClass11.setEnabled(false);
+        ivClass12.setEnabled(false);
+
+        selectedClasses = new ArrayList<>();
     }
 
     @OnClick(R.id.btnNext)
     public void onNextClick() {
         StringBuilder stringBuilder = new StringBuilder();
-        int size = stringArrayList.size();
+        int size = selectedClasses.size();
         if (size > 0) {
-            stringBuilder.append(stringArrayList.get(0));
-            for (int i = 1; i < stringArrayList.size(); i++) {
-                stringBuilder.append(", ").append(stringArrayList.get(i));
+            stringBuilder.append(selectedClasses.get(0));
+            for (int i = 1; i < selectedClasses.size(); i++) {
+                stringBuilder.append(", ").append(selectedClasses.get(i));
             }
-
         }
+
         if (stringBuilder.length() == 0) {
-            Snackbar snackbar;
-            snackbar = Snackbar.make((findViewById(android.R.id.content)), getString(R.string.choose_classes), Snackbar.LENGTH_LONG);
-            View view = snackbar.getView();
-            TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-            view.setBackgroundColor(Color.parseColor("#ba0505"));
-            textView.setTextColor(Color.WHITE);
-            snackbar.show();
+            showSnackError(R.string.choose_classes);
             return;
         }
-        getAppPreferenceHelper().setScreenFour(stringBuilder.toString());
-        if(stringArrayList.contains("Class 11") || stringArrayList.contains("Class 12")){
-            startActivity(new Intent(this, Screen5ForSenior.class));
 
-        }else{
+        showLoading();
 
-        startActivity(new Intent(this, TutorSubjectSelect.class));
-        }
+        final boolean isSeniorClass = selectedClasses.contains(CLASS_11) || selectedClasses.contains(CLASS_12);
+        getAppPreferenceHelper().setSeniorTutor(isSeniorClass);
 
+        Map<String, Object> user = new HashMap<>();
+        user.put(KEY_CLASSES, stringBuilder.toString());
+
+        getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        hideLoading();
+                        if (isSeniorClass) {
+                            startActivity(new Intent(TutorClassSelect.this, TutorSubjectSelect_Senior.class));
+                        } else {
+                            startActivity(new Intent(TutorClassSelect.this, TutorSubjectSelect.class));
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        hideLoading();
+                        showSnackError(e.getMessage());
+                    }
+                });
     }
 
-    /*The below method is for select the class 4 deselect the 11 and 12 classes*/
-    @OnClick(R.id.LLClass4)
-    public void onClass4Click() {
-        if (!ivClass4.isShown()) {
-            if (!stringArrayList.contains("Class 4")) {
-                stringArrayList.add("Class 4");
-            }
-            ivClass4.setVisibility(View.VISIBLE);
-        } else {
-            stringArrayList.remove("Class 4");
-            ivClass4.setVisibility(View.GONE);
-        }
-        if(ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE){
-            showSnackbar();
-        }
-        if (stringArrayList.contains("Class 11")) {
-            stringArrayList.remove("Class 11");
-        }
-        if (stringArrayList.contains("Class 12")) {
-            stringArrayList.remove("Class 12");
-        }
-        ivClass11.setVisibility(View.GONE);
-        ivClass12.setVisibility(View.GONE);
-    }
-    /*The below method is for select the class 3 deselect the 11 and 12 classes*/
-    @OnClick(R.id.LLClass3)
-    public void onClass3Click() {
-        if (!ivClass3.isShown()) {
-            if (!stringArrayList.contains("Class 3")) {
-                stringArrayList.add("Class 3");
-            }
-            ivClass3.setVisibility(View.VISIBLE);
-        } else {
-            stringArrayList.remove("Class 3");
-            ivClass3.setVisibility(View.GONE);
-        }
-        if(ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE){
-            showSnackbar();
-        }
-        if (stringArrayList.contains("Class 11")) {
-            stringArrayList.remove("Class 11");
-        }
-        if (stringArrayList.contains("Class 12")) {
-            stringArrayList.remove("Class 12");
-        }
-        ivClass11.setVisibility(View.GONE);
-        ivClass12.setVisibility(View.GONE);
-    }
-    /*The below method is for select the class 2 deselect the 11 and 12 classes*/
-    @OnClick(R.id.LLClass2)
-    public void onClass2Click() {
-        if (!ivClass2.isShown()) {
-            if (!stringArrayList.contains("Class 2")) {
-                stringArrayList.add("Class 2");
-            }
-            ivClass2.setVisibility(View.VISIBLE);
-        } else {
-            stringArrayList.remove("Class 2");
-            ivClass2.setVisibility(View.GONE);
-        }
-        if(ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE){
-            showSnackbar();
-        }
-        if (stringArrayList.contains("Class 11")) {
-            stringArrayList.remove("Class 11");
-        }
-        if (stringArrayList.contains("Class 12")) {
-            stringArrayList.remove("Class 12");
-        }
-        ivClass11.setVisibility(View.GONE);
-        ivClass12.setVisibility(View.GONE);
-    }
-    /*The below method is for select the class 1 deselect the 11 and 12 classes*/
     @OnClick(R.id.LLClass1)
     public void onClass1Click() {
-        if (!ivClass1.isShown()) {
-            if (!stringArrayList.contains("Class 1")) {
-                stringArrayList.add("Class 1");
-            }
-            ivClass1.setVisibility(View.VISIBLE);
+        if (!ivClass1.isEnabled()) {
+            ivClass1.setEnabled(true);
+            selectedClasses.add(CLASS_1);
         } else {
-            stringArrayList.remove("Class 1");
-            ivClass1.setVisibility(View.GONE);
+            ivClass1.setEnabled(false);
+            selectedClasses.remove(CLASS_1);
         }
-        if(ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE){
-            showSnackbar();
+
+        if (ivClass11.isEnabled() || ivClass12.isEnabled()) {
+            showSnackError(R.string.class_selection_warning);
         }
-        if (stringArrayList.contains("Class 11")) {
-            stringArrayList.remove("Class 11");
-        }
-        if (stringArrayList.contains("Class 12")) {
-            stringArrayList.remove("Class 12");
-        }
-        ivClass11.setVisibility(View.GONE);
-        ivClass12.setVisibility(View.GONE);
+
+        selectedClasses.remove(CLASS_11);
+        selectedClasses.remove(CLASS_12);
+        ivClass11.setEnabled(false);
+        ivClass12.setEnabled(false);
     }
-        @OnClick(R.id.LLClass5)
-        public void onClass5Click() {
-        if (!ivClass5.isShown()) {
-            if (!stringArrayList.contains("Class 5")) {
-                stringArrayList.add("Class 5");
-            }
-            ivClass5.setVisibility(View.VISIBLE);
+
+    @OnClick(R.id.LLClass2)
+    public void onClass2Click() {
+        if (!ivClass2.isEnabled()) {
+            selectedClasses.add(CLASS_2);
+            ivClass2.setEnabled(true);
         } else {
-            stringArrayList.remove("Class 5");
-            ivClass5.setVisibility(View.GONE);
+            selectedClasses.remove(CLASS_2);
+            ivClass2.setEnabled(false);
         }
-            if(ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE){
-                showSnackbar();
-            }
-        if (stringArrayList.contains("Class 11")) {
-            stringArrayList.remove("Class 11");
+        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+            showSnackError(R.string.class_selection_warning);
         }
-        if (stringArrayList.contains("Class 12")) {
-            stringArrayList.remove("Class 12");
-        }
-        ivClass11.setVisibility(View.GONE);
-        ivClass12.setVisibility(View.GONE);
+        selectedClasses.remove(CLASS_11);
+        selectedClasses.remove(CLASS_12);
+        ivClass11.setEnabled(false);
+        ivClass12.setEnabled(false);
     }
-    /*The below method is for select the class 6 deselect the 11 and 12 classes*/
+
+    @OnClick(R.id.LLClass3)
+    public void onClass3Click() {
+        if (!ivClass3.isEnabled()) {
+            selectedClasses.add(CLASS_3);
+            ivClass3.setEnabled(true);
+        } else {
+            selectedClasses.remove(CLASS_3);
+            ivClass3.setEnabled(false);
+        }
+        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+            showSnackError(R.string.class_selection_warning);
+        }
+        selectedClasses.remove(CLASS_11);
+        selectedClasses.remove(CLASS_12);
+        ivClass11.setEnabled(false);
+        ivClass12.setEnabled(false);
+    }
+
+    @OnClick(R.id.LLClass4)
+    public void onClass4Click() {
+        if (!ivClass4.isEnabled()) {
+            selectedClasses.add(CLASS_4);
+            ivClass4.setEnabled(true);
+        } else {
+            selectedClasses.remove(CLASS_4);
+            ivClass4.setEnabled(false);
+        }
+        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+            showSnackError(R.string.class_selection_warning);
+        }
+        selectedClasses.remove(CLASS_11);
+        selectedClasses.remove(CLASS_12);
+        ivClass11.setEnabled(false);
+        ivClass12.setEnabled(false);
+    }
+
+    @OnClick(R.id.LLClass5)
+    public void onClass5Click() {
+        if (!ivClass5.isEnabled()) {
+            selectedClasses.add(CLASS_5);
+            ivClass5.setEnabled(true);
+        } else {
+            selectedClasses.remove(CLASS_5);
+            ivClass5.setEnabled(false);
+        }
+        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+            showSnackError(R.string.class_selection_warning);
+        }
+        selectedClasses.remove(CLASS_11);
+        selectedClasses.remove(CLASS_12);
+        ivClass11.setEnabled(false);
+        ivClass12.setEnabled(false);
+    }
 
     @OnClick(R.id.LLClass6)
     public void onClass6Click() {
-        if (!ivClass6.isShown()) {
-            if (!stringArrayList.contains("Class 6")) {
-                stringArrayList.add("Class 6");
-            }
-            ivClass6.setVisibility(View.VISIBLE);
+        if (!ivClass6.isEnabled()) {
+            selectedClasses.add(CLASS_6);
+            ivClass6.setEnabled(true);
         } else {
-            stringArrayList.remove("Class 6");
-            ivClass6.setVisibility(View.GONE);
+            selectedClasses.remove(CLASS_6);
+            ivClass6.setEnabled(false);
         }
-        if(ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE){
-            showSnackbar();
+        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+            showSnackError(R.string.class_selection_warning);
         }
-        if (stringArrayList.contains("Class 11")) {
-            stringArrayList.remove("Class 11");
-        }
-        if (stringArrayList.contains("Class 12")) {
-            stringArrayList.remove("Class 12");
-        }
-        ivClass11.setVisibility(View.GONE);
-        ivClass12.setVisibility(View.GONE);
+        selectedClasses.remove(CLASS_11);
+        selectedClasses.remove(CLASS_12);
+        ivClass11.setEnabled(false);
+        ivClass12.setEnabled(false);
     }
-    /*The below method is for select the class 7 deselect the 11 and 12 classes*/
+
     @OnClick(R.id.LLClass7)
     public void onClass7Click() {
-        if (!ivClass7.isShown()) {
-            if (!stringArrayList.contains("Class 7")) {
-                stringArrayList.add("Class 7");
-            }
-            ivClass7.setVisibility(View.VISIBLE);
+        if (!ivClass7.isEnabled()) {
+            selectedClasses.add(CLASS_7);
+            ivClass7.setEnabled(true);
         } else {
-            stringArrayList.remove("Class 7");
-            ivClass7.setVisibility(View.GONE);
+            selectedClasses.remove(CLASS_7);
+            ivClass7.setEnabled(false);
         }
-        if(ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE){
-            showSnackbar();
+        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+            showSnackError(R.string.class_selection_warning);
         }
-        if (stringArrayList.contains("Class 11")) {
-            stringArrayList.remove("Class 11");
-        }
-        if (stringArrayList.contains("Class 12")) {
-            stringArrayList.remove("Class 12");
-        }
-        ivClass11.setVisibility(View.GONE);
-        ivClass12.setVisibility(View.GONE);
+        selectedClasses.remove(CLASS_11);
+        selectedClasses.remove(CLASS_12);
+        ivClass11.setEnabled(false);
+        ivClass12.setEnabled(false);
     }
-    /*The below method is for select the class 8 deselect the 11 and 12 classes*/
+
     @OnClick(R.id.LLClass8)
     public void onClass8Click() {
-        if (!ivClass8.isShown()) {
-            if (!stringArrayList.contains("Class 8")) {
-                stringArrayList.add("Class 8");
-            }
-            ivClass8.setVisibility(View.VISIBLE);
+        if (!ivClass8.isEnabled()) {
+            selectedClasses.add(CLASS_8);
+            ivClass8.setEnabled(true);
         } else {
-            stringArrayList.remove("Class 8");
-            ivClass8.setVisibility(View.GONE);
+            selectedClasses.remove(CLASS_8);
+            ivClass8.setEnabled(false);
         }
-        if(ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE){
-            showSnackbar();
+        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+            showSnackError(R.string.class_selection_warning);
         }
-        if (stringArrayList.contains("Class 11")) {
-            stringArrayList.remove("Class 11");
-        }
-        if (stringArrayList.contains("Class 12")) {
-            stringArrayList.remove("Class 12");
-        }
-        ivClass11.setVisibility(View.GONE);
-        ivClass12.setVisibility(View.GONE);
+        selectedClasses.remove(CLASS_11);
+        selectedClasses.remove(CLASS_12);
+        ivClass11.setEnabled(false);
+        ivClass12.setEnabled(false);
     }
-    /*The below method is for select the class 9 deselect the 11 and 12 classes*/
+
     @OnClick(R.id.LLClass9)
     public void onClass9Click() {
-        if (!ivClass9.isShown()) {
-            if (!stringArrayList.contains("Class 9")) {
-                stringArrayList.add("Class 9");
-            }
-            ivClass9.setVisibility(View.VISIBLE);
+        if (!ivClass9.isEnabled()) {
+            selectedClasses.add(CLASS_9);
+            ivClass9.setEnabled(true);
         } else {
-            stringArrayList.remove("Class 9");
-            ivClass9.setVisibility(View.GONE);
+            selectedClasses.remove(CLASS_9);
+            ivClass9.setEnabled(false);
         }
-        if(ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE){
-            showSnackbar();
-        }
-
-        if (stringArrayList.contains("Class 11")) {
-            stringArrayList.remove("Class 11");
-        }
-        if (stringArrayList.contains("Class 12")) {
-            stringArrayList.remove("Class 12");
+        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+            showSnackError(R.string.class_selection_warning);
         }
 
-        ivClass11.setVisibility(View.GONE);
-        ivClass12.setVisibility(View.GONE);
+        selectedClasses.remove(CLASS_11);
+        selectedClasses.remove(CLASS_12);
+        ivClass11.setEnabled(false);
+        ivClass12.setEnabled(false);
     }
-    /*The below method is for select the class 10 deselect the 11 and 12 classes*/
+
     @OnClick(R.id.LLClass10)
     public void onClass10Click() {
-        if (!ivClass10.isShown()) {
-            if (!stringArrayList.contains("Class 10")) {
-                stringArrayList.add("Class 10");
-            }
-            ivClass10.setVisibility(View.VISIBLE);
+        if (!ivClass10.isEnabled()) {
+            selectedClasses.add(CLASS_10);
+            ivClass10.setEnabled(true);
         } else {
-            stringArrayList.remove("Class 10");
-            ivClass10.setVisibility(View.GONE);
+            selectedClasses.remove(CLASS_10);
+            ivClass10.setEnabled(false);
         }
-        if(ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE){
-            showSnackbar();
+        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+            showSnackError(R.string.class_selection_warning);
         }
-        if (stringArrayList.contains("Class 11")) {
-            stringArrayList.remove("Class 11");
-        }
-        if (stringArrayList.contains("Class 12")) {
-            stringArrayList.remove("Class 12");
-        }
-        ivClass11.setVisibility(View.GONE);
-        ivClass12.setVisibility(View.GONE);
+        selectedClasses.remove(CLASS_11);
+        selectedClasses.remove(CLASS_12);
+        ivClass11.setEnabled(false);
+        ivClass12.setEnabled(false);
     }
 
-    void showSnackbar(){
-        Snackbar snackbar =Snackbar.make((findViewById(android.R.id.content)), getString(R.string.senior_students), Snackbar.LENGTH_LONG);
-        View view = snackbar.getView();
-        TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-        view.setBackgroundColor(Color.parseColor("#ba0505"));
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }
-    /*The below method is for select the class 11 deselect the rest of the classes except 12*/
     @OnClick(R.id.LLClass11)
     public void onClass11Click() {
-        if (!ivClass11.isShown()) {
-            if (!stringArrayList.contains("Class 11")) {
-                stringArrayList.add("Class 11");
-            }
-            ivClass11.setVisibility(View.VISIBLE);
+        if (!ivClass11.isEnabled()) {
+            selectedClasses.add(CLASS_11);
+            ivClass11.setEnabled(true);
         } else {
-            stringArrayList.remove("Class 11");
-            ivClass11.setVisibility(View.GONE);
+            selectedClasses.remove(CLASS_11);
+            ivClass11.setEnabled(false);
         }
-        if (stringArrayList.contains("Class 1")) {
-            stringArrayList.remove("Class 1");
-        }
-        if (stringArrayList.contains("Class 2")) {
-            stringArrayList.remove("Class 2");
-        }
-        if (stringArrayList.contains("Class 3")) {
-            stringArrayList.remove("Class 3");
-        }
-        if (stringArrayList.contains("Class 4")) {
-            stringArrayList.remove("Class 4");
-        }
-        if (stringArrayList.contains("Class 5")) {
-            stringArrayList.remove("Class 5");
-        }
-        if (stringArrayList.contains("Class 6")) {
-            stringArrayList.remove("Class 6");
-        }
-        if (stringArrayList.contains("Class 7")) {
-            stringArrayList.remove("Class 7");
-        }
-        if (stringArrayList.contains("Class 8")) {
-            stringArrayList.remove("Class 8");
-        }
-        if (stringArrayList.contains("Class 9")) {
-            stringArrayList.remove("Class 9");
-        }
-        if (stringArrayList.contains("Class 10")) {
-            stringArrayList.remove("Class 10");
-        }
-
-        ivClass1.setVisibility(View.GONE);
-        ivClass2.setVisibility(View.GONE);
-        ivClass3.setVisibility(View.GONE);
-        ivClass4.setVisibility(View.GONE);
-        ivClass5.setVisibility(View.GONE);
-        ivClass6.setVisibility(View.GONE);
-        ivClass7.setVisibility(View.GONE);
-        ivClass8.setVisibility(View.GONE);
-        ivClass9.setVisibility(View.GONE);
-        ivClass10.setVisibility(View.GONE);
+        selectedClasses.remove(CLASS_1);
+        selectedClasses.remove(CLASS_2);
+        selectedClasses.remove(CLASS_3);
+        selectedClasses.remove(CLASS_4);
+        selectedClasses.remove(CLASS_5);
+        selectedClasses.remove(CLASS_6);
+        selectedClasses.remove(CLASS_7);
+        selectedClasses.remove(CLASS_8);
+        selectedClasses.remove(CLASS_9);
+        selectedClasses.remove(CLASS_10);
+        ivClass1.setEnabled(false);
+        ivClass2.setEnabled(false);
+        ivClass3.setEnabled(false);
+        ivClass4.setEnabled(false);
+        ivClass5.setEnabled(false);
+        ivClass6.setEnabled(false);
+        ivClass7.setEnabled(false);
+        ivClass8.setEnabled(false);
+        ivClass9.setEnabled(false);
+        ivClass10.setEnabled(false);
     }
 
-    /*The below method is for select the class 12 deselect the rest of the classes except 11*/
     @OnClick(R.id.LLClass12)
     public void onClass12Click() {
-        if (!ivClass12.isShown()) {
-            if (!stringArrayList.contains("Class 12")) {
-                stringArrayList.add("Class 12");
-            }
-            ivClass12.setVisibility(View.VISIBLE);
+        if (!ivClass12.isEnabled()) {
+            selectedClasses.add(CLASS_12);
+            ivClass12.setEnabled(true);
         } else {
-            stringArrayList.remove("Class 12");
-            ivClass12.setVisibility(View.GONE);
+            selectedClasses.remove(CLASS_12);
+            ivClass12.setEnabled(false);
         }
-        if (stringArrayList.contains("Class 1")) {
-            stringArrayList.remove("Class 1");
-        }if (stringArrayList.contains("Class 2")) {
-            stringArrayList.remove("Class 2");
-        }if (stringArrayList.contains("Class 3")) {
-            stringArrayList.remove("Class 3");
-        }if (stringArrayList.contains("Class 4")) {
-            stringArrayList.remove("Class 4");
-        }if (stringArrayList.contains("Class 5")) {
-            stringArrayList.remove("Class 5");
-        }
-        if (stringArrayList.contains("Class 6")) {
-            stringArrayList.remove("Class 6");
-        }
-        if (stringArrayList.contains("Class 7")) {
-            stringArrayList.remove("Class 7");
-        }
-        if (stringArrayList.contains("Class 8")) {
-            stringArrayList.remove("Class 8");
-        }
-        if (stringArrayList.contains("Class 9")) {
-            stringArrayList.remove("Class 9");
-        }
-        if (stringArrayList.contains("Class 10")) {
-            stringArrayList.remove("Class 10");
-        }
-        ivClass1.setVisibility(View.GONE);
-        ivClass2.setVisibility(View.GONE);
-        ivClass3.setVisibility(View.GONE);
-        ivClass4.setVisibility(View.GONE);
-        ivClass5.setVisibility(View.GONE);
-        ivClass6.setVisibility(View.GONE);
-        ivClass7.setVisibility(View.GONE);
-        ivClass8.setVisibility(View.GONE);
-        ivClass9.setVisibility(View.GONE);
-        ivClass10.setVisibility(View.GONE);
+        selectedClasses.remove(CLASS_1);
+        selectedClasses.remove(CLASS_2);
+        selectedClasses.remove(CLASS_3);
+        selectedClasses.remove(CLASS_4);
+        selectedClasses.remove(CLASS_5);
+        selectedClasses.remove(CLASS_6);
+        selectedClasses.remove(CLASS_7);
+        selectedClasses.remove(CLASS_8);
+        selectedClasses.remove(CLASS_9);
+        selectedClasses.remove(CLASS_10);
+        ivClass1.setEnabled(false);
+        ivClass2.setEnabled(false);
+        ivClass3.setEnabled(false);
+        ivClass4.setEnabled(false);
+        ivClass5.setEnabled(false);
+        ivClass6.setEnabled(false);
+        ivClass7.setEnabled(false);
+        ivClass8.setEnabled(false);
+        ivClass9.setEnabled(false);
+        ivClass10.setEnabled(false);
     }
 
     @Override

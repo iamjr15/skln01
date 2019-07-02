@@ -34,6 +34,7 @@ public class WelcomeActivity extends BaseActivity {
                 intent.putExtra("country_code", "+" + codePicker.getSelectedCountryCode());
                 intent.putExtra("phone_number", etPhoneNumber.getText().toString());
                 startActivity(intent);
+                finish();
             }
         });
 

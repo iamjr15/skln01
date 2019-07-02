@@ -16,6 +16,5 @@ public class AppController extends Application {
                 .setDefaultFontPath("fonts/Montserrat-Regular.otf")
                 .setFontAttrId(R.attr.fontPath)
                 .build());
-
     }
 }

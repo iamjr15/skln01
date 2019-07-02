@@ -2,45 +2,36 @@ package com.autohub.skln.tutor.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static com.autohub.skln.utills.AppConstants.HOBBY_DANCE;
+import static com.autohub.skln.utills.AppConstants.HOBBY_DRUM;
+import static com.autohub.skln.utills.AppConstants.HOBBY_GUITAR;
+import static com.autohub.skln.utills.AppConstants.HOBBY_KEYBOARD;
+import static com.autohub.skln.utills.AppConstants.HOBBY_MARTIAL;
+import static com.autohub.skln.utills.AppConstants.HOBBY_PAINT;
+import static com.autohub.skln.utills.AppConstants.KEY_HOBBIES;
+
 public class TutorHobbySelect extends BaseActivity {
-    /*Referencing the widgets through the bind view API*/
-    /*Start*/
-    @BindView(R.id.LLGuitar)
-    LinearLayout LLGuitar;
-
-    @BindView(R.id.LLPainting)
-    LinearLayout LLPainting;
-
-    @BindView(R.id.LLMartialArts)
-    LinearLayout LLmartialArts;
-
-    @BindView(R.id.LLDrum)
-    LinearLayout LLDrum;
-
-    @BindView(R.id.LLkeyboard)
-    LinearLayout LLKeyboard;
-
-    @BindView(R.id.LLDance)
-    LinearLayout LLDance;
 
     @BindView(R.id.ivGuitar)
     ImageView ivGUitar;
@@ -58,134 +49,127 @@ public class TutorHobbySelect extends BaseActivity {
     ImageView ivKeyboard;
 
     @BindView(R.id.ivDance)
-    /*end*/
-    /*Declaration of Variables*/
-            ImageView ivDance;
-    private ArrayList<String> stringArrayList;
-    private StringBuilder stringBuilder;
+    ImageView ivDance;
+
+    private ArrayList<String> selectedHobbies;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_tutor_hobby_select);
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tutor_hobby_select);
         ButterKnife.bind(this);
-        /*initializition*/
-        stringArrayList = new ArrayList<>();
 
+        ivGUitar.setEnabled(false);
+        ivPainting.setEnabled(false);
+        ivMartialArts.setEnabled(false);
+        ivDance.setEnabled(false);
+        ivDrum.setEnabled(false);
+        ivKeyboard.setEnabled(false);
+
+        selectedHobbies = new ArrayList<>();
     }
 
     @OnClick(R.id.btnNext)
     public void onNextClick() {
-        stringBuilder = new StringBuilder();
-        int size = stringArrayList.size();
-        if (size > 0) {
-            stringBuilder.append(stringArrayList.get(0));
-            for (int i = 1; i < stringArrayList.size(); i++) {
-                stringBuilder.append(", ").append(stringArrayList.get(i));
+        StringBuilder stringBuilder = new StringBuilder();
+        if (selectedHobbies.size() > 0) {
+            stringBuilder.append(selectedHobbies.get(0));
+            for (int i = 1; i < selectedHobbies.size(); i++) {
+                stringBuilder.append(", ").append(selectedHobbies.get(i));
             }
-
         }
+
         if (stringBuilder.length() == 0) {
-            Snackbar snackbar;
-            snackbar = Snackbar.make((findViewById(android.R.id.content)), getString(R.string.choose_classes), Snackbar.LENGTH_LONG);
-            View view = snackbar.getView();
-            TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-            view.setBackgroundColor(Color.parseColor("#ba0505"));
-            textView.setTextColor(Color.WHITE);
-            snackbar.show();
+            showSnackError(R.string.choose_hobbies);
             return;
         }
-        getAppPreferenceHelper().setScreenFour(stringBuilder.toString());
-        Intent intent = new Intent(this, TutorPictureUpload.class);
-        intent.putExtra("category", getString(R.string.hobby));
-        startActivity(intent);
+
+        showLoading();
+
+        Map<String, Object> user = new HashMap<>();
+        user.put(KEY_HOBBIES, stringBuilder.toString());
+
+        getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        hideLoading();
+                        startActivity(new Intent(TutorHobbySelect.this, TutorPictureUpload.class));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        hideLoading();
+                        showSnackError(e.getMessage());
+                    }
+                });
     }
-    /*The below method is for select the class Guitar*/
+
     @OnClick(R.id.LLGuitar)
     public void onGuitarClick() {
         if (!ivGUitar.isShown()) {
-            if (!stringArrayList.contains("Guitar")) {
-                stringArrayList.add("Guitar");
-            }
-            ivGUitar.setVisibility(View.VISIBLE);
+            selectedHobbies.add(HOBBY_GUITAR);
+            ivGUitar.setEnabled(true);
         } else {
-            stringArrayList.remove("Guitar");
-            ivGUitar.setVisibility(View.GONE);
+            selectedHobbies.remove(HOBBY_GUITAR);
+            ivGUitar.setEnabled(false);
         }
-
     }
-    /*The below method is for select the class Painting*/
+
     @OnClick(R.id.LLPainting)
     public void onPaintingClick() {
         if (!ivPainting.isShown()) {
-            if (!stringArrayList.contains("Painting")) {
-                stringArrayList.add("Painting");
-            }
-            ivPainting.setVisibility(View.VISIBLE);
+            selectedHobbies.add(HOBBY_PAINT);
+            ivPainting.setEnabled(true);
         } else {
-            stringArrayList.remove("Painting");
-            ivPainting.setVisibility(View.GONE);
+            selectedHobbies.remove(HOBBY_PAINT);
+            ivPainting.setEnabled(false);
         }
-
     }
-    /*The below method is for select the class Marital arts*/
+
     @OnClick(R.id.LLMartialArts)
     public void onMartialArtClick() {
         if (!ivMartialArts.isShown()) {
-            if (!stringArrayList.contains("Martial Arts")) {
-                stringArrayList.add("Martial Arts");
-            }
-            ivMartialArts.setVisibility(View.VISIBLE);
+            selectedHobbies.add(HOBBY_MARTIAL);
+            ivMartialArts.setEnabled(true);
         } else {
-            stringArrayList.remove("Martial Arts");
-            ivMartialArts.setVisibility(View.GONE);
+            selectedHobbies.remove(HOBBY_MARTIAL);
+            ivMartialArts.setEnabled(false);
         }
-
     }
-    /*The below method is for select the class Drum*/
+
     @OnClick(R.id.LLDrum)
     public void onDrumClick() {
         if (!ivDrum.isShown()) {
-            if (!stringArrayList.contains("Drum and Precaution")) {
-                stringArrayList.add("Drum and Precaution");
-            }
-            ivDrum.setVisibility(View.VISIBLE);
+            selectedHobbies.add(HOBBY_DRUM);
+            ivDrum.setEnabled(true);
         } else {
-            stringArrayList.remove("Drum and Precaution");
-            ivDrum.setVisibility(View.GONE);
+            selectedHobbies.remove(HOBBY_DRUM);
+            ivDrum.setEnabled(false);
         }
-
     }
 
-    /*The below method is for select the class Keyboard*/
     @OnClick(R.id.LLkeyboard)
     public void onKeyBoardClick() {
         if (!ivKeyboard.isShown()) {
-            if (!stringArrayList.contains("Keyboard")) {
-                stringArrayList.add("Keyboard");
-            }
-            ivKeyboard.setVisibility(View.VISIBLE);
+            selectedHobbies.add(HOBBY_KEYBOARD);
+            ivKeyboard.setEnabled(true);
         } else {
-            stringArrayList.remove("Keyboard");
-            ivKeyboard.setVisibility(View.GONE);
+            selectedHobbies.remove(HOBBY_KEYBOARD);
+            ivKeyboard.setEnabled(false);
         }
-
-
     }
-    /*The below method is for select the class Dance*/
+
     @OnClick(R.id.LLDance)
     public void onDanceClick() {
         if (!ivDance.isShown()) {
-            if (!stringArrayList.contains("Dance")) {
-                stringArrayList.add("Dance");
-            }
-            ivDance.setVisibility(View.VISIBLE);
+            selectedHobbies.add(HOBBY_DANCE);
+            ivDance.setEnabled(true);
         } else {
-            stringArrayList.remove("Dance");
-            ivDance.setVisibility(View.GONE);
+            selectedHobbies.remove(HOBBY_DANCE);
+            ivDance.setEnabled(false);
         }
-
     }
 
     @Override

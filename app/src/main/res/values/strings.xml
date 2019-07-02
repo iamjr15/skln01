@@ -3,7 +3,6 @@
     <string name="test_app">Test APP</string>
     <string name="login">LOGIN</string>
     <string name="sign_up">SIGNUP</string>
-    <string name="Tutor">Tutor</string>
     <string name="title">title:</string>
 
     <string-array name="title_arrays">
@@ -15,37 +14,31 @@
     </string-array>
 
     <string-array name="occupation_arrays">
-        <item>select occupation</item>
-        <item>full-time tutor</item>
+        <item>Full-time tutor</item>
         <item>Home maker</item>
         <item>Retired</item>
         <item>Student</item>
-        <item>School/ College Tutor</item>
+        <item>School/College Tutor</item>
         <item>Working professional</item>
         <item>Other</item>
     </string-array>
 
-    <string-array name="exp_arrays">
-
-        <item>select teaching experience</item>
+    <string-array name="experience_arrays">
         <item>1-2 years</item>
         <item>2-3 years</item>
         <item>3-5 years</item>
         <item>5-6 years</item>
-        <item>7 years+</item>
+        <item>7 years +</item>
     </string-array>
 
     <string-array name="qualification_arrays">
-        <item>select qualification</item>
         <item>Graduate</item>
-        <item>Post Graduate</item>
+        <item>Post-Graduate</item>
+        <item>N/A</item>
     </string-array>
 
 
-
-    <string-array name="area_arrays_for_grad">
-
-        <item>select qualification area</item>
+    <string-array name="area_qualifi_arrays_1">
         <item>B.A</item>
         <item>B.A.F</item>
         <item>B.B.A</item>
@@ -58,12 +51,14 @@
         <item>B.Phil</item>
         <item>B.Sc</item>
         <item>BPharma</item>
+        <item>CA</item>
         <item>Diploma</item>
         <item>L.L.B</item>
         <item>M.B.B.S</item>
+        <item>N/A</item>
     </string-array>
-    <string-array name="area_arrays_for_post_grad">
-        <item>select qualification area</item>
+
+    <string-array name="area_qualifi_arrays_2">
         <item>B.M.M</item>
         <item>B.M.S</item>
         <item>B.Phil</item>
@@ -73,29 +68,22 @@
         <item>Diploma</item>
         <item>L.L.B</item>
         <item>M.B.B.S</item>
+        <item>N/A</item>
     </string-array>
 
-    <string name="title_prompt">Mr</string>
-    <string name="first_name">First name</string>
-    <string name="last_name">Last name</string>
-    <string name="contact_number">Contact number</string>
-
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
     <string name="password">set password</string>
     <string name="next">next</string>
-    <string name="verifyContactText">Verify Contact Number</string>
     <string name="enter_otp">Enter the OTP.</string>
     <string name="enter_number">Enter Number</string>
     <string name="resend_code">resend code</string>
     <string name="select_cat_text">Select your category of teaching.</string>
     <string name="select_any_one">(select any one)</string>
-    <string name="academics">academics.</string>
-    <string name="doubt">doubt clearing classes are one time classes meant for students who just want to revise a concept or charge a chapter, and will be paid per section of class</string>
-    <string name="hobby">hobby.</string>
     <string name="hobbys">hobbies</string>
     <string name="message">MESSAGES</string>
     <string name="request">REQUESTS</string>
-    <string name="select_expertise">select your expertise</string>
-    <string name="academicss">academics</string>
+    <string name="academics">academics</string>
     <string name="select_class_text">Select classes to teach.</string>
     <string name="select_subject">Select the subjects to teach.</string>
     <string name="class1">class 1.</string>
@@ -113,7 +101,7 @@
     <string name="guitar">guitar.</string>
     <string name="painting">painting.</string>
     <string name="martial_arts">martial arts.</string>
-    <string name="senior_students">You cannot select other classes while you select class 11-12.</string>
+    <string name="class_selection_warning">You cannot select other classes while you select classes 11/12 and vice versa.</string>
     <string name="drum">drums and precautions.</string>
     <string name="keyboard">keyboard.</string>
     <string name="dance">dance.</string>
@@ -138,12 +126,11 @@
     <string name="university">University</string>
     <string name="specialisation">Specialisation</string>
     <string name="qualificat">Qualification Year</string>
-    <string name="select_board">select your board(s):</string>
+    <string name="select_board">Select your targeted board.</string>
     <string name="cbse">CBSE</string>
     <string name="icse">ICSE</string>
     <string name="state_board">State Board</string>
-    <string name="select_exp">select your experience:</string>
-    <string name="select_exp_">select your experience</string>
+    <string name="select_experience">select your experience:</string>
     <string name="starting_out">starting out</string>
     <string name="one_three_years_e">1-3 years experience</string>
     <string name="four_ten_years_e">4-10 years experience</string>
@@ -160,9 +147,8 @@
     <string name="conduct_classes">where will you conduct your classes?</string>
     <string name="at_home">at my home.</string>
     <string name="at_student_home">at student\'s home.</string>
-    <string name="setup_rates">setup your rates</string>
+    <string name="setup_rates">set rate</string>
     <string name="how_would_you_charge">how would you charge?</string>
-    <string name="select_all">*select all that applies</string>
     <string name="monthly">monthly.</string>
     <string name="weekly">weekly.</string>
     <string name="per_class">per class basis.</string>
@@ -170,7 +156,6 @@
     <string name="chapter_wise">chapter wise.</string>
     <string name="concept_wise">concept wise.</string>
     <string name="et_hint">adding a detailed description will help you get more relevant queries. Eg: I, Arun Dev, have done my graduation in B.Ed. from HR college, Mumbai University in 2012. I have 4 years of experience in teaching Maths and Science for std. 4-10 for CBSE and ICSE boards.</string>
-    <string name="mr">Mr.</string>
     <string name="enter_name">Please enter first name</string>
     <string name="enter_lastname">Please enter last name</string>
     <string name="enter_phone">Please enter phone number</string>
@@ -184,7 +169,6 @@
     <string name="certificate">Please put certificates</string>
     <string name="proof_document">Please put any one proof document</string>
     <string name="select_board_message">Please select board</string>
-    <string name="select_exp_message">Please select experince</string>
     <string name="select_hour_message">Please select working hours</string>
     <string name="select_place">Please select classes place</string>
     <string name="select_chargestype">Please select charges type</string>
@@ -194,11 +178,11 @@
     <string name="choose_classes">Please choose classes</string>
     <string name="choose_subjects">Please choose subjects</string>
     <string name="please_wait">Please wait...</string>
-    <string name="sending">Sending Please wait...</string>
+    <string name="sending">Sending code... Please wait.</string>
     <string name="title_activity_rquest_and_messages">RquestAndMessages</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="users">users</string>
+    <string name="db_root_users">users</string>
 
     <string name="welcome_onboard">Welcome \nOnboard.</string>
     <string name="s_">s.</string>
@@ -210,4 +194,39 @@
     <string name="male">male</string>
     <string name="female">female</string>
     <string name="note_select_class">please note that if you select  classes 11/12 then you won\'t be able to select other classes and vice versa.</string>
+    <string name="create_your_pack">Create your packages</string>
+    <string name="last_hint">One last step. Set your rates for your services, and make sure to set rate less or around the average rate to attract students.</string>
+    <string name="package1">Package1</string>
+    <string name="class_type">Class Type</string>
+    <string name="class_number">NO. OF CLASSES PER WEEK/MONTH</string>
+    <string name="class_frequency">Class Frequency</string>
+    <string name="rate">RS.</string>
+    <string name="welcome_back">Welcome  back!</string>
+    <string name="login_">Login.</string>
+    <string name="hint_password">Enter password to continue.</string>
+    <string name="forgot_pass">forgot password?</string>
+    <string name="home">Home</string>
+    <string name="toolbox">Toolbox</string>
+    <string name="class_request">Class Requests</string>
+    <string name="profile">Profile</string>
+    <string name="average_rating">AVG.\nRATINGS</string>
+    <string name="requests_month">REQUESTS\\nTHIS MONTH</string>
+    <string name="unpaid_month">UNPAID\nTHIS MONTH</string>
+    <string name="teacher">Teacher</string>
+    <string name="sent">Code sent.</string>
+    <string name="not_registered">You need to register yourself first.</string>
+    <string name="your_feed">Your feed.</string>
+    <string name="your_toolbox">Your toolbox.</string>
+    <string name="your_clsreq">Your Class Requests.</string>
+    <string name="your_profile">Your Profile.</string>
+    <string name="select_your_sex">Please select your sex</string>
+    <string name="select_hobby_text">Select the hobbies to teach.</string>
+    <string name="choose_hobbies">Please choose hobbies to teach</string>
+    <string name="select_occupation">select occupation</string>
+    <string name="warning_choose_occp">Please select your current occupation.</string>
+    <string name="warning_choose_exp">Please select your teaching experience.</string>
+    <string name="hint_select_qualification">select qualification</string>
+    <string name="hint_select_area_qualification">select area of qualification</string>
+    <string name="select_qualification_first">Please select valid qualification first.</string>
+    <string name="fill_biodata">Please fill your professional biodata.</string>
 </resources>
