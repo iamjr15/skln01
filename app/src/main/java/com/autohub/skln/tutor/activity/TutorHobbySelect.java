@@ -108,7 +108,7 @@ public class TutorHobbySelect extends BaseActivity {
 
     @OnClick(R.id.LLGuitar)
     public void onGuitarClick() {
-        if (!ivGUitar.isShown()) {
+        if (!ivGUitar.isEnabled()) {
             selectedHobbies.add(HOBBY_GUITAR);
             ivGUitar.setEnabled(true);
         } else {
@@ -119,7 +119,7 @@ public class TutorHobbySelect extends BaseActivity {
 
     @OnClick(R.id.LLPainting)
     public void onPaintingClick() {
-        if (!ivPainting.isShown()) {
+        if (!ivPainting.isEnabled()) {
             selectedHobbies.add(HOBBY_PAINT);
             ivPainting.setEnabled(true);
         } else {
@@ -130,7 +130,7 @@ public class TutorHobbySelect extends BaseActivity {
 
     @OnClick(R.id.LLMartialArts)
     public void onMartialArtClick() {
-        if (!ivMartialArts.isShown()) {
+        if (!ivMartialArts.isEnabled()) {
             selectedHobbies.add(HOBBY_MARTIAL);
             ivMartialArts.setEnabled(true);
         } else {
@@ -141,7 +141,7 @@ public class TutorHobbySelect extends BaseActivity {
 
     @OnClick(R.id.LLDrum)
     public void onDrumClick() {
-        if (!ivDrum.isShown()) {
+        if (!ivDrum.isEnabled()) {
             selectedHobbies.add(HOBBY_DRUM);
             ivDrum.setEnabled(true);
         } else {
@@ -152,7 +152,7 @@ public class TutorHobbySelect extends BaseActivity {
 
     @OnClick(R.id.LLkeyboard)
     public void onKeyBoardClick() {
-        if (!ivKeyboard.isShown()) {
+        if (!ivKeyboard.isEnabled()) {
             selectedHobbies.add(HOBBY_KEYBOARD);
             ivKeyboard.setEnabled(true);
         } else {
@@ -163,7 +163,7 @@ public class TutorHobbySelect extends BaseActivity {
 
     @OnClick(R.id.LLDance)
     public void onDanceClick() {
-        if (!ivDance.isShown()) {
+        if (!ivDance.isEnabled()) {
             selectedHobbies.add(HOBBY_DANCE);
             ivDance.setEnabled(true);
         } else {

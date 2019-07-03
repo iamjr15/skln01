@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -52,8 +53,8 @@ public class TutorCreatePackage extends BaseActivity {
     @BindView(R.id.tvMaxStudents)
     TextView tvMaxStudents;
 
-    @BindView(R.id.tvRate)
-    TextView tvRate;
+    @BindView(R.id.edtRate)
+    EditText edtRate;
 
     private String[] classTypes;
     private String[] classNumbers = new String[30];
@@ -300,7 +301,7 @@ public class TutorCreatePackage extends BaseActivity {
             return;
         }
 
-        if (TextUtils.isEmpty(tvRate.getText().toString())) {
+        if (TextUtils.isEmpty(edtRate.getText().toString())) {
             showSnackError(R.string.input_rate);
             return;
         }
@@ -312,7 +313,7 @@ public class TutorCreatePackage extends BaseActivity {
         user.put(KEY_NO_OF_CLASSES, mSelectedClassNumber);
         user.put(KEY_CLASS_FREQUENCY, mSelectedClassFreq);
         user.put(KEY_MAX_STUDENTS, mSelectedMaxStudents);
-        user.put(KEY_RATE, tvRate.getText().toString());
+        user.put(KEY_RATE, edtRate.getText().toString());
         user.put(KEY_PHONE_NUMBER, getAppPreferenceHelper().getUserPhone());
 
         getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
@@ -321,6 +322,7 @@ public class TutorCreatePackage extends BaseActivity {
                     public void onSuccess(Void aVoid) {
                         hideLoading();
                         startActivity(new Intent(TutorCreatePackage.this, TutorHomeActivity.class));
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

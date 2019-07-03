@@ -232,8 +232,8 @@ public class TutorPictureUpload extends BaseActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         hideLoading();
-                        Uri downloadUrl = taskSnapshot.getUploadSessionUri();
-                        mProfileImageUrl = downloadUrl.toString();
+//                        Uri downloadUrl = taskSnapshot.get();
+//                        mProfileImageUrl = downloadUrl.toString();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

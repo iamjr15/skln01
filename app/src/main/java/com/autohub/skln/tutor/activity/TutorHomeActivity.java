@@ -1,11 +1,12 @@
 package com.autohub.skln.tutor.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.View;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autohub.skln.BaseActivity;
@@ -22,11 +24,20 @@ import com.autohub.skln.tutor.fragment.FragmentClsRequests;
 import com.autohub.skln.tutor.fragment.FragmentProfile;
 import com.autohub.skln.tutor.fragment.FragmentToolbox;
 import com.autohub.skln.tutor.fragment.FragmentHome;
+import com.autohub.skln.utills.GlideApp;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import static com.autohub.skln.utills.AppConstants.KEY_FIRST_NAME;
+import static com.autohub.skln.utills.AppConstants.KEY_PROFILE_PICTURE;
 
 public class TutorHomeActivity extends BaseActivity {
 
@@ -34,13 +45,35 @@ public class TutorHomeActivity extends BaseActivity {
 
     private ViewPager mViewPager;
 
+    TextView tvHey;
+    ImageView ivPicture;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor_home);
 
-        TextView tvHey = findViewById(R.id.hey_tutor);
-        tvHey.setText("Hey, \n" + getAppPreferenceHelper().getTutorName() +".");
+        tvHey = findViewById(R.id.hey_tutor);
+        ivPicture = findViewById(R.id.iv_picture);
+
+        StorageReference ref = FirebaseStorage.getInstance().getReference().child("tutor/" +
+                getFirebaseAuth().getCurrentUser().getUid() + ".jpg");
+        GlideApp.with(this).load(ref).into(ivPicture);
+
+        getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        String firstName = documentSnapshot.getString(KEY_FIRST_NAME);
+                        tvHey.setText("Hey, \n" + firstName + ".");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        showSnackError(e.getMessage());
+                    }
+                });
 
         mTabs.add((TextView) findViewById(R.id.tab_item_home));
         mTabs.add((TextView) findViewById(R.id.tab_item_toolbox));
