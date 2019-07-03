@@ -165,7 +165,8 @@
                     android:layout_marginEnd="10dp"
                     android:paddingTop="6dp"
                     android:paddingBottom="6dp"
-                    android:text="@string/setup_rates" />
+                    android:text="@string/setup_rates"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvRate"

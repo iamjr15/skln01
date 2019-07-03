@@ -51,6 +51,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="item_header_style">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="academics2">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">20sp</item>
@@ -78,103 +84,8 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="upload_you_cert">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">22sp</item>
-    </style>
-
-    <style name="identity_p">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">25sp</item>
-    </style>
-
-    <style name="any_one_of">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">18sp</item>
-    </style>
-
-    <style name="driving_li">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="whats_you">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">19sp</item>
-    </style>
-
-    <style name="university">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">19sp</item>
-    </style>
-
-    <style name="specialisation">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">19sp</item>
-    </style>
-
-    <style name="qualificat">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">19sp</item>
-    </style>
-
-    <style name="select_you_exp">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">17sp</item>
-    </style>
-
-    <style name="select_you_exp_">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="starting_o">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">24sp</item>
-    </style>
-
-    <style name="one_three_years_e">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">13sp</item>
-    </style>
-
-    <style name="how_many_h">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="more_than_">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="write_your">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">19sp</item>
-    </style>
-
-    <style name="_highlight">
-        <item name="android:textColor">#ff000000</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="where_will">
-        <item name="android:textColor">#ff707070</item>
-        <item name="android:textSize">22sp</item>
-    </style>
-
-    <style name="at_my_home">
-        <item name="android:textColor">#ff707070</item>
-        <item name="android:textSize">22sp</item>
-    </style>
-
-    <style name="how_would_">
-        <item name="android:textColor">#cc000000</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
     <style name="adding_a_d">
-        <item name="android:textColor">#cc000000</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">15sp</item>
     </style>
 

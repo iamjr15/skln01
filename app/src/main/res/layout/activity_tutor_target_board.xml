@@ -158,19 +158,18 @@
 
             <TextView
                 android:id="@+id/tvQualification"
-                style="@style/whats_you"
+                style="@style/item_header_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/board_group"
                 android:layout_marginStart="15dp"
-                android:textStyle="bold"
-                android:textSize="15sp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="43dp"
                 android:text="@string/select_qualification" />
 
             <TextView
                 android:id="@+id/tvSelectQualification"
+                style="@style/signup_hint_small_style"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_below="@+id/tvQualification"
@@ -184,25 +183,22 @@
                 android:paddingEnd="10dp"
                 android:gravity="start|center"
                 android:paddingStart="20dp"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:text="@string/hint_select_qualification"
-                tools:ignore="RtlSymmetry" />
+                android:textStyle="bold"
+                android:text="@string/hint_select_qualification" />
 
             <TextView
                 android:id="@+id/tvAreaQualification"
-                style="@style/whats_you"
+                style="@style/item_header_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvSelectQualification"
                 android:layout_marginStart="15dp"
-                android:textStyle="bold"
-                android:textSize="15sp"
                 android:layout_marginTop="10dp"
                 android:text="@string/select_area_qualification" />
 
             <TextView
                 android:id="@+id/tvSelectAreaQualification"
+                style="@style/signup_hint_small_style"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_below="@+id/tvAreaQualification"
@@ -217,8 +213,7 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="10dp"
                 android:text="@string/hint_select_area_qualification"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textStyle="bold" />
 
         </RelativeLayout>
     </ScrollView>

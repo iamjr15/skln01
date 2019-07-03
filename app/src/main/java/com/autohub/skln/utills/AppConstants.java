@@ -53,7 +53,6 @@ public class AppConstants {
     // firestore db keys
     public static final String KEY_PHONE_NUMBER = "phone_number";
     public static final String KEY_ACCOUNT_TYPE = "account_type";
-//    public static final String KEY_TITLE = "title";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_FIRST_NAME = "first_name";
     public static final String KEY_LAST_NAME = "last_name";
@@ -73,4 +72,5 @@ public class AppConstants {
     public static final String KEY_NO_OF_CLASSES = "no_of_classes";
     public static final String KEY_CLASS_FREQUENCY = "class_frequency";
     public static final String KEY_MAX_STUDENTS = "max_students_capacity";
+    public static final String KEY_RATE = "rate";
 }

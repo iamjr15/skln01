@@ -101,7 +101,7 @@
 
             <TextView
                 android:id="@+id/tvCurrentOccupation"
-                style="@style/whats_you"
+                style="@style/item_header_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvUploadAP"
@@ -125,13 +125,11 @@
                 android:drawableEnd="@drawable/chevron_with_circle_down"
                 android:paddingEnd="10dp"
                 android:gravity="start|center"
-                android:paddingStart="20dp"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:paddingStart="20dp" />
 
             <TextView
                 android:id="@+id/tvTeachingExp"
-                style="@style/whats_you"
+                style="@style/item_header_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
