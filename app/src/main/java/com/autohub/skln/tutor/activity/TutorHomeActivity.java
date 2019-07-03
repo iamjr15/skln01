@@ -16,6 +16,7 @@ import android.view.View;
 
 import android.widget.TextView;
 
+import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
 import com.autohub.skln.tutor.fragment.FragmentClsRequests;
 import com.autohub.skln.tutor.fragment.FragmentProfile;
@@ -27,7 +28,7 @@ import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class TutorHomeActivity extends AppCompatActivity {
+public class TutorHomeActivity extends BaseActivity {
 
     private List<TextView> mTabs = new ArrayList<>();
 
@@ -37,6 +38,9 @@ public class TutorHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor_home);
+
+        TextView tvHey = findViewById(R.id.hey_tutor);
+        tvHey.setText("Hey, \n" + getAppPreferenceHelper().getTutorName() +".");
 
         mTabs.add((TextView) findViewById(R.id.tab_item_home));
         mTabs.add((TextView) findViewById(R.id.tab_item_toolbox));
@@ -58,10 +62,10 @@ public class TutorHomeActivity extends AppCompatActivity {
                 for (int i = 0; i < 4; i++) {
                     if (position == i) {
                         mTabs.get(i).setTextColor(getResources().getColor(R.color.black));
-                        setTextViewDrawableColor(mTabs.get(i), getResources().getColor(R.color.black));
+                        setTextViewDrawableColor(mTabs.get(i), R.color.black);
                     } else {
                         mTabs.get(i).setTextColor(getResources().getColor(R.color.light_grey));
-                        setTextViewDrawableColor(mTabs.get(i), getResources().getColor(R.color.light_grey));
+                        setTextViewDrawableColor(mTabs.get(i), R.color.light_grey);
                     }
                 }
             }
