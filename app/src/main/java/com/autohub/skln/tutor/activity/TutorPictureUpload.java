@@ -91,7 +91,6 @@ public class TutorPictureUpload extends BaseActivity {
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
         width = displayMetrics.widthPixels;
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -227,18 +226,20 @@ public class TutorPictureUpload extends BaseActivity {
             }
         });*/
 
+        showLoading();
         picRef.putFile(resultUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        hideLoading();
                         Uri downloadUrl = taskSnapshot.getUploadSessionUri();
                         mProfileImageUrl = downloadUrl.toString();
-                        Toast.makeText(TutorPictureUpload.this, "Uploading Successful.", Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        hideLoading();
                         Toast.makeText(TutorPictureUpload.this, "Uploading Failed.", Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }

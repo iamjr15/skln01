@@ -117,7 +117,6 @@ public class TutorClassSelect extends BaseActivity {
         showLoading();
 
         final boolean isSeniorClass = selectedClasses.contains(CLASS_11) || selectedClasses.contains(CLASS_12);
-        getAppPreferenceHelper().setSeniorTutor(isSeniorClass);
 
         Map<String, Object> user = new HashMap<>();
         user.put(KEY_CLASSES, stringBuilder.toString());
@@ -172,7 +171,7 @@ public class TutorClassSelect extends BaseActivity {
             selectedClasses.remove(CLASS_2);
             ivClass2.setEnabled(false);
         }
-        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+        if (ivClass11.isEnabled() || ivClass12.isEnabled()) {
             showSnackError(R.string.class_selection_warning);
         }
         selectedClasses.remove(CLASS_11);
@@ -190,7 +189,7 @@ public class TutorClassSelect extends BaseActivity {
             selectedClasses.remove(CLASS_3);
             ivClass3.setEnabled(false);
         }
-        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+        if (ivClass11.isEnabled() || ivClass12.isEnabled()) {
             showSnackError(R.string.class_selection_warning);
         }
         selectedClasses.remove(CLASS_11);
@@ -208,7 +207,7 @@ public class TutorClassSelect extends BaseActivity {
             selectedClasses.remove(CLASS_4);
             ivClass4.setEnabled(false);
         }
-        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+        if (ivClass11.isEnabled() || ivClass12.isEnabled()) {
             showSnackError(R.string.class_selection_warning);
         }
         selectedClasses.remove(CLASS_11);
@@ -226,7 +225,7 @@ public class TutorClassSelect extends BaseActivity {
             selectedClasses.remove(CLASS_5);
             ivClass5.setEnabled(false);
         }
-        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+        if (ivClass11.isEnabled() || ivClass12.isEnabled()) {
             showSnackError(R.string.class_selection_warning);
         }
         selectedClasses.remove(CLASS_11);
@@ -244,7 +243,7 @@ public class TutorClassSelect extends BaseActivity {
             selectedClasses.remove(CLASS_6);
             ivClass6.setEnabled(false);
         }
-        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+        if (ivClass11.isEnabled() || ivClass12.isEnabled()) {
             showSnackError(R.string.class_selection_warning);
         }
         selectedClasses.remove(CLASS_11);
@@ -262,7 +261,7 @@ public class TutorClassSelect extends BaseActivity {
             selectedClasses.remove(CLASS_7);
             ivClass7.setEnabled(false);
         }
-        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+        if (ivClass11.isEnabled() || ivClass12.isEnabled()) {
             showSnackError(R.string.class_selection_warning);
         }
         selectedClasses.remove(CLASS_11);
@@ -280,7 +279,7 @@ public class TutorClassSelect extends BaseActivity {
             selectedClasses.remove(CLASS_8);
             ivClass8.setEnabled(false);
         }
-        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+        if (ivClass11.isEnabled() || ivClass12.isEnabled()) {
             showSnackError(R.string.class_selection_warning);
         }
         selectedClasses.remove(CLASS_11);
@@ -298,7 +297,7 @@ public class TutorClassSelect extends BaseActivity {
             selectedClasses.remove(CLASS_9);
             ivClass9.setEnabled(false);
         }
-        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+        if (ivClass11.isEnabled() || ivClass12.isEnabled()) {
             showSnackError(R.string.class_selection_warning);
         }
 
@@ -317,7 +316,7 @@ public class TutorClassSelect extends BaseActivity {
             selectedClasses.remove(CLASS_10);
             ivClass10.setEnabled(false);
         }
-        if (ivClass11.getVisibility() == View.VISIBLE || ivClass12.getVisibility() == View.VISIBLE) {
+        if (ivClass11.isEnabled() || ivClass12.isEnabled()) {
             showSnackError(R.string.class_selection_warning);
         }
         selectedClasses.remove(CLASS_11);

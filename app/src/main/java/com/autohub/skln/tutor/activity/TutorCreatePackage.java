@@ -34,6 +34,8 @@ import static com.autohub.skln.utills.AppConstants.KEY_CLASS_FREQUENCY;
 import static com.autohub.skln.utills.AppConstants.KEY_CLASS_TYPE;
 import static com.autohub.skln.utills.AppConstants.KEY_MAX_STUDENTS;
 import static com.autohub.skln.utills.AppConstants.KEY_NO_OF_CLASSES;
+import static com.autohub.skln.utills.AppConstants.KEY_PHONE_NUMBER;
+import static com.autohub.skln.utills.AppConstants.KEY_RATE;
 
 public class TutorCreatePackage extends BaseActivity {
     private static final String TAG = "TutorCreatePackage";
@@ -49,6 +51,9 @@ public class TutorCreatePackage extends BaseActivity {
 
     @BindView(R.id.tvMaxStudents)
     TextView tvMaxStudents;
+
+    @BindView(R.id.tvRate)
+    TextView tvRate;
 
     private String[] classTypes;
     private String[] classNumbers = new String[30];
@@ -197,7 +202,7 @@ public class TutorCreatePackage extends BaseActivity {
     private PopupWindow createPopupClassFreq() {
         popupClassFreq = new PopupWindow(this);
         popupClassFreq.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.reactangle_cert));
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_dropdown_items, maxStudents);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_dropdown_items, classFreqs);
         ListView listViewSort = new ListView(this);
         listViewSort.setDivider(null);
         listViewSort.setAdapter(adapter);
@@ -295,6 +300,11 @@ public class TutorCreatePackage extends BaseActivity {
             return;
         }
 
+        if (TextUtils.isEmpty(tvRate.getText().toString())) {
+            showSnackError(R.string.input_rate);
+            return;
+        }
+
         showLoading();
 
         Map<String, Object> user = new HashMap<>();
@@ -302,6 +312,8 @@ public class TutorCreatePackage extends BaseActivity {
         user.put(KEY_NO_OF_CLASSES, mSelectedClassNumber);
         user.put(KEY_CLASS_FREQUENCY, mSelectedClassFreq);
         user.put(KEY_MAX_STUDENTS, mSelectedMaxStudents);
+        user.put(KEY_RATE, tvRate.getText().toString());
+        user.put(KEY_PHONE_NUMBER, getAppPreferenceHelper().getUserPhone());
 
         getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

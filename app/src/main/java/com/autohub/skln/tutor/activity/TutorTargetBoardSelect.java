@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -144,8 +145,8 @@ public class TutorTargetBoardSelect extends BaseActivity {
         radioGroupBoards.check(R.id.radioState);
     }
 
-    @OnCheckedChanged(R.id.board_group)
-    public void onBoardCheckedChanged() {
+    /*@OnCheckedChanged(R.id.board_group)
+    public void onBoardCheckedChanged(CompoundButton button, boolean checked) {
         switch (radioGroupBoards.getCheckedRadioButtonId()) {
             case R.id.radioCBSE:
                 mSelectedTargetBoard = BOARD_CBSE;
@@ -161,6 +162,33 @@ public class TutorTargetBoardSelect extends BaseActivity {
 
             default:
                 mSelectedTargetBoard = "";
+                break;
+        }
+    }*/
+
+    @OnClick({R.id.radioCBSE, R.id.radioICSE, R.id.radioState})
+    public void onRadioButtonClicked(RadioButton radioButton) {
+        boolean checked = radioButton.isChecked();
+
+        // Check which radio button was clicked
+        switch (radioButton.getId()) {
+            case R.id.radioCBSE:
+                if (checked) {
+                    radioGroupBoards.check(R.id.radioCBSE);
+                    mSelectedTargetBoard = BOARD_CBSE;
+                }
+                break;
+            case R.id.radioICSE:
+                if (checked) {
+                    radioGroupBoards.check(R.id.radioICSE);
+                    mSelectedTargetBoard = BOARD_ICSE;
+                }
+                break;
+            case R.id.radioState:
+                if (checked) {
+                    radioGroupBoards.check(R.id.radioState);
+                    mSelectedTargetBoard = BOARD_STATE;
+                }
                 break;
         }
     }
@@ -248,7 +276,7 @@ public class TutorTargetBoardSelect extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
                 img.setBounds(0, 0, 120, 120);
-                tvSelectAreaQualification.setText(areasQualifies[position]);
+                tvSelectAreaQualification.setText(mSelectedArea = areasQualifies[position]);
                 tvSelectAreaQualification.setCompoundDrawables(null, null, img, null);
 
                 if (popupWindowArea != null) {
