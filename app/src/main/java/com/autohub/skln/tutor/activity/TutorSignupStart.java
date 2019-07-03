@@ -96,7 +96,7 @@ public class TutorSignupStart extends BaseActivity {
 
         showLoading();
 
-        Map<String, Object> user = new HashMap<>();
+        final Map<String, Object> user = new HashMap<>();
         user.put(KEY_FIRST_NAME, edtFirstName.getText().toString());
         user.put(KEY_LAST_NAME, edtLastName.getText().toString());
         user.put(KEY_SEX, radioMale.isChecked() ? MALE : FEMALE);
@@ -121,6 +121,7 @@ public class TutorSignupStart extends BaseActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         hideLoading();
+                        getAppPreferenceHelper().setTutorName((String) user.get(KEY_FIRST_NAME));
                         startActivity(new Intent(TutorSignupStart.this, TutorCategorySelect.class));
                     }
                 })
