@@ -82,14 +82,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rlAcademics"
-                android:background="@mipmap/layers_academicsxhdpi" />
+                android:background="@drawable/layers_academicsxhdpi" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:id="@+id/rlHobby"
-                android:background="@mipmap/layers_hobbyxhdpi" />
+                android:background="@drawable/layers_hobbyxhdpi" />
 
         </LinearLayout>
 

@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@mipmap/layers_class_1xhdpi"
+                    android:background="@drawable/layers_class_1xhdpi"
                     android:orientation="vertical">
 
                     <ImageView
@@ -101,7 +101,7 @@
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@mipmap/layers_class_2xhdpi"
+                    android:background="@drawable/layers_class_2xhdpi"
                     android:orientation="vertical">
 
                     <ImageView
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@mipmap/layers_class_3xhdpi"
+                    android:background="@drawable/layers_class_3xhdpi"
                     android:orientation="vertical">
 
                     <ImageView
@@ -145,7 +145,7 @@
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@mipmap/layers_class_4xhdpi"
+                    android:background="@drawable/layers_class_4xhdpi"
                     android:orientation="vertical">
 
                     <ImageView
@@ -170,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@mipmap/layers_class_5xhdpi"
+                    android:background="@drawable/layers_class_5xhdpi"
                     android:orientation="vertical">
 
                     <ImageView
@@ -189,7 +189,7 @@
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@mipmap/layers_class_6xhdpi"
+                    android:background="@drawable/layers_class_6xhdpi"
                     android:orientation="vertical">
 
                     <ImageView
@@ -213,7 +213,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@mipmap/layers_class_7xhdpi"
+                    android:background="@drawable/layers_class_7xhdpi"
                     android:orientation="vertical">
 
                     <ImageView
@@ -232,7 +232,7 @@
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@mipmap/layers_class_8xhdpi"
+                    android:background="@drawable/layers_class_8xhdpi"
                     android:orientation="vertical">
 
                     <ImageView
@@ -256,7 +256,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@mipmap/layers_class_9xhdpi"
+                    android:background="@drawable/layers_class_9xhdpi"
                     android:orientation="vertical">
 
                     <ImageView
@@ -275,7 +275,7 @@
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@mipmap/layers_class_10xhdpi"
+                    android:background="@drawable/layers_class_10xhdpi"
                     android:orientation="vertical">
 
                     <ImageView
@@ -299,7 +299,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@mipmap/layers_class_11xhdpi"
+                    android:background="@drawable/layers_class_11xhdpi"
                     android:orientation="vertical">
 
                     <ImageView
@@ -318,7 +318,7 @@
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@mipmap/layers_class_12xhdpi"
+                    android:background="@drawable/layers_class_12xhdpi"
                     android:orientation="vertical">
 
                     <ImageView

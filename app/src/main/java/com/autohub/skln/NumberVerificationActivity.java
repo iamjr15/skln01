@@ -143,6 +143,7 @@ public class NumberVerificationActivity extends BaseActivity {
                                         !TextUtils.isEmpty(accountType) && accountType.equals(TYPE_TUTOR)) {
                                             startActivity(new Intent(NumberVerificationActivity.this, TutorLogin.class));
                                             finish();
+                                            return;
                                         }
                                     }
 
