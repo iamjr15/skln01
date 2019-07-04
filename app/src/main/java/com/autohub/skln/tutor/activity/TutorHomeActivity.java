@@ -23,6 +23,7 @@ import com.autohub.skln.tutor.fragment.FragmentProfile;
 import com.autohub.skln.tutor.fragment.FragmentToolbox;
 import com.autohub.skln.tutor.fragment.FragmentHome;
 import com.autohub.skln.utills.GlideApp;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -56,7 +57,11 @@ public class TutorHomeActivity extends BaseActivity {
 
         StorageReference ref = FirebaseStorage.getInstance().getReference().child("tutor/" +
                 getFirebaseAuth().getCurrentUser().getUid() + ".jpg");
-        GlideApp.with(this).load(ref).into(ivPicture);
+        GlideApp.with(this)
+                .load(ref)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                .skipMemoryCache(true)
+                .into(ivPicture);
 
         getFirebaseStore().collection(getString(R.string.db_root_tutors)).document(getFirebaseAuth().getCurrentUser().getUid()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
