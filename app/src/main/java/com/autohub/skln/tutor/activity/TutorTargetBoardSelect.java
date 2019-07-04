@@ -196,8 +196,7 @@ public class TutorTargetBoardSelect extends BaseActivity {
     @OnClick(R.id.tvSelectQualification)
     public void onQualificationClick(View v) {
         Drawable img = this.getResources().getDrawable(R.drawable.chevron_with_circle_up);
-        img.setBounds(0, 0, 120, 120);
-        tvSelectQualification.setCompoundDrawables(null, null, img, null);
+        tvSelectQualification.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
         PopupWindow popUp = popupWindowQualification();
         popUp.showAsDropDown(v, 0, 10);
     }
@@ -210,8 +209,7 @@ public class TutorTargetBoardSelect extends BaseActivity {
         }
 
         Drawable img = this.getResources().getDrawable(R.drawable.chevron_with_circle_up);
-        img.setBounds(0, 0, 120, 120);
-        tvSelectAreaQualification.setCompoundDrawables(null, null, img, null);
+        tvSelectAreaQualification.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
         PopupWindow popUp = popupWindowArea();
         popUp.showAsDropDown(v, 0, 10);
     }
@@ -228,9 +226,8 @@ public class TutorTargetBoardSelect extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
-                img.setBounds(0, 0, 120, 120);
                 tvSelectQualification.setText(mSelectedQualification = qualifications[position]);
-                tvSelectQualification.setCompoundDrawables(null, null, img, null);
+                tvSelectQualification.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
 
                 if (mSelectedQualification.equals(qualifications[0]))
                     areasQualifies = getResources().getStringArray(R.array.area_qualifi_arrays_1);
@@ -251,8 +248,7 @@ public class TutorTargetBoardSelect extends BaseActivity {
             @Override
             public void onDismiss() {
                 Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
-                img.setBounds(0, 0, 120, 120);
-                tvSelectQualification.setCompoundDrawables(null, null, img, null);
+                tvSelectQualification.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
 
             }
         });
@@ -275,9 +271,8 @@ public class TutorTargetBoardSelect extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
-                img.setBounds(0, 0, 120, 120);
                 tvSelectAreaQualification.setText(mSelectedArea = areasQualifies[position]);
-                tvSelectAreaQualification.setCompoundDrawables(null, null, img, null);
+                tvSelectAreaQualification.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
 
                 if (popupWindowArea != null) {
                     popupWindowArea.dismiss();
@@ -290,8 +285,7 @@ public class TutorTargetBoardSelect extends BaseActivity {
             @Override
             public void onDismiss() {
                 Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
-                img.setBounds(0, 0, 120, 120);
-                tvSelectAreaQualification.setCompoundDrawables(null, null, img, null);
+                tvSelectAreaQualification.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
 
             }
         });

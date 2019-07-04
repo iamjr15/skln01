@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="34dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_mathsxhdpi"
+                    android:background="@drawable/tile_maths"
                     android:orientation="vertical">
 
                     <ImageView
@@ -101,7 +101,7 @@
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_englishxhdpi"
+                    android:background="@drawable/tile_english"
                     android:orientation="vertical">
 
                     <ImageView
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_physicsxhdpi"
+                    android:background="@drawable/tile_physics"
                     android:orientation="vertical">
 
                     <ImageView
@@ -145,7 +145,7 @@
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_accountancyxhdpi"
+                    android:background="@drawable/tile_accountancy"
                     android:orientation="vertical">
 
                     <ImageView
@@ -171,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="34dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_biologyxhdpi"
+                    android:background="@drawable/tile_biology"
                     android:orientation="vertical">
 
                     <ImageView
@@ -190,7 +190,7 @@
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_computerxhdpi"
+                    android:background="@drawable/tile_computer"
                     android:orientation="vertical">
 
                     <ImageView
@@ -214,7 +214,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_chemistryxhdpi"
+                    android:background="@drawable/tile_chemistry"
                     android:orientation="vertical">
 
                     <ImageView
@@ -233,7 +233,7 @@
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_economicsxhdpi"
+                    android:background="@drawable/tile_economics"
                     android:orientation="vertical">
 
                     <ImageView
@@ -259,7 +259,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="34dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_businessxhdpi"
+                    android:background="@drawable/tile_business"
                     android:orientation="vertical">
 
                     <ImageView

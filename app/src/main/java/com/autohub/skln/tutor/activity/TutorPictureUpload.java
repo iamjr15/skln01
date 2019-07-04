@@ -1,16 +1,19 @@
 package com.autohub.skln.tutor.activity;
 
+import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -26,6 +29,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autohub.skln.BaseActivity;
+import com.autohub.skln.utills.GalleryUtil;
+import com.autohub.skln.utills.GlideApp;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.SetOptions;
@@ -34,10 +39,11 @@ import com.google.firebase.storage.StorageReference;
 import com.autohub.skln.R;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.FileDescriptor;
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,9 +55,11 @@ import static com.autohub.skln.utills.AppConstants.KEY_EXPERIENCE;
 import static com.autohub.skln.utills.AppConstants.KEY_OCCUPATION;
 import static com.autohub.skln.utills.AppConstants.KEY_PROFILE_PICTURE;
 
-/*This Activity is not in use*/
 public class TutorPictureUpload extends BaseActivity {
     private static final String TAG = "TutorPictureUpload";
+
+    private final int REQUEST_GALLERY_ACTIVITY = 200;
+    private final int REQUEST_CROP = 400;
 
     @BindView(R.id.tvSelectOccupation)
     TextView tvSelectOccupation;
@@ -59,8 +67,8 @@ public class TutorPictureUpload extends BaseActivity {
     @BindView(R.id.tvSelectExperience)
     TextView tvSelectExperience;
 
-    @BindView(R.id.Picture)
-    ImageView imageView;
+    @BindView(R.id.profile_picture)
+    ImageView ivProfilePicture;
 
     @BindView(R.id.addProfilePicture)
     RelativeLayout addPics;
@@ -98,7 +106,7 @@ public class TutorPictureUpload extends BaseActivity {
 
     @OnClick(R.id.btnNext)
     public void onNextClick() {
-        if(TextUtils.isEmpty(mProfileImageUrl)){
+        if (TextUtils.isEmpty(mProfileImageUrl)) {
             Toast.makeText(this, R.string.profile_image, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -142,149 +150,112 @@ public class TutorPictureUpload extends BaseActivity {
 
     @OnClick(R.id.addProfilePicture)
     public void onAddPicture() {
-        getImageFromAlbum(0);
+        String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        final int MyVersion = Build.VERSION.SDK_INT;
+        if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
+            if (!checkIfAlreadyhavePermission()) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    return;
+                }
+                ActivityCompat.requestPermissions(this, galleryPermissions, 0);
+            } else {
+                Intent gallery_Intent = new Intent(this, GalleryUtil.class);
+                startActivityForResult(gallery_Intent, REQUEST_GALLERY_ACTIVITY);
+            }
+        }
     }
 
-    private void getImageFromAlbum(int i) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, i);
+    private boolean checkIfAlreadyhavePermission() {
+        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // If request is cancelled, the result arrays are empty.
+        if (requestCode == 0) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent gallery_Intent = new Intent(this, GalleryUtil.class);
+                startActivityForResult(gallery_Intent, REQUEST_GALLERY_ACTIVITY);
+            } else {
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+        }
     }
 
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
 
-        String des = "Croped" + ".jpg";
+        if (reqCode == REQUEST_GALLERY_ACTIVITY) {
+            if(resultCode == RESULT_OK){
+                String picturePath = data.getStringExtra("picturePath");
+                performCrop(picturePath);
+            }
+        } else if (reqCode == REQUEST_CROP) {
+            if(resultCode == RESULT_OK){
+                if (data.getData() != null) {
+                    Bitmap bmp;
+                    bmp = BitmapFactory.decodeFile(data.getData().getPath());
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos); // photo compress before uploading
+                    byte[] bytes = baos.toByteArray();
 
-        final Uri imageUri = data.getData();
-        setImages(imageUri);
-        /*UCrop.of(imageUri, Uri.fromFile(new File(getCacheDir(), des)))
-                .withAspectRatio(4, 3)
-                .withMaxResultSize(450 , 450)
-                .start(this);
+                    //uploading the image
+                    ivProfilePicture.requestLayout();
+                    ivProfilePicture.getLayoutParams().height = 550;
+                    ivProfilePicture.getLayoutParams().width = 550;
 
-*/
-        /*if (resultCode == RESULT_OK && reqCode == UCrop.REQUEST_CROP) {
-            final Uri resultUri = UCrop.getOutput(data);
-//            setImages(f, resultUri);
+                    GlideApp.with(this).load(bmp).into(ivProfilePicture);
 
-
-        } else if (resultCode == UCrop.RESULT_ERROR) {
-            final Throwable cropError = UCrop.getError(data);
-        }
-*/
-
-    }
-
-    void setImages(Uri resultUri) {
-        Bitmap newImage = null;
-        try {
-            newImage = getResizedBitmap(getBitmapFromUri(resultUri), 64, 64);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        imageView.requestLayout();
-        imageView.getLayoutParams().height = 550;
-        imageView.getLayoutParams().width = 550;
-        imageView.setImageBitmap(newImage);
-//      Picasso.get().load(resultUri).fit().centerCrop().into(imageView);
-//      addPics.setVisibility(View.GONE);
-//      try {
-        //threadForProfile.start();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-        final StorageReference picRef = mStorageRef.child("tutor/" +
-                getFirebaseAuth().getCurrentUser().getUid() + ".jpg");
-
-        /*UploadTask uploadTask =  picRef.putFile(resultUri);
-        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
+                    showLoading();
+                    final StorageReference picRef = mStorageRef.child("tutor/" + getFirebaseAuth().getCurrentUser().getUid() + ".jpg");
+                    UploadTask uploadTask = picRef.putBytes(bytes);
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            hideLoading();
+                            mProfileImageUrl = Objects.requireNonNull(taskSnapshot.getUploadSessionUri()).toString();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            hideLoading();
+                            Toast.makeText(TutorPictureUpload.this, "Upload Failed -> " + e, Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
-
-                // Continue with the task to get the download URL
-                return picRef.getDownloadUrl();
             }
-        }).addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                mProfileImageUrl = uri.toString();
-                Toast.makeText(TutorPictureUpload.this, "Uploading Successful.", Toast.LENGTH_LONG).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(TutorPictureUpload.this, "Uploading Failed.", Toast.LENGTH_LONG).show();
-            }
-        });*/
-
-        showLoading();
-        picRef.putFile(resultUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        hideLoading();
-//                        Uri downloadUrl = taskSnapshot.get();
-//                        mProfileImageUrl = downloadUrl.toString();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        hideLoading();
-                        Toast.makeText(TutorPictureUpload.this, "Uploading Failed.", Toast.LENGTH_LONG).show();
-                        e.printStackTrace();
-                    }
-                });
+        }
     }
 
-    public Bitmap getResizedBitmap(Bitmap image, int bitmapWidth, int bitmapHeight) {
-        return Bitmap.createScaledBitmap(image, bitmapWidth, bitmapHeight, true);
+    private void performCrop(String picUri) {
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            File f = new File(picUri);
+            Uri contentUri = Uri.fromFile(f);
+            cropIntent.setDataAndType(contentUri, "image/*");
+            cropIntent.putExtra("crop", "true");
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            cropIntent.putExtra("outputX", 280);
+            cropIntent.putExtra("outputY", 280);
+            cropIntent.putExtra("return-data", true);
+
+            startActivityForResult(cropIntent, REQUEST_CROP);
+
+        } catch (ActivityNotFoundException anfe) {
+            String errorMessage = "your device doesn't support the crop action!";
+            Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
-
-    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
-        ParcelFileDescriptor parcelFileDescriptor =
-                getContentResolver().openFileDescriptor(uri, "r");
-        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-        parcelFileDescriptor.close();
-        return image;
-    }
-
-    /*public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
-
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-
-        // create a matrix for the manipulation
-        Matrix matrix = new Matrix();
-
-        // resize the bit map
-        matrix.postScale(scaleWidth, scaleHeight);
-
-        // recreate the new Bitmap
-        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height,
-                matrix, false);
-
-        return resizedBitmap;
-    }*/
 
     @OnClick(R.id.tvSelectOccupation)
     public void onOccupationClick(View v) {
         Drawable img = this.getResources().getDrawable(R.drawable.chevron_with_circle_up);
-        img.setBounds(0, 0, 120, 120);
-        tvSelectOccupation.setCompoundDrawables(null, null, img, null);
+        tvSelectOccupation.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
         PopupWindow popUp = popupOccupation(v);
         popUp.showAsDropDown(v, 0, 10);
     }
@@ -292,8 +263,7 @@ public class TutorPictureUpload extends BaseActivity {
     @OnClick(R.id.tvSelectExperience)
     public void onExpClick(View v) {
         Drawable img = this.getResources().getDrawable(R.drawable.chevron_with_circle_up);
-        img.setBounds(0, 0, 120, 120);
-        tvSelectExperience.setCompoundDrawables(null, null, img, null);
+        tvSelectExperience.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
         PopupWindow popUp = popupWindowExp();
         popUp.showAsDropDown(v, 0, 10);
     }
@@ -308,9 +278,7 @@ public class TutorPictureUpload extends BaseActivity {
             @Override
             public void onDismiss() {
                 Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
-                img.setBounds(0, 0, 120, 120);
-                tvSelectOccupation.setCompoundDrawables(null, null, img, null);
-
+                tvSelectOccupation.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
             }
         });
         ListView listViewSort = new ListView(this);
@@ -320,10 +288,8 @@ public class TutorPictureUpload extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
-                img.setBounds(0, 0, 120, 120);
                 tvSelectOccupation.setText(mSelectedOccp = occupations[position]);
-                tvSelectOccupation.setCompoundDrawables(null, null, img, null);
-
+                tvSelectOccupation.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
                 if (popupWindowOccp != null) {
                     popupWindowOccp.dismiss();
                 }
@@ -349,9 +315,8 @@ public class TutorPictureUpload extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
-                img.setBounds(0, 0, 120, 120);
                 tvSelectExperience.setText(mSelectedExp = experiences[position]);
-                tvSelectExperience.setCompoundDrawables(null, null, img, null);
+                tvSelectExperience.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
 
                 if (popupWindowExp != null) {
                     popupWindowExp.dismiss();
@@ -364,8 +329,7 @@ public class TutorPictureUpload extends BaseActivity {
             @Override
             public void onDismiss() {
                 Drawable img = getDrawable(R.drawable.chevron_with_circle_down);
-                img.setBounds(0, 0, 120, 120);
-                tvSelectExperience.setCompoundDrawables(null, null, img, null);
+                tvSelectExperience.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
 
             }
         });
