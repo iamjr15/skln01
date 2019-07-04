@@ -34,10 +34,10 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.autohub.skln.utills.AppConstants.KEY_FIRST_NAME;
-import static com.autohub.skln.utills.AppConstants.KEY_PROFILE_PICTURE;
 
 public class TutorHomeActivity extends BaseActivity {
 
@@ -46,7 +46,7 @@ public class TutorHomeActivity extends BaseActivity {
     private ViewPager mViewPager;
 
     TextView tvHey;
-    ImageView ivPicture;
+    CircleImageView ivPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

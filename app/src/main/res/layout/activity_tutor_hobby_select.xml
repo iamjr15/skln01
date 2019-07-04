@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_guitarxhdpi"
+                    android:background="@drawable/tile_guitar"
                     android:orientation="vertical">
 
                     <ImageView
@@ -101,7 +101,7 @@
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_keyboardxhdpi"
+                    android:background="@drawable/tile_keyboard"
                     android:orientation="vertical">
 
                     <ImageView
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_martialxhdpi"
+                    android:background="@drawable/tile_martial"
                     android:orientation="vertical">
 
                     <ImageView
@@ -145,7 +145,7 @@
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_dancexhdpi"
+                    android:background="@drawable/tile_dance"
                     android:orientation="vertical">
 
                     <ImageView
@@ -170,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_paintingxhdpi"
+                    android:background="@drawable/tile_painting"
                     android:orientation="vertical">
 
                     <ImageView
@@ -189,7 +189,7 @@
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/layers_drumxhdpi"
+                    android:background="@drawable/tile_drum"
                     android:orientation="vertical">
 
                     <ImageView

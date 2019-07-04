@@ -153,6 +153,7 @@ public class NumberVerificationActivity extends BaseActivity {
                                 }
                             });
                         } else {
+                            hideLoading();
                             if (task.getException() instanceof FirebaseAuthException) {
                                 showSnackError(task.getException().getMessage());
                             } else {

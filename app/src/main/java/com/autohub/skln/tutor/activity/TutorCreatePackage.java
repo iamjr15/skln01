@@ -96,8 +96,7 @@ public class TutorCreatePackage extends BaseActivity {
     @OnClick(R.id.tvClassType)
     public void onClassTypeClick(View v) {
         Drawable img = this.getResources().getDrawable(R.drawable.drop_down_arrow_up);
-        img.setBounds(0, 0, 120, 120);
-        tvClassType.setCompoundDrawables(null, null, img, null);
+        tvClassType.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
         PopupWindow popUp = createPopupClassType();
         popUp.showAsDropDown(v, 0, 10);
     }
@@ -113,9 +112,8 @@ public class TutorCreatePackage extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Drawable img = getDrawable(R.drawable.drop_down_arrow);
-                img.setBounds(0, 0, 120, 120);
                 tvClassType.setText(mSelectedClassType = classTypes[position]);
-                tvClassType.setCompoundDrawables(null, null, img, null);
+                tvClassType.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
 
                 if (mSelectedClassType.equals(classTypes[0])) {
                     if (tvMaxStudents.getVisibility() == View.GONE) {
@@ -137,8 +135,7 @@ public class TutorCreatePackage extends BaseActivity {
             @Override
             public void onDismiss() {
                 Drawable img = getDrawable(R.drawable.drop_down_arrow);
-                img.setBounds(0, 0, 120, 120);
-                tvClassType.setCompoundDrawables(null, null, img, null);
+                tvClassType.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
             }
         });
         popupClassType.setFocusable(true);
@@ -150,8 +147,7 @@ public class TutorCreatePackage extends BaseActivity {
     @OnClick(R.id.tvClassNumber)
     public void onClassNumberClick(View v) {
         Drawable img = this.getResources().getDrawable(R.drawable.drop_down_arrow_up);
-        img.setBounds(0, 0, 120, 120);
-        tvClassNumber.setCompoundDrawables(null, null, img, null);
+        tvClassNumber.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
         PopupWindow popUp = createPopupClassNumber();
         popUp.showAsDropDown(v, 0, 10);
     }
@@ -167,9 +163,8 @@ public class TutorCreatePackage extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Drawable img = getDrawable(R.drawable.drop_down_arrow);
-                img.setBounds(0, 0, 120, 120);
                 tvClassNumber.setText("" + (mSelectedClassNumber = Integer.parseInt(classNumbers[position])));
-                tvClassNumber.setCompoundDrawables(null, null, img, null);
+                tvClassNumber.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
 
                 if (popupClassNumber != null) {
                     popupClassNumber.dismiss();
@@ -181,8 +176,7 @@ public class TutorCreatePackage extends BaseActivity {
             @Override
             public void onDismiss() {
                 Drawable img = getDrawable(R.drawable.drop_down_arrow);
-                img.setBounds(0, 0, 120, 120);
-                tvClassNumber.setCompoundDrawables(null, null, img, null);
+                tvClassNumber.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
             }
         });
         popupClassNumber.setFocusable(true);
@@ -194,8 +188,7 @@ public class TutorCreatePackage extends BaseActivity {
     @OnClick(R.id.tvClassFreq)
     public void onClassFreqClick(View v) {
         Drawable img = this.getResources().getDrawable(R.drawable.drop_down_arrow_up);
-        img.setBounds(0, 0, 120, 120);
-        tvClassFreq.setCompoundDrawables(null, null, img, null);
+        tvClassFreq.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
         PopupWindow popUp = createPopupClassFreq();
         popUp.showAsDropDown(v, 0, 10);
     }
@@ -211,9 +204,8 @@ public class TutorCreatePackage extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Drawable img = getDrawable(R.drawable.drop_down_arrow);
-                img.setBounds(0, 0, 120, 120);
                 tvClassFreq.setText(mSelectedClassFreq = classFreqs[position]);
-                tvClassFreq.setCompoundDrawables(null, null, img, null);
+                tvClassFreq.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
 
                 if (popupClassFreq != null) {
                     popupClassFreq.dismiss();
@@ -225,8 +217,7 @@ public class TutorCreatePackage extends BaseActivity {
             @Override
             public void onDismiss() {
                 Drawable img = getDrawable(R.drawable.drop_down_arrow);
-                img.setBounds(0, 0, 120, 120);
-                tvClassFreq.setCompoundDrawables(null, null, img, null);
+                tvClassFreq.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
             }
         });
         popupClassFreq.setFocusable(true);
@@ -238,8 +229,7 @@ public class TutorCreatePackage extends BaseActivity {
     @OnClick(R.id.tvMaxStudents)
     public void onMaxStudentsClick(View v) {
         Drawable img = this.getResources().getDrawable(R.drawable.drop_down_arrow_up);
-        img.setBounds(0, 0, 120, 120);
-        tvMaxStudents.setCompoundDrawables(null, null, img, null);
+        tvMaxStudents.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
         PopupWindow popUp = createPopupMaxStudents();
         popUp.showAsDropDown(v, 0, 10);
     }
@@ -255,9 +245,8 @@ public class TutorCreatePackage extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Drawable img = getDrawable(R.drawable.drop_down_arrow);
-                img.setBounds(0, 0, 120, 120);
                 tvMaxStudents.setText("" + (mSelectedMaxStudents = Integer.parseInt(maxStudents[position])));
-                tvMaxStudents.setCompoundDrawables(null, null, img, null);
+                tvMaxStudents.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
 
                 if (popupMaxStudents != null) {
                     popupMaxStudents.dismiss();
@@ -269,8 +258,7 @@ public class TutorCreatePackage extends BaseActivity {
             @Override
             public void onDismiss() {
                 Drawable img = getDrawable(R.drawable.drop_down_arrow);
-                img.setBounds(0, 0, 120, 120);
-                tvMaxStudents.setCompoundDrawables(null, null, img, null);
+                tvMaxStudents.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
             }
         });
         popupMaxStudents.setFocusable(true);
