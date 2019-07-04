@@ -296,21 +296,40 @@ public class TutorCreatePackage extends BaseActivity {
 
         showLoading();
 
-        Map<String, Object> user = new HashMap<>();
+        final Map<String, Object> user = new HashMap<>();
         user.put(KEY_CLASS_TYPE, mSelectedClassType);
         user.put(KEY_NO_OF_CLASSES, mSelectedClassNumber);
         user.put(KEY_CLASS_FREQUENCY, mSelectedClassFreq);
         user.put(KEY_MAX_STUDENTS, mSelectedMaxStudents);
         user.put(KEY_RATE, edtRate.getText().toString());
-        user.put(KEY_PHONE_NUMBER, getAppPreferenceHelper().getUserPhone());
 
-        getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
+        final Map<String, Object> user1 = new HashMap<>();
+        user1.put(KEY_PHONE_NUMBER, getAppPreferenceHelper().getUserPhone());
+
+        getFirebaseStore().collection(getString(R.string.db_root_tutors)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        hideLoading();
-                        startActivity(new Intent(TutorCreatePackage.this, TutorHomeActivity.class));
-                        finish();
+
+                        getFirebaseStore().collection(getString(R.string.db_root_all_users)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user1, SetOptions.merge())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        hideLoading();
+
+                                        Intent i = new Intent(TutorCreatePackage.this, TutorHomeActivity.class);
+                                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(i);
+                                        finish();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        hideLoading();
+                                        showSnackError(e.getMessage());
+                                    }
+                                });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

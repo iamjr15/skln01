@@ -128,7 +128,7 @@ public class TutorPictureUpload extends BaseActivity {
         user.put(KEY_OCCUPATION, mSelectedOccp);
         user.put(KEY_EXPERIENCE, mSelectedExp);
 
-        getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
+        getFirebaseStore().collection(getString(R.string.db_root_tutors)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

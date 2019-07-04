@@ -1,7 +1,6 @@
 package com.autohub.skln.tutor.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
@@ -15,7 +14,6 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.View;
 
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autohub.skln.BaseActivity;
@@ -60,7 +58,7 @@ public class TutorHomeActivity extends BaseActivity {
                 getFirebaseAuth().getCurrentUser().getUid() + ".jpg");
         GlideApp.with(this).load(ref).into(ivPicture);
 
-        getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).get()
+        getFirebaseStore().collection(getString(R.string.db_root_tutors)).document(getFirebaseAuth().getCurrentUser().getUid()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
