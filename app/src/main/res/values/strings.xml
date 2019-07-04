@@ -121,7 +121,7 @@
     <string name="choose_subjects">Please choose subjects</string>
     <string name="please_wait">Please wait...</string>
     <string name="sending">Sending code... Please wait.</string>
-    <string name="db_root_users">users</string>
+    <string name="db_root_tutors">tutors</string>
     <string name="welcome_onboard">Welcome \nOnboard.</string>
     <string name="s_">s.</string>
     <string name="enter_your_phonenum">Enter your phone\nnumber to\ncontinue.</string>
@@ -173,4 +173,7 @@
     <string name="select_class_freq">Please select your class frequency.</string>
     <string name="select_max_students_capacity">Please specify maximum students capacity.</string>
     <string name="input_rate">Please specify your rate.</string>
+    <string name="db_root_all_users">AllUsers</string>
+    <string name="student_part_coming_soon">Student part coming soon...</string>
+    <string name="db_root_students">students</string>
 </resources>

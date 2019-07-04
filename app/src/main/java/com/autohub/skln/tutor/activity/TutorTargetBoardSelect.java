@@ -1,6 +1,5 @@
 package com.autohub.skln.tutor.activity;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -34,7 +32,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnCheckedChanged;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.autohub.skln.utills.AppConstants.BOARD_CBSE;
@@ -113,7 +110,7 @@ public class TutorTargetBoardSelect extends BaseActivity {
         user.put(KEY_QUALIFICATION, mSelectedQualification);
         user.put(KEY_AREA_QUALIFICATION, mSelectedArea);
 
-        getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
+        getFirebaseStore().collection(getString(R.string.db_root_tutors)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

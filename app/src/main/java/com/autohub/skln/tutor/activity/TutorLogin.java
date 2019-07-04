@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
+import com.autohub.skln.TutorOrStudent;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -49,7 +50,7 @@ public class TutorLogin extends BaseActivity {
                     showSnackError(R.string.enter_password);
                 } else {
                     showLoading();
-                    getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    getFirebaseStore().collection(getString(R.string.db_root_tutors)).document(getFirebaseAuth().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {

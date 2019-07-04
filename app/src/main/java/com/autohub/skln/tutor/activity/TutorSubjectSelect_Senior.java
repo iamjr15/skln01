@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.autohub.skln.BaseActivity;
@@ -103,7 +102,7 @@ public class TutorSubjectSelect_Senior extends BaseActivity {
         Map<String, Object> user = new HashMap<>();
         user.put(KEY_SUBJECTS, stringBuilder.toString());
 
-        getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
+        getFirebaseStore().collection(getString(R.string.db_root_tutors)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

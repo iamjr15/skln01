@@ -87,7 +87,7 @@ public class TutorSubjectSelect extends BaseActivity {
         Map<String, Object> user = new HashMap<>();
         user.put(KEY_SUBJECTS, stringBuilder.toString());
 
-        getFirebaseStore().collection(getString(R.string.db_root_users)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
+        getFirebaseStore().collection(getString(R.string.db_root_tutors)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

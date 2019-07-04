@@ -43,7 +43,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".tutor.activity.TutorOrStudent"
+            android:name=".TutorOrStudent"
             android:screenOrientation="portrait">
         </activity>
         <activity
