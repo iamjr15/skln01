@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
-import com.autohub.skln.tutor.activity.TutorSignupStart;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -43,7 +41,9 @@ public class TutorOrStudent extends BaseActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         hideLoading();
-                        startActivity(new Intent(TutorOrStudent.this, TutorSignupStart.class));
+                        Intent i = new Intent(TutorOrStudent.this, SignupStart.class);
+                        i.putExtra(KEY_ACCOUNT_TYPE, TYPE_TUTOR);
+                        startActivity(i);
                         finish();
                     }
                 })
@@ -69,9 +69,11 @@ public class TutorOrStudent extends BaseActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         hideLoading();
-//                        startActivity(new Intent(TutorOrStudent.this, StudentSignupStart.class));
-//                        finish();
-                        Toast.makeText(TutorOrStudent.this, R.string.student_part_coming_soon, Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(TutorOrStudent.this, SignupStart.class);
+                        i.putExtra(KEY_ACCOUNT_TYPE, TYPE_STUDENT);
+                        startActivity(i);
+                        finish();
+//                        Toast.makeText(TutorOrStudent.this, R.string.student_part_coming_soon, Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -82,7 +84,7 @@ public class TutorOrStudent extends BaseActivity {
                     }
                 });
 
-        Map<String, Object> user1 = new HashMap<>();
+        /*Map<String, Object> user1 = new HashMap<>();
         user1.put("N/A", getResources().getString(R.string.student_part_coming_soon));
         getFirebaseStore().collection(getString(R.string.db_root_students)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user1)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -94,7 +96,7 @@ public class TutorOrStudent extends BaseActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                     }
-                });
+                });*/
     }
 
     @Override

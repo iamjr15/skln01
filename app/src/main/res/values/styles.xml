@@ -36,7 +36,9 @@
     <style name="s_small">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">bottom|left</item>
     </style>
 
     <style name="login">
@@ -180,7 +182,7 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <style name="hey_tutor_style">
+    <style name="hey_user_style">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">25sp</item>
         <item name="android:textStyle">bold</item>
@@ -203,6 +205,27 @@
         <item name="android:textColor">#ffe55353</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="hey_student_style">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">80sp</item>
+    </style>
+
+    <style name="hey_student_name_style">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">54sp</item>
+    </style>
+
+    <style name="hey_student_lets_style">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="signup_student_jack_style">
+        <item name="android:textColor">@color/blue_jack</item>
+        <item name="android:textSize">19sp</item>
     </style>
 
 </resources>

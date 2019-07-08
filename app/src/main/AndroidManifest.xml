@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.autohub.skln.AppController"
+        android:name=".AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".student.StudentHey"></activity>
         <activity
             android:name=".WelcomeActivity"
             android:screenOrientation="portrait">
@@ -30,24 +31,23 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".tutor.activity.TutorLogin"
+            android:name=".LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".tutor.activity.TutorSubjectSelect_Senior"
+            android:name=".tutor.TutorSubjectSelect_Senior"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".tutor.activity.TutorHomeActivity"
+            android:name=".tutor.TutorHomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".TutorOrStudent"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".tutor.activity.TutorSignupStart"
+            android:name=".SignupStart"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -55,38 +55,61 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
-            android:name=".tutor.activity.TutorCategorySelect"
+            android:name=".tutor.TutorCategorySelect"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".tutor.activity.TutorClassSelect"
+            android:name=".tutor.TutorClassSelect"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".tutor.activity.TutorHobbySelect"
+            android:name=".tutor.TutorHobbySelect"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".tutor.activity.TutorSubjectSelect"
+            android:name=".tutor.TutorSubjectSelect"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".tutor.activity.TutorPictureUpload"
+            android:name=".tutor.TutorPictureUpload"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".tutor.activity.TutorTargetBoardSelect"
+            android:name=".tutor.TutorTargetBoardSelect"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".tutor.activity.TutorBiodata"
+            android:name=".tutor.TutorBiodata"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".tutor.activity.TutorCreatePackage"
+            android:name=".tutor.TutorCreatePackage"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".utills.GalleryUtil" />
+        <activity
+            android:name=".utills.GalleryUtil"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".student.StudentHomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".student.StudentClassSelect"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".student.StudentSubjectSelect"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".student.StudentSubjectSelect_Senior"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".student.StudentHobbySelect"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>
