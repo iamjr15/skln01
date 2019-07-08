@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.autohub.skln.tutor.activity.TutorLogin;
 import com.goodiebag.pinview.Pinview;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,6 +29,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.autohub.skln.utills.AppConstants.KEY_ACCOUNT_TYPE;
 import static com.autohub.skln.utills.AppConstants.KEY_PHONE_NUMBER;
+import static com.autohub.skln.utills.AppConstants.TYPE_STUDENT;
 import static com.autohub.skln.utills.AppConstants.TYPE_TUTOR;
 
 
@@ -140,9 +140,22 @@ public class NumberVerificationActivity extends BaseActivity {
 
                                         if (!TextUtils.isEmpty(phoneNumber) && phoneNumber.equals(countryCode + phoneNum) &&
                                         !TextUtils.isEmpty(accountType) && accountType.equals(TYPE_TUTOR)) {
-                                            startActivity(new Intent(NumberVerificationActivity.this, TutorLogin.class));
+
+                                            Intent i = new Intent(NumberVerificationActivity.this, LoginActivity.class);
+                                            i.putExtra(KEY_ACCOUNT_TYPE, TYPE_TUTOR);
+                                            startActivity(i);
                                             finish();
                                             return;
+
+                                        } else if (!TextUtils.isEmpty(phoneNumber) && phoneNumber.equals(countryCode + phoneNum) &&
+                                                !TextUtils.isEmpty(accountType) && accountType.equals(TYPE_STUDENT)) {
+
+                                            Intent i = new Intent(NumberVerificationActivity.this, LoginActivity.class);
+                                            i.putExtra(KEY_ACCOUNT_TYPE, TYPE_STUDENT);
+                                            startActivity(i);
+                                            finish();
+                                            return;
+
                                         }
                                     }
 

@@ -50,7 +50,7 @@ public class AppConstants {
     public static final String IV = "abcdefgh";
     public static final String KEY = "MyKey";
 
-    // firestore db keys
+    // firestore db keys - tutor
     public static final String KEY_PHONE_NUMBER = "phone_number";
     public static final String KEY_ACCOUNT_TYPE = "account_type";
     public static final String KEY_PASSWORD = "password";
@@ -73,4 +73,11 @@ public class AppConstants {
     public static final String KEY_CLASS_FREQUENCY = "class_frequency";
     public static final String KEY_MAX_STUDENTS = "max_students_capacity";
     public static final String KEY_RATE = "rate";
+
+    // firestore db keys - student
+    public static final String KEY_STDT_CLASS = "class";
+    public static final String KEY_STDT_FAVORITE_CLASSES = "favorite_classes";
+    public static final String KEY_STDT_LEAST_FAV_CLASSES = "least_favorite_classes";
+    public static final String KEY_STDT_HOBBIES = "hobbies_to_pursue";
+
 }

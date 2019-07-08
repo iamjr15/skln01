@@ -7,11 +7,11 @@ public interface PreferencesHelper {
 
     void setTutorCategory(String category);
 
-    void setTutorName(String fname);
+//    void setTutorName(String fname);
 
     String getUserPhone();
 
     String getTutorCategory();
 
-    String getTutorName();
+//    String getTutorName();
 }

@@ -9,11 +9,12 @@
     <TextView
         style="@style/s_small"
         android:id="@+id/tvS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="36dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp"
-        android:padding="15dp"
+        android:paddingStart="6dp"
+        android:paddingBottom="2dp"
         android:background="@drawable/border_round_rect"
         android:text="@string/s_" />
 

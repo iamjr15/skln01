@@ -176,4 +176,11 @@
     <string name="db_root_all_users">AllUsers</string>
     <string name="student_part_coming_soon">Student part coming soon...</string>
     <string name="db_root_students">students</string>
+    <string name="select_class_text_1">Select the class you are in.</string>
+    <string name="hey">Hey,</string>
+    <string name="lets_custom_learning_plan">let\'s customize your learning plan.</string>
+    <string name="select_favorite_subject">select your favourite subjects.</string>
+    <string name="select_least_favorite_subject">select your least favourite subjects.</string>
+    <string name="jack_a_dull">\"All work and no play makes  Jack/Jake a dull boy/girl\"</string>
+    <string name="select_hobby_text_1">Select some hobbies to pursue.</string>
 </resources>
