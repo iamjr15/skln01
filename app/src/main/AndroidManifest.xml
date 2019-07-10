@@ -16,7 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".student.StudentHey"></activity>
         <activity
             android:name=".WelcomeActivity"
             android:screenOrientation="portrait">
@@ -26,6 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".student.StudentHey"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
@@ -45,7 +47,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".TutorOrStudent"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SignupStart"
             android:screenOrientation="portrait"
