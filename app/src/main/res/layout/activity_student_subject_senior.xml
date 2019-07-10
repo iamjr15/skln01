@@ -78,8 +78,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLMaths"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginTop="34dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/tile_maths"
@@ -96,8 +96,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLEnglish"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -122,8 +122,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLPhysics"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/tile_physics"
@@ -140,8 +140,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLAccountancy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -167,8 +167,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLBiology"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginTop="34dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/tile_biology"
@@ -185,8 +185,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLComputerScience"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -210,8 +210,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLChemistry"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/tile_chemistry"
@@ -228,8 +228,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLEconomics"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -255,8 +255,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLBusiness"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginTop="34dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/tile_business"
