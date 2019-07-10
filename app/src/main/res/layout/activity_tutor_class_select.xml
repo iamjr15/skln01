@@ -78,8 +78,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLClass1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/tile_class1"
@@ -96,8 +96,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLClass2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -122,8 +122,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLClass3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/tile_class3"
@@ -140,8 +140,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLClass4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -166,8 +166,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLClass5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/tile_class5"
@@ -184,8 +184,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLClass6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -209,8 +209,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLClass7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/tile_class7"
@@ -227,8 +227,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLClass8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -237,8 +237,8 @@
 
                     <ImageView
                         android:id="@+id/ivClass8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/tile_width"
+                        android:layout_height="@dimen/tile_height"
                         android:layout_gravity="end"
                         android:layout_margin="10dp"
                         android:background="@drawable/chosen_circle" />
@@ -252,8 +252,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLClass9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/tile_class9"
@@ -270,8 +270,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLClass10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -295,8 +295,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLClass11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/tile_class11"
@@ -313,8 +313,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLClass12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"

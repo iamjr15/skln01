@@ -78,8 +78,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLGuitar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/tile_guitar"
@@ -96,8 +96,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLkeyboard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -122,8 +122,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLMartialArts"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/tile_martial"
@@ -140,8 +140,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLDance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
@@ -166,8 +166,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLPainting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/tile_painting"
@@ -184,8 +184,8 @@
 
                 <LinearLayout
                     android:id="@+id/LLDrum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/tile_width"
+                    android:layout_height="@dimen/tile_height"
                     android:layout_marginStart="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
