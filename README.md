@@ -1,6 +1,6 @@
 Max. S
 
-- SKLN (test application)
+- SKLN 
 Tutor Signup Part
 
 - Platform
