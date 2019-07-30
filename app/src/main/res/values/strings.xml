@@ -122,7 +122,7 @@
     <string name="please_wait">Please wait...</string>
     <string name="sending">Sending code... Please wait.</string>
     <string name="db_root_tutors">tutors</string>
-    <string name="welcome_onboard">Welcome \nOnboard.</string>
+    <string name="welcome_onboard">Welcome\nOnboard.</string>
     <string name="s_">s.</string>
     <string name="enter_your_phonenum">Enter your phone\nnumber to\ncontinue.</string>
     <string name="tutor">Tutor</string>
@@ -183,4 +183,7 @@
     <string name="select_least_favorite_subject">select your least favourite subjects.</string>
     <string name="jack_a_dull">\"All work and no play makes  Jack/Jake a dull boy/girl\"</string>
     <string name="select_hobby_text_1">Select some hobbies to pursue.</string>
+    <string name="enter_valid_number">Enter valid number</string>
+    <string name="authentication_failed">Authentication faild</string>
+    <string name="please_wait_to_receive_pin">Wait to receive pin</string>
 </resources>
