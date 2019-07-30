@@ -1,109 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-    <TextView
-        style="@style/s_small"
-        android:id="@+id/tvS"
-        android:layout_width="35dp"
-        android:layout_height="36dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
-        android:paddingStart="6dp"
-        android:paddingBottom="2dp"
-        android:background="@drawable/border_round_rect"
-        android:text="@string/s_" />
+    <data>
 
-    <TextView
-        android:id="@+id/tvLogin"
-        style="@style/signup_general_hint_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/tvS"
-        android:layout_marginTop="13dp"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        android:text="@string/login_" />
+        <variable
+            name="callback"
+            type="com.autohub.skln.LoginActivity" />
+    </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tvLogin"
-        android:layout_marginTop="36dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp" >
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvWelcomeBack"
-            style="@style/welcome_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="31dp"
-            android:text="@string/welcome_back" />
-
-        <TextView
-            android:id="@+id/tvHintPassword"
-            style="@style/signup_general_hint_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:layout_marginStart="30dp"
-            android:text="@string/hint_password" />
-
-        <LinearLayout
-            android:id="@+id/edit_password_area"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="23dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginEnd="14dp"
-            android:layout_below="@+id/tvHintPassword"
-            android:orientation="vertical">
+            android:layout_above="@+id/btnLogin">
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
+                android:id="@+id/edit_password_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shadow_rect"
-                app:passwordToggleContentDescription=""
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/colorAccent">
+               android:layout_margin="16dp"
+                android:orientation="vertical">
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/edtPassword"
+                <TextView
+                    android:id="@+id/tvS"
+                    style="@style/s_small"
+                    android:layout_width="35dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/border_round_rect"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/s_" />
+
+                <TextView
+                    android:id="@+id/tvLogin"
+                    style="@style/Heading"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/login_"
+                    android:textAllCaps="true"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/tvWelcomeBack"
+                    style="@style/Heading"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="36dp"
+                    android:text="@string/welcome_back"
+                    android:textSize="28sp" />
+
+                <TextView
+                    android:id="@+id/tvHintPassword"
+                    style="@style/signup_general_hint_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="35dp"
+                    android:text="@string/hint_password" />
+
+
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:inputType="textPassword"/>
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_marginTop="23dp"
+                    android:background="@drawable/shadow_rect"
+                    app:passwordToggleContentDescription=""
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/colorAccent">
 
-            <TextView
-                android:id="@+id/tvForgotPassword"
-                style="@style/forgot_pass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:layout_gravity="end"
-                android:text="@string/forgot_pass"
-                android:focusable="true"
-                android:clickable="true" />
-        </LinearLayout>
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/edtPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp" />
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tvForgotPassword"
+                    style="@style/Subhead"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="14dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/forgot_pass"
+                    android:textColor="@color/blue" />
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:onClick="@{()->callback.login()}"
+            android:id="@+id/btnLogin"
+            style="@style/ButtonNext"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:gravity="end|center_vertical"
+            android:text="@string/login" />
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/btnLogin"
-        style="@style/otp_next"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/button_background_red"
-        android:text="@string/login"
-        android:padding="10dp"
-        android:gravity="end|center_vertical" />
-
-</RelativeLayout>
+</layout>
