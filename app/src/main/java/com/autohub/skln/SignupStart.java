@@ -1,16 +1,15 @@
 package com.autohub.skln;
 
 import android.content.Context;
-import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
+import android.text.Editable;
 
+import com.autohub.skln.databinding.TutorSignupStartBinding;
 import com.autohub.skln.student.StudentClassSelect;
 import com.autohub.skln.tutor.TutorCategorySelect;
+import com.autohub.skln.utills.ActivityUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.SetOptions;
@@ -25,9 +24,6 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.autohub.skln.utills.AppConstants.FEMALE;
@@ -40,80 +36,70 @@ import static com.autohub.skln.utills.AppConstants.MALE;
 import static com.autohub.skln.utills.AppConstants.TYPE_TUTOR;
 
 public class SignupStart extends BaseActivity {
-
-    @BindView(R.id.tvTutorOrStudent)
-    TextView tvTutorOrStudent;
-
-    @BindView(R.id.edtFirstName)
-    EditText edtFirstName;
-
-    @BindView(R.id.edtLastName)
-    EditText edtLastName;
-
-    @BindView(R.id.sexGroup)
-    RadioGroup radioSex;
-
-    @BindView(R.id.radioMale)
-    RadioButton radioMale;
-
-    @BindView(R.id.radioFemale)
-    RadioButton radioFemale;
-
-    @BindView(R.id.edtPassword)
-    EditText edtPassword;
-
+    private TutorSignupStartBinding mBinding;
     private String mType = TYPE_TUTOR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tutor_signup_start);
-        ButterKnife.bind(this);
-
+        mBinding = DataBindingUtil.setContentView(this, R.layout.tutor_signup_start);
+        mBinding.setCallback(this);
+        mBinding.tvTutorOrStudent.setText(R.string.student);
         mType = getIntent().getStringExtra(KEY_ACCOUNT_TYPE);
-        if (mType.equalsIgnoreCase(TYPE_TUTOR))
-            tvTutorOrStudent.setText(R.string.tutor);
-        else
-            tvTutorOrStudent.setText(R.string.student);
+        if (mType.equalsIgnoreCase(TYPE_TUTOR)) {
+            mBinding.tvTutorOrStudent.setText(R.string.teacher);
+        }
+
     }
 
-    @OnClick(R.id.btnNext)
     public void onNextClick() {
-        if (edtFirstName.getText().length() == 0) {
-            edtFirstName.setError(getResources().getString(R.string.enter_name));
-            edtFirstName.requestFocus();
-            showSnackError(R.string.enter_name);
-            return;
+        if (isValid(mBinding.edtFirstName, mBinding.edtLastName)) {
+            Editable password = mBinding.edtPassword.getText();
+            if (password == null || password.length() == 0) {
+                mBinding.edtPassword.setError(getResources().getString(R.string.enter_password));
+                mBinding.edtPassword.requestFocus();
+                showSnackError(R.string.enter_password);
+                return;
+            }
+            makeSaveRequest();
         }
+    }
 
-        if (edtLastName.getText().length() == 0) {
-            edtLastName.setError(getResources().getString(R.string.enter_lastname));
-            edtLastName.requestFocus();
-            showSnackError(R.string.enter_lastname);
-            return;
-        }
-
-        if (radioSex.getCheckedRadioButtonId() == -1) {
-            radioMale.requestFocus();
-            showSnackError(R.string.select_your_sex);
-            return;
-        }
-
-        if (edtPassword.getText().length() == 0) {
-            edtPassword.setError(getResources().getString(R.string.enter_password));
-            edtPassword.requestFocus();
-            showSnackError(R.string.enter_password);
-            return;
-        }
-
+    private void makeSaveRequest() {
         showLoading();
-
         final Map<String, Object> user = new HashMap<>();
-        user.put(KEY_FIRST_NAME, edtFirstName.getText().toString());
-        user.put(KEY_LAST_NAME, edtLastName.getText().toString());
-        user.put(KEY_SEX, radioMale.isChecked() ? MALE : FEMALE);
+        user.put(KEY_FIRST_NAME, mBinding.edtFirstName.getText().toString());
+        user.put(KEY_LAST_NAME, mBinding.edtLastName.getText().toString());
+        user.put(KEY_SEX, mBinding.radioMale.isChecked() ? MALE : FEMALE);
+        user.put(KEY_PASSWORD, getEncryptedPassword());
+        String dbRoot = getString(R.string.db_root_students);
+        if (TYPE_TUTOR.equalsIgnoreCase(mType)) {
+            dbRoot = getString(R.string.db_root_tutors);
+        }
+
+        getFirebaseStore().collection(dbRoot).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        hideLoading();
+                        ActivityUtils.launchActivity(SignupStart.this,
+                                mType.equalsIgnoreCase(TYPE_TUTOR) ?
+                                        TutorCategorySelect.class : StudentClassSelect.class);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        hideLoading();
+                        showSnackError(e.getMessage());
+                    }
+                });
+    }
+
+    @NonNull
+    private String getEncryptedPassword() {
         try {
-            user.put(KEY_PASSWORD, encrypt(edtPassword.getText().toString()));
+            return encrypt(getString(mBinding.edtPassword.getText()));
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
@@ -127,37 +113,11 @@ public class SignupStart extends BaseActivity {
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         }
-
-        String dbRoot;
-        if (mType.equalsIgnoreCase(TYPE_TUTOR))
-            dbRoot = getString(R.string.db_root_tutors);
-        else
-            dbRoot = getString(R.string.db_root_students);
-
-        getFirebaseStore().collection(dbRoot).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        hideLoading();
-//                        getAppPreferenceHelper().setTutorName((String) user.get(KEY_FIRST_NAME));
-                        if (mType.equalsIgnoreCase(TYPE_TUTOR))
-                            startActivity(new Intent(SignupStart.this, TutorCategorySelect.class));
-                        else
-                            startActivity(new Intent(SignupStart.this, StudentClassSelect.class));
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        hideLoading();
-                        showSnackError(e.getMessage());
-                    }
-                });
+        return getString(mBinding.edtPassword.getText());
     }
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-
 }

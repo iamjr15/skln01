@@ -1,4 +1,8 @@
 <resources>
+    <string name="db_root_tutors">tutors</string>
+    <string name="db_root_all_users">AllUsers</string>
+    <string name="db_root_students">students</string>
+
     <string name="app_name">SKLN</string>
     <string name="login">LOGIN</string>
     <string name="sign_up">SIGNUP</string>
@@ -68,19 +72,26 @@
         <item>N/A</item>
     </string-array>
 
+    <string-array name="payment_duration">
+        <item>monthly</item>
+        <item>weekly</item>
+        <item>hourly</item>
+    </string-array>
     <string-array name="class_types_array">
+        <item>Class types</item>
         <item>Group class</item>
         <item>Individual class</item>
     </string-array>
 
     <string-array name="class_freqs_array">
+        <item>Class Frequency</item>
         <item>Weekly</item>
         <item>Monthly</item>
     </string-array>
 
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="password">set password</string>
+    <string name="password">Set Password</string>
     <string name="next">next</string>
     <string name="enter_otp">Enter the OTP.</string>
     <string name="enter_number">Enter Number</string>
@@ -109,6 +120,7 @@
     <string name="setup_rates">set rate</string>
     <string name="et_hint">adding a detailed description will help you get more relevant queries. Eg: I, Arun Dev, have done my graduation in B.Ed. from HR college, Mumbai University in 2012. I have 4 years of experience in teaching Maths and Science for std. 4-10 for CBSE and ICSE boards.</string>
     <string name="enter_name">Please enter first name</string>
+    <string name="enter_x">Please enter %s</string>
     <string name="enter_lastname">Please enter last name</string>
     <string name="enter_phone">Please enter phone number</string>
     <string name="enter_password">Please enter password</string>
@@ -121,7 +133,6 @@
     <string name="choose_subjects">Please choose subjects</string>
     <string name="please_wait">Please wait...</string>
     <string name="sending">Sending code... Please wait.</string>
-    <string name="db_root_tutors">tutors</string>
     <string name="welcome_onboard">Welcome\nOnboard.</string>
     <string name="s_">s.</string>
     <string name="enter_your_phonenum">Enter your phone\nnumber to\ncontinue.</string>
@@ -173,9 +184,7 @@
     <string name="select_class_freq">Please select your class frequency.</string>
     <string name="select_max_students_capacity">Please specify maximum students capacity.</string>
     <string name="input_rate">Please specify your rate.</string>
-    <string name="db_root_all_users">AllUsers</string>
     <string name="student_part_coming_soon">Student part coming soon...</string>
-    <string name="db_root_students">students</string>
     <string name="select_class_text_1">Select the class you are in.</string>
     <string name="hey">Hey,</string>
     <string name="lets_custom_learning_plan">let\'s customize your learning plan.</string>
@@ -186,4 +195,5 @@
     <string name="enter_valid_number">Enter valid number</string>
     <string name="authentication_failed">Authentication faild</string>
     <string name="please_wait_to_receive_pin">Wait to receive pin</string>
+    <string name="crop">Crop</string>
 </resources>

@@ -4,6 +4,10 @@ import com.autohub.skln.BuildConfig;
 
 public interface AppConstants {
     String PREF_NAME = "Skln_Prefs";
+    //General Keys
+    String KEY_DATA = BuildConfig.APPLICATION_ID + "_data_key_";
+    String KEY_FRAGMENT = BuildConfig.APPLICATION_ID + "_fragment_name_key_";
+    String KEY_URI = BuildConfig.APPLICATION_ID + "_uri_key_";
 
     // firestore db value constants
     String TYPE_TUTOR = "tutor";
@@ -75,8 +79,6 @@ public interface AppConstants {
     String KEY_CLASS_FREQUENCY = "class_frequency";
     String KEY_MAX_STUDENTS = "max_students_capacity";
     String KEY_RATE = "rate";
-    String KEY_DATA = BuildConfig.APPLICATION_ID + "_data_key_";
-    String KEY_FRAGMENT = BuildConfig.APPLICATION_ID + "_fragment_name_key_";
 
     // firestore db keys - student
     String KEY_STDT_CLASS = "class";
