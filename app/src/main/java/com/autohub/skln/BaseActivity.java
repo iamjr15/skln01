@@ -9,8 +9,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.autohub.skln.pref.PreferencesImpl;
@@ -147,5 +149,21 @@ public abstract class BaseActivity extends AppCompatActivity {
     @NonNull
     protected String getString(@Nullable Editable text) {
         return (text == null || text.length() == 0) ? "" : text.toString();
+    }
+
+    protected boolean isValid(@NonNull EditText... editTexts) {
+        for (EditText editText : editTexts) {
+            Editable text = editText.getText();
+            if (text == null || text.length() < 2) {
+                CharSequence hint = editText.getHint();
+                if (TextUtils.isEmpty(hint)) {
+                    hint = "valid value";
+                }
+                editText.setError(getString(R.string.enter_x, hint));
+                editText.requestFocus();
+                return false;
+            }
+        }
+        return true;
     }
 }
