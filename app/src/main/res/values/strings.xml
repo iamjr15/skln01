@@ -73,9 +73,9 @@
     </string-array>
 
     <string-array name="payment_duration">
-        <item>monthly</item>
-        <item>weekly</item>
-        <item>hourly</item>
+        <item>Monthly</item>
+        <item>Weekly</item>
+        <item>Hourly</item>
     </string-array>
     <string-array name="class_types_array">
         <item>Class types</item>
@@ -89,6 +89,7 @@
         <item>Monthly</item>
     </string-array>
 
+    <string name="content_description">It is image</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="password">Set Password</string>
@@ -157,9 +158,8 @@
     <string name="home">Home</string>
     <string name="toolbox">Toolbox</string>
     <string name="class_request">Class Requests</string>
-    <string name="profile">Profile</string>
     <string name="average_rating">AVG.\nRATINGS</string>
-    <string name="requests_month">REQUESTS\\nTHIS MONTH</string>
+    <string name="requests_month">REQUESTS\nTHIS MONTH</string>
     <string name="unpaid_month">UNPAID\nTHIS MONTH</string>
     <string name="teacher">Teacher</string>
     <string name="sent">Code sent.</string>
@@ -196,4 +196,9 @@
     <string name="authentication_failed">Authentication faild</string>
     <string name="please_wait_to_receive_pin">Wait to receive pin</string>
     <string name="crop">Crop</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="edit_personal_detail">Edit Personal Detail</string>
+    <string name="manage_packages">Manage Packages</string>
+    <string name="logout">Logout</string>
+    <string name="profile">Profile</string>
 </resources>

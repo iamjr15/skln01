@@ -53,20 +53,12 @@ public class StudentHomeActivity extends BaseActivity {
         tvHey = findViewById(R.id.hey_user);
         ivPicture = findViewById(R.id.iv_picture);
 
-        /*StorageReference ref = FirebaseStorage.getInstance().getReference().child("tutor/" +
-                getFirebaseAuth().getCurrentUser().getUid() + ".jpg");
-        GlideApp.with(this)
-                .load(ref)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                .skipMemoryCache(true)
-                .into(ivPicture);*/
-
         getFirebaseStore().collection(getString(R.string.db_root_students)).document(getFirebaseAuth().getCurrentUser().getUid()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String firstName = documentSnapshot.getString(KEY_FIRST_NAME);
-                        tvHey.setText("Hey, \n" + firstName + ".");
+                        tvHey.setText(String.format("Hey, \n%s.", firstName));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

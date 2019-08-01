@@ -4,39 +4,30 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.view.View;
-
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
 import com.autohub.skln.fragment.FragmentClsRequests;
+import com.autohub.skln.fragment.FragmentHome;
 import com.autohub.skln.fragment.FragmentProfile;
 import com.autohub.skln.fragment.FragmentToolbox;
-import com.autohub.skln.fragment.FragmentHome;
-import com.autohub.skln.utills.GlideApp;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
-import static com.autohub.skln.utills.AppConstants.KEY_FIRST_NAME;
 
 public class TutorHomeActivity extends BaseActivity {
 
@@ -44,40 +35,11 @@ public class TutorHomeActivity extends BaseActivity {
 
     private ViewPager mViewPager;
 
-    TextView tvHey;
-    CircleImageView ivPicture;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor_home);
-
-        tvHey = findViewById(R.id.hey_user);
-        ivPicture = findViewById(R.id.iv_picture);
-
-        StorageReference ref = FirebaseStorage.getInstance().getReference().child("tutor/" +
-                getFirebaseAuth().getCurrentUser().getUid() + ".jpg");
-        GlideApp.with(this)
-                .load(ref)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                .skipMemoryCache(true)
-                .into(ivPicture);
-
-        getFirebaseStore().collection(getString(R.string.db_root_tutors)).document(getFirebaseAuth().getCurrentUser().getUid()).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        String firstName = documentSnapshot.getString(KEY_FIRST_NAME);
-                        tvHey.setText("Hey, \n" + firstName + ".");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        showSnackError(e.getMessage());
-                    }
-                });
-
+        setStatusBarColor(R.drawable.tutor_home_header);
         mTabs.add((TextView) findViewById(R.id.tab_item_home));
         mTabs.add((TextView) findViewById(R.id.tab_item_toolbox));
         mTabs.add((TextView) findViewById(R.id.tab_item_cls_request));
@@ -95,6 +57,13 @@ public class TutorHomeActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
+                if (position == 0) {
+                    setStatusBarColor(R.drawable.tutor_home_header);
+                } else if (position == 1 || position == 2) {
+                    setStatusBarColor(R.drawable.white_header);
+                } else {
+                    setStatusBarColor(R.drawable.tutor_profile_header);
+                }
                 for (int i = 0; i < 4; i++) {
                     if (position == i) {
                         mTabs.get(i).setTextColor(getResources().getColor(R.color.black));
@@ -158,6 +127,18 @@ public class TutorHomeActivity extends BaseActivity {
         @Override
         public int getCount() {
             return 4;
+        }
+    }
+
+
+    private void setStatusBarColor(@DrawableRes int drawable) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            Drawable background = getResources().getDrawable(drawable);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
+            // window.setNavigationBarColor(requireActivity().getResources().getColor(android.R.color.transparent));
+            window.setBackgroundDrawable(background);
         }
     }
 

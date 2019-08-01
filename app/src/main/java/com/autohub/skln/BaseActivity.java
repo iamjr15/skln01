@@ -93,7 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     t@ngel : show error message using snack bar
     param : message to be shown as a String resource id
      */
-    protected void showSnackError(int resId) {
+    public void showSnackError(int resId) {
         Snackbar snackbar = Snackbar.make((findViewById(android.R.id.content)), getString(resId), Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(getResources().getColor(R.color.snack_back_color));
@@ -106,7 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     t@ngel : show error message using snack bar
     param : message as a String
      */
-    protected void showSnackError(String message) {
+    public void showSnackError(String message) {
         Snackbar snackbar = Snackbar.make((findViewById(android.R.id.content)), message, Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(getResources().getColor(R.color.snack_back_color));

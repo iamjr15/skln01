@@ -1,156 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/tutor_home_bg"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     tools:context=".tutor.TutorHomeActivity" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        
-        <TextView
-            android:id="@+id/homeTutor"
-            style="@style/s_small"
-            android:layout_width="35dp"
-            android:layout_height="36dp"
-            android:text="@string/s_"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="12dp"
-            android:paddingStart="6dp"
-            android:paddingBottom="2dp"
-            android:background="@drawable/white_bg_round_rect" />
-        
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="24dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_picture"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                app:civ_border_width="0dp"
-                app:civ_border_color="#FF000000"/>
-
-            <TextView
-                android:id="@+id/hey_user"
-                style="@style/hey_user_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:lines="2"
-                android:text="Hey, \nLaunrene." />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0" >
-                
-                <TextView
-                    android:id="@+id/avg_rating"
-                    style="@style/home_stats_value_style"
-                    android:layout_width="70dp"
-                    android:layout_height="71dp"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/home_avgrate_bg"
-                    android:gravity="center"
-                    android:text="0"/>
-
-                <TextView
-                    style="@style/home_stats_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_below="@id/avg_rating"
-                    android:gravity="center"
-                    android:text="@string/average_rating"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0" >
-
-                <TextView
-                    android:id="@+id/req_month"
-                    style="@style/home_stats_value_style"
-                    android:layout_width="70dp"
-                    android:layout_height="71dp"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/home_reqmonth_bg"
-                    android:gravity="center"
-                    android:text="0"/>
-
-                <TextView
-                    style="@style/home_stats_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_below="@id/req_month"
-                    android:gravity="center"
-                    android:text="@string/requests_month"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0" >
-
-                <TextView
-                    android:id="@+id/unpaid_month"
-                    style="@style/home_stats_value_style"
-                    android:layout_width="70dp"
-                    android:layout_height="71dp"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/home_unpaidmonth_bg"
-                    android:gravity="center"
-                    android:text="0"/>
-
-                <TextView
-                    style="@style/home_stats_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_below="@id/unpaid_month"
-                    android:gravity="center"
-                    android:text="@string/unpaid_month" />
-            </RelativeLayout>
-        </LinearLayout>
-
-    </LinearLayout>
-
     <android.support.v4.view.ViewPager
         android:id="@+id/container"
-        android:layout_marginTop="11dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.0"
-        android:background="@drawable/home_view_pager_bg"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?android:attr/actionBarSize"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <LinearLayout
+        android:layout_gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?android:attr/actionBarSize"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:background="@drawable/home_tab_bg">
@@ -208,4 +77,4 @@
             android:text="@string/profile" />
 
     </LinearLayout>
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
