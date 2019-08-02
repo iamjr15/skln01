@@ -67,7 +67,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /*
     t@ngel : show loading progress
      */
-    protected void showLoading() {
+    public void showLoading() {
         try {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage("Please wait...");
@@ -83,7 +83,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /*
     t@ngel : hide progress dialog
      */
-    protected void hideLoading() {
+    public void hideLoading() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.cancel();
         }

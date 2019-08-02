@@ -43,7 +43,6 @@ public class CropActivity extends BaseActivity {
         Uri mUri = getIntent().getParcelableExtra(AppConstants.KEY_URI);
         mCropImageView = findViewById(R.id.cropImageView);
         mCropImageView.setAspectRatio(1, 1);
-        mCropImageView.setMaxCropResultSize(1024, 1024);
         mCropImageView.setAutoZoomEnabled(true);
         mCropImageView.setImageUriAsync(mUri);
         mCropImageView.setOnCropImageCompleteListener(new CropImageView.OnCropImageCompleteListener() {

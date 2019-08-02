@@ -40,6 +40,7 @@ public class FragmentProfile extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mBinding = FragmentTutorProfileBinding.bind(view);
+        mBinding.setCalback(this);
         AppCompatActivity appCompatActivity = (AppCompatActivity) requireActivity();
         appCompatActivity.setSupportActionBar(mBinding.toolBar);
         ActionBar actionBar = appCompatActivity.getSupportActionBar();
@@ -85,6 +86,12 @@ public class FragmentProfile extends BaseFragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupProfile();
+    }
+
     private void setupProfile() {
         StorageReference ref = FirebaseStorage.getInstance().getReference().child("tutor/" +
                 getFirebaseAuth().getCurrentUser().getUid() + ".jpg");
@@ -111,5 +118,17 @@ public class FragmentProfile extends BaseFragment {
                         showSnackError(e.getMessage());
                     }
                 });
+    }
+
+    public void onEditProfileClick() {
+        ActivityUtils.launchFragment(requireContext(), EditProfileFragment.class.getName());
+    }
+
+    public void onEditPersonalDetailClick() {
+
+    }
+
+    public void onManagePackagesClick() {
+
     }
 }
