@@ -5,7 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 
 import com.autohub.skln.BaseActivity;
@@ -17,7 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * Senior Software Engineer at
  * BhimSoft on 2019-08-01.
  */
-public class BaseFragment extends Fragment {
+public class BaseDialogFragment extends DialogFragment {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseFirestore mFirebaseFirestore;
 

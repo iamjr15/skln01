@@ -137,32 +137,29 @@ public class TutorPictureUpload extends BaseActivity {
 
     public void onAddPicture() {
         String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        final int MyVersion = Build.VERSION.SDK_INT;
-        if (MyVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
-            if (!checkIfAlreadyhavePermission()) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    return;
-                }
-                ActivityCompat.requestPermissions(this, galleryPermissions, 0);
-            } else {
-                PickSetup setup = new PickSetup();
-                setup.setCancelText("Close");
-                PickImageDialog.build(setup, new IPickResult() {
-                    @Override
-                    public void onPickResult(PickResult pickResult) {
-                        if (pickResult.getError() == null) {
-                            Uri uri = pickResult.getUri();
-                            mBinding.profilePicture.setImageURI(uri);
-                            mBinding.profilePicture.setTag(pickResult.getPath());
-
-                            File file = new File(pickResult.getPath());
-                            Intent intent = new Intent(TutorPictureUpload.this, CropActivity.class);
-                            intent.putExtra(AppConstants.KEY_URI, Uri.fromFile(file));
-                            startActivityForResult(intent, 1122);
-                        }
-                    }
-                }).show(this);
+        if (!checkIfAlreadyhavePermission()) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                return;
             }
+            ActivityCompat.requestPermissions(this, galleryPermissions, 0);
+        } else {
+            PickSetup setup = new PickSetup();
+            setup.setCancelText("Close");
+            PickImageDialog.build(setup, new IPickResult() {
+                @Override
+                public void onPickResult(PickResult pickResult) {
+                    if (pickResult.getError() == null) {
+                        Uri uri = pickResult.getUri();
+                        mBinding.profilePicture.setImageURI(uri);
+                        mBinding.profilePicture.setTag(pickResult.getPath());
+
+                        File file = new File(pickResult.getPath());
+                        Intent intent = new Intent(TutorPictureUpload.this, CropActivity.class);
+                        intent.putExtra(AppConstants.KEY_URI, Uri.fromFile(file));
+                        startActivityForResult(intent, 1122);
+                    }
+                }
+            }).show(this);
         }
     }
 

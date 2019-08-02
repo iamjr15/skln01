@@ -201,4 +201,16 @@
     <string name="manage_packages">Manage Packages</string>
     <string name="logout">Logout</string>
     <string name="profile">Profile</string>
+    <string name="class_to_teach">Class To teach</string>
+    <string name="subject_to_taught">Subject To Taught</string>
+    <string name="select_ocupation">Select Occupation</string>
+    <string name="select_treaching_epereience">Select Teaching Experience</string>
+    <string name="select_area_of_qualification">Select Area of Qualification</string>
+    <string name="select_targeted_board">Select Targeted Board</string>
+    <string name="bio">Bio</string>
+    <string name="_240_remaining">240 remaining</string>
+    <string name="classes_to_teach">Classes To Teach</string>
+    <string name="update">Update</string>
+    <string name="you_can_select_class_11_12_or_vice_versa">You can select class 11/12 and vice versa.</string>
+    <string name="select_different_value">Select different value</string>
 </resources>
