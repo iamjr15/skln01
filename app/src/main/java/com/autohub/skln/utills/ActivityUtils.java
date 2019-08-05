@@ -23,7 +23,6 @@ public class ActivityUtils {
         intent.putExtra(AppConstants.KEY_DATA, bundle);
         context.startActivity(intent);
     }
-
     public static void launchFragment(@NonNull Context context, @NonNull String fragmentName) {
         Intent intent = new Intent(context, FrameActivity.class);
         intent.putExtra(AppConstants.KEY_FRAGMENT, fragmentName);

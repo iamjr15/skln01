@@ -17,6 +17,10 @@ public class FrameActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int theme = getIntent().getIntExtra(AppConstants.KEY_THEME, -1);
+        if (theme != -1) {
+            setTheme(theme);
+        }
         setContentView(R.layout.activity_frame);
         String fragmentName = getIntent().getStringExtra(AppConstants.KEY_FRAGMENT);
         if (TextUtils.isEmpty(fragmentName)) {
