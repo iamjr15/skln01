@@ -16,17 +16,13 @@ import android.widget.TextView;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
-import com.autohub.skln.fragment.FragmentClsRequests;
+import com.autohub.skln.fragment.FragmentClassRequests;
 import com.autohub.skln.fragment.FragmentHome;
 import com.autohub.skln.fragment.FragmentProfile;
 import com.autohub.skln.fragment.FragmentToolbox;
-import com.autohub.skln.utills.GlideApp;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,7 +134,7 @@ public class StudentHomeActivity extends BaseActivity {
             } else if (position == 1) {
                 return new FragmentToolbox();
             } else if (position == 2) {
-                return new FragmentClsRequests();
+                return new FragmentClassRequests();
             } else if (position == 3) {
                 return new FragmentProfile();
             }

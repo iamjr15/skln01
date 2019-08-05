@@ -213,4 +213,10 @@
     <string name="update">Update</string>
     <string name="you_can_select_class_11_12_or_vice_versa">You can select class 11/12 and vice versa.</string>
     <string name="select_different_value">Select different value</string>
+    <string name="class_requests">Class Requests</string>
+    <string name="no_data_found">No Data Found</string>
+    <string name="delete_request">Delete Request</string>
+    <string name="request_message">Please contact the student by clicking the contact button above.</string>
+    <string name="add_to_batch">Add to batch</string>
+    <string name="contact_student">Contact Student</string>
 </resources>

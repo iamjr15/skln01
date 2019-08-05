@@ -22,6 +22,9 @@
         <item name="android:windowSoftInputMode">adjustResize|stateHidden</item>
         <item name="android:windowFullscreen">false</item>
     </style>
+    <style name="AppTheme.NoActionBar.FrameActivity.Purple">
+
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

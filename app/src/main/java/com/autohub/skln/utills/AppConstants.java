@@ -8,6 +8,8 @@ public interface AppConstants {
     String KEY_DATA = BuildConfig.APPLICATION_ID + "_data_key_";
     String KEY_FRAGMENT = BuildConfig.APPLICATION_ID + "_fragment_name_key_";
     String KEY_URI = BuildConfig.APPLICATION_ID + "_uri_key_";
+    String KEY_TYPE = BuildConfig.APPLICATION_ID + "_type_";
+    String KEY_THEME = BuildConfig.APPLICATION_ID + "_theme_";
 
     // firestore db value constants
     String TYPE_TUTOR = "tutor";

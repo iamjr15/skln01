@@ -1,4 +1,4 @@
-package com.autohub.widgets;
+package com.autohub.skln.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;

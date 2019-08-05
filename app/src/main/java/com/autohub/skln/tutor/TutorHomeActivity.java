@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
-import com.autohub.skln.fragment.FragmentClsRequests;
+import com.autohub.skln.fragment.FragmentClassRequests;
 import com.autohub.skln.fragment.FragmentHome;
 import com.autohub.skln.fragment.FragmentProfile;
 import com.autohub.skln.fragment.FragmentToolbox;
@@ -117,7 +117,7 @@ public class TutorHomeActivity extends BaseActivity {
             } else if (position == 1) {
                 return new FragmentToolbox();
             } else if (position == 2) {
-                return new FragmentClsRequests();
+                return new FragmentClassRequests();
             } else if (position == 3) {
                 return new FragmentProfile();
             }
@@ -127,18 +127,6 @@ public class TutorHomeActivity extends BaseActivity {
         @Override
         public int getCount() {
             return 4;
-        }
-    }
-
-
-    private void setStatusBarColor(@DrawableRes int drawable) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            Drawable background = getResources().getDrawable(drawable);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
-            // window.setNavigationBarColor(requireActivity().getResources().getColor(android.R.color.transparent));
-            window.setBackgroundDrawable(background);
         }
     }
 
