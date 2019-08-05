@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
 import com.autohub.skln.fragment.FragmentClassRequests;
-import com.autohub.skln.fragment.FragmentHome;
 import com.autohub.skln.fragment.FragmentProfile;
 import com.autohub.skln.fragment.FragmentToolbox;
 import com.google.android.gms.tasks.OnFailureListener;

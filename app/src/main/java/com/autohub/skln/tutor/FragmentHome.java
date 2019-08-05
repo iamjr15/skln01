@@ -1,4 +1,4 @@
-package com.autohub.skln.fragment;
+package com.autohub.skln.tutor;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.autohub.skln.R;
 import com.autohub.skln.databinding.FragmentTutorHomeBinding;
+import com.autohub.skln.fragment.BaseFragment;
 import com.autohub.skln.utills.GlideApp;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnFailureListener;
