@@ -17,6 +17,14 @@ public class UserViewModel extends BaseObservable {
         mUser = user;
     }
 
+    public String getFullName() {
+        return mUser.firstName + " " + mUser.lastName;
+    }
+
+    public String getFirstAndLastNameLetter() {
+        return mUser.firstName + " " + (mUser.lastName.substring(0, 1) + ".".toUpperCase());
+    }
+
     public String getFirstName() {
         return mUser.firstName;
     }
@@ -33,8 +41,24 @@ public class UserViewModel extends BaseObservable {
         return CommonUtils.getString(mUser.classesToTeach);
     }
 
+    public String getClassType() {
+        return CommonUtils.getString(mUser.classType);
+    }
+
+    public String getClassFrequency() {
+        return CommonUtils.getString(mUser.classFrequency);
+    }
+
+    public String getMaxStudentsCapacity() {
+        return CommonUtils.getString(mUser.maxStudentsCapacity);
+    }
+
     public String getSubjectsToTeach() {
         return CommonUtils.getString(mUser.subjectsToTeach);
+    }
+
+    public String[] getSubjectsToTeachAsArray() {
+        return mUser.subjectsToTeach.split(",");
     }
 
     public String getSubjectOrHobbiesToTeach() {
@@ -53,7 +77,11 @@ public class UserViewModel extends BaseObservable {
     }
 
     public String getTeachingExp() {
-        return CommonUtils.getString(mUser.teachingExp);
+        return CommonUtils.getString(mUser.experience);
+    }
+
+    public String getNoOfClasses() {
+        return CommonUtils.getString(mUser.noOfClasses);
     }
 
     public String getQualification() {
@@ -72,6 +100,14 @@ public class UserViewModel extends BaseObservable {
         return CommonUtils.getString(mUser.bioData);
     }
 
+    public String getCostPerClasses() {
+        return String.format("RS %1$s/%2$s Classes per %3$s", mUser.rate, mUser.noOfClasses, mUser.paymentDuration);
+    }
+
+    public String getCostPerDuration() {
+        return String.format("RS %1$s / %2$s", mUser.rate, mUser.paymentDuration);
+    }
+
     public void setUser(User user) {
         this.mUser = user;
         notifyChange();
@@ -88,5 +124,9 @@ public class UserViewModel extends BaseObservable {
     public void setClasses(String classesToTeach) {
         mUser.classesToTeach = classesToTeach;
         notifyChange();
+    }
+
+    public String getUserId() {
+        return mUser.id;
     }
 }

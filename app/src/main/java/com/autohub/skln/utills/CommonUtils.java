@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -12,6 +13,23 @@ import java.util.HashSet;
  * BhimSoft on 2019-08-02.
  */
 public class CommonUtils {
+    private static final HashMap<String, String> ROMAN_CLASSES = new HashMap<>();
+
+    static {
+        ROMAN_CLASSES.put("1", "I");
+        ROMAN_CLASSES.put("2", "II");
+        ROMAN_CLASSES.put("3", "III");
+        ROMAN_CLASSES.put("4", "IV");
+        ROMAN_CLASSES.put("5", "V");
+        ROMAN_CLASSES.put("6", "VI");
+        ROMAN_CLASSES.put("7", "VII");
+        ROMAN_CLASSES.put("8", "VIII");
+        ROMAN_CLASSES.put("9", "IX");
+        ROMAN_CLASSES.put("10", "X");
+        ROMAN_CLASSES.put("11", "XI");
+        ROMAN_CLASSES.put("12", "XII");
+    }
+
     public static String getClassSuffix(final int n) {
         switch (n % 10) {
             case 1:
@@ -41,6 +59,10 @@ public class CommonUtils {
             builder.append(selectedClass).append(",");
         }
         return builder.substring(0, builder.length() - 1);
+    }
+
+    public static String getRomanCLass(String studentCLass) {
+        return ROMAN_CLASSES.get(studentCLass.trim());
     }
 
     public static <T> boolean hasLowerClasses(T set, Function<T> function) {

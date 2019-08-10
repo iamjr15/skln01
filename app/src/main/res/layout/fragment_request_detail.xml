@@ -3,6 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="requestViewModel"
+            type="com.autohub.skln.models.RequestViewModel" />
+
+        <variable
+            name="userViewModel"
+            type="com.autohub.skln.models.UserViewModel" />
+
+        <variable
+            name="tutorViewModel"
+            type="com.autohub.skln.models.UserViewModel" />
+    </data>
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,7 +32,7 @@
             android:paddingBottom="64dp">
 
             <ImageView
-                android:id="@+id/fimg"
+                android:id="@+id/request_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -27,12 +42,12 @@
                 android:src="@drawable/ic_flash" />
 
             <TextView
-                android:id="@+id/tvNewReq"
+                android:id="@+id/request_status"
                 style="@style/Heading"
-                android:layout_below="@id/fimg"
+                android:layout_below="@id/request_logo"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"
-                android:text="NEW REQUEST RECEIVED"
+                android:text="@string/new_request_received"
                 android:textColor="@color/white"
                 android:textSize="13sp" />
 
@@ -40,7 +55,7 @@
                 android:id="@+id/cv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvNewReq"
+                android:layout_below="@id/request_status"
                 android:layout_margin="16dp"
                 android:background="@color/white"
                 android:paddingBottom="4dp"
@@ -75,9 +90,10 @@
                             android:id="@+id/name"
                             style="@style/Heading"
                             android:layout_margin="8dp"
-                            android:text="Muhammad Imran"
+                            android:text="@{userViewModel.fullName}"
                             android:textAllCaps="true"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            tools:text="Muhammad Imran" />
 
                     </LinearLayout>
 
@@ -100,9 +116,10 @@
                             android:layout_margin="8dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="PHYSICS"
+                            android:text="@{requestViewModel.subject}"
                             android:textAllCaps="true"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            tools:text="Physics" />
 
                         <View
                             android:layout_width="0.6dp"
@@ -121,9 +138,10 @@
                             android:layout_margin="8dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="GROUP CLASSES"
+                            android:text="@{tutorViewModel.classType}"
                             android:textAllCaps="true"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            tools:text="GROUP CLASSES" />
                     </LinearLayout>
 
                     <View
@@ -138,9 +156,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="8dp"
-                        android:text="FEES: RS.4000 / MONTH"
+                        android:text="@{tutorViewModel.costPerDuration}"
                         android:textAllCaps="true"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        tools:text="FEES: RS.4000 / MONTH" />
 
                     <View
                         android:layout_width="match_parent"
@@ -160,9 +179,8 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-
             <Button
-                android:id="@+id/contact_std"
+                android:id="@+id/add_batch"
                 style="@style/Heading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -174,16 +192,15 @@
                 android:paddingStart="64dp"
                 android:paddingLeft="64dp"
                 android:paddingRight="64dp"
-                android:text="@string/contact_student"
-                android:textAlignment="center"
+                android:text="@string/add_to_batch"
                 android:textSize="14sp" />
 
             <Button
-                android:id="@+id/add_batch"
+                android:id="@+id/contact_std"
                 style="@style/Heading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/contact_std"
+                android:layout_below="@id/add_batch"
                 android:layout_gravity="center"
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="16dp"
@@ -192,14 +209,17 @@
                 android:paddingStart="64dp"
                 android:paddingLeft="64dp"
                 android:paddingRight="64dp"
-                android:text="@string/add_to_batch"
+                android:text="@string/contact_student"
+                android:textAlignment="center"
                 android:textSize="14sp" />
 
+
             <TextView
+                android:id="@+id/message_label"
                 style="@style/Heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/add_batch"
+                android:layout_below="@id/contact_std"
                 android:layout_gravity="center_vertical|end"
                 android:layout_margin="16dp"
                 android:gravity="center"

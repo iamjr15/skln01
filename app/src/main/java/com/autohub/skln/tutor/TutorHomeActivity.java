@@ -18,6 +18,7 @@ import com.autohub.skln.R;
 import com.autohub.skln.fragment.FragmentClassRequests;
 import com.autohub.skln.fragment.FragmentProfile;
 import com.autohub.skln.fragment.FragmentToolbox;
+import com.autohub.skln.utills.AppConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,7 +113,11 @@ public class TutorHomeActivity extends BaseActivity {
             } else if (position == 1) {
                 return new FragmentToolbox();
             } else if (position == 2) {
-                return new FragmentClassRequests();
+                Bundle bundle = new Bundle();
+                bundle.putString(AppConstants.KEY_TYPE, "tutor");
+                FragmentClassRequests fragmentClassRequests = new FragmentClassRequests();
+                fragmentClassRequests.setArguments(bundle);
+                return fragmentClassRequests;
             } else if (position == 3) {
                 return new FragmentProfile();
             }

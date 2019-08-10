@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+<data>
+    <variable
+        name="model"
+        type="com.autohub.skln.models.UserViewModel" />
+</data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_round"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/city"
+                    style="@style/Heading"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="4dp"
+                    android:text="DELHI"
+                    android:textAllCaps="true"
+                    android:textSize="12sp" />
+
+
+                <TextView
+                    android:id="@+id/distance"
+                    style="@style/Heading"
+                    android:layout_below="@+id/city"
+                    android:layout_centerHorizontal="true"
+                    android:text="1.4 Km"
+                    android:textAllCaps="true"
+                    android:textSize="9sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/content_description"
+                    android:src="@drawable/ic_heart" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/distance"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_picture"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/ic_launcher_background" />
+
+
+                    <TextView
+                        android:id="@+id/name"
+                        style="@style/Heading"
+                        tools:text="John Doe"
+                        android:text="@{model.getFullName()}"
+                        android:textSize="17sp" />
+
+                    <Button
+                        android:id="@+id/lesson_free"
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="32dp"
+                        android:background="@drawable/selector_dark_pink_round"
+                        android:text="@string/_1st_lesson_free"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white" />
+
+                    <android.support.design.chip.ChipGroup
+                        android:id="@+id/subjects"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="16dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"/>
+
+                    <TextView
+                        android:id="@+id/price_duration"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:layout_margin="16dp"
+                        android:background="@drawable/border_rectangle"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:gravity="center"
+                        android:text="@{model.getCostPerClasses}"
+                        tools:text="RS 4000/ 20 CLASSES PER MONTH"
+                        android:textAllCaps="true"
+                        android:textSize="10sp" />
+
+                    <LinearLayout
+                        android:id="@+id/ranking_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Heading"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:drawableBottom="@drawable/rank_drawable"
+                            android:drawablePadding="4dp"
+                            android:gravity="center"
+                            android:text="@string/_new"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            style="@style/Heading"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:drawableBottom="@drawable/ic_star_full"
+                            android:drawablePadding="4dp"
+                            android:gravity="center"
+                            android:text="4.2"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/Heading"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="2"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                style="@style/Heading"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center"
+                                android:text="Active\nclasses"
+                                android:textSize="8sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/lineGrayColor" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <TextView
+                            style="@style/Heading"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:text="@string/teaching_exp_dot"
+                            android:textAllCaps="true"
+                            android:textSize="8sp" />
+
+                        <TextView
+                            android:id="@+id/experience"
+                            style="@style/Heading"
+                            android:layout_gravity="center"
+                            android:gravity="end"
+                            tools:text="1-2YRS"
+                            android:text="@{model.teachingExp}"
+                            android:textSize="8sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lineGrayColor" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <TextView
+                            style="@style/Heading"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:text="@string/occupation"
+                            android:textSize="8sp" />
+
+                        <TextView
+                            android:id="@+id/occupation"
+                            style="@style/Heading"
+                            android:layout_gravity="center"
+                            android:gravity="end"
+                            tools:text="Full Time Tutor"
+                            android:text="@{model.occupation}"
+                            android:textSize="8sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lineGrayColor" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <TextView
+                            style="@style/Heading"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:text="@string/class_type"
+                            android:textSize="8sp" />
+
+                        <TextView
+                            android:id="@+id/class_type"
+                            style="@style/Heading"
+                            android:layout_gravity="center"
+                            android:gravity="end"
+                            tools:text="Group"
+                            android:text="@{model.getClassType}"
+                            android:textSize="8sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lineGrayColor" />
+
+                    <Button
+                        android:id="@+id/view_more"
+                        style="@style/Heading"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="38dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="32dp"
+                        android:background="@drawable/selector_black_round"
+                        android:text="@string/view_more"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </FrameLayout>
+</layout>
