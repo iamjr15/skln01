@@ -97,7 +97,7 @@ public class FragmentRequests extends BaseFragment {
                     List<RequestViewModel> requests = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Request request = document.toObject(Request.class);
-                        requests.add(new RequestViewModel(request, mUserType));
+                        requests.add(new RequestViewModel(request, mUserType,document.getId()));
                         Log.d(">>>Explore", "Data Is " + request.subject);
                     }
                     mAdapter.setData(requests);

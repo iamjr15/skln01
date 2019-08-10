@@ -14,21 +14,25 @@ import com.autohub.skln.utills.CommonUtils;
 public class RequestViewModel extends BaseObservable implements Parcelable {
     private Request mRequest;
     private final String mUserType;
+    private final String mRequestId;
 
-    public RequestViewModel(Request request, String userType) {
+    public RequestViewModel(Request request, String userType, String requestId) {
         mRequest = request;
         mUserType = userType;
+        mRequestId = requestId;
     }
 
     protected RequestViewModel(Parcel in) {
         mRequest = in.readParcelable(Request.class.getClassLoader());
         mUserType = in.readString();
+        mRequestId = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(mRequest, flags);
         dest.writeString(mUserType);
+        dest.writeString(mRequestId);
     }
 
     @Override
@@ -50,9 +54,9 @@ public class RequestViewModel extends BaseObservable implements Parcelable {
 
     public String getName() {
         if (mUserType.equalsIgnoreCase("student")) {
-            return mRequest.studentName;
+            return mRequest.tutorName;
         }
-        return mRequest.tutorName;
+        return mRequest.studentName;
     }
 
     public String getUserType() {
@@ -65,6 +69,10 @@ public class RequestViewModel extends BaseObservable implements Parcelable {
 
     public String getClassType() {
         return CommonUtils.getString(mRequest.classType);
+    }
+
+    public String getRequestId() {
+        return mRequestId;
     }
 
     public String getStudentClass() {

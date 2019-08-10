@@ -12,13 +12,21 @@ import android.view.ViewGroup;
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
 import com.autohub.skln.databinding.FragmentRequestDetailBinding;
+import com.autohub.skln.models.Request;
 import com.autohub.skln.models.RequestViewModel;
 import com.autohub.skln.models.User;
 import com.autohub.skln.models.UserViewModel;
 import com.autohub.skln.utills.AppConstants;
+import com.autohub.skln.utills.GlideApp;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.HashMap;
 
 /**
  * Created by m.imran
@@ -51,26 +59,17 @@ public class FragmentRequestDetail extends BaseFragment {
         mBinding.deleteRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String status = Request.STATUS.DELETED.getValue();
+                if (mRequestViewModel.getUserType().equalsIgnoreCase("student")) {
+                    status = Request.STATUS.CANCELED.getValue();
+                }
+                changeStatus(status);
             }
         });
-        fetchUser();
+        fetchStudent();
         fetchTutor();
 
-        if (mRequestViewModel.getUserType().equalsIgnoreCase("tutor")) {
-            mBinding.deleteRequest.setText(R.string.delete_request);
-            mBinding.messageLabel.setText(R.string.request_message);
-            mBinding.requestLogo.setImageResource(R.drawable.ic_flash);
-            mBinding.requestStatus.setText(R.string.new_request_received);
-            mBinding.contactStd.setText(R.string.contact_student);
-            mBinding.addBatch.setText(R.string.add_to_batch);
-        } else {
-            mBinding.deleteRequest.setText(R.string.cancel_request);
-            mBinding.messageLabel.setText(R.string.request_message_student);
-            mBinding.requestLogo.setImageResource(R.drawable.ic_request_tick);
-            mBinding.requestStatus.setText(R.string.new_request_sent);
-            mBinding.contactStd.setText(R.string.contact_skill_master);
-            mBinding.addBatch.setText(R.string.see_location_on_map);
-        }
+        setUpUi();
         mBinding.contactStd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +78,41 @@ public class FragmentRequestDetail extends BaseFragment {
         });
     }
 
-    private void fetchUser() {
+    private void setUpUi() {
+        if (mRequestViewModel.getUserType().equalsIgnoreCase("tutor")) {
+            mBinding.deleteRequest.setText(R.string.delete_request);
+            mBinding.deleteRequest.setEnabled(!mRequestViewModel.getRequest().requestStatus.equalsIgnoreCase(Request.STATUS.DELETED.getValue()));
+            mBinding.messageLabel.setText(R.string.request_message);
+            mBinding.requestLogo.setImageResource(R.drawable.ic_flash);
+            mBinding.requestStatus.setText(R.string.new_request_received);
+            mBinding.contactStd.setText(R.string.contact_student);
+            mBinding.addBatch.setText(R.string.add_to_batch);
+        } else {
+            mBinding.deleteRequest.setEnabled(!mRequestViewModel.getRequest().requestStatus.equalsIgnoreCase(Request.STATUS.CANCELED.getValue()));
+            mBinding.deleteRequest.setText(R.string.cancel_request);
+            mBinding.messageLabel.setText(R.string.request_message_student);
+            mBinding.requestLogo.setImageResource(R.drawable.ic_request_tick);
+            mBinding.requestStatus.setText(R.string.new_request_sent);
+            mBinding.contactStd.setText(R.string.contact_skill_master);
+            mBinding.addBatch.setText(R.string.see_location_on_map);
+        }
+    }
+
+    private void loadPicture() {
+        if (mStudent == null || mTutor == null) return;
+        String path = mTutor.pictureUrl;
+        if (mRequestViewModel.getUserType().equalsIgnoreCase("tutor")) {
+            path = mStudent.pictureUrl;
+        }
+        StorageReference pathReference1 = FirebaseStorage.getInstance().getReference().child(path);
+        GlideApp.with(requireContext())
+                .load(pathReference1)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .fallback(R.drawable.default_pic)
+                .into(mBinding.profilePicture);
+    }
+
+    private void fetchStudent() {
         String root = getString(R.string.db_root_students);
         getFirebaseStore().collection(root).document(mRequestViewModel.getRequest().studentId).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -90,6 +123,7 @@ public class FragmentRequestDetail extends BaseFragment {
                             mBinding.setUserViewModel(new UserViewModel(student));
                         }
                         mStudent = student;
+                        loadPicture();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -113,6 +147,7 @@ public class FragmentRequestDetail extends BaseFragment {
                         }
                         mBinding.setTutorViewModel(new UserViewModel(tutor));
                         mTutor = tutor;
+                        loadPicture();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -124,10 +159,30 @@ public class FragmentRequestDetail extends BaseFragment {
                 });
     }
 
+    private void changeStatus(final String requestStatus) {
+        showLoading();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("requestStatus", requestStatus);
+        String dbRoot = getString(R.string.db_root_requests);
+        getFirebaseStore().collection(dbRoot).document(mRequestViewModel.getRequestId()).set(map, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                hideLoading();
+                mRequestViewModel.getRequest().requestStatus = requestStatus;
+                setUpUi();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                hideLoading();
+            }
+        });
+    }
+
     private void opDialer() {
-        String number = "tel:" + mTutor.phoneNumber;
+        String number = "tel:" + mStudent.phoneNumber;
         if (mRequestViewModel.getUserType().equalsIgnoreCase("student")) {
-            number = "tel:" + mStudent.phoneNumber;
+            number = "tel:" + mTutor.phoneNumber;
         }
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse(number));

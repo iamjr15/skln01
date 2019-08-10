@@ -10,7 +10,7 @@ import android.os.Parcelable;
  */
 public class Request implements Parcelable {
     public enum STATUS {
-        PENDING("pending"), CANCELED("canceled"), ACCEPTED("accepted");
+        PENDING("pending"), CANCELED("canceled"), ACCEPTED("accepted"), DELETED("deleted");
 
         private final String value;
 

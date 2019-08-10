@@ -78,11 +78,11 @@ public class FragmentClassRequests extends BaseFragment {
         Bundle bundle = new Bundle();
         bundle.putString(AppConstants.KEY_TYPE, type);
         bundle.putParcelable(AppConstants.KEY_DATA, user);
-        String root = "Student";
-        if (mType.equalsIgnoreCase("students")) {
-            root = "Tutor";
-        }
-        bundle.putString("_user_type", root);
+//        String root = "Student";
+//        if (mType.equalsIgnoreCase("student")) {
+//            root = "Tutor";
+//        }
+        bundle.putString("_user_type", mType);
         latestRequests.setArguments(bundle);
         return latestRequests;
     }
