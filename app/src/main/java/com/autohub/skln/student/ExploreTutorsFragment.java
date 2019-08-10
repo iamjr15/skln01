@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,13 +113,14 @@ public class ExploreTutorsFragment extends BaseFragment {
             binding.setModel(new UserViewModel(user));
             binding.viewMore.setTag(user);
             binding.viewMore.setOnClickListener(mOnClickListener);
-            Log.d(">>>Url", user.pictureUrl);
-            StorageReference pathReference1 = FirebaseStorage.getInstance().getReference().child(user.pictureUrl);
-            GlideApp.with(mInflater.getContext())
-                    .load(pathReference1)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .fallback(R.drawable.default_pic)
-                    .into(binding.profilePicture);
+          if(!TextUtils.isEmpty(user.pictureUrl)) {
+              StorageReference pathReference1 = FirebaseStorage.getInstance().getReference().child(user.pictureUrl);
+              GlideApp.with(mInflater.getContext())
+                      .load(pathReference1)
+                      .diskCacheStrategy(DiskCacheStrategy.ALL)
+                      .fallback(R.drawable.default_pic)
+                      .into(binding.profilePicture);
+          }
             List<String> subjects = user.getSubjectsToTeachAsArray();
             for (String subject : subjects) {
                 ItemSubjectBinding subjectsBinding = ItemSubjectBinding.inflate(mInflater, binding.subjects, false);

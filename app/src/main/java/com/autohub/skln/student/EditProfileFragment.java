@@ -17,6 +17,7 @@ import com.autohub.skln.databinding.StudentEditProfileBinding;
 import com.autohub.skln.fragment.BaseFragment;
 import com.autohub.skln.models.User;
 import com.autohub.skln.utills.AppConstants;
+import com.autohub.skln.utills.CommonUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -39,10 +40,7 @@ import static com.autohub.skln.utills.AppConstants.KEY_FIRST_NAME;
 import static com.autohub.skln.utills.AppConstants.KEY_LAST_NAME;
 import static com.autohub.skln.utills.AppConstants.KEY_PASSWORD;
 import static com.autohub.skln.utills.AppConstants.KEY_PHONE_NUMBER;
-import static com.autohub.skln.utills.AppConstants.KEY_STDT_CURRENT_GRADE;
-import static com.autohub.skln.utills.AppConstants.KEY_STDT_FAV_SUB;
 import static com.autohub.skln.utills.AppConstants.KEY_STDT_HOBBIES;
-import static com.autohub.skln.utills.AppConstants.KEY_STDT_LEAST_FAV_SUB;
 
 public class EditProfileFragment extends BaseFragment {
     private StudentEditProfileBinding mBinding;
@@ -159,23 +157,11 @@ public class EditProfileFragment extends BaseFragment {
     }
 
     public void showGrade() {
-        final List<String> items = new ArrayList<>();
-        items.add(AppConstants.CLASS_1 + "st Grade");
-        items.add(AppConstants.CLASS_2 + "nd Grade");
-        items.add(AppConstants.CLASS_3 + "rd Grade");
-        items.add(AppConstants.CLASS_4 + "th Grade");
-        items.add(AppConstants.CLASS_5 + "th Grade");
-        items.add(AppConstants.CLASS_6 + "th Grade");
-        items.add(AppConstants.CLASS_7 + "th Grade");
-        items.add(AppConstants.CLASS_8 + "th Grade");
-        items.add(AppConstants.CLASS_9 + "th Grade");
-        items.add(AppConstants.CLASS_10 + "th Grade");
-        items.add(AppConstants.CLASS_11 + "th Grade");
-        items.add(AppConstants.CLASS_12 + "th Grade");
-        String[] namesArr = items.toArray(new String[items.size()]);
+        final String[] namesArr = new String[12];
         int indexSelected = -1;
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).equalsIgnoreCase(user.currentGrade)) {
+        for (int i = 0; i < 12; i++) {
+            namesArr[i] = (i + 1) + CommonUtils.getClassSuffix((i + 1)) + " Grade";
+            if (user.studentClass.equalsIgnoreCase(String.valueOf(i + 1))) {
                 indexSelected = i;
             }
         }
@@ -190,9 +176,8 @@ public class EditProfileFragment extends BaseFragment {
                         if (selectedPosition < 0) {
                             selectedPosition = 0;
                         }
-                        mBinding.grade.setText(items.get(selectedPosition));
-                        user.currentGrade = items.get(selectedPosition);
-                        // Do something useful withe the position of the selected radio button
+                        mBinding.grade.setText(namesArr[selectedPosition]);
+                        user.studentClass = String.valueOf(selectedPosition + 1);
                     }
                 })
                 .show();
@@ -215,16 +200,16 @@ public class EditProfileFragment extends BaseFragment {
         String[] namesArr = items.toArray(new String[items.size()]);
         boolean[] booleans = new boolean[items.size()];
         List<String> selectedItems = new ArrayList<>();
-        if (user.favouriteSub != null && !user.favouriteSub.isEmpty() && !isLeastFav) {
+        if (user.favoriteClasses != null && !user.leastFavoriteClasses.isEmpty() && !isLeastFav) {
 //            if (!isLeastFav) {
-            selectedItems = Arrays.asList(user.favouriteSub.split("\\s*,\\s*"));
+            selectedItems = Arrays.asList(user.favoriteClasses.split("\\s*,\\s*"));
 //            } else {
 
 //            }
         }
-        if (user.leastFavouriteSub != null && !user.leastFavouriteSub.isEmpty() && isLeastFav) {
+        if (user.leastFavoriteClasses != null && !user.leastFavoriteClasses.isEmpty() && isLeastFav) {
 //            if (!isLeastFav) {
-            selectedItems = Arrays.asList(user.leastFavouriteSub.split("\\s*,\\s*"));
+            selectedItems = Arrays.asList(user.leastFavoriteClasses.split("\\s*,\\s*"));
 //            } else {
 
 //            }
@@ -272,10 +257,10 @@ public class EditProfileFragment extends BaseFragment {
                             }
                         }
                         if (isLeastFav) {
-                            user.leastFavouriteSub = selectedSubString;
+                            user.leastFavoriteClasses = selectedSubString;
                             mBinding.leastFavuSubj.setText(selectedSubString);
                         } else {
-                            user.favouriteSub = selectedSubString;
+                            user.favoriteClasses = selectedSubString;
                             mBinding.favoriteSubj.setText(selectedSubString);
                         }
                     }
@@ -295,9 +280,9 @@ public class EditProfileFragment extends BaseFragment {
                         mBinding.edtLastName.setText(user.lastName);
                         mBinding.etPhoneNumber.setText(user.phoneNumber);
                         mBinding.favHobby.setText(user.hobbiesToPursue);
-                        mBinding.favoriteSubj.setText(user.favouriteSub);
-                        mBinding.leastFavuSubj.setText(user.leastFavouriteSub);
-                        mBinding.grade.setText(user.currentGrade);
+                        mBinding.favoriteSubj.setText(user.favoriteClasses);
+                        mBinding.leastFavuSubj.setText(user.leastFavoriteClasses);
+                        mBinding.grade.setText(user.studentClass);
                         mBinding.codePicker.setClickable(false);
                         mBinding.codePicker.setFocusable(false);
                         mBinding.codePicker.setEnabled(false);
@@ -320,9 +305,9 @@ public class EditProfileFragment extends BaseFragment {
         user.put(KEY_LAST_NAME, mBinding.edtLastName.getText().toString());
         user.put(KEY_PASSWORD, getEncryptedPassword());
         user.put(KEY_PHONE_NUMBER, mBinding.codePicker.getFullNumberWithPlus());
-        user.put(KEY_STDT_LEAST_FAV_SUB, mBinding.leastFavuSubj.getText().toString());
-        user.put(KEY_STDT_FAV_SUB, mBinding.favoriteSubj.getText().toString());
-        user.put(KEY_STDT_CURRENT_GRADE, mBinding.grade.getText().toString());
+        user.put(AppConstants.KEY_STDT_LEAST_FAV_CLASSES, mBinding.leastFavuSubj.getText().toString());
+        user.put(AppConstants.KEY_STDT_FAVORITE_CLASSES, mBinding.favoriteSubj.getText().toString());
+        user.put(AppConstants.KEY_STDT_CLASS, mBinding.grade.getText().toString());
         user.put(KEY_STDT_HOBBIES, mBinding.favHobby.getText().toString());
         String dbRoot = getString(R.string.db_root_students);
         getFirebaseStore().collection(dbRoot).document(getFirebaseAuth()
