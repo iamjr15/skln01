@@ -262,13 +262,14 @@ public class TutorPictureUpload extends BaseActivity {
             BufferedInputStream buf = new BufferedInputStream(new FileInputStream(file));
             buf.read(bytes, 0, bytes.length);
             buf.close();
-            final StorageReference picRef = mStorageRef.child("tutor/" + getFirebaseAuth().getCurrentUser().getUid() + ".jpg");
+            final String pathString = "tutor/" + getFirebaseAuth().getCurrentUser().getUid() + ".jpg";
+            final StorageReference picRef = mStorageRef.child(pathString);
             UploadTask uploadTask = picRef.putBytes(bytes);
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     hideLoading();
-                    mProfileImageUrl = taskSnapshot.getUploadSessionUri().toString();
+                    mProfileImageUrl = pathString;
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

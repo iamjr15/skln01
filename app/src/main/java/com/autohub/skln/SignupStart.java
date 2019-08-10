@@ -10,6 +10,7 @@ import com.autohub.skln.databinding.TutorSignupStartBinding;
 import com.autohub.skln.student.StudentClassSelect;
 import com.autohub.skln.tutor.TutorCategorySelect;
 import com.autohub.skln.utills.ActivityUtils;
+import com.autohub.skln.utills.AppConstants;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.SetOptions;
@@ -31,6 +32,7 @@ import static com.autohub.skln.utills.AppConstants.KEY_ACCOUNT_TYPE;
 import static com.autohub.skln.utills.AppConstants.KEY_FIRST_NAME;
 import static com.autohub.skln.utills.AppConstants.KEY_LAST_NAME;
 import static com.autohub.skln.utills.AppConstants.KEY_PASSWORD;
+import static com.autohub.skln.utills.AppConstants.KEY_PHONE_NUMBER;
 import static com.autohub.skln.utills.AppConstants.KEY_SEX;
 import static com.autohub.skln.utills.AppConstants.MALE;
 import static com.autohub.skln.utills.AppConstants.TYPE_TUTOR;
@@ -38,6 +40,7 @@ import static com.autohub.skln.utills.AppConstants.TYPE_TUTOR;
 public class SignupStart extends BaseActivity {
     private TutorSignupStartBinding mBinding;
     private String mType = TYPE_TUTOR;
+    private String phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,7 @@ public class SignupStart extends BaseActivity {
         if (mType.equalsIgnoreCase(TYPE_TUTOR)) {
             mBinding.tvTutorOrStudent.setText(R.string.teacher);
         }
-
+        phoneNumber = getIntent().getStringExtra(AppConstants.KEY_PHONE_NUMBER);
     }
 
     public void onNextClick() {
@@ -72,6 +75,7 @@ public class SignupStart extends BaseActivity {
         user.put(KEY_LAST_NAME, mBinding.edtLastName.getText().toString());
         user.put(KEY_SEX, mBinding.radioMale.isChecked() ? MALE : FEMALE);
         user.put(KEY_PASSWORD, getEncryptedPassword());
+        user.put(KEY_PHONE_NUMBER, phoneNumber);
         String dbRoot = getString(R.string.db_root_students);
         if (TYPE_TUTOR.equalsIgnoreCase(mType)) {
             dbRoot = getString(R.string.db_root_tutors);

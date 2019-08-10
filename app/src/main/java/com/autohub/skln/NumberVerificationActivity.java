@@ -143,7 +143,9 @@ public class NumberVerificationActivity extends BaseActivity {
                                         }
                                     }
                                     getAppPreferenceHelper().setUserPhoneNumber(mBinding.codePicker.getFullNumberWithPlus());
-                                    ActivityUtils.launchActivity(NumberVerificationActivity.this, TutorOrStudent.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(KEY_PHONE_NUMBER, mBinding.codePicker.getFullNumberWithPlus());
+                                    ActivityUtils.launchActivity(NumberVerificationActivity.this, TutorOrStudent.class, bundle);
                                     finish();
                                 }
                             });

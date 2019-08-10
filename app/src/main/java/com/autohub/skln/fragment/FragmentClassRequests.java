@@ -12,12 +12,26 @@ import android.view.ViewGroup;
 
 import com.autohub.skln.R;
 import com.autohub.skln.databinding.FragmentClassRequestsBinding;
+import com.autohub.skln.models.User;
 import com.autohub.skln.utills.AppConstants;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentClassRequests extends BaseFragment {
+    private String mType = "student";
+    private FragmentClassRequestsBinding mBinding;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mType = getArguments().getString(AppConstants.KEY_TYPE, "student");
+        }
+    }
 
     @Nullable
     @Override
@@ -28,19 +42,48 @@ public class FragmentClassRequests extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FragmentClassRequestsBinding mBinding = FragmentClassRequestsBinding.bind(view);
+        mBinding = FragmentClassRequestsBinding.bind(view);
+        fetchUser();
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addData(getFragmentClassRequests("Latest"), "Latest");
-        adapter.addData(getFragmentClassRequests("All"), "All");
-        mBinding.tabs.setupWithViewPager(mBinding.viewpager);
-        mBinding.viewpager.setAdapter(adapter);
     }
 
-    private FragmentRequests getFragmentClassRequests(String type) {
+    private void fetchUser() {
+        String root = getString(R.string.db_root_tutors);
+        if (mType.equalsIgnoreCase("student")) {
+            root = getString(R.string.db_root_students);
+        }
+        getFirebaseStore().collection(root).document(getFirebaseAuth().getCurrentUser().getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        User user = documentSnapshot.toObject(User.class);
+                        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+                        adapter.addData(getFragmentClassRequests("Latest", user), "Latest");
+                        adapter.addData(getFragmentClassRequests("All", user), "All");
+                        mBinding.tabs.setupWithViewPager(mBinding.viewpager);
+                        mBinding.viewpager.setAdapter(adapter);
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        showSnackError(e.getMessage());
+                    }
+                });
+    }
+
+    private FragmentRequests getFragmentClassRequests(String type, User user) {
         FragmentRequests latestRequests = new FragmentRequests();
         Bundle bundle = new Bundle();
         bundle.putString(AppConstants.KEY_TYPE, type);
+        bundle.putParcelable(AppConstants.KEY_DATA, user);
+        String root = "Student";
+        if (mType.equalsIgnoreCase("students")) {
+            root = "Tutor";
+        }
+        bundle.putString("_user_type", root);
+        latestRequests.setArguments(bundle);
         return latestRequests;
     }
 
@@ -69,6 +112,11 @@ public class FragmentClassRequests extends BaseFragment {
         @Override
         public CharSequence getPageTitle(int position) {
             return mData.get(position).title;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return System.currentTimeMillis();
         }
 
         class Info {

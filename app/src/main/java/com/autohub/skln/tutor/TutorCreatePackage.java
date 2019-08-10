@@ -73,6 +73,7 @@ public class TutorCreatePackage extends BaseActivity {
             user.put(AppConstants.KEY_MAX_STUDENTS, mBinding.maxStudentCapacity.getSelectedItem().toString());
         }
         user.put(AppConstants.KEY_RATE, mBinding.edtRate.getText().toString());
+        user.put(AppConstants.KEY_PAYMENT_DURATION, mBinding.paymentDuration.getSelectedItem().toString());
 
         final Map<String, Object> user1 = new HashMap<>();
         user1.put(AppConstants.KEY_PHONE_NUMBER, getAppPreferenceHelper().getUserPhone());

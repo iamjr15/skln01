@@ -2,6 +2,7 @@
     <string name="db_root_tutors">tutors</string>
     <string name="db_root_all_users">AllUsers</string>
     <string name="db_root_students">students</string>
+    <string name="db_root_requests">requests</string>
 
     <string name="app_name">SKLN</string>
     <string name="login">LOGIN</string>
@@ -147,7 +148,6 @@
     <string name="create_your_pack">Create your packages</string>
     <string name="last_hint">One last step. Set your rates for your services, and make sure to set rate less or around the average rate to attract students.</string>
     <string name="package1">Package1</string>
-    <string name="class_type">Class Type</string>
     <string name="class_number">NO. OF CLASSES PER WEEK/MONTH</string>
     <string name="class_frequency">Class Frequency</string>
     <string name="rate">RS.</string>
@@ -222,4 +222,25 @@
     <string name="learn_something_new">Learn something new.</string>
     <string name="hobbies">Hobbies</string>
     <string name="classes_today">Classes today</string>
+    <string name="explore">Explore</string>
+    <string name="view_more">view more</string>
+    <string name="occupation">Occupation</string>
+    <string name="teaching_exp_dot">Teaching Exp.</string>
+    <string name="_1st_lesson_free">1st Lesson Free!</string>
+    <string name="_new">New</string>
+    <string name="class_type">Class Type</string>
+    <string name="search_any_subject_hobby_i_e_guitar_math">search any subject/hobby i.e guitar,math</string>
+    <string name="qualification">Qualification</string>
+    <string name="area_of_qualification">Area of Qualification</string>
+    <string name="subjects_taught">Subjects Taught</string>
+    <string name="number_of_classes">No. of Classes</string>
+    <string name="max_student_capacity">Max Student Capacity</string>
+    <string name="request_this_class">Request This Class</string>
+    <string name="_0_0">0.0</string>
+    <string name="new_request_received">New Request Received</string>
+    <string name="cancel_request">Cancel Request</string>
+    <string name="request_message_student">PLEASE CONTACT THE TEACHER BY CLICKING THE CONTACT BUTTON ABOVE.</string>
+    <string name="new_request_sent">Your Request has been sent.</string>
+    <string name="contact_skill_master">Contact Skillmaster</string>
+    <string name="see_location_on_map">See Location on Map</string>
 </resources>

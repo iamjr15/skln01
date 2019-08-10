@@ -7,7 +7,7 @@
 
         <variable
             name="callback"
-            type="com.autohub.skln.fragment.EditProfileFragment" />
+            type="com.autohub.skln.tutor.EditProfileFragment" />
 
         <variable
             name="userViewModel"

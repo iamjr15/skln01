@@ -3,7 +3,9 @@ package com.autohub.skln;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.autohub.skln.utills.AppConstants;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -14,16 +16,21 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.autohub.skln.utills.AppConstants.KEY_ACCOUNT_TYPE;
+import static com.autohub.skln.utills.AppConstants.KEY_PHONE_NUMBER;
 import static com.autohub.skln.utills.AppConstants.TYPE_STUDENT;
 import static com.autohub.skln.utills.AppConstants.TYPE_TUTOR;
 
 public class TutorOrStudent extends BaseActivity {
+    private String phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor_or_student);
         ButterKnife.bind(this);
+        Bundle bundle = getIntent().getBundleExtra(AppConstants.KEY_DATA);
+        phoneNumber = bundle.getString(KEY_PHONE_NUMBER);
+        Log.d(">>>Phone", phoneNumber + "");
     }
 
     // Redirect to the startup of sign up as a Tutor
@@ -51,6 +58,7 @@ public class TutorOrStudent extends BaseActivity {
                         hideLoading();
                         Intent i = new Intent(TutorOrStudent.this, SignupStart.class);
                         i.putExtra(KEY_ACCOUNT_TYPE, typeStudent);
+                        i.putExtra(KEY_PHONE_NUMBER, phoneNumber);
                         startActivity(i);
                         finishAffinity();
                     }

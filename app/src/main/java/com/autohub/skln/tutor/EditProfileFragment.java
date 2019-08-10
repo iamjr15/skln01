@@ -1,4 +1,4 @@
-package com.autohub.skln.fragment;
+package com.autohub.skln.tutor;
 
 import android.Manifest;
 import android.app.Activity;
@@ -18,6 +18,9 @@ import android.widget.Toast;
 import com.autohub.skln.CropActivity;
 import com.autohub.skln.R;
 import com.autohub.skln.databinding.FragmentEditProfileBinding;
+import com.autohub.skln.fragment.BaseFragment;
+import com.autohub.skln.fragment.EditClassesDialogFragment;
+import com.autohub.skln.fragment.EditDialogFragment;
 import com.autohub.skln.listeners.DialogFragmentButtonPressedListener;
 import com.autohub.skln.listeners.TextWatcherWrapper;
 import com.autohub.skln.models.User;
@@ -127,7 +130,7 @@ public class EditProfileFragment extends BaseFragment implements View.OnClickLis
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        User user = User.prepareUser(documentSnapshot);
+                        User user = documentSnapshot.toObject(User.class);
                         mUserViewModel.setUser(user);
                     }
                 })

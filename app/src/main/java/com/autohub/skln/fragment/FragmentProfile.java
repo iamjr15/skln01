@@ -15,11 +15,14 @@ import android.view.ViewGroup;
 import com.autohub.skln.R;
 import com.autohub.skln.WelcomeActivity;
 import com.autohub.skln.databinding.FragmentTutorProfileBinding;
+import com.autohub.skln.tutor.EditProfileFragment;
 import com.autohub.skln.utills.ActivityUtils;
+import com.autohub.skln.utills.AppConstants;
 import com.autohub.skln.utills.GlideApp;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -29,6 +32,7 @@ import static com.autohub.skln.utills.AppConstants.KEY_LAST_NAME;
 
 public class FragmentProfile extends BaseFragment {
     private FragmentTutorProfileBinding mBinding;
+    private String mProfileType = "tutor";
 
     @Nullable
     @Override
@@ -39,6 +43,9 @@ public class FragmentProfile extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (getArguments() != null) {
+            mProfileType = getArguments().getString(AppConstants.KEY_TYPE, "tutor");
+        }
         mBinding = FragmentTutorProfileBinding.bind(view);
         mBinding.setCalback(this);
         AppCompatActivity appCompatActivity = (AppCompatActivity) requireActivity();
@@ -80,6 +87,7 @@ public class FragmentProfile extends BaseFragment {
         mBinding.logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
                 ActivityUtils.launchActivity(requireContext(), WelcomeActivity.class);
                 requireActivity().finishAffinity();
             }
@@ -93,7 +101,11 @@ public class FragmentProfile extends BaseFragment {
     }
 
     private void setupProfile() {
-        StorageReference ref = FirebaseStorage.getInstance().getReference().child("tutor/" +
+        String path = "tutor/";
+        if (mProfileType.equalsIgnoreCase("student")) {
+            path = "student/";
+        }
+        StorageReference ref = FirebaseStorage.getInstance().getReference().child(path +
                 getFirebaseAuth().getCurrentUser().getUid() + ".jpg");
         GlideApp.with(this)
                 .load(ref)
@@ -101,7 +113,11 @@ public class FragmentProfile extends BaseFragment {
                 .skipMemoryCache(true)
                 .into(mBinding.profilePicture);
 
-        getFirebaseStore().collection(getString(R.string.db_root_tutors)).document(getFirebaseAuth().getCurrentUser().getUid()).get()
+        String root = getString(R.string.db_root_tutors);
+        if (mProfileType.equalsIgnoreCase("student")) {
+            root = getString(R.string.db_root_students);
+        }
+        getFirebaseStore().collection(root).document(getFirebaseAuth().getCurrentUser().getUid()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {

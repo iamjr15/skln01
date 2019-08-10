@@ -14,6 +14,7 @@
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
@@ -87,18 +88,21 @@
                     android:textAllCaps="true"
                     android:textSize="14sp" />
 
-                <ScrollView
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clipToPadding="false"
                     android:paddingStart="16dp"
-                    android:paddingEnd="16dp">
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp">
 
                     <LinearLayout
                         android:id="@+id/container_academic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal" />
-                </ScrollView>
+                </HorizontalScrollView>
 
                 <TextView
                     style="@style/Subhead"
@@ -109,18 +113,21 @@
                     android:textAllCaps="true"
                     android:textSize="14sp" />
 
-                <ScrollView
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clipToPadding="false"
                     android:paddingStart="16dp"
-                    android:paddingEnd="16dp">
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="8dp">
 
                     <LinearLayout
                         android:id="@+id/container_hobbies"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal" />
-                </ScrollView>
+                </HorizontalScrollView>
 
                 <TextView
                     style="@style/Subhead"
@@ -139,7 +146,7 @@
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/bg_round"
                     android:orientation="vertical"
-                    android:padding="12dp">
+                    android:padding="8dp">
 
                     <TextView
                         style="@style/Subhead"
@@ -168,7 +175,7 @@
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/bg_round"
                     android:orientation="vertical"
-                    android:padding="12dp">
+                    android:padding="8dp">
 
                     <TextView
                         style="@style/Subhead"

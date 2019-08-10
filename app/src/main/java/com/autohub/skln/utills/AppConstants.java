@@ -59,32 +59,34 @@ public interface AppConstants {
     String KEY = "MyKey";
 
     // firestore db keys - tutor
-    String KEY_PHONE_NUMBER = "phone_number";
-    String KEY_ACCOUNT_TYPE = "account_type";
+    String KEY_USER_ID = "id";
+    String KEY_PHONE_NUMBER = "phoneNumber";
+    String KEY_ACCOUNT_TYPE = "accountType";
     String KEY_PASSWORD = "password";
-    String KEY_FIRST_NAME = "first_name";
-    String KEY_LAST_NAME = "last_name";
-    String KEY_SEX = "sex";
-    String KEY_CATEGORY = "teaching_category";
-    String KEY_CLASSES = "classes_to_teach";
-    String KEY_SUBJECTS = "subjects_to_teach";
-    String KEY_HOBBIES = "hobbies_to_teach";
-    String KEY_PROFILE_PICTURE = "picture_url";
+    String KEY_FIRST_NAME = "firstName";
+    String KEY_LAST_NAME = "lastName";
+    String KEY_SEX = "gender";
+    String KEY_CATEGORY = "teachingCategory";
+    String KEY_CLASSES = "classesToTeach";
+    String KEY_SUBJECTS = "subjectsToTeach";
+    String KEY_HOBBIES = "hobbiesToTeach";
+    String KEY_PROFILE_PICTURE = "pictureUrl";
     String KEY_OCCUPATION = "occupation";
     String KEY_EXPERIENCE = "experience";
     String KEY_BOARD = "board";
     String KEY_QUALIFICATION = "qualification";
-    String KEY_AREA_QUALIFICATION = "area_qualification";
-    String KEY_BIODATA = "biodata";
-    String KEY_CLASS_TYPE = "class_type";
-    String KEY_NO_OF_CLASSES = "no_of_classes";
-    String KEY_CLASS_FREQUENCY = "class_frequency";
-    String KEY_MAX_STUDENTS = "max_students_capacity";
+    String KEY_AREA_QUALIFICATION = "areaQualification";
+    String KEY_BIODATA = "bioData";
+    String KEY_CLASS_TYPE = "classType";
+    String KEY_NO_OF_CLASSES = "noOfClasses";
+    String KEY_CLASS_FREQUENCY = "classFrequency";
+    String KEY_MAX_STUDENTS = "maxStudentsCapacity";
     String KEY_RATE = "rate";
+    String KEY_PAYMENT_DURATION = "paymentDuration";
 
     // firestore db keys - student
-    String KEY_STDT_CLASS = "class";
-    String KEY_STDT_FAVORITE_CLASSES = "favorite_classes";
-    String KEY_STDT_LEAST_FAV_CLASSES = "least_favorite_classes";
-    String KEY_STDT_HOBBIES = "hobbies_to_pursue";
+    String KEY_STDT_CLASS = "studentClass";
+    String KEY_STDT_FAVORITE_CLASSES = "favoriteClasses";
+    String KEY_STDT_LEAST_FAV_CLASSES = "leastFavoriteClasses";
+    String KEY_STDT_HOBBIES = "hobbiesToPursue";
 }

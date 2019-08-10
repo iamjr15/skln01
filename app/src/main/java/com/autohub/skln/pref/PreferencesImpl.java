@@ -39,7 +39,7 @@ public class PreferencesImpl implements PreferencesHelper {
     }
 
     /*@Override
-    public void setTutorName(String firstName) {
-        mPrefs.edit().putString(PREF_KEY_TUTOR_NAME, firstName).apply();
+    public void setTutorName(String first_name) {
+        mPrefs.edit().putString(PREF_KEY_TUTOR_NAME, first_name).apply();
     }*/
 }
