@@ -307,7 +307,7 @@ public class EditProfileFragment extends BaseFragment {
         user.put(KEY_PHONE_NUMBER, mBinding.codePicker.getFullNumberWithPlus());
         user.put(AppConstants.KEY_STDT_LEAST_FAV_CLASSES, mBinding.leastFavuSubj.getText().toString());
         user.put(AppConstants.KEY_STDT_FAVORITE_CLASSES, mBinding.favoriteSubj.getText().toString());
-        user.put(AppConstants.KEY_STDT_CLASS, mBinding.grade.getText().toString());
+        user.put(AppConstants.KEY_STDT_CLASS, this.user.studentClass.trim());
         user.put(KEY_STDT_HOBBIES, mBinding.favHobby.getText().toString());
         String dbRoot = getString(R.string.db_root_students);
         getFirebaseStore().collection(dbRoot).document(getFirebaseAuth()
