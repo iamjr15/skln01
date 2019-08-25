@@ -3,6 +3,7 @@ package com.autohub.skln.utills;
 import com.autohub.skln.BuildConfig;
 
 public interface AppConstants {
+    int GPS_REQUEST = 3434;
     String PREF_NAME = "Skln_Prefs";
     //General Keys
     String KEY_DATA = BuildConfig.APPLICATION_ID + "_data_key_";
@@ -83,6 +84,9 @@ public interface AppConstants {
     String KEY_MAX_STUDENTS = "maxStudentsCapacity";
     String KEY_RATE = "rate";
     String KEY_PAYMENT_DURATION = "paymentDuration";
+    String KEY_CITY = "city";
+    String KEY_LATITUDE = "latitude";
+    String KEY_LONGITUDE = "longitude";
 
     // firestore db keys - student
     String KEY_STDT_CLASS = "studentClass";

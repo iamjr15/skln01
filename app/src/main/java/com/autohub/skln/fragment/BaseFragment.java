@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 import com.autohub.skln.BaseActivity;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -26,6 +28,7 @@ import javax.crypto.NoSuchPaddingException;
  * BhimSoft on 2019-08-01.
  */
 public class BaseFragment extends Fragment {
+    protected static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 11332;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseFirestore mFirebaseFirestore;
 
@@ -75,8 +78,35 @@ public class BaseFragment extends Fragment {
         return result == PackageManager.PERMISSION_GRANTED;
     }
 
+    protected boolean isLocationPermissionGranted() {
+        return ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
     protected String encrypt(String value) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         return BaseActivity.encrypt(value);
+    }
+
+    protected boolean checkGooglePlayServices() {
+
+        int checkGooglePlayServices = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(requireActivity());
+        if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
+            /*
+             * google play services is missing or update is required
+             *  return code could be
+             * SUCCESS,
+             * SERVICE_MISSING, SERVICE_VERSION_UPDATE_REQUIRED,
+             * SERVICE_DISABLED, SERVICE_INVALID.
+             */
+            GooglePlayServicesUtil.getErrorDialog(checkGooglePlayServices,
+                    requireActivity(), REQUEST_CODE_RECOVER_PLAY_SERVICES).show();
+
+            return false;
+        }
+
+        return true;
+
     }
 
 }

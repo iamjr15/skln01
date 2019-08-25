@@ -217,6 +217,7 @@
                     android:layout_gravity="center"
                     android:background="@null"
                     android:drawableRight="@drawable/arrow_right"
+                    android:drawableEnd="@drawable/arrow_right"
                     android:drawablePadding="8dp"
                     android:gravity="center|start"
                     android:paddingStart="16dp"

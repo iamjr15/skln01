@@ -1,6 +1,8 @@
 package com.autohub.skln;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -10,6 +12,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -22,6 +25,8 @@ import android.widget.TextView;
 
 import com.autohub.skln.pref.PreferencesImpl;
 import com.autohub.skln.utills.AppConstants;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -38,6 +43,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    protected static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 11332;
     protected static final int FONT_TYPE_MONTSERRAT_BOLD = 0;
     protected static final int FONT_TYPE_CERAPRO_BOLD = 1;
     protected static final int FONT_TYPE_MONTSERRAT_REGULAR = 2;
@@ -182,4 +188,32 @@ public abstract class BaseActivity extends AppCompatActivity {
             window.setBackgroundDrawable(background);
         }
     }
+
+    protected boolean checkGooglePlayServices() {
+
+        int checkGooglePlayServices = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(this);
+        if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
+            /*
+             * google play services is missing or update is required
+             *  return code could be
+             * SUCCESS,
+             * SERVICE_MISSING, SERVICE_VERSION_UPDATE_REQUIRED,
+             * SERVICE_DISABLED, SERVICE_INVALID.
+             */
+            GooglePlayServicesUtil.getErrorDialog(checkGooglePlayServices,
+                    this, REQUEST_CODE_RECOVER_PLAY_SERVICES).show();
+
+            return false;
+        }
+
+        return true;
+
+    }
+
+    protected boolean isLocationPermissionGranted() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
 }

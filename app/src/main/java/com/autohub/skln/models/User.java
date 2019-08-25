@@ -74,6 +74,9 @@ public class User implements Parcelable, AppConstants {
     public String rate;
     public String studentClass;
     public String paymentDuration;
+    public String city;
+    public float latitude;
+    public float longitude;
 
     public User() {
     }
@@ -106,6 +109,9 @@ public class User implements Parcelable, AppConstants {
         rate = in.readString();
         studentClass = in.readString();
         paymentDuration = in.readString();
+        city = in.readString();
+        latitude = in.readFloat();
+        longitude = in.readFloat();
     }
 
     @Override
@@ -137,6 +143,9 @@ public class User implements Parcelable, AppConstants {
         dest.writeString(rate);
         dest.writeString(studentClass);
         dest.writeString(paymentDuration);
+        dest.writeString(city);
+        dest.writeFloat(latitude);
+        dest.writeFloat(longitude);
     }
 
     @Override

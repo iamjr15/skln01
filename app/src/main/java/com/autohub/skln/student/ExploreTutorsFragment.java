@@ -1,6 +1,11 @@
 package com.autohub.skln.student;
 
-import android.content.Context;
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.autohub.skln.R;
 import com.autohub.skln.databinding.ExploreTutorFragmentBinding;
@@ -22,12 +28,13 @@ import com.autohub.skln.models.UserViewModel;
 import com.autohub.skln.utills.ActivityUtils;
 import com.autohub.skln.utills.AppConstants;
 import com.autohub.skln.utills.GlideApp;
+import com.autohub.skln.utills.GpsUtils;
+import com.autohub.skln.utills.LocationProvider;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -43,6 +50,33 @@ import java.util.List;
  */
 public class ExploreTutorsFragment extends BaseFragment {
     private ExploreTutorFragmentBinding mBinding;
+    @Nullable
+    private Location mCurrentLocation;
+    private GpsUtils mGpsUtils;
+    private final LocationListener mLocationListener = new LocationListener() {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            mCurrentLocation = location;
+            Log.d(">>>>Location", location.toString());
+//            LocationProvider.getInstance().getAddressFromLocation(container.getContext(), location, new AddressListener() {
+//                @Override
+//                public void onAddressDecoded(String address) {
+//                    Log.d(">>>>LocationAddress","Address is :"+ address);
+//                }
+//            });
+        }
+    };
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mGpsUtils = new GpsUtils(requireActivity());
+        if (checkGooglePlayServices() && isLocationPermissionGranted()) {
+            Log.d(">>>>Location", "Oncreate");
+            LocationProvider.getInstance().start(requireContext(), mLocationListener);
+        }
+    }
 
     @Nullable
     @Override
@@ -54,7 +88,35 @@ public class ExploreTutorsFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mBinding = ExploreTutorFragmentBinding.bind(view);
+        if (!isLocationPermissionGranted()) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION}, 2321);
+        }
         getTutors();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisible() && isResumed()) {
+            if (!mGpsUtils.isGpsEnabled()) {
+                Log.d(">>>>Location", "onResume 1");
+                mGpsUtils.turnGPSOn(new GpsUtils.OnGpsListener() {
+                    @Override
+                    public void onGpsStatus(boolean isGPSEnable) {
+                        Log.d(">>>>Location", "OonResume 2");
+                    }
+                });
+            } else {
+                Log.d(">>>>Location", "Enabled");
+            }
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        LocationProvider.getInstance().stopLocationUpdates();
     }
 
     private void getTutors() {
@@ -68,7 +130,7 @@ public class ExploreTutorsFragment extends BaseFragment {
                         users.add(user);
                         Log.d(">>>Explore", "Data Is " + user.firstName + " , " + user.gender);
                     }
-                    mBinding.viewPager.setAdapter(new ExplorePagerAdapter(requireContext(), users));
+                    mBinding.viewPager.setAdapter(new ExplorePagerAdapter(ExploreTutorsFragment.this, users));
                 } else {
                     Log.d(">>>Explore", "Error getting documents: ", task.getException());
                 }
@@ -81,13 +143,41 @@ public class ExploreTutorsFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_RECOVER_PLAY_SERVICES) {
+            if (resultCode == Activity.RESULT_OK) {
+                LocationProvider.getInstance().start(requireContext(), mLocationListener);
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(requireContext(), "Google Play Services must be installed.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 2321) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (checkGooglePlayServices() && isLocationPermissionGranted()) {
+                    LocationProvider.getInstance().start(requireContext(), mLocationListener);
+                }
+            }
+        }
+    }
+
     private static class ExplorePagerAdapter extends PagerAdapter {
         private final List<User> mData = new ArrayList<>();
         private LayoutInflater mInflater;
+        private ExploreTutorsFragment mTutorsFragment;
 
-        private ExplorePagerAdapter(Context context, List<User> data) {
+        private ExplorePagerAdapter(ExploreTutorsFragment fragment, List<User> data) {
             mData.addAll(data);
-            mInflater = LayoutInflater.from(context);
+            mTutorsFragment = fragment;
+            mInflater = LayoutInflater.from(mTutorsFragment.requireActivity());
         }
 
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -113,14 +203,14 @@ public class ExploreTutorsFragment extends BaseFragment {
             binding.setModel(new UserViewModel(user));
             binding.viewMore.setTag(user);
             binding.viewMore.setOnClickListener(mOnClickListener);
-          if(!TextUtils.isEmpty(user.pictureUrl)) {
-              StorageReference pathReference1 = FirebaseStorage.getInstance().getReference().child(user.pictureUrl);
-              GlideApp.with(mInflater.getContext())
-                      .load(pathReference1)
-                      .diskCacheStrategy(DiskCacheStrategy.ALL)
-                      .fallback(R.drawable.default_pic)
-                      .into(binding.profilePicture);
-          }
+            if (!TextUtils.isEmpty(user.pictureUrl)) {
+                StorageReference pathReference1 = FirebaseStorage.getInstance().getReference().child(user.pictureUrl);
+                GlideApp.with(mInflater.getContext())
+                        .load(pathReference1)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .fallback(R.drawable.default_pic)
+                        .into(binding.profilePicture);
+            }
             List<String> subjects = user.getSubjectsToTeachAsArray();
             for (String subject : subjects) {
                 ItemSubjectBinding subjectsBinding = ItemSubjectBinding.inflate(mInflater, binding.subjects, false);
@@ -128,6 +218,10 @@ public class ExploreTutorsFragment extends BaseFragment {
                 binding.subjects.addView(subjectsBinding.getRoot());
             }
             container.addView(binding.getRoot());
+            Location toLocation = new Location(LocationManager.GPS_PROVIDER);
+            toLocation.setLatitude(user.latitude);
+            toLocation.setLongitude(user.longitude);
+            binding.distance.setText(LocationProvider.getInstance().getDistance(mTutorsFragment.mCurrentLocation, toLocation));
             return binding.getRoot();
         }
 
