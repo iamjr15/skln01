@@ -282,7 +282,7 @@ public class EditProfileFragment extends BaseFragment {
                         mBinding.favHobby.setText(user.hobbiesToPursue);
                         mBinding.favoriteSubj.setText(user.favoriteClasses);
                         mBinding.leastFavuSubj.setText(user.leastFavoriteClasses);
-                        mBinding.grade.setText(user.studentClass);
+                        mBinding.grade.setText(CommonUtils.getGrade(Integer.parseInt(user.studentClass.trim())));
                         mBinding.codePicker.setClickable(false);
                         mBinding.codePicker.setFocusable(false);
                         mBinding.codePicker.setEnabled(false);
@@ -303,7 +303,7 @@ public class EditProfileFragment extends BaseFragment {
         final Map<String, Object> user = new HashMap<>();
         user.put(KEY_FIRST_NAME, mBinding.edtFirstName.getText().toString());
         user.put(KEY_LAST_NAME, mBinding.edtLastName.getText().toString());
-        user.put(KEY_PASSWORD, getEncryptedPassword());
+       // user.put(KEY_PASSWORD, getEncryptedPassword());
         user.put(KEY_PHONE_NUMBER, mBinding.codePicker.getFullNumberWithPlus());
         user.put(AppConstants.KEY_STDT_LEAST_FAV_CLASSES, mBinding.leastFavuSubj.getText().toString());
         user.put(AppConstants.KEY_STDT_FAVORITE_CLASSES, mBinding.favoriteSubj.getText().toString());

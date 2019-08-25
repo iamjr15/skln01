@@ -108,6 +108,10 @@ public class UserViewModel extends BaseObservable {
         return String.format("RS %1$s / %2$s", mUser.rate, mUser.paymentDuration);
     }
 
+    public String getCity() {
+        return CommonUtils.getString(mUser.city);
+    }
+
     public void setUser(User user) {
         this.mUser = user;
         notifyChange();

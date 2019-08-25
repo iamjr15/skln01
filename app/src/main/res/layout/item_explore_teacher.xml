@@ -29,7 +29,8 @@
                     style="@style/Heading"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="4dp"
-                    android:text="DELHI"
+                    tools:text="DELHI"
+                    android:text="@{model.getCity()}"
                     android:textAllCaps="true"
                     android:textSize="12sp" />
 
@@ -39,7 +40,7 @@
                     style="@style/Heading"
                     android:layout_below="@+id/city"
                     android:layout_centerHorizontal="true"
-                    android:text="1.4 Km"
+                    tools:text="1.4 Km"
                     android:textAllCaps="true"
                     android:textSize="9sp" />
 

@@ -43,6 +43,10 @@ public class CommonUtils {
         }
     }
 
+    public static String getGrade(int n) {
+        return n + getClassSuffix(n) + " Grade";
+    }
+
     @NonNull
     public static String getString(@Nullable Editable text) {
         return (text == null || text.length() == 0) ? "" : text.toString();

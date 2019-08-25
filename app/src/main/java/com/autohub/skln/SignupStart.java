@@ -1,16 +1,27 @@
 package com.autohub.skln;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
+import android.text.TextUtils;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.autohub.skln.databinding.TutorSignupStartBinding;
+import com.autohub.skln.listeners.AddressListener;
 import com.autohub.skln.student.StudentClassSelect;
 import com.autohub.skln.tutor.TutorCategorySelect;
 import com.autohub.skln.utills.ActivityUtils;
 import com.autohub.skln.utills.AppConstants;
+import com.autohub.skln.utills.GpsUtils;
+import com.autohub.skln.utills.LocationProvider;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.SetOptions;
@@ -29,8 +40,11 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.autohub.skln.utills.AppConstants.FEMALE;
 import static com.autohub.skln.utills.AppConstants.KEY_ACCOUNT_TYPE;
+import static com.autohub.skln.utills.AppConstants.KEY_CITY;
 import static com.autohub.skln.utills.AppConstants.KEY_FIRST_NAME;
 import static com.autohub.skln.utills.AppConstants.KEY_LAST_NAME;
+import static com.autohub.skln.utills.AppConstants.KEY_LATITUDE;
+import static com.autohub.skln.utills.AppConstants.KEY_LONGITUDE;
 import static com.autohub.skln.utills.AppConstants.KEY_PASSWORD;
 import static com.autohub.skln.utills.AppConstants.KEY_PHONE_NUMBER;
 import static com.autohub.skln.utills.AppConstants.KEY_SEX;
@@ -41,6 +55,24 @@ public class SignupStart extends BaseActivity {
     private TutorSignupStartBinding mBinding;
     private String mType = TYPE_TUTOR;
     private String phoneNumber;
+    private GpsUtils mGpsUtils;
+    private String mCity;
+    private Location mLocation;
+    private final LocationListener mLocationListener = new LocationListener() {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            Log.d(">>>>Location", location.toString());
+            mLocation = location;
+            LocationProvider.getInstance().getAddressFromLocation(SignupStart.this, location, new AddressListener() {
+                @Override
+                public void onAddressDecoded(String address) {
+                    Log.d(">>>>LocationAddress", "Address is :" + address);
+                    mCity = address;
+                }
+            });
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +85,16 @@ public class SignupStart extends BaseActivity {
             mBinding.tvTutorOrStudent.setText(R.string.teacher);
         }
         phoneNumber = getIntent().getStringExtra(AppConstants.KEY_PHONE_NUMBER);
+        mGpsUtils = new GpsUtils(this);
+
+        if (!mGpsUtils.isGpsEnabled()) {
+            mGpsUtils.turnGPSOn(new GpsUtils.OnGpsListener() {
+                @Override
+                public void onGpsStatus(boolean isGPSEnable) {
+                    Log.d(">>>>Location", "enabled");
+                }
+            });
+        }
     }
 
     public void onNextClick() {
@@ -62,6 +104,11 @@ public class SignupStart extends BaseActivity {
                 mBinding.edtPassword.setError(getResources().getString(R.string.enter_password));
                 mBinding.edtPassword.requestFocus();
                 showSnackError(R.string.enter_password);
+                return;
+            }
+
+            if (mLocation == null || TextUtils.isEmpty(mCity)) {
+                Toast.makeText(this, "Please check you GPS setting, we need You location", Toast.LENGTH_SHORT).show();
                 return;
             }
             makeSaveRequest();
@@ -76,6 +123,9 @@ public class SignupStart extends BaseActivity {
         user.put(KEY_SEX, mBinding.radioMale.isChecked() ? MALE : FEMALE);
         user.put(KEY_PASSWORD, getEncryptedPassword());
         user.put(KEY_PHONE_NUMBER, phoneNumber);
+        user.put(KEY_CITY, mCity);
+        user.put(KEY_LATITUDE, mLocation.getLatitude());
+        user.put(KEY_LONGITUDE, mLocation.getLongitude());
         String dbRoot = getString(R.string.db_root_students);
         if (TYPE_TUTOR.equalsIgnoreCase(mType)) {
             dbRoot = getString(R.string.db_root_tutors);
@@ -123,5 +173,36 @@ public class SignupStart extends BaseActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (checkGooglePlayServices() && isLocationPermissionGranted()) {
+            Log.d(">>>>Location", "Oncreate");
+            LocationProvider.getInstance().start(this, mLocationListener);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION}, 2321);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocationProvider.getInstance().stopLocationUpdates();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 2321) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (checkGooglePlayServices() && isLocationPermissionGranted()) {
+                    LocationProvider.getInstance().start(this, mLocationListener);
+                }
+            }
+        }
     }
 }
