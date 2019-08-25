@@ -31,6 +31,9 @@ public class CommonUtils {
     }
 
     public static String getClassSuffix(final int n) {
+        if (n == 11 || n == 12) {
+            return "th";
+        }
         switch (n % 10) {
             case 1:
                 return "st";
