@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#D3D3D3</color>
     <color name="colorAccent">#ff707070</color>
     <color name="colorGrayDark">#ff707070</color>
     <color name="black">#ff000000</color>
@@ -13,4 +13,7 @@
     <color name="blue">#ff2929f1</color>
     <color name="blue_jack">#ff1800f5</color>
     <color name="snack_back_color">#ba0505</color>
+    <color name="lineGrayColor">#707070</color>
+    <color name="lineBlackColor">#000000</color>
+    <color name="purpleColor">#A97CCD</color>
 </resources>

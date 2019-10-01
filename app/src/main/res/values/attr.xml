@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="UnderLineTextView">
+        <attr name="line_color" format="color" />
+    </declare-styleable>
+    <declare-styleable name="CustomImageView">
+        <attr name="useHeight" format="boolean" />
+    </declare-styleable>
+</resources>

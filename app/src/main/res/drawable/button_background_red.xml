@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Style for "rectangle_" -->
-    <item >
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:state_focused="true">
         <shape android:shape="rectangle">
-            <gradient android:type="linear" android:useLevel="false" android:startColor="#ffe8364e" android:centerColor="#ffec1432" android:endColor="#ffec1432" android:angle="0" />
-            <item android:name="android:shadowColor">#4da8a8a8</item>
-            <!-- TextView shadow offsets do not respect scale. -->
-            <item android:name="android:shadowDx">0</item>
-            <item android:name="android:shadowDy">0</item>
+            <gradient android:angle="0" android:centerColor="#D1102C" android:endColor="#D1102C" android:startColor="#C42A3F" android:type="linear" android:useLevel="false" />
         </shape>
     </item>
-</layer-list>
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <gradient android:angle="0" android:centerColor="#D1102C" android:endColor="#D1102C" android:startColor="#C42A3F" android:type="linear" android:useLevel="false" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient android:angle="0" android:centerColor="#ffec1432" android:endColor="#ffec1432" android:startColor="#ffe8364e" android:type="linear" android:useLevel="false" />
+        </shape>
+    </item>
+</selector>

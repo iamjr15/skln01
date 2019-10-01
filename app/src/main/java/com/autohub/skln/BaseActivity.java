@@ -1,20 +1,34 @@
 package com.autohub.skln;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.autohub.skln.pref.PreferencesImpl;
 import com.autohub.skln.utills.AppConstants;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -27,8 +41,9 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
+    protected static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 11332;
     protected static final int FONT_TYPE_MONTSERRAT_BOLD = 0;
     protected static final int FONT_TYPE_CERAPRO_BOLD = 1;
     protected static final int FONT_TYPE_MONTSERRAT_REGULAR = 2;
@@ -63,7 +78,7 @@ public class BaseActivity extends AppCompatActivity {
     /*
     t@ngel : show loading progress
      */
-    protected void showLoading() {
+    public void showLoading() {
         try {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage("Please wait...");
@@ -79,7 +94,7 @@ public class BaseActivity extends AppCompatActivity {
     /*
     t@ngel : hide progress dialog
      */
-    protected void hideLoading() {
+    public void hideLoading() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.cancel();
         }
@@ -89,7 +104,7 @@ public class BaseActivity extends AppCompatActivity {
     t@ngel : show error message using snack bar
     param : message to be shown as a String resource id
      */
-    protected void showSnackError(int resId) {
+    public void showSnackError(int resId) {
         Snackbar snackbar = Snackbar.make((findViewById(android.R.id.content)), getString(resId), Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(getResources().getColor(R.color.snack_back_color));
@@ -102,7 +117,7 @@ public class BaseActivity extends AppCompatActivity {
     t@ngel : show error message using snack bar
     param : message as a String
      */
-    protected void showSnackError(String message) {
+    public void showSnackError(String message) {
         Snackbar snackbar = Snackbar.make((findViewById(android.R.id.content)), message, Snackbar.LENGTH_LONG);
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(getResources().getColor(R.color.snack_back_color));
@@ -114,7 +129,7 @@ public class BaseActivity extends AppCompatActivity {
     /*
     t@ngel : encrypt password
      */
-    protected static String encrypt(String value) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+    public static String encrypt(String value) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         SecretKeySpec secretKeySpec = new SecretKeySpec(AppConstants.KEY.getBytes(), AppConstants.ALGORITHM);
         Cipher cipher = Cipher.getInstance(AppConstants.MODE);
         cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, new IvParameterSpec(AppConstants.IV.getBytes()));
@@ -141,4 +156,64 @@ public class BaseActivity extends AppCompatActivity {
         if (typeface != null)
             v.setTypeface(typeface);
     }
+
+    @NonNull
+    protected String getString(@Nullable Editable text) {
+        return (text == null || text.length() == 0) ? "" : text.toString();
+    }
+
+    protected boolean isValid(@NonNull EditText... editTexts) {
+        for (EditText editText : editTexts) {
+            Editable text = editText.getText();
+            if (text == null || text.length() < 2) {
+                CharSequence hint = editText.getHint();
+                if (TextUtils.isEmpty(hint)) {
+                    hint = "valid value";
+                }
+                editText.setError(getString(R.string.enter_x, hint));
+                editText.requestFocus();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void setStatusBarColor(@DrawableRes int drawable) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            Drawable background = getResources().getDrawable(drawable);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
+            // window.setNavigationBarColor(requireActivity().getResources().getColor(android.R.color.transparent));
+            window.setBackgroundDrawable(background);
+        }
+    }
+
+    protected boolean checkGooglePlayServices() {
+
+        int checkGooglePlayServices = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(this);
+        if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
+            /*
+             * google play services is missing or update is required
+             *  return code could be
+             * SUCCESS,
+             * SERVICE_MISSING, SERVICE_VERSION_UPDATE_REQUIRED,
+             * SERVICE_DISABLED, SERVICE_INVALID.
+             */
+            GooglePlayServicesUtil.getErrorDialog(checkGooglePlayServices,
+                    this, REQUEST_CODE_RECOVER_PLAY_SERVICES).show();
+
+            return false;
+        }
+
+        return true;
+
+    }
+
+    protected boolean isLocationPermissionGranted() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
 }

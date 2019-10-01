@@ -7,50 +7,46 @@
 
     <TextView
         android:id="@+id/tvSignup"
-        style="@style/signup_title_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Heading"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp"
-        android:text="@string/sign_up" />
+        android:text="@string/sign_up"
+        android:textSize="29sp" />
 
     <TextView
-        style="@style/i_am_a"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        style="@style/Heading"
         android:layout_below="@id/tvSignup"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:text="@string/i_am"
-        />
+        android:textSize="45sp" />
 
     <Button
         android:id="@+id/btnTutor"
-        style="@style/signup_title_style"
+        style="@style/Heading"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:textSize="29sp"
         android:layout_centerInParent="true"
         android:layout_marginStart="26dp"
         android:layout_marginEnd="26dp"
-        android:layout_marginBottom="25dp"
+
+        android:background="@drawable/border_round_rect"
         android:paddingTop="22dp"
         android:paddingBottom="20dp"
-        android:background="@drawable/border_round_rect"
-        android:text="@string/tutor"
-         />
+        android:text="@string/tutor" />
 
     <Button
+        android:layout_marginTop="24dp"
         android:id="@+id/btnStudent"
-        style="@style/signup_title_style"
+        style="@style/Heading"
+        android:textSize="29sp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_below="@id/btnTutor"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="26dp"
         android:layout_marginEnd="26dp"
+        android:background="@drawable/border_round_rect"
         android:paddingTop="22dp"
         android:paddingBottom="20dp"
-        android:background="@drawable/border_round_rect"
-        android:text="@string/student"
-       />
+        android:text="@string/student" />
 </RelativeLayout>

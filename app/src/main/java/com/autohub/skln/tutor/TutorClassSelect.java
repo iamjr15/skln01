@@ -12,8 +12,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.SetOptions;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -73,7 +73,7 @@ public class TutorClassSelect extends BaseActivity {
     @BindView(R.id.ivClass12)
     ImageView ivClass12;
 
-    private ArrayList<String> selectedClasses;
+    private HashSet<String> selectedClasses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,31 +94,26 @@ public class TutorClassSelect extends BaseActivity {
         ivClass11.setEnabled(false);
         ivClass12.setEnabled(false);
 
-        selectedClasses = new ArrayList<>();
+        selectedClasses = new HashSet<>();
     }
 
     @OnClick(R.id.btnNext)
     public void onNextClick() {
         StringBuilder stringBuilder = new StringBuilder();
-        int size = selectedClasses.size();
-        if (size > 0) {
-            stringBuilder.append(selectedClasses.get(0));
-            for (int i = 1; i < selectedClasses.size(); i++) {
-                stringBuilder.append(", ").append(selectedClasses.get(i));
-            }
-        }
-
-        if (stringBuilder.length() == 0) {
+        if (selectedClasses.size() == 0) {
             showSnackError(R.string.choose_classes);
             return;
         }
-
+        for (String value : selectedClasses) {
+            stringBuilder.append(value).append(",");
+        }
+        String classes = stringBuilder.substring(0, stringBuilder.length() - 1);
         showLoading();
 
         final boolean isSeniorClass = selectedClasses.contains(CLASS_11) || selectedClasses.contains(CLASS_12);
 
         Map<String, Object> user = new HashMap<>();
-        user.put(KEY_CLASSES, stringBuilder.toString());
+        user.put(KEY_CLASSES, classes);
 
         getFirebaseStore().collection(getString(R.string.db_root_tutors)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

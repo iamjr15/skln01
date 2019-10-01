@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "828206577726-7llbgk0g3c19m7gqmq79es2u8k5kvlnd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.autohub.skln",
+            "certificate_hash": "ee56645296a39b9a9fc91e8ab7dd1b4d67c64862"
+          }
+        },
+        {
           "client_id": "828206577726-fqo5qdp3vnv810opf425ujcu2cn8cq7p.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

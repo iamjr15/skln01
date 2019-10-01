@@ -21,6 +21,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import static com.autohub.skln.utills.AppConstants.CATEGORY_ACADEMICS;
 import static com.autohub.skln.utills.AppConstants.CATEGORY_HOBBY;
 import static com.autohub.skln.utills.AppConstants.KEY_CATEGORY;
+import static com.autohub.skln.utills.AppConstants.KEY_USER_ID;
 
 public class TutorCategorySelect extends BaseActivity {
 
@@ -48,8 +49,10 @@ public class TutorCategorySelect extends BaseActivity {
 
         Map<String, Object> user = new HashMap<>();
         user.put(KEY_CATEGORY, toAcademics ? CATEGORY_ACADEMICS : CATEGORY_HOBBY);
+        String uid = getFirebaseAuth().getCurrentUser().getUid();
+        user.put(KEY_USER_ID, uid);
 
-        getFirebaseStore().collection(getString(R.string.db_root_tutors)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
+        getFirebaseStore().collection(getString(R.string.db_root_tutors)).document(uid).set(user, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

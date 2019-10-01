@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/rotate_right"
+        android:title="@string/crop_image_menu_rotate_right"
+        app:showAsAction="always"/>
+    <item
+        app:showAsAction="always"
+        android:id="@+id/crop"
+        android:title="@string/crop" />
+</menu>

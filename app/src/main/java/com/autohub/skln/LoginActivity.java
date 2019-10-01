@@ -2,18 +2,20 @@ package com.autohub.skln;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
+import com.autohub.skln.databinding.ActivityLoginBinding;
 import com.autohub.skln.student.StudentHomeActivity;
 import com.autohub.skln.tutor.TutorHomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.security.InvalidAlgorithmParameterException;
@@ -32,58 +34,53 @@ import static com.autohub.skln.utills.AppConstants.TYPE_STUDENT;
 import static com.autohub.skln.utills.AppConstants.TYPE_TUTOR;
 
 public class LoginActivity extends BaseActivity {
-
-    private static final String TAG = "LoginActivity";
-
-    private EditText mPassword;
-
+    private ActivityLoginBinding mBinding;
     private String mAccountType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        mPassword = findViewById(R.id.edtPassword);
-
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        mBinding.setCallback(this);
         mAccountType = getIntent().getStringExtra(KEY_ACCOUNT_TYPE);
+    }
 
-        Button mBtnLogin = findViewById(R.id.btnLogin);
-        mBtnLogin.setOnClickListener(new View.OnClickListener() {
+    public void login() {
+        String text = getString(mBinding.edtPassword.getText());
+        if (TextUtils.isEmpty(text)) {
+            showSnackError(R.string.enter_password);
+            return;
+        }
+        showLoading();
+        String db_root = getString(R.string.db_root_tutors);
+        if (TYPE_STUDENT.equalsIgnoreCase(mAccountType)) {
+            db_root = getString(R.string.db_root_students);
+        }
+        FirebaseUser currentUser = getFirebaseAuth().getCurrentUser();
+        if (currentUser == null) {
+            return;
+        }
+        getFirebaseStore().collection(db_root).document(currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View v) {
-                if (mPassword.getText().toString().equals("")) {
-                    showSnackError(R.string.enter_password);
-                } else {
-                    showLoading();
-
-                    String db_root = getString(R.string.db_root_tutors);
-                    if (mAccountType.equalsIgnoreCase(TYPE_STUDENT)) {
-                        db_root = getString(R.string.db_root_students);
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot snapshot = task.getResult();
+                    if (snapshot == null) {
+                        showNeedToRegister();
+                        return;
                     }
-
-                    getFirebaseStore().collection(db_root).document(getFirebaseAuth().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot snapshot = task.getResult();
-                                String savedPassword = snapshot.getString(KEY_PASSWORD);
-                                validateUser(savedPassword);
-                                hideLoading();
-                            } else {
-                                showNeedToRegister();
-                            }
-                        }
-                    });
-
+                    String savedPassword = snapshot.getString(KEY_PASSWORD);
+                    validateUser(savedPassword);
+                    hideLoading();
+                } else {
+                    showNeedToRegister();
                 }
             }
-
         });
     }
 
     private void validateUser(String savedPass) {
-        String pass = mPassword.getText().toString();
+        String pass = getString(mBinding.edtPassword.getText());
 
         try {
             if (encrypt(pass).equals(savedPass)) {
@@ -98,8 +95,10 @@ public class LoginActivity extends BaseActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                finishAffinity();
             } else if (savedPass == null) {
                 showNeedToRegister();
+                finishAffinity();
             } else {
                 Toast.makeText(this, "Password not matched!", Toast.LENGTH_SHORT).show();
             }
