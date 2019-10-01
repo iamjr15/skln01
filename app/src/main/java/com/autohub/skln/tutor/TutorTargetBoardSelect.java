@@ -130,16 +130,19 @@ public class TutorTargetBoardSelect extends BaseActivity {
     @OnClick(R.id.rlCBSE)
     public void onRlCBSEClick() {
         radioGroupBoards.check(R.id.radioCBSE);
+        mSelectedTargetBoard = BOARD_CBSE;
     }
 
     @OnClick(R.id.rlICSE)
     public void onRlICSEClick() {
         radioGroupBoards.check(R.id.radioICSE);
+        mSelectedTargetBoard = BOARD_ICSE;
     }
 
     @OnClick(R.id.rlSTATE)
     public void onRlStateClick() {
         radioGroupBoards.check(R.id.radioState);
+        mSelectedTargetBoard = BOARD_STATE;
     }
 
     /*@OnCheckedChanged(R.id.board_group)

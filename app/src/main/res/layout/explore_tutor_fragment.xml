@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/profile_picture"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/content_description"
+            android:src="@drawable/default_pic" />
+
+        <TextView
+            android:id="@+id/tv_explore"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12sp"
+            android:text="@string/explore"
+            android:textAllCaps="true"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profile_picture"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_selector_search"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="4dp"
+                android:hint="@string/search_any_subject_hobby_i_e_guitar_math"
+                android:imeOptions="actionSearch"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/content_description"
+                android:src="@drawable/ic_filter" />
+        </LinearLayout>
+
+        <com.autohub.skln.widgets.CustomViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/search_bar"
+            android:clipToPadding="false" />
+    </RelativeLayout>
+</layout>

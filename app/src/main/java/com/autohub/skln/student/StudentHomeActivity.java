@@ -5,7 +5,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,68 +15,31 @@ import android.widget.TextView;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
-import com.autohub.skln.fragment.FragmentClsRequests;
-import com.autohub.skln.fragment.FragmentHome;
+import com.autohub.skln.fragment.FragmentClassRequests;
 import com.autohub.skln.fragment.FragmentProfile;
 import com.autohub.skln.fragment.FragmentToolbox;
-import com.autohub.skln.utills.GlideApp;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.autohub.skln.utills.AppConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-import static com.autohub.skln.utills.AppConstants.KEY_FIRST_NAME;
 
 public class StudentHomeActivity extends BaseActivity {
 
     private List<TextView> mTabs = new ArrayList<>();
-
     private ViewPager mViewPager;
-
-    TextView tvHey;
-    CircleImageView ivPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_home);
 
-        tvHey = findViewById(R.id.hey_user);
-        ivPicture = findViewById(R.id.iv_picture);
-
-        /*StorageReference ref = FirebaseStorage.getInstance().getReference().child("tutor/" +
-                getFirebaseAuth().getCurrentUser().getUid() + ".jpg");
-        GlideApp.with(this)
-                .load(ref)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                .skipMemoryCache(true)
-                .into(ivPicture);*/
-
-        getFirebaseStore().collection(getString(R.string.db_root_students)).document(getFirebaseAuth().getCurrentUser().getUid()).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        String firstName = documentSnapshot.getString(KEY_FIRST_NAME);
-                        tvHey.setText("Hey, \n" + firstName + ".");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        showSnackError(e.getMessage());
-                    }
-                });
-
+        setStatusBarColor(R.drawable.white_header);
         mTabs.add((TextView) findViewById(R.id.tab_item_home));
         mTabs.add((TextView) findViewById(R.id.tab_item_toolbox));
+        mTabs.add((TextView) findViewById(R.id.tab_item_explore));
         mTabs.add((TextView) findViewById(R.id.tab_item_cls_request));
         mTabs.add((TextView) findViewById(R.id.tab_item_profile));
 
@@ -93,7 +55,13 @@ public class StudentHomeActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                for (int i = 0; i < 4; i++) {
+                if (position == 4) {
+                    setStatusBarColor(R.drawable.tutor_profile_header);
+
+                } else {
+                    setStatusBarColor(R.drawable.white_header);
+                }
+                for (int i = 0; i < mTabs.size(); i++) {
                     if (position == i) {
                         mTabs.get(i).setTextColor(getResources().getColor(R.color.black));
                         setTextViewDrawableColor(mTabs.get(i), R.color.black);
@@ -146,17 +114,25 @@ public class StudentHomeActivity extends BaseActivity {
             } else if (position == 1) {
                 return new FragmentToolbox();
             } else if (position == 2) {
-                return new FragmentClsRequests();
+                return new ExploreTutorsFragment();
             } else if (position == 3) {
-                return new FragmentProfile();
+                Bundle bundle = new Bundle();
+                bundle.putString(AppConstants.KEY_TYPE, "student");
+                FragmentClassRequests fragmentClassRequests = new FragmentClassRequests();
+                fragmentClassRequests.setArguments(bundle);
+                return fragmentClassRequests;
+            } else {
+                FragmentProfile fragmentProfile = new FragmentProfile();
+                Bundle bundle = new Bundle();
+                bundle.putString(AppConstants.KEY_TYPE, "student");
+                fragmentProfile.setArguments(bundle);
+                return fragmentProfile;
             }
-            return null;
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
     }
-
 }

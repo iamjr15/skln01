@@ -54,39 +54,26 @@
         android:textStyle="bold"
         android:text="@string/write_review" />
 
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <EditText
         android:layout_below="@+id/tvWriteReview"
         android:layout_above="@id/btnNext"
-        android:layout_marginTop="58dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="21dp"
-        android:background="@drawable/border_round_rect"
-        android:fillViewport="true">
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:padding="8dp"
+        android:minLines="7"
+        android:minHeight="200dp"
+        android:id="@+id/edtOverview"
+        style="@style/BodyText"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        android:hint="@string/et_hint"
+        tools:ignore="Autofill,MissingPrefix"
+        android:background="@drawable/border_round_rect"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp">
-
-            <EditText
-                android:id="@+id/edtOverview"
-                style="@style/adding_a_d"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                fontPath="fonts/Montserrat-Light.otf"
-                android:gravity="top"
-                android:background="@null"
-                android:hint="@string/et_hint"
-                tools:ignore="Autofill,MissingPrefix" />
-        </RelativeLayout>
-    </ScrollView>
 
     <ImageButton
         android:id="@+id/btnNext"
@@ -96,7 +83,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="26dp"
-        android:layout_marginEnd="27dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/next"
         android:textAllCaps="false" />
 

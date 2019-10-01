@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="callback"
+            type="com.autohub.skln.tutor.EditProfileFragment" />
+
+        <variable
+            name="userViewModel"
+            type="com.autohub.skln.models.UserViewModel" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fitsSystemWindows="false">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="@color/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:contentDescription="@string/content_description"
+                        android:src="@drawable/logo_top" />
+
+                    <TextView
+                        style="@style/BodyText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:text="@string/edit_profile"
+                        android:textSize="18sp" />
+
+                    <FrameLayout
+                        android:id="@+id/addProfilePicture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="16dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="@{()->callback.onAddPicture()}">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/profile_picture"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/default_pic" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+
+                            android:src="@drawable/ic_edit" />
+                    </FrameLayout>
+                </LinearLayout>
+
+
+                <!--<android.support.v7.widget.Toolbar-->
+                <!--android:id="@+id/tool_bar"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="?android:attr/actionBarSize"-->
+                <!--app:layout_collapseMode="pin"-->
+                <!--app:layout_scrollFlags="scroll|exitUntilCollapsed">-->
+
+
+                <!--</android.support.v7.widget.Toolbar>-->
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context=".BaseActivity">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Heading"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/class_to_teach"
+                    android:textAllCaps="true"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <TextView
+                    android:id="@+id/class_to_teach"
+                    style="@style/BodyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableEnd="@drawable/arrow_right"
+                    android:padding="12dp"
+                    android:text="@{userViewModel.getClassesWithAffix()}"
+                    android:textSize="14sp"
+                    tools:text="4th,5th,6th" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineGrayColor" />
+
+
+                <TextView
+                    style="@style/Heading"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/subject_to_taught"
+                    android:textAllCaps="true"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <TextView
+                    android:id="@+id/subject_to_taught"
+                    style="@style/BodyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/arrow_right"
+                    android:focusable="true"
+                    android:padding="12dp"
+                    android:text="@{userViewModel.getSubjectOrHobbiesToTeach()}"
+                    android:textSize="14sp"
+                    tools:text="4th,5th,6th" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineGrayColor" />
+
+
+                <TextView
+                    style="@style/Heading"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/select_ocupation"
+                    android:textAllCaps="true"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <TextView
+                    android:id="@+id/select_occupation"
+                    style="@style/BodyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/arrow_right"
+                    android:focusable="true"
+                    android:padding="12dp"
+                    android:text="@{userViewModel.getOccupation()}"
+                    android:textSize="14sp"
+                    tools:text="4th,5th,6th" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineGrayColor" />
+
+
+                <TextView
+                    style="@style/Heading"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/select_treaching_epereience"
+                    android:textAllCaps="true"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <TextView
+                    android:id="@+id/teaching_experience"
+                    style="@style/BodyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/arrow_right"
+                    android:focusable="true"
+                    android:padding="12dp"
+                    android:text="@{userViewModel.getTeachingExp()}"
+                    android:textSize="14sp"
+                    tools:text="4th,5th,6th" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineGrayColor" />
+
+                <TextView
+                    style="@style/Heading"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/select_qualification"
+                    android:textAllCaps="true"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <TextView
+                    android:id="@+id/qualification"
+                    style="@style/BodyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/arrow_right"
+                    android:focusable="true"
+                    android:padding="12dp"
+                    android:text="@{userViewModel.getQualification()}"
+                    android:textSize="14sp"
+                    tools:text="4th,5th,6th" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineGrayColor" />
+
+                <TextView
+                    style="@style/Heading"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/select_area_of_qualification"
+                    android:textAllCaps="true"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <TextView
+                    android:id="@+id/area_of_qualification"
+                    style="@style/BodyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/arrow_right"
+                    android:focusable="true"
+                    android:padding="12dp"
+                    android:text="@{userViewModel.getAreaQualification()}"
+                    android:textSize="14sp"
+                    tools:text="4th,5th,6th" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineGrayColor" />
+
+
+                <TextView
+                    style="@style/Heading"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/select_targeted_board"
+                    android:textAllCaps="true"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <TextView
+                    android:id="@+id/targeted_board"
+                    style="@style/BodyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/arrow_right"
+                    android:focusable="true"
+                    android:padding="12dp"
+                    android:text="@{userViewModel.getBoard()}"
+                    android:textSize="14sp"
+                    tools:text="4th,5th,6th" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineGrayColor" />
+
+                <TextView
+                    style="@style/Heading"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/bio"
+                    android:textAllCaps="true"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <EditText
+                    android:id="@+id/bio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:foregroundGravity="top"
+                    android:gravity="top"
+                    android:maxLength="240"
+                    android:minHeight="144dp"
+                    android:padding="8dp"
+                    android:text="@{userViewModel.getBioData()}"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/count"
+                    style="@style/Heading"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/_240_remaining"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineGrayColor" />
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

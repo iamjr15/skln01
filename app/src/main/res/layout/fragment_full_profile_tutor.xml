@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.autohub.skln.models.UserViewModel" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="0dp">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:elevation="0dp"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_picture"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="16dp"
+                        android:src="@mipmap/ic_launcher" />
+
+                    <TextView
+                        android:id="@+id/name"
+                        style="@style/Heading"
+                        android:layout_below="@+id/profile_picture"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="8dp"
+                        android:text="@{model.getFirstAndLastNameLetter}"
+                        android:textSize="22sp"
+                        tools:text="Muhammad Imran" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                tools:ignore="MissingConstraints">
+
+
+                <LinearLayout
+                    android:id="@+id/ranking_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Heading"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:drawableBottom="@drawable/rank_drawable"
+                        android:drawablePadding="4dp"
+                        android:gravity="center"
+                        android:text="@string/_new"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        style="@style/Heading"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:drawableBottom="@drawable/ic_star_full"
+                        android:drawablePadding="4dp"
+                        android:gravity="center"
+                        android:text="4.2"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Heading"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="2"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            style="@style/Heading"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center"
+                            android:text="Active\nclasses"
+                            android:textSize="8sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/bio"
+                    style="@style/BodyText"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@{model.bioData}"
+                    android:textSize="11sp"
+                    tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s" />
+
+                <TextView
+                    android:id="@+id/read_more"
+                    style="@style/BodyText"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
+                    android:text="...read more"
+                    android:textColor="@color/blue"
+                    android:textSize="11sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/Heading"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/teaching_exp_dot"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/teaching_experience"
+                        style="@style/Heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.teachingExp}"
+                        android:textSize="12sp"
+                        tools:text="1-2YRS" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/Heading"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/occupation"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/occupation"
+                        style="@style/Heading"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.occupation}"
+                        android:textSize="11sp"
+                        tools:text="1-2YRS" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/Heading"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/qualification"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/qualification"
+                        style="@style/Heading"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.qualification}"
+                        android:textSize="11sp"
+                        tools:text="1-2YRS" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/Heading"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/area_of_qualification"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/area_of_qualification"
+                        style="@style/Heading"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.areaQualification}"
+                        android:textSize="11sp"
+                        tools:text="1-2YRS" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@color/lineGrayColor" />
+
+                <com.autohub.skln.widgets.UnderLineTextView
+                    style="@style/Heading"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="12dp"
+                    android:text="Class Detail"
+                    android:textAllCaps="true"
+                    android:textColor="@color/blue"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/lineGrayColor" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/Heading"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/subjects_taught"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/subjects_taught"
+                        style="@style/Heading"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@{model.subjectsToTeach}"
+                        android:textAllCaps="true"
+                        android:textSize="11sp"
+                        tools:text="1-2YRS" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/Heading"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/class_type"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/class_type"
+                        style="@style/Heading"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.classType}"
+                        android:textSize="11sp"
+                        tools:text="1-2YRS" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/Heading"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/number_of_classes"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/number_of_classes"
+                        style="@style/Heading"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.noOfClasses}"
+                        android:textSize="11sp"
+                        tools:text="1-2YRS" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/Heading"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/class_frequency"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/class_frequency"
+                        style="@style/Heading"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.classFrequency}"
+                        android:textSize="11sp"
+                        tools:text="Weekly" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/Heading"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/max_student_capacity"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/max_student_capacity"
+                        style="@style/Heading"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.maxStudentsCapacity}"
+                        android:textSize="11sp"
+                        tools:text="25" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+
+                <TextView
+                    android:id="@+id/cost_per_duration"
+                    style="@style/Heading"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:text="@{model.getCostPerDuration}"
+                    android:textAllCaps="true"
+                    android:textColor="@color/blue"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    tools:text="RS. 15000/ month" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/lineGrayColor" />
+
+
+                <Button
+                    android:id="@+id/request_this_class"
+                    style="@style/Heading"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/selector_green"
+                    android:gravity="center"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:text="@string/request_this_class"
+                    android:textColor="@color/white" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="0 REVIEWS" />
+
+                    <TextView
+                        style="@style/Heading"
+                        android:layout_marginStart="16dp"
+                        android:drawableStart="@drawable/ic_star_full"
+                        android:drawablePadding="4dp"
+                        android:text="@string/_0_0"
+                        android:textColor="#FFDF00" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:src="@drawable/ic_arrow_down" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

@@ -1,122 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:fitsSystemWindows="true">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        style="@style/s_small"
-        android:id="@+id/tvS"
-        android:layout_width="35dp"
-        android:layout_height="36dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
-        android:paddingStart="6dp"
-        android:paddingBottom="2dp"
-        android:background="@drawable/border_round_rect"
-        android:text="@string/s_" />
+    <data>
+
+        <variable
+            name="callback"
+            type="com.autohub.skln.NumberVerificationActivity" />
+    </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_margin="14dp" >
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
-            style="@style/enter_the_otp"
-            android:id="@+id/tvEnterOtp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="27dp"
-            android:text="@string/enter_otp" />
+            android:id="@+id/tvS"
+            style="@style/s_small"
+            android:layout_width="35dp"
+            android:layout_height="36dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/border_round_rect"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            android:paddingBottom="2dp"
+            android:text="@string/s_" />
 
-        <LinearLayout
-            android:id="@+id/llNumber"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="31dp"
-            android:layout_below="@+id/tvEnterOtp"
-            android:gravity="center_vertical"
-            android:background="@drawable/shadow_rect"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btnNext"
+            android:layout_below="@+id/tvS">
 
-            <com.hbb20.CountryCodePicker
-                android:id="@+id/codePicker"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/pin_container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:ccp_rememberLastSelection="true"
-                app:ccp_showNameCode="false"
-                app:ccp_autoDetectCountry="true"
-                app:ccp_autoDetectLanguage="true"
-                app:ccp_textSize="20sp"
-                app:ccp_showFlag="true" />
+                android:layout_gravity="center"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@color/black" />
+                <TextView
+                    android:layout_marginStart="16dp"
+                    android:id="@+id/tvEnterOtp"
+                    style="@style/enter_the_otp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="27dp"
+                    android:text="@string/enter_otp" />
 
-            <TextView
-                style="@style/signup_general_hint_style"
-                android:id="@+id/tvPhoneNumber"
-                android:maxLines="1"
-                android:padding="5dp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:background="@null"
-                android:gravity="start|center_vertical"
-                android:textAlignment="viewStart" />
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="31dp"
+                    android:background="@drawable/shadow_rect"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-        <com.goodiebag.pinview.Pinview
-            android:id="@+id/pinView"
-            app:pinBackground="@drawable/border_circle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/llNumber"
-            app:textSize="7dp"
-            app:pinWidth="38dp"
-            app:pinHeight="38dp"
-            app:splitWidth="12dp"
-            app:pinLength="6"
-            app:cursorVisible="true"
-            app:forceKeyboard="true"
-            app:hint=""
-            app:inputType="number"
-            app:password="false"/>
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/codePicker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ccp_autoDetectCountry="true"
+                        app:ccp_autoDetectLanguage="true"
+                        app:ccp_rememberLastSelection="true"
+                        app:ccp_showFlag="true"
+                        app:ccp_showNameCode="false"
+                        app:ccp_textSize="20sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/black" />
+
+                    <EditText
+                        android:id="@+id/tvPhoneNumber"
+                        style="@style/signup_general_hint_style"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:gravity="start|center_vertical"
+                        android:inputType="phone"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:textAlignment="viewStart" />
+                </LinearLayout>
+
+                <com.goodiebag.pinview.Pinview
+                    android:id="@+id/pinView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cursorVisible="true"
+                    app:forceKeyboard="true"
+                    app:hint=""
+                    app:inputType="number"
+                    app:password="false"
+                    app:pinBackground="@drawable/border_circle"
+                    app:pinHeight="38dp"
+                    app:pinLength="6"
+                    app:pinWidth="38dp"
+                    app:splitWidth="12dp"
+                    app:textSize="7sp" />
+
+                <Button
+                    android:id="@+id/btnResendCode"
+                    style="@style/resend_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="21dp"
+                    android:background="@drawable/border_rectangle"
+                    android:gravity="center"
+                    android:onClick="@{()->callback.onResendClick()}"
+                    android:paddingStart="70dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="70dp"
+                    android:paddingBottom="6dp"
+                    android:text="@string/resend_code" />
+            </LinearLayout>
+        </ScrollView>
 
         <Button
-            style="@style/resend_code"
-            android:id="@+id/btnResendCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/pinView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="21dp"
-            android:paddingStart="70dp"
-            android:paddingEnd="70dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:background="@drawable/border_rectangle"
-            android:gravity="center"
-            android:text="@string/resend_code" />
+            android:id="@+id/btnNext"
+            style="@style/ButtonNext"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:gravity="end|center_vertical"
+            android:onClick="@{()->callback.onNextClick()}"
+            android:text="@string/next" />
     </RelativeLayout>
-
-    <Button
-        style="@style/otp_next"
-        android:id="@+id/btnNext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/button_background_red"
-        android:text="@string/next"
-        android:padding="10dp"
-        android:gravity="end|center_vertical" />
-</RelativeLayout>
+</layout>

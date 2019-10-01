@@ -1,204 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/tvSignup"
-        style="@style/signup_title_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/sign_up" />
+    <data>
 
-    <TextView
-        android:id="@+id/tvPersonalVerification"
-        style="@style/signup_second_title_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvSignup"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:background="@drawable/button_background_black"
-        android:gravity="center"
-        android:paddingStart="28dp"
-        android:paddingTop="4dp"
-        android:paddingEnd="29dp"
-        android:paddingBottom="3dp"
-        android:text="@string/personal_verification" />
-
-    <ProgressBar
-        android:id="@+id/pbSignupProgress"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="9dp"
-        android:layout_below="@id/tvPersonalVerification"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="12dp"
-        android:max="8"
-        android:progress="8"
-        android:progressDrawable="@drawable/progress_drawable" />
+        <variable
+            name="callback"
+            type="com.autohub.skln.tutor.TutorCreatePackage" />
+    </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pbSignupProgress"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="31dp"
-        android:layout_marginEnd="16dp">
+        android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tvCreatePackage"
-            style="@style/title_style"
+            android:id="@+id/tvSignup"
+            style="@style/signup_title_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="@string/create_your_pack" />
+            android:layout_marginTop="10dp"
+            android:text="@string/sign_up" />
 
         <TextView
-            android:id="@+id/tvLastHint"
-            style="@style/signup_general_hint_style"
+            android:id="@+id/tvPersonalVerification"
+            style="@style/signup_second_title_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvCreatePackage"
+            android:layout_below="@+id/tvSignup"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:text="@string/last_hint" />
+            android:layout_marginTop="23dp"
+            android:background="@drawable/button_background_black"
+            android:gravity="center"
+            android:paddingStart="28dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="29dp"
+            android:paddingBottom="3dp"
+            android:text="@string/personal_verification" />
 
-        <LinearLayout
+        <ProgressBar
+            android:id="@+id/pbSignupProgress"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvLastHint"
-            android:layout_marginTop="33dp"
-            android:orientation="vertical">
+            android:layout_height="9dp"
+            android:layout_below="@id/tvPersonalVerification"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="12dp"
+            android:max="8"
+            android:progress="8"
+            android:progressDrawable="@drawable/progress_drawable" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_rectangle"
-                android:paddingStart="10dp"
-                android:paddingTop="7dp"
-                android:paddingBottom="7dp"
-                android:text="@string/package1" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/btnNext"
+            android:layout_below="@+id/pbSignupProgress"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="8dp"
+            android:scrollbarStyle="outsideOverlay">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_rectangle"
-                android:orientation="vertical">
+                android:animateLayoutChanges="true"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
 
                 <TextView
-                    android:id="@+id/tvClassType"
-                    style="@style/package_item_text_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:id="@+id/tvCreatePackage"
+                    style="@style/Heading"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/create_your_pack"
+                    android:textAllCaps="true"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tvLastHint"
+                    style="@style/Subhead"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/border_rectangle"
-                    android:drawableEnd="@drawable/drop_down_arrow"
-                    android:paddingStart="12dp"
-                    android:paddingTop="6dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="6dp"
-                    android:text="@string/class_type" />
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="@string/last_hint"
+                    android:textSize="19sp" />
 
-                <TextView
-                    android:id="@+id/tvClassNumber"
-                    style="@style/package_item_text_style"
+                <com.autohub.skln.widgets.UnderLineTextView
+                    style="@style/BodyText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/border_rectangle"
-                    android:drawableEnd="@drawable/drop_down_arrow"
-                    android:paddingStart="12dp"
-                    android:paddingTop="6dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="6dp"
-                    android:text="@string/class_number" />
+                    android:layout_height="30dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="@string/package1"
+                    android:textAllCaps="true"
+                    android:textColor="#0031F6" />
 
-                <TextView
-                    android:id="@+id/tvClassFreq"
-                    style="@style/package_item_text_style"
+                <Spinner
+                    android:id="@+id/class_type"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/border_rectangle"
-                    android:drawableEnd="@drawable/drop_down_arrow"
-                    android:paddingStart="12dp"
-                    android:paddingTop="6dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="6dp"
-                    android:text="@string/class_frequency" />
+                    android:layout_height="32dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/border_rectangle" />
 
-                <TextView
-                    android:id="@+id/tvMaxStudents"
-                    style="@style/package_item_text_style"
+                <Spinner
+                    android:id="@+id/numb_of_classes"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_height="32dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/border_rectangle"
-                    android:drawableEnd="@drawable/drop_down_arrow"
-                    android:paddingStart="12dp"
-                    android:paddingTop="6dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="6dp"
-                    android:text="@string/specify_max_students"
-                    android:visibility="gone" />
+                    android:background="@drawable/border_rectangle" />
+
+                <Spinner
+                    android:id="@+id/class_frequency"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/border_rectangle" />
+
+                <Spinner
+                    android:id="@+id/max_student_capacity"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/border_rectangle" />
 
                 <TextView
-                    style="@style/package_item_text_style"
+                    style="@style/BodyText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
                     android:text="@string/setup_rates"
+                    android:textAllCaps="true"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/edtRate"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:layout_marginTop="2dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="13dp"
-                    android:background="@drawable/border_rectangle"
-                    android:paddingStart="12dp"
-                    android:paddingTop="6dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="6dp"
-                    android:text="@string/rate"
-                    android:textColor="@color/black"
-                    android:textSize="13sp" />
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_rectangle">
+
+                        <TextView
+                            style="@style/Heading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="12dp"
+                            android:text="@string/rate"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <EditText
+                            android:id="@+id/edtRate"
+                            style="@style/Heading"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="1dp"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="@font/cera_pro_bold"
+                            android:gravity="center_vertical"
+                            android:hint="120"
+                            android:inputType="number"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:textColor="@color/black"
+                            android:textSize="17sp" />
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/payment_duration"
+                        android:layout_width="144dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="1dp"
+                        android:background="@drawable/border_rectangle" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
+
+        <ImageButton
+            android:id="@+id/btnNext"
+            style="@style/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/next"
+            android:contentDescription="@string/next"
+            android:onClick="@{()->callback.onNextClick()}" />
 
     </RelativeLayout>
-
-    <ImageButton
-        android:id="@+id/btnNext"
-        style="@style/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="27dp"
-        android:layout_marginBottom="26dp"
-        android:background="@drawable/next"
-        android:contentDescription="@string/next" />
-
-</RelativeLayout>
+</layout>

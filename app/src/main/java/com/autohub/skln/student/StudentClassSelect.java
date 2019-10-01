@@ -36,6 +36,7 @@ import static com.autohub.skln.utills.AppConstants.CLASS_7;
 import static com.autohub.skln.utills.AppConstants.CLASS_8;
 import static com.autohub.skln.utills.AppConstants.CLASS_9;
 import static com.autohub.skln.utills.AppConstants.KEY_STDT_CLASS;
+import static com.autohub.skln.utills.AppConstants.KEY_USER_ID;
 
 public class StudentClassSelect extends BaseActivity {
 
@@ -138,9 +139,11 @@ public class StudentClassSelect extends BaseActivity {
         final boolean isSeniorClass = selectedClass.equalsIgnoreCase(CLASS_11) || selectedClass.equalsIgnoreCase(CLASS_12);
 
         Map<String, Object> user = new HashMap<>();
+        String uid = getFirebaseAuth().getCurrentUser().getUid();
         user.put(KEY_STDT_CLASS, selectedClass);
+        user.put(KEY_USER_ID, uid);
 
-        getFirebaseStore().collection(getString(R.string.db_root_tutors)).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
+        getFirebaseStore().collection(getString(R.string.db_root_students)).document(uid).set(user, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
