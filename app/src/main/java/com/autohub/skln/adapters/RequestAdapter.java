@@ -1,15 +1,15 @@
 package com.autohub.skln.adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.autohub.skln.databinding.ItemRequestBinding;
 import com.autohub.skln.listeners.ItemClickListener;
-import com.autohub.skln.models.Request;
 import com.autohub.skln.models.RequestViewModel;
 
 import java.util.ArrayList;

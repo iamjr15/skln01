@@ -39,8 +39,8 @@
         android:layout_marginEnd="12dp"
         android:layout_below="@id/tvStudent"
         android:progressDrawable="@drawable/progress_drawable"
-        android:max="8"
-        android:progress="4"/>
+        android:max="5"
+        android:progress="3" />
 
     <TextView
         android:id="@+id/tvSelectText"

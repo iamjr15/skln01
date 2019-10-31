@@ -1,9 +1,10 @@
 package com.autohub.skln;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.autohub.skln.utills.AppConstants;
 

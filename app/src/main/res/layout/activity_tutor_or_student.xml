@@ -3,50 +3,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TutorOrStudent">
+    tools:context=".activities.TutorOrStudent">
 
     <TextView
         android:id="@+id/tvSignup"
-        style="@style/Heading"
+        style="@style/signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:text="@string/sign_up"
-        android:textSize="29sp" />
+        android:layout_marginTop="10dp"
+        android:text="@string/sign_up" />
 
     <TextView
-        style="@style/Heading"
+        style="@style/im_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/tvSignup"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="66dp"
         android:text="@string/i_am"
         android:textSize="45sp" />
 
     <Button
         android:id="@+id/btnTutor"
-        style="@style/Heading"
+        style="@style/tutors_in"
         android:layout_width="match_parent"
-        android:textSize="29sp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginStart="26dp"
         android:layout_marginEnd="26dp"
-
-        android:background="@drawable/border_round_rect"
-        android:paddingTop="22dp"
-        android:paddingBottom="20dp"
-        android:text="@string/tutor" />
+        android:background="@drawable/border_circular_rect"
+        android:paddingTop="23dp"
+        android:paddingBottom="23dp"
+        android:text="@string/tutor_institutes"
+        android:textSize="29sp" />
 
     <Button
-        android:layout_marginTop="24dp"
         android:id="@+id/btnStudent"
-        style="@style/Heading"
-        android:textSize="29sp"
+        style="@style/students_p"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/btnTutor"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="26dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="26dp"
-        android:background="@drawable/border_round_rect"
-        android:paddingTop="22dp"
-        android:paddingBottom="20dp"
-        android:text="@string/student" />
+        android:background="@drawable/border_circular_rect"
+        android:paddingTop="23dp"
+        android:paddingBottom="23dp"
+        android:text="@string/student_p"
+        android:textSize="29sp" />
 </RelativeLayout>

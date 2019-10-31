@@ -2,9 +2,11 @@ package com.autohub.skln;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.autohub.skln.activities.user.SignupStart;
 import com.autohub.skln.utills.AppConstants;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

@@ -1,7 +1,8 @@
 package com.autohub.skln.models;
 
-import android.databinding.BaseObservable;
 import android.text.TextUtils;
+
+import androidx.databinding.BaseObservable;
 
 import com.autohub.skln.utills.CommonUtils;
 

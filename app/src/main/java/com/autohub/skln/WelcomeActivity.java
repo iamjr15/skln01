@@ -1,9 +1,7 @@
 package com.autohub.skln;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -11,6 +9,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+
+import com.autohub.skln.activities.user.NumberVerificationActivity;
 import com.autohub.skln.databinding.ActivityWelcomeActivityBinding;
 import com.autohub.skln.utills.AppConstants;
 import com.hbb20.CountryCodePicker;

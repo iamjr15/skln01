@@ -16,4 +16,5 @@
     <color name="lineGrayColor">#707070</color>
     <color name="lineBlackColor">#000000</color>
     <color name="purpleColor">#A97CCD</color>
+    <color name="spanblue">#ff3100ff</color>
 </resources>

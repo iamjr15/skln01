@@ -19,5 +19,6 @@
         android:text="@{text}"
         android:textSize="10sp"
         android:textAllCaps="true"
+        tools:ignore="SmallSp"
         tools:text="Physics" />
 </layout>

@@ -1,28 +1,19 @@
 package com.autohub.skln.fragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.CompoundButton;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 
 import com.autohub.skln.R;
 import com.autohub.skln.databinding.DialogFragmentChooserBinding;
-import com.autohub.skln.databinding.DialogFragmentEditBinding;
 import com.autohub.skln.databinding.ItemRadioButtonBinding;
 import com.autohub.skln.listeners.DialogFragmentButtonPressedListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by m.imran

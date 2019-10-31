@@ -87,7 +87,7 @@
                         android:textAllCaps="true"
                         android:textColor="@color/white" />
 
-                    <android.support.design.chip.ChipGroup
+                    <com.google.android.material.chip.ChipGroup
                         android:id="@+id/subjects"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

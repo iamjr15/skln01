@@ -26,7 +26,7 @@
         android:paddingEnd="29dp"
         android:background="@drawable/button_background_black"
         android:gravity="center"
-        android:text="@string/student" />
+        android:text="@string/student_p" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
@@ -39,18 +39,19 @@
         android:layout_marginEnd="12dp"
         android:layout_below="@id/tvStudent"
         android:progressDrawable="@drawable/progress_drawable"
-        android:max="8"
-        android:progress="4"/>
+        android:max="5"
+        android:progress="5" />
 
     <TextView
+
         android:id="@+id/tvSelectText"
         style="@style/signup_general_hint_style"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/pbSignupProgress"
         android:layout_marginTop="31dp"
         android:layout_marginStart="12dp"
-        android:gravity="start"
+        android:gravity="center_horizontal"
         android:text="@string/select_hobby_text_1" />
 
     <TextView
@@ -219,7 +220,7 @@
 
     </HorizontalScrollView>
 
-    <!--<android.support.v7.widget.RecyclerView
+    <!--<androidx.appcompat.widget.RecyclerView
         android:id="@+id/rvClasses"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

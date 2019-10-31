@@ -2,11 +2,12 @@ package com.autohub.skln.widgets;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.ViewPager;
 
 public class CustomViewPager extends ViewPager implements ViewPager.PageTransformer {
     private float MAX_SCALE = 0.0f;

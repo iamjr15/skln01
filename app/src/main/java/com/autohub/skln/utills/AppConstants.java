@@ -66,6 +66,7 @@ public interface AppConstants {
     String KEY_PASSWORD = "password";
     String KEY_FIRST_NAME = "firstName";
     String KEY_LAST_NAME = "lastName";
+    String KEY_EMAIL = "email";
     String KEY_SEX = "gender";
     String KEY_CATEGORY = "teachingCategory";
     String KEY_CLASSES = "classesToTeach";
@@ -93,4 +94,8 @@ public interface AppConstants {
     String KEY_STDT_FAVORITE_CLASSES = "favoriteClasses";
     String KEY_STDT_LEAST_FAV_CLASSES = "leastFavoriteClasses";
     String KEY_STDT_HOBBIES = "hobbiesToPursue";
+
+    // bundel keys
+    String KEY_USERMAP = "usermap";
+
 }

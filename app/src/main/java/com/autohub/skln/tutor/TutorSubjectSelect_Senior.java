@@ -3,7 +3,6 @@ package com.autohub.skln.tutor;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 import com.autohub.skln.BaseActivity;
@@ -112,7 +111,7 @@ public class TutorSubjectSelect_Senior extends BaseActivity {
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onFailure(@NonNull Exception e) {
+                    public void onFailure(Exception e) {
                         hideLoading();
                         showSnackError(e.getMessage());
                     }

@@ -20,27 +20,27 @@
         android:layout_below="@+id/tvSignup"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="23dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="3dp"
-        android:paddingStart="28dp"
-        android:paddingEnd="29dp"
         android:background="@drawable/button_background_black"
         android:gravity="center"
-        android:text="@string/student" />
+        android:paddingStart="28dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="29dp"
+        android:paddingBottom="3dp"
+        android:text="@string/student_p" />
 
     <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
         android:id="@+id/pbSignupProgress"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="9dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
         android:layout_below="@id/tvStudent"
-        android:progressDrawable="@drawable/progress_drawable"
-        android:max="8"
-        android:progress="3"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="12dp"
+        android:max="5"
+        android:progress="3"
+        android:progressDrawable="@drawable/progress_drawable" />
 
     <TextView
         android:id="@+id/tvSelectText"
@@ -48,19 +48,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/pbSignupProgress"
-        android:layout_marginTop="31dp"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="31dp"
         android:gravity="start"
         android:text="@string/select_favorite_subject" />
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_below="@id/tvSelectText"
         android:layout_above="@id/btnNext"
+        android:layout_below="@id/tvSelectText"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="38dp"
-        android:fillViewport="true" >
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -211,10 +211,10 @@
         style="@style/next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="26dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="27dp"
+        android:layout_marginBottom="26dp"
         android:background="@drawable/next"
         android:contentDescription="@string/next" />
 

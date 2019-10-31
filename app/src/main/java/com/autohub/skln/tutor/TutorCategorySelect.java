@@ -3,7 +3,8 @@ package com.autohub.skln.tutor;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
@@ -46,7 +47,6 @@ public class TutorCategorySelect extends BaseActivity {
 
     private void goToNext(final boolean toAcademics) {
         showLoading();
-
         Map<String, Object> user = new HashMap<>();
         user.put(KEY_CATEGORY, toAcademics ? CATEGORY_ACADEMICS : CATEGORY_HOBBY);
         String uid = getFirebaseAuth().getCurrentUser().getUid();

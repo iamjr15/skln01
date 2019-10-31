@@ -5,8 +5,10 @@
     <string name="db_root_requests">requests</string>
 
     <string name="app_name">SKLN</string>
-    <string name="login">LOGIN</string>
-    <string name="sign_up">SIGNUP</string>
+    <string name="login">login</string>
+    <string name="sign_up">signup</string>
+    <string name="sign_up_now"> &#160;Signup Now</string>
+    <string name="notregister_yet"> Not registered yet?</string>
 
     <string-array name="title_arrays">
         <item>Ms.</item>
@@ -92,10 +94,13 @@
 
     <string name="content_description">It is image</string>
     <string name="first_name">First Name</string>
+    <string name="first_namehint">FIRST NAME</string>
     <string name="last_name">Last Name</string>
+    <string name="last_namehint">LAST NAME</string>
     <string name="password">Set Password</string>
     <string name="next">next</string>
     <string name="enter_otp">Enter the OTP.</string>
+    <string name="verify_number">verify your phone number.</string>
     <string name="enter_number">Enter Number</string>
     <string name="resend_code">resend code</string>
     <string name="select_cat_text">Select your category of teaching.</string>
@@ -126,6 +131,8 @@
     <string name="enter_lastname">Please enter last name</string>
     <string name="enter_phone">Please enter phone number</string>
     <string name="enter_password">Please enter password</string>
+    <string name="enter_email">Please enter email</string>
+    <string name="enter_validemail">Please enter valid email address</string>
     <string name="enter_correct_phone">Please enter correct number</string>
     <string name="enter_correct_otp">Please enter the OTP.</string>
     <string name="profile_image">Please put profile image</string>
@@ -135,13 +142,19 @@
     <string name="choose_subjects">Please choose subjects</string>
     <string name="please_wait">Please wait...</string>
     <string name="sending">Sending code... Please wait.</string>
-    <string name="welcome_onboard">Welcome\nOnboard.</string>
+    <string name="welcome_onboard">welcome\nonboard.</string>
     <string name="s_">s.</string>
     <string name="enter_your_phonenum">Enter your phone\nnumber to\ncontinue.</string>
     <string name="tutor">Tutor</string>
+    <string name="tutor_institutes">Tutor/Institutes</string>
+    <string name="tutor_institute">Tutor/Institute</string>
     <string name="student">Student</string>
+    <string name="student_p">Students/Parents</string>
+    <string name="studentp">Students/Parent</string>
     <string name="i_am">I\'m a...</string>
     <string name="getToKnowYou">Let\'s get to know you!</string>
+    <string name="heythere">Hey there !</string>
+    <string name="letsget_start">Let\'s get started.</string>
     <string name="male">male</string>
     <string name="female">female</string>
     <string name="note_select_class">please note that if you select  classes 11/12 then you won\'t be able to select other classes and vice versa.</string>
@@ -154,6 +167,11 @@
     <string name="welcome_back">Welcome  back!</string>
     <string name="login_">Login.</string>
     <string name="hint_password">Enter password to continue.</string>
+    <string name="labelloginid">login ID</string>
+    <string name="labelemailid">email id</string>
+    <string name="labelsetemailid">Enter E-MAIL</string>
+    <string name="labelpass">password</string>
+    <string name="labelsetpass">SET PASSWORD</string>
     <string name="forgot_pass">forgot password?</string>
     <string name="home">Home</string>
     <string name="toolbox">Toolbox</string>
@@ -243,4 +261,11 @@
     <string name="new_request_sent">Your Request has been sent.</string>
     <string name="contact_skill_master">Contact Skillmaster</string>
     <string name="see_location_on_map">See Location on Map</string>
+    <string name="show">show</string>
+    <string name="hide">hide</string>
+    <string name="pleasefollow">Please follow the following steps to register as a tutor/coaching institute on skillone platform -</string>
+    <string name="step1">1. Go to the website and click \"signup\" .</string>
+    <string name="step2">2. Select \"signup to teach\" .</string>
+    <string name="step3">3. Go through the procedure step by step.</string>
+    <string name="step4">4. A login ID will be generated which you need to enter along with your password when you login.</string>
 </resources>

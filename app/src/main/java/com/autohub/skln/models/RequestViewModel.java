@@ -1,8 +1,10 @@
 package com.autohub.skln.models;
 
-import android.databinding.BaseObservable;
+
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.databinding.BaseObservable;
 
 import com.autohub.skln.utills.CommonUtils;
 

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="callback"
+            type="com.autohub.skln.activities.OnBoardActivity" />
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/onboard"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            tools:context=".activities.OnBoardActivity">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.1"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="22dp"
+                android:paddingTop="26dp">
+
+                <TextView
+                    style="@style/welcome_on"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/welcome_onboard" />
+
+                <TextView
+                    style="@style/hey_there_"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="76dp"
+                    android:text="@string/heythere" />
+
+                <TextView
+                    style="@style/hey_there_"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/letsget_start" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+
+            <Button
+                style="@style/onboard_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/onboard_loginbutton"
+                android:onClick="@{()->callback.onLogin()}"
+                android:text="@string/login" />
+
+            <Button
+                style="@style/onboard_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="13dp"
+                android:background="@drawable/onboard_signupbutton"
+
+                android:onClick="@{()->callback.onSignup()}"
+                android:text="@string/sign_up" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</layout>

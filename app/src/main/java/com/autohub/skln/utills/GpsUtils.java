@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.IntentSender;
 import android.location.LocationManager;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,13 +26,12 @@ public class GpsUtils {
     private SettingsClient mSettingsClient;
     private LocationSettingsRequest mLocationSettingsRequest;
     private LocationManager locationManager;
-    private LocationRequest locationRequest;
 
     public GpsUtils(Context context) {
         this.context = context;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         mSettingsClient = LocationServices.getSettingsClient(context);
-        locationRequest = LocationRequest.create();
+        LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(10 * 1000);
         locationRequest.setFastestInterval(2 * 1000);
@@ -66,7 +64,7 @@ public class GpsUtils {
                     })
                     .addOnFailureListener((Activity) context, new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e) {
+                        public void onFailure(Exception e) {
                             int statusCode = ((ApiException) e).getStatusCode();
                             switch (statusCode) {
                                 case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
@@ -83,7 +81,7 @@ public class GpsUtils {
                                     String errorMessage = "Location settings are inadequate, and cannot be " +
                                             "fixed here. Fix in Settings.";
                                     Log.e(TAG, errorMessage);
-                                    Toast.makeText((Activity) context, errorMessage, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
                             }
                         }
                     });

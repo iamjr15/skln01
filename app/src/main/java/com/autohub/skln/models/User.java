@@ -2,8 +2,9 @@ package com.autohub.skln.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
+
+import androidx.annotation.DrawableRes;
 
 import com.autohub.skln.R;
 import com.autohub.skln.utills.AppConstants;

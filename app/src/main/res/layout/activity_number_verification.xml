@@ -6,56 +6,43 @@
 
         <variable
             name="callback"
-            type="com.autohub.skln.NumberVerificationActivity" />
+            type="com.autohub.skln.activities.user.NumberVerificationActivity" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvS"
-            style="@style/s_small"
-            android:layout_width="35dp"
-            android:layout_height="36dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/border_round_rect"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:paddingBottom="2dp"
-            android:text="@string/s_" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/btnNext"
-            android:layout_below="@+id/tvS">
+            android:layout_above="@+id/btnNext">
 
             <LinearLayout
                 android:id="@+id/pin_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="72dp"
+                android:layout_marginRight="14dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginStart="16dp"
                     android:id="@+id/tvEnterOtp"
-                    style="@style/enter_the_otp"
+                    style="@style/verify_you"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="27dp"
-                    android:text="@string/enter_otp" />
+                    android:layout_marginRight="100dp"
+
+                    android:text="@string/verify_number" />
 
                 <LinearLayout
-                    android:id="@+id/llNumber"
+                    android:id="@+id/llPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="31dp"
+                    android:layout_marginTop="29dp"
                     android:background="@drawable/shadow_rect"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -80,46 +67,55 @@
                         android:background="@color/black" />
 
                     <EditText
-                        android:id="@+id/tvPhoneNumber"
-                        style="@style/signup_general_hint_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/etPhoneNumber"
+                        style="@style/Subhead"
+                        android:layout_width="332dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:enabled="false"
-                        android:focusable="false"
                         android:gravity="start|center_vertical"
                         android:inputType="phone"
                         android:maxLines="1"
                         android:padding="5dp"
                         android:textAlignment="viewStart" />
+
+                    <ImageButton
+                        android:id="@+id/btngetotp"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="12dp"
+                        android:background="@color/white"
+                        android:src="@drawable/welcome_next" />
                 </LinearLayout>
 
                 <com.goodiebag.pinview.Pinview
+                    android:layout_marginTop="31dp"
                     android:id="@+id/pinView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     app:cursorVisible="true"
                     app:forceKeyboard="true"
                     app:hint=""
                     app:inputType="number"
                     app:password="false"
                     app:pinBackground="@drawable/border_circle"
-                    app:pinHeight="38dp"
+                    app:pinHeight="45dp"
                     app:pinLength="6"
-                    app:pinWidth="38dp"
-                    app:splitWidth="12dp"
+                    app:pinWidth="45dp"
+                    app:splitWidth="7dp"
                     app:textSize="7sp" />
 
                 <Button
+                    android:layout_marginTop="26dp"
                     android:id="@+id/btnResendCode"
                     style="@style/resend_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="21dp"
-                    android:background="@drawable/border_rectangle"
+                    android:background="@drawable/round_rect_drawable"
+                    android:visibility="gone"
                     android:gravity="center"
                     android:onClick="@{()->callback.onResendClick()}"
                     android:paddingStart="70dp"
@@ -131,8 +127,11 @@
         </ScrollView>
 
         <Button
+            style="@style/btnnext"
             android:id="@+id/btnNext"
-            style="@style/ButtonNext"
+            android:layout_height="wrap_content"
+            android:background="@drawable/nextbtnbg_drawable"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_alignParentBottom="true"
             android:gravity="end|center_vertical"

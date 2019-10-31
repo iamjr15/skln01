@@ -5,13 +5,14 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
@@ -36,10 +37,10 @@ public class TutorHomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor_home);
         setStatusBarColor(R.drawable.tutor_home_header);
-        mTabs.add((TextView) findViewById(R.id.tab_item_home));
-        mTabs.add((TextView) findViewById(R.id.tab_item_toolbox));
-        mTabs.add((TextView) findViewById(R.id.tab_item_cls_request));
-        mTabs.add((TextView) findViewById(R.id.tab_item_profile));
+        mTabs.add(findViewById(R.id.tab_item_home));
+        mTabs.add(findViewById(R.id.tab_item_toolbox));
+        mTabs.add(findViewById(R.id.tab_item_cls_request));
+        mTabs.add(findViewById(R.id.tab_item_profile));
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 

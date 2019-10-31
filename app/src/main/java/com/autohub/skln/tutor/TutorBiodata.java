@@ -3,9 +3,10 @@ package com.autohub.skln.tutor;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;

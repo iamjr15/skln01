@@ -2,15 +2,16 @@ package com.autohub.skln.student;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.autohub.skln.R;
 import com.autohub.skln.databinding.StudentEditProfileBinding;
@@ -38,7 +39,6 @@ import javax.crypto.NoSuchPaddingException;
 
 import static com.autohub.skln.utills.AppConstants.KEY_FIRST_NAME;
 import static com.autohub.skln.utills.AppConstants.KEY_LAST_NAME;
-import static com.autohub.skln.utills.AppConstants.KEY_PASSWORD;
 import static com.autohub.skln.utills.AppConstants.KEY_PHONE_NUMBER;
 import static com.autohub.skln.utills.AppConstants.KEY_STDT_HOBBIES;
 
