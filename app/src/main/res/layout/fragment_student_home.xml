@@ -14,29 +14,28 @@
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="22dp">
 
-                    <ImageView
-                        android:id="@+id/logo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center_horizontal"
-                        android:contentDescription="@string/content_description"
-                        android:src="@drawable/logo_top" />
+                    <!--    <ImageView
+                            android:id="@+id/logo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center_horizontal"
+                            android:contentDescription="@string/content_description"
+                            android:src="@drawable/logo_top" />-->
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/profile_picture"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
-                        android:layout_below="@id/logo"
                         android:layout_marginTop="20dp"
                         android:src="@drawable/default_pic"
                         app:civ_border_color="#FF000000"
@@ -44,23 +43,21 @@
 
                     <TextView
                         android:id="@+id/hey_user"
-                        style="@style/Heading"
+                        style="@style/hey__jack"
                         android:layout_alignTop="@id/profile_picture"
                         android:layout_marginStart="14dp"
                         android:layout_marginTop="-8dp"
                         android:layout_toEndOf="@id/profile_picture"
                         android:fontFamily="@font/montserrat_bold"
                         android:lines="2"
-                        android:text="Hey, \nLaunrene."
-                        android:textSize="25sp" />
+                        android:text="Hey, \nLaunrene." />
 
                     <TextView
-                        style="@style/Heading"
+                        style="@style/learn_some"
                         android:layout_below="@+id/hey_user"
                         android:layout_alignStart="@+id/hey_user"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="@string/learn_something_new"
-                        android:textSize="18sp" />
+                        android:text="@string/learn_something_new" />
 
                 </RelativeLayout>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -76,26 +73,63 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp">
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginRight="7dp"
+                    android:background="@drawable/blue_rect"
+                    android:orientation="vertical"
+                    android:paddingLeft="13dp"
+                    android:paddingTop="11dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+
+                            style="@style/already_go"
+                            android:text="@string/already_go_to_a_class" />
+
+                        <TextView
+                            style="@style/click_to_a"
+                            android:layout_marginTop="5dp"
+
+                            android:text="@string/click_to_add_it_your_classes" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="13dp"
+                        android:src="@drawable/homearrow_right" />
+
+                </RelativeLayout>
+
 
                 <TextView
-                    style="@style/Subhead"
-                    android:paddingStart="16dp"
+                    style="@style/academics"
+                    android:layout_marginTop="16dp"
+                    android:paddingStart="26dp"
+
                     android:paddingEnd="16dp"
                     android:text="@string/academics"
-                    android:textAllCaps="true"
-                    android:textSize="14sp" />
+                    android:textAllCaps="true" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
-                    android:paddingStart="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="8dp">
+                    android:paddingStart="24dp"
+                    android:paddingTop="8dp">
 
                     <LinearLayout
                         android:id="@+id/container_academic"
@@ -105,22 +139,21 @@
                 </HorizontalScrollView>
 
                 <TextView
-                    style="@style/Subhead"
-                    android:layout_marginTop="12dp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
+                    style="@style/academics"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:paddingStart="26dp"
                     android:text="@string/hobbies"
-                    android:textAllCaps="true"
-                    android:textSize="14sp" />
+                    android:textAllCaps="true" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
-                    android:paddingStart="16dp"
+                    android:paddingStart="24dp"
                     android:paddingTop="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="8dp">
+
+                    >
 
                     <LinearLayout
                         android:id="@+id/container_hobbies"
@@ -129,72 +162,73 @@
                         android:orientation="horizontal" />
                 </HorizontalScrollView>
 
-                <TextView
-                    style="@style/Subhead"
-                    android:layout_marginTop="12dp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/classes_today"
-                    android:textAllCaps="true"
-                    android:textSize="14sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/bg_round"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
+                <!--    <TextView
                         style="@style/Subhead"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="11:25 am"
+                        android:layout_marginTop="12dp"
+                        android:paddingStart="26dp"
+
+                        android:paddingEnd="16dp"
+                        android:text="@string/classes_today"
                         android:textAllCaps="true"
-                        android:textSize="23sp" />
+                        android:textSize="14sp" />
 
-                    <TextView
-                        style="@style/BodyText"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:text="Physics morning batch"
-                        android:textAllCaps="true"
-                        android:textSize="15sp" />
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/bg_round"
+                        android:orientation="vertical"
+                        android:padding="8dp">
 
-                </LinearLayout>
+                        <TextView
+                            style="@style/Subhead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="11:25 am"
+                            android:textAllCaps="true"
+                            android:textSize="23sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/bg_round"
-                    android:orientation="vertical"
-                    android:padding="8dp">
+                        <TextView
+                            style="@style/BodyText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:text="Physics morning batch"
+                            android:textAllCaps="true"
+                            android:textSize="15sp" />
 
-                    <TextView
-                        style="@style/Subhead"
-                        android:layout_width="wrap_content"
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="04:25 pm"
-                        android:textAllCaps="true"
-                        android:textSize="23sp" />
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/bg_round"
+                        android:orientation="vertical"
+                        android:padding="8dp">
 
-                    <TextView
-                        style="@style/BodyText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:text="Chemistry afternoon batch"
-                        android:textAllCaps="true"
-                        android:textSize="15sp" />
+                        <TextView
+                            style="@style/Subhead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="04:25 pm"
+                            android:textAllCaps="true"
+                            android:textSize="23sp" />
 
-                </LinearLayout>
+                        <TextView
+                            style="@style/BodyText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:text="Chemistry afternoon batch"
+                            android:textAllCaps="true"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>-->
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

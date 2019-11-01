@@ -320,6 +320,24 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    <!-- Text style for "learn_some" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="learn_some">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!-- Text style for "hey,__jack" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="hey__jack">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
 
     <!-- Text style for "login" -->
     <!-- Add this snippet to styles.xml. -->
@@ -369,6 +387,38 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    <!-- Text style for "academics" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="academics">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+
+    </style>
+
+    <!-- Text style for "already_go" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="already_go">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Text style for "click_to_a" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="click_to_a">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
     <!-- Text style for "show" -->
     <!-- Add this snippet to styles.xml. -->

@@ -182,6 +182,7 @@
     <string name="teacher">Teacher</string>
     <string name="sent">Code sent.</string>
     <string name="not_registered">You need to register yourself first.</string>
+    <string name="wrong_crendentials">Wrong Credentials.</string>
     <string name="your_feed">Your feed.</string>
     <string name="your_toolbox">Your toolbox.</string>
     <string name="your_clsreq">Your Class Requests.</string>
@@ -237,7 +238,7 @@
     <string name="request_message">Please contact the student by clicking the contact button above.</string>
     <string name="add_to_batch">Add to batch</string>
     <string name="contact_student">Contact Student</string>
-    <string name="learn_something_new">Learn something new.</string>
+    <string name="learn_something_new">learn something new.</string>
     <string name="hobbies">Hobbies</string>
     <string name="classes_today">Classes today</string>
     <string name="explore">Explore</string>
@@ -268,4 +269,8 @@
     <string name="step2">2. Select \"signup to teach\" .</string>
     <string name="step3">3. Go through the procedure step by step.</string>
     <string name="step4">4. A login ID will be generated which you need to enter along with your password when you login.</string>
+
+    <string name="already_go_to_a_class">already go to a class?</string>
+    <string name="click_to_add_it_your_classes">click to add it your classes.</string>
+
 </resources>

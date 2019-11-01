@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,11 +22,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.hbb20.CountryCodePicker;
 
@@ -34,6 +36,8 @@ import java.util.concurrent.TimeUnit;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static com.autohub.skln.utills.AppConstants.KEY_EMAIL;
+import static com.autohub.skln.utills.AppConstants.KEY_PASSWORD;
 import static com.autohub.skln.utills.AppConstants.KEY_PHONE_NUMBER;
 import static com.autohub.skln.utills.AppConstants.KEY_USERMAP;
 
@@ -76,8 +80,9 @@ public class NumberVerificationActivity extends BaseActivity implements TextView
         }
         userMap = (HashMap<String, Object>) extras.getSerializable(KEY_USERMAP);
 //
-
-
+        mBinding.etPhoneNumber.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(mBinding.etPhoneNumber, InputMethodManager.SHOW_IMPLICIT);
         mBinding.codePicker.registerCarrierNumberEditText(mBinding.etPhoneNumber);
         mBinding.etPhoneNumber.setOnEditorActionListener(this);
         mBinding.btngetotp.setOnClickListener(new View.OnClickListener() {
@@ -133,11 +138,6 @@ public class NumberVerificationActivity extends BaseActivity implements TextView
 
 
     public void onNextClick() {
-        /*if (!mBinding.codePicker.isValidFullNumber() && mVerificationId == null
-                || mBinding.pinView.getValue().length() != mBinding.pinView.getPinLength()) {
-            Toast.makeText(NumberVerificationActivity.this, R.string.enter_valid_number, Toast.LENGTH_SHORT).show();
-            return;
-        }*/
 
         if (mVerificationId == null || mBinding.pinView.getValue().length() != mBinding.pinView.getPinLength()) {
             showSnackError(R.string.enter_correct_otp);
@@ -145,6 +145,7 @@ public class NumberVerificationActivity extends BaseActivity implements TextView
         }
         showLoading();
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, mBinding.pinView.getValue());
+
         signInWithPhoneAuthCredential(credential);
     }
 
@@ -155,46 +156,11 @@ public class NumberVerificationActivity extends BaseActivity implements TextView
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            getFirebaseStore().collection(getString(R.string.db_root_all_users)).document(getFirebaseAuth().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    hideLoading();
-                                    if (task.isSuccessful()) {
-                                        DocumentSnapshot snapshot = task.getResult();
-                                        if (snapshot == null) {
-                                            Toast.makeText(NumberVerificationActivity.this, R.string.authentication_failed, Toast.LENGTH_SHORT).show();
-                                            return;
-                                        }
-                                        String phoneNumber = snapshot.getString(KEY_PHONE_NUMBER);
-                                        userMap.put(KEY_PHONE_NUMBER, phoneNumber);
-                                        showLoading();
-                                        saveUserData();
-                                    }
-                                       /* String accountType = snapshot.getString(KEY_ACCOUNT_TYPE);
+                            hideLoading();
+                            userMap.put(KEY_PHONE_NUMBER, mBinding.codePicker.getFullNumberWithPlus());
+                            showLoading();
+                            linkWithCredentials();
 
-                                        if (mBinding.codePicker.getFullNumberWithPlus().equalsIgnoreCase(phoneNumber) && TYPE_TUTOR.equals(accountType)) {
-                                            Intent i = new Intent(NumberVerificationActivity.this, LoginActivity.class);
-                                            i.putExtra(KEY_ACCOUNT_TYPE, TYPE_TUTOR);
-                                            startActivity(i);
-                                            finish();
-                                            return;
-
-                                        } else if (mBinding.codePicker.getFullNumberWithPlus().equalsIgnoreCase(phoneNumber) && TYPE_STUDENT.equals(accountType)) {
-                                            Intent i = new Intent(NumberVerificationActivity.this, LoginActivity.class);
-                                            i.putExtra(KEY_ACCOUNT_TYPE, TYPE_STUDENT);
-                                            startActivity(i);
-                                            finish();
-                                            return;
-
-                                        }
-                                    }
-                                    getAppPreferenceHelper().setUserPhoneNumber(mBinding.codePicker.getFullNumberWithPlus());
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString(KEY_PHONE_NUMBER, mBinding.codePicker.getFullNumberWithPlus());
-                                    ActivityUtils.launchActivity(NumberVerificationActivity.this, TutorOrStudent.class, bundle);
-                                    finish();*/
-                                }
-                            });
                         } else {
                             hideLoading();
                             if (task.getException() instanceof FirebaseAuthException) {
@@ -202,6 +168,37 @@ public class NumberVerificationActivity extends BaseActivity implements TextView
                             } else {
                                 showSnackError(getString(R.string.error));
                             }
+                        }
+                    }
+                });
+    }
+
+    private void unLinkCredentials() {
+        getFirebaseAuth().getCurrentUser().unlink(getFirebaseAuth().getCurrentUser().getProviderId())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        linkWithCredentials();
+                    }
+                });
+    }
+
+    private void linkWithCredentials() {
+        AuthCredential credential = EmailAuthProvider.getCredential(userMap.get(KEY_EMAIL).toString(),
+                userMap.get(KEY_PASSWORD).toString());
+        getFirebaseAuth().getCurrentUser().linkWithCredential(credential)
+                .addOnCompleteListener(NumberVerificationActivity.this, new OnCompleteListener<AuthResult>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        hideLoading();
+
+
+                        if (task.isSuccessful()) {
+                            saveUserData();
+                        } else {
+                            showSnackError(task.getException().getMessage());
                         }
                     }
                 });
@@ -233,7 +230,9 @@ public class NumberVerificationActivity extends BaseActivity implements TextView
     public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
         if (actionId == EditorInfo.IME_ACTION_DONE && mBinding.codePicker.isValidFullNumber()) {
             phoneNum = mBinding.codePicker.getFullNumberWithPlus();
-
+            mBinding.pinView.setVisibility(View.VISIBLE);
+            mBinding.btnResendCode.setVisibility(View.VISIBLE);
+            mBinding.btnNext.setVisibility(View.VISIBLE);
             verifyPhoneNumber();
             return true;
         }

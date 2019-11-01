@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.view.View
 import android.widget.RadioGroup
 import android.widget.Toast
@@ -15,12 +14,14 @@ import com.autohub.skln.BaseActivity
 import com.autohub.skln.R
 import com.autohub.skln.activities.tutor.TutorSignupActivity
 import com.autohub.skln.activities.user.SignupStart
+import com.autohub.skln.activities.user.StudentHomeActivity
 import com.autohub.skln.databinding.ActivityLoginBinding
-import com.autohub.skln.student.StudentHomeActivity
 import com.autohub.skln.tutor.TutorHomeActivity
 import com.autohub.skln.utills.ActivityUtils
-import com.autohub.skln.utills.AppConstants.*
+import com.autohub.skln.utills.AppConstants.TYPE_STUDENT
+import com.autohub.skln.utills.AppConstants.TYPE_TUTOR
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.EmailAuthProvider
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.security.InvalidAlgorithmParameterException
 import java.security.InvalidKeyException
@@ -118,28 +119,50 @@ class LoginActivity : BaseActivity() {
 
     private fun validateUserCredentials() {
 
-        var db_root = getString(R.string.db_root_students)
-        firebaseStore.collection(db_root).whereEqualTo(KEY_EMAIL, mBinding!!.edtemail.text.toString().trim())
-                .whereEqualTo(KEY_PASSWORD, encrypt(mBinding!!.edtPassword.text.toString().trim())).get().addOnCompleteListener {
+        val credential = EmailAuthProvider.getCredential(mBinding!!.edtemail.text.toString().trim(),
+                encrypt(mBinding!!.edtPassword.text.toString().trim()))
+
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener {
                     hideLoading()
-                    if (it.isSuccessful && !it.result!!.isEmpty) {
-                        val snapshot = it.result
-                        if (snapshot == null) {
-                            showNeedToRegister()
-                            return@addOnCompleteListener
-                        }
+                    if (it.isSuccessful) {
+                        moveNext()
+                    } else {
+                        showNeedToRegister()
+
+                    }
 
 
-                        /*val profileUpdates = UserProfileChangeRequest.Builder()
+                }.addOnFailureListener {
+                    showNeedToRegister()
+
+                    hideLoading()
+
+                }
+
+
+        var db_root = getString(R.string.db_root_students)
+        /*     firebaseStore.collection(db_root).whereEqualTo(KEY_EMAIL, mBinding!!.edtemail.text.toString().trim())
+                     .whereEqualTo(KEY_PASSWORD, encrypt(mBinding!!.edtPassword.text.toString().trim())).get().addOnCompleteListener {
+                         hideLoading()
+                         if (it.isSuccessful && !it.result!!.isEmpty) {
+                             val snapshot = it.result
+                             if (snapshot == null) {
+                                 showNeedToRegister()
+                                 return@addOnCompleteListener
+                             }
+
+
+                             *//*val profileUpdates = UserProfileChangeRequest.Builder()
                                 .setDisplayName("")
                                 .
                                 .build()
-*/
+*//*
 
-                        /*   val i = Intent(this@LoginActivity, StudentHomeActivity::class.java)
+                        *//*   val i = Intent(this@LoginActivity, StudentHomeActivity::class.java)
                            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                            startActivity(i)
-                           finish()*/
+                           finish()*//*
 
                         // Move user to Home screen
                     } else {
@@ -150,7 +173,8 @@ class LoginActivity : BaseActivity() {
                     Log.w("", "Error writing document", e)
                     hideLoading()
                     showNeedToRegister()
-                }
+                }*/
+
 
     }
 
@@ -165,6 +189,26 @@ class LoginActivity : BaseActivity() {
         }
         editText.setSelection(editText.length())
     }
+
+
+    private fun moveNext() {
+        val intent: Intent
+        if (mAccountType.equals(TYPE_TUTOR, ignoreCase = true)) {
+            Toast.makeText(this, "Tutor Verified!", Toast.LENGTH_SHORT).show()
+            intent = Intent(this, TutorHomeActivity::class.java)
+        } else {
+            Toast.makeText(this, "Student Verified!", Toast.LENGTH_SHORT).show()
+            intent = Intent(this, StudentHomeActivity::class.java)
+        }
+
+        appPreferenceHelper.setSignupComplete(true)
+
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finishAffinity()
+    }
+
 
     private fun validateUser(savedPass: String?) {
         val pass = getString(mBinding!!.edtPassword.text)
@@ -205,13 +249,13 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun showNeedToRegister() {
-        Snackbar.make(findViewById(android.R.id.content), R.string.not_registered, Snackbar.LENGTH_LONG)
-                .setAction("Sign Up") {
+        Snackbar.make(findViewById(android.R.id.content), R.string.wrong_crendentials, Snackbar.LENGTH_LONG)
+                /*.setAction("Sign Up") {
                     val intent = Intent(this@LoginActivity, TutorOrStudent::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
-                }
+                }*/
                 .setActionTextColor(resources.getColor(android.R.color.holo_red_light))
                 .show()
     }

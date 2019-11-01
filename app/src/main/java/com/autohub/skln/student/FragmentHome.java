@@ -54,7 +54,7 @@ public class FragmentHome extends BaseFragment {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         User user = documentSnapshot.toObject(User.class);
-                        user.id=documentSnapshot.getId();
+                        user.id = documentSnapshot.getId();
 //                        User user = User.prepareUser(documentSnapshot);
                         mBinding.heyUser.setText(String.format("Hey, \n%s.", user.firstName));
                         setSubjects(user);

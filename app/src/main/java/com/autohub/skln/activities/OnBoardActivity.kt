@@ -3,12 +3,11 @@ package com.autohub.skln.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.R
 import com.autohub.skln.activities.user.StudentClassSelect
+import com.autohub.skln.activities.user.StudentHomeActivity
 import com.autohub.skln.databinding.ActivityOnBoardBinding
-import com.autohub.skln.student.StudentHomeActivity
 import com.autohub.skln.utills.ActivityUtils
 
 class OnBoardActivity : BaseActivity() {

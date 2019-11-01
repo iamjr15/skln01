@@ -98,12 +98,13 @@ class SignupStart : BaseActivity() {
                 Toast.makeText(this, "Please check you GPS setting, we need You location", Toast.LENGTH_SHORT).show()
                 return
             }
+            /*        authenticateEmailPass()*/
+
             makeSaveRequest()
         }
     }
 
     private fun makeSaveRequest() {
-
         var userMap = HashMap<String, Any>()
         userMap.put(KEY_FIRST_NAME, mBinding!!.edtFirstName.text.toString())
         userMap.put(KEY_LAST_NAME, mBinding!!.edtLastName.text.toString())
@@ -115,46 +116,26 @@ class SignupStart : BaseActivity() {
         userMap.put(KEY_LONGITUDE, mLocation!!.longitude)
         var extras = Bundle()
         extras.putSerializable(KEY_USERMAP, userMap)
-
         ActivityUtils.launchActivity(this@SignupStart, NumberVerificationActivity::class.java, extras)
+    }
 
-        //  showLoading();
-        /*  final Map<String, Object> user = new HashMap<>();
-        user.put(KEY_FIRST_NAME, mBinding.edtFirstName.getText().toString());
-        user.put(KEY_LAST_NAME, mBinding.edtLastName.getText().toString());
-        user.put(KEY_SEX, mBinding.radioMale.isChecked() ? MALE : FEMALE);
-        user.put(KEY_PASSWORD, getEncryptedPassword());
-//        user.put(KEY_PHONE_NUMBER, phoneNumber);
-        user.put(KEY_CITY, mCity);
-        user.put(KEY_LATITUDE, mLocation.getLatitude());
-        user.put(KEY_LONGITUDE, mLocation.getLongitude());
-        String dbRoot = getString(R.string.db_root_students);
-        if (TYPE_TUTOR.equalsIgnoreCase(mType)) {
-            dbRoot = getString(R.string.db_root_tutors);
-        }*/
+    private fun authenticateEmailPass() {
+        showLoading()
+        firebaseAuth.createUserWithEmailAndPassword(mBinding!!.edtemail.text.toString(), getString(mBinding!!.edtPassword.text))
+                .addOnCompleteListener {
+                    hideLoading()
 
-        /* getFirebaseStore().collection(dbRoot).document(getFirebaseAuth().getCurrentUser().getUid()).set(user, SetOptions.merge())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        hideLoading();
-                        ActivityUtils.launchActivity(SignupStart.this,
-                                mType.equalsIgnoreCase(TYPE_TUTOR) ?
-                                        TutorCategorySelect.class : StudentClassSelect.class);
+                    if (it.isSuccessful) {
+                        makeSaveRequest()
+                    } else {
+                        Toast.makeText(applicationContext, "Registration failed! Please try again later", Toast.LENGTH_LONG).show()
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        hideLoading();
-                        showSnackError(e.getMessage());
-                    }
-                });*/
 
+                }.addOnFailureListener {
+                    hideLoading()
+                    Toast.makeText(applicationContext, "Registration failed! Please try again later", Toast.LENGTH_LONG).show()
 
-        /* ActivityUtils.launchActivity(SignupStart.this,
-                                mType.equalsIgnoreCase(TYPE_TUTOR) ?
-                                        TutorCategorySelect.class : StudentClassSelect.class);*/
+                }
     }
 
     override fun attachBaseContext(newBase: Context) {
