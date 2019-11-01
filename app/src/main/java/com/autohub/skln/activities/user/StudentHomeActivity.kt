@@ -16,8 +16,8 @@ import com.autohub.skln.R
 import com.autohub.skln.fragment.FragmentClassRequests
 import com.autohub.skln.fragment.FragmentProfile
 import com.autohub.skln.fragment.FragmentToolbox
-import com.autohub.skln.student.ExploreTutorsFragment
-import com.autohub.skln.student.FragmentHome
+import com.autohub.skln.activities.user.fragments.ExploreTutorsFragment
+import com.autohub.skln.activities.user.fragments.FragmentHome
 import com.autohub.skln.utills.AppConstants
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*

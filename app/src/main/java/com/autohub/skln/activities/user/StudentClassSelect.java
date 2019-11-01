@@ -86,7 +86,6 @@ public class StudentClassSelect extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_class_select);
         ButterKnife.bind(this);
-
         ivClass1.setEnabled(false);
         ivClass2.setEnabled(false);
         ivClass3.setEnabled(false);

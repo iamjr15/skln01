@@ -124,19 +124,17 @@
                     android:text="@string/academics"
                     android:textAllCaps="true" />
 
-                <HorizontalScrollView
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/acadmicrecycleview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:paddingStart="24dp"
-                    android:paddingTop="8dp">
+                    android:layout_marginTop="11dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="26dp">
 
-                    <LinearLayout
-                        android:id="@+id/container_academic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" />
-                </HorizontalScrollView>
+
+                </androidx.recyclerview.widget.RecyclerView>
 
                 <TextView
                     style="@style/academics"
@@ -146,21 +144,16 @@
                     android:text="@string/hobbies"
                     android:textAllCaps="true" />
 
-                <HorizontalScrollView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/hobbiesrecycleview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:paddingStart="24dp"
-                    android:paddingTop="8dp"
+                    android:layout_marginTop="11dp"
+                    android:orientation="horizontal"
+                    android:paddingStart="26dp">
 
-                    >
 
-                    <LinearLayout
-                        android:id="@+id/container_hobbies"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" />
-                </HorizontalScrollView>
+                </androidx.recyclerview.widget.RecyclerView>
 
                 <!--    <TextView
                         style="@style/Subhead"
@@ -230,6 +223,7 @@
 
                     </LinearLayout>-->
             </LinearLayout>
+
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

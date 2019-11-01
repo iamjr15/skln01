@@ -4,8 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
-import androidx.annotation.DrawableRes;
-
 import com.autohub.skln.R;
 import com.autohub.skln.utills.AppConstants;
 import com.autohub.skln.utills.CommonUtils;
@@ -24,21 +22,24 @@ import java.util.List;
  */
 public class User implements Parcelable, AppConstants {
     private static final HashMap<String, Integer> FAVORITE_CLASSES = new HashMap<>();
+    private static final HashMap<String, AcadmicsData> ACADMICS_DATA_HASH_MAP = new HashMap<>();
+    private static final HashMap<String, HobbiesData> HOBBIES_DATA_HASH_MAP = new HashMap<>();
     private static final HashMap<String, Integer> HOBBIES = new HashMap<>();
 
     static {
-        FAVORITE_CLASSES.put(SUBJECT_SCIENCE, R.drawable.tile_science);
-        FAVORITE_CLASSES.put(SUBJECT_ENGLISH, R.drawable.tile_english);
-        FAVORITE_CLASSES.put(SUBJECT_MATHS, R.drawable.tile_maths);
-        FAVORITE_CLASSES.put(SUBJECT_SOCIAL_STUDIES, R.drawable.tile_social);
-        FAVORITE_CLASSES.put(SUBJECT_LANGUAGES, R.drawable.tile_languages);
-        FAVORITE_CLASSES.put(SUBJECT_COMPUTER_SCIENCE, R.drawable.tile_computer);
-        FAVORITE_CLASSES.put(SUBJECT_PHYSICS, R.drawable.tile_physics);
-        FAVORITE_CLASSES.put(SUBJECT_BIOLOGY, R.drawable.tile_biology);
-        FAVORITE_CLASSES.put(SUBJECT_CHEMISTRY, R.drawable.tile_chemistry);
-        FAVORITE_CLASSES.put(SUBJECT_BUSINESS, R.drawable.tile_business);
-        FAVORITE_CLASSES.put(SUBJECT_ACCOUNTANCY, R.drawable.tile_accountancy);
-        FAVORITE_CLASSES.put(SUBJECT_ECONOMICS, R.drawable.tile_economics);
+        FAVORITE_CLASSES.put(SUBJECT_SCIENCE, R.drawable.microscope);
+        FAVORITE_CLASSES.put(SUBJECT_ENGLISH, R.drawable.noun);
+        FAVORITE_CLASSES.put(SUBJECT_MATHS, R.drawable.geometry);
+        FAVORITE_CLASSES.put(SUBJECT_SOCIAL_STUDIES, R.drawable.strike);
+        FAVORITE_CLASSES.put(SUBJECT_LANGUAGES, R.drawable.language);
+        FAVORITE_CLASSES.put(SUBJECT_COMPUTER_SCIENCE, R.drawable.informatic);
+
+        FAVORITE_CLASSES.put(SUBJECT_PHYSICS, R.drawable.physics);
+        FAVORITE_CLASSES.put(SUBJECT_BIOLOGY, R.drawable.microscope);
+        FAVORITE_CLASSES.put(SUBJECT_CHEMISTRY, R.drawable.test_tube);
+        FAVORITE_CLASSES.put(SUBJECT_BUSINESS, R.drawable.rupee);
+        FAVORITE_CLASSES.put(SUBJECT_ACCOUNTANCY, R.drawable.accounting);
+        FAVORITE_CLASSES.put(SUBJECT_ECONOMICS, R.drawable.rating);
 
         HOBBIES.put(HOBBY_DANCE, R.drawable.tile_dance);
         HOBBIES.put(HOBBY_DRUM, R.drawable.tile_drum);
@@ -46,6 +47,44 @@ public class User implements Parcelable, AppConstants {
         HOBBIES.put(HOBBY_KEYBOARD, R.drawable.tile_keyboard);
         HOBBIES.put(HOBBY_MARTIAL, R.drawable.tile_martial);
         HOBBIES.put(HOBBY_PAINT, R.drawable.tile_painting);
+
+
+        ACADMICS_DATA_HASH_MAP.put(SUBJECT_SCIENCE,
+                new AcadmicsData(R.color.science, SUBJECT_SCIENCE, R.drawable.microscope));
+        ACADMICS_DATA_HASH_MAP.put(SUBJECT_ENGLISH,
+                new AcadmicsData(R.color.english, SUBJECT_ENGLISH, R.drawable.noun));
+        ACADMICS_DATA_HASH_MAP.put(SUBJECT_MATHS,
+                new AcadmicsData(R.color.math, SUBJECT_MATHS, R.drawable.geometry));
+
+        ACADMICS_DATA_HASH_MAP.put(SUBJECT_SOCIAL_STUDIES,
+                new AcadmicsData(R.color.socialstudies, SUBJECT_SOCIAL_STUDIES, R.drawable.strike));
+        ACADMICS_DATA_HASH_MAP.put(SUBJECT_LANGUAGES,
+                new AcadmicsData(R.color.language, SUBJECT_LANGUAGES, R.drawable.language));
+        ACADMICS_DATA_HASH_MAP.put(SUBJECT_COMPUTER_SCIENCE,
+                new AcadmicsData(R.color.computerscience, SUBJECT_COMPUTER_SCIENCE, R.drawable.informatic));
+
+        ACADMICS_DATA_HASH_MAP.put(SUBJECT_PHYSICS,
+                new AcadmicsData(R.color.science, SUBJECT_PHYSICS, R.drawable.physics));
+        ACADMICS_DATA_HASH_MAP.put(SUBJECT_BIOLOGY,
+                new AcadmicsData(R.color.science, SUBJECT_BIOLOGY, R.drawable.microscope));
+        ACADMICS_DATA_HASH_MAP.put(SUBJECT_CHEMISTRY,
+                new AcadmicsData(R.color.science, SUBJECT_CHEMISTRY, R.drawable.test_tube));
+        ACADMICS_DATA_HASH_MAP.put(SUBJECT_BUSINESS,
+                new AcadmicsData(R.color.science, SUBJECT_BUSINESS, R.drawable.rupee));
+        ACADMICS_DATA_HASH_MAP.put(SUBJECT_ACCOUNTANCY,
+                new AcadmicsData(R.color.science, SUBJECT_ACCOUNTANCY, R.drawable.accounting));
+        ACADMICS_DATA_HASH_MAP.put(SUBJECT_ECONOMICS,
+                new AcadmicsData(R.color.science, SUBJECT_ECONOMICS, R.drawable.rating));
+
+
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_DANCE, new HobbiesData(R.color.dance, HOBBY_DANCE, R.drawable.dancing));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_DRUM, new HobbiesData(R.color.drum, HOBBY_DRUM, R.drawable.drum));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_GUITAR, new HobbiesData(R.color.guitar, HOBBY_GUITAR, R.drawable.guitar));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_KEYBOARD, new HobbiesData(R.color.keyboard, HOBBY_KEYBOARD, R.drawable.piano));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_MARTIAL, new HobbiesData(R.color.materialarts, HOBBY_MARTIAL, R.drawable.attack));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_PAINT, new HobbiesData(R.color.painting, HOBBY_PAINT, R.drawable.brush));
+
+
     }
 
     public String id;
@@ -209,7 +248,6 @@ public class User implements Parcelable, AppConstants {
         return clazzes;
     }
 
-    @DrawableRes
     public List<Integer> getFavoriteClasses() {
         List<Integer> classes = new ArrayList<>();
         if (TextUtils.isEmpty(favoriteClasses)) return classes;
@@ -228,7 +266,33 @@ public class User implements Parcelable, AppConstants {
         return classes;
     }
 
-    @DrawableRes
+
+    public List<AcadmicsData> getAcadmics() {
+        List<AcadmicsData> acadmicsDataList = new ArrayList<>();
+        if (TextUtils.isEmpty(favoriteClasses)) return acadmicsDataList;
+        String[] subjects = favoriteClasses.split(",");
+        for (String subj : subjects) {
+            if (ACADMICS_DATA_HASH_MAP.containsKey(subj.trim()))
+                acadmicsDataList.add(ACADMICS_DATA_HASH_MAP.get(subj.trim()));
+        }
+
+        return acadmicsDataList;
+    }
+
+
+    public List<HobbiesData> getHobbies() {
+        List<HobbiesData> hobbies = new ArrayList<>();
+        if (TextUtils.isEmpty(hobbiesToPursue)) return hobbies;
+        String[] selectedHobbies = hobbiesToPursue.split(",");
+        for (String hobby : selectedHobbies) {
+            if (HOBBIES_DATA_HASH_MAP.containsKey(hobby.trim()))
+                hobbies.add(HOBBIES_DATA_HASH_MAP.get(hobby.trim()));
+        }
+        return hobbies;
+    }
+
+
+  /*  @DrawableRes
     public List<Integer> getHobbies() {
         List<Integer> hobbies = new ArrayList<>();
         if (TextUtils.isEmpty(hobbiesToPursue)) return hobbies;
@@ -238,7 +302,7 @@ public class User implements Parcelable, AppConstants {
                 hobbies.add(HOBBIES.get(hobby.trim()));
         }
         return hobbies;
-    }
+    }*/
 
     public List<String> getSubjectsToTeachAsArray() {
         if (TextUtils.isEmpty(subjectsToTeach)) {
@@ -247,4 +311,6 @@ public class User implements Parcelable, AppConstants {
         String[] subjects = subjectsToTeach.split(",");
         return Arrays.asList(subjects);
     }
+
+
 }

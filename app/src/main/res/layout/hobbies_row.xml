@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="hobbiesData"
+            type="com.autohub.skln.models.HobbiesData" />
+
+        <variable
+            name="itemClickListener"
+            type="com.autohub.skln.listeners.ItemClickListener" />
+    </data>
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+
+
+        android:layout_height="wrap_content"
+        android:layout_marginRight="9dp"
+        android:onClick="@{() -> itemClickListener.onClick(hobbiesData)}"
+
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rr"
+            android:layout_width="118dp"
+            android:layout_height="116dp"
+
+
+            android:background="@drawable/acadmic_rowbg_drawable"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp">
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="41dp"
+                android:layout_height="41dp"
+                android:src="@drawable/microscope" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/img">
+
+                <TextView
+                    android:id="@+id/txt"
+                    style="@style/keyboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+
+                    android:text="keyboard" />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

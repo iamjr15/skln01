@@ -183,6 +183,24 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+
+    <!-- Text style for "science." -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="science">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+    <!-- Text style for "keyboard." -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="keyboard">
+        <item name="android:textColor">#ccffffff</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
     <!-- Text style for "please_fol" -->
     <!-- Add this snippet to styles.xml. -->
     <style name="please_fol">
@@ -373,7 +391,7 @@
 
     <!-- Text style for "signup" -->
     <!-- Add this snippet to styles.xml. -->
-    <style name="signup">
+    <style name="signup" >
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">29sp</item>
         <item name="android:textAllCaps">true</item>
@@ -387,6 +405,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <!-- Text style for "academics" -->
     <!-- Add this snippet to styles.xml. -->
     <style name="academics">
@@ -418,7 +437,6 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textStyle">bold</item>
     </style>
-
 
     <!-- Text style for "show" -->
     <!-- Add this snippet to styles.xml. -->

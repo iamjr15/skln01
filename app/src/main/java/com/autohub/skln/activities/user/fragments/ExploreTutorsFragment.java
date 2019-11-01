@@ -1,4 +1,4 @@
-package com.autohub.skln.student;
+package com.autohub.skln.activities.user.fragments;
 
 import android.Manifest;
 import android.app.Activity;

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.user.fragments.StudentClassFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/LLClass1"
+        android:layout_width="@dimen/tile_width"
+        android:layout_height="@dimen/tile_height"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/tile_class1"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivClass1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="10dp"
+            android:background="@drawable/chosen_circle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LLClass2"
+        android:layout_width="@dimen/tile_width"
+        android:layout_height="@dimen/tile_height"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/tile_class2"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivClass2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="10dp"
+            android:background="@drawable/chosen_circle" />
+    </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
