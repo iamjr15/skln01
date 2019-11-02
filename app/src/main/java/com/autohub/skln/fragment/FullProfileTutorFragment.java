@@ -30,11 +30,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-/**
- * Created by m.imran
- * Senior Software Engineer at
- * BhimSoft on 2019-08-08.
- */
+
 public class FullProfileTutorFragment extends BaseFragment {
     private UserViewModel mUserViewModel;
     private FragmentFullProfileTutorBinding mBinding;
@@ -62,13 +58,7 @@ public class FullProfileTutorFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         mBinding = FragmentFullProfileTutorBinding.bind(view);
         mBinding.setModel(mUserViewModel);
-        AppCompatActivity appCompatActivity = (AppCompatActivity) requireActivity();
-        appCompatActivity.setSupportActionBar(mBinding.toolBar);
-        ActionBar supportActionBar = appCompatActivity.getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
-            supportActionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_left);
-        }
+
         setUpView();
         getCurrentUser();
     }
@@ -90,12 +80,16 @@ public class FullProfileTutorFragment extends BaseFragment {
     }
 
     private void setUpView() {
-        StorageReference pathReference1 = FirebaseStorage.getInstance().getReference().child(mUserViewModel.getUser().pictureUrl);
-        GlideApp.with(requireContext())
-                .load(pathReference1)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .fallback(R.drawable.default_pic)
-                .into(mBinding.profilePicture);
+        if(mUserViewModel.getUser().pictureUrl !=null)
+        {
+            StorageReference pathReference1 = FirebaseStorage.getInstance().getReference().child(mUserViewModel.getUser().pictureUrl);
+            GlideApp.with(requireContext())
+                    .load(pathReference1)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .fallback(R.drawable.default_pic)
+                    .into(mBinding.profilePicture);
+        }
+
 
         mBinding.requestThisClass.setOnClickListener(new View.OnClickListener() {
             @Override

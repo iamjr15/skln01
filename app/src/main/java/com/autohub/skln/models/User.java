@@ -15,11 +15,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-/**
- * Created by m.imran
- * Senior Software Engineer at
- * BhimSoft on 2019-08-02.
- */
+
 public class User implements Parcelable, AppConstants {
     private static final HashMap<String, Integer> FAVORITE_CLASSES = new HashMap<>();
     private static final HashMap<String, AcadmicsData> ACADMICS_DATA_HASH_MAP = new HashMap<>();

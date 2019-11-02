@@ -22,6 +22,7 @@
         <item name="android:windowSoftInputMode">adjustResize|stateHidden</item>
         <item name="android:windowFullscreen">false</item>
     </style>
+
     <style name="AppTheme.NoActionBar.FrameActivity.Purple">
 
     </style>
@@ -191,6 +192,13 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
 
+    </style>
+
+    <!-- Text style for "class_1._" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="class_1_">
+        <item name="android:textColor">#ccffffff</item>
+        <item name="android:textSize">22sp</item>
     </style>
 
     <!-- Text style for "keyboard." -->
@@ -391,7 +399,7 @@
 
     <!-- Text style for "signup" -->
     <!-- Add this snippet to styles.xml. -->
-    <style name="signup" >
+    <style name="signup">
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">29sp</item>
         <item name="android:textAllCaps">true</item>
@@ -463,8 +471,64 @@
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <!-- Text style for "4th_avenue" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="avenue">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- Text style for "change" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="change">
+        <item name="android:textColor">#ff18d29f</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+    <!-- Text style for "$_250__/__" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="explorebuttontextstyle">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!-- Text style for "richard_ni" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="richard_ni">
+        <item name="android:textColor">#ff141414</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
 
     </style>
+    <!-- Text style for "physics_|_" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="physics__">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <!-- Text style for "rating." -->
+    <!-- Add this snippet to styles.xml. -->
+
+    <!-- Text style for "4.2" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="smallexploretest">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="_rating">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- Text style for "_not_regis" -->
     <!-- Add this snippet to styles.xml. -->
     <style name="signup_now">

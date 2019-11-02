@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.autohub.skln.models.User" />
+
+        <variable
+            name="itemClickListener"
+            type="com.autohub.skln.listeners.ItemClickListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:onClick="@{() -> itemClickListener.onClick(user)}"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgprofile"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/exploreimagebg_drawable"
+                android:src="@drawable/dummyexploreimage" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imgprofile"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_weight="1">
+
+                        <RelativeLayout
+                            android:id="@+id/rr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/rateimage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignBottom="@+id/txtrating"
+                                android:src="@drawable/ratingicon" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtrating"
+                                style="@style/smallexploretest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@+id/rateimage"
+                                android:text="4.2" />
+                        </RelativeLayout>
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/_rating"
+                            android:layout_width="74dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/rr"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/ratingbg_drawable"
+                            android:gravity="center"
+                            android:paddingTop="2dp"
+
+                            android:paddingBottom="2dp"
+                            android:text="rating." />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_weight="1">
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtgrades"
+                            style="@style/smallexploretest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:text="8th - 12th" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/_rating"
+                            android:layout_width="74dp"
+
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txtgrades"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/gratebg_drawable"
+                            android:gravity="center"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:text="grades." />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_below="@+id/ll"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_gravity="bottom"
+                        android:layout_weight="1">
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtdistance"
+                            style="@style/smallexploretest"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:text="1 km" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/_rating"
+                            android:layout_width="74dp"
+
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txtdistance"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/distance_drawable"
+
+                            android:gravity="center"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:text="distance." />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="bottom"
+                        android:layout_weight="1">
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtclasstype"
+                            style="@style/smallexploretest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+
+                            android:text="groun/individual" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/_rating"
+                            android:layout_width="74dp"
+                            android:layout_height="wrap_content"
+
+                            android:layout_below="@+id/txtclasstype"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/classtype_drawable"
+                            android:gravity="center"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:text="class type." />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tutorname"
+            style="@style/richard_ni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="Richard Nixon | Richard's Physics" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtsubjects"
+            style="@style/physics__"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="PHYSICS | CHEMISTRY | COMPUTER SCIENCE" />
+
+        <RelativeLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/explorebuttonbg"
+            android:padding="8dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtclassprice"
+                style="@style/explorebuttontextstyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="$ 250 / 20 CLASSES PER MONTH" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="16dp"
+                android:layout_height="12dp"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@+id/txtclassprice"
+                android:layout_centerVertical="true"
+
+                android:src="@drawable/arrowright" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</layout>

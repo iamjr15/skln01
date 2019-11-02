@@ -10,50 +10,38 @@
             type="com.autohub.skln.models.UserViewModel" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:elevation="0dp">
+            android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/tool_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:elevation="0dp"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_picture"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:src="@mipmap/ic_launcher" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/name"
+                style="@style/Heading"
+                android:layout_below="@+id/profile_picture"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:text="@{model.getFirstAndLastNameLetter}"
+                android:textSize="22sp"
+                tools:text="Muhammad Imran" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/profile_picture"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="16dp"
-                        android:src="@mipmap/ic_launcher" />
+        </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/name"
-                        style="@style/Heading"
-                        android:layout_below="@+id/profile_picture"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="8dp"
-                        android:text="@{model.getFirstAndLastNameLetter}"
-                        android:textSize="22sp"
-                        tools:text="Muhammad Imran" />
-
-                </RelativeLayout>
-            </androidx.appcompat.widget.Toolbar>
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
@@ -537,6 +525,6 @@
 
                 </LinearLayout>
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 </layout>

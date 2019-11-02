@@ -19,7 +19,7 @@
     <color name="spanblue">#ff3100ff</color>
 
     <color name="science">#ff000000</color>
-    <color name="math">#ffef6f6c</color>
+    <color name="math">#ff120d31</color>
     <color name="english">#ffa57982</color>
     <color name="socialstudies">#ff9381ff</color>
     <color name="language">#ffbc69aa</color>
@@ -32,6 +32,11 @@
     <color name="drum">#ffa57982</color>
     <color name="materialarts">#ff120d31</color>
     <color name="guitar">#ff000000</color>
+
+
+    <color name="three">#ff90d7ff</color>
+    <color name="two">#fff8bdc4</color>
+    <color name="four">#ffa57982</color>
 
 
 

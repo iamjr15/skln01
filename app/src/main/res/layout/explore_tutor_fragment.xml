@@ -1,66 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-        <ImageView
-            android:id="@+id/profile_picture"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/content_description"
-            android:src="@drawable/default_pic" />
-
-        <TextView
-            android:id="@+id/tv_explore"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="12sp"
-            android:text="@string/explore"
-            android:textAllCaps="true"
-            android:textSize="18sp" />
-
-        <LinearLayout
-            android:id="@+id/search_bar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile_picture"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_selector_search"
-                android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="4dp"
-                android:hint="@string/search_any_subject_hobby_i_e_guitar_math"
-                android:imeOptions="actionSearch"
-                android:inputType="textPersonName"
-                android:padding="8dp"
-                android:textSize="12sp" />
+            android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/profile_picture"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginTop="13dp"
+                android:contentDescription="@string/content_description"
+                android:src="@drawable/default_pic" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="17dp"
+                android:layout_marginRight="12dp"
+                android:layout_toLeftOf="@+id/rr"
+                android:src="@drawable/search" />
+
+            <RelativeLayout
+                android:id="@+id/rr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
-                android:contentDescription="@string/content_description"
-                android:src="@drawable/ic_filter" />
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="17dp"
+                android:layout_marginRight="9dp"
+                android:background="@drawable/gradesfilterbg_drawable">
+
+
+            </RelativeLayout>
+
+
+            <!--  <LinearLayout
+                  android:id="@+id/search_bar"
+
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="13dp"
+                  android:paddingStart="16dp"
+
+                  android:paddingEnd="16dp">
+
+            &lt;!&ndash;      <EditText
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:background="@drawable/bg_selector_search"
+                      android:drawableStart="@drawable/ic_search"
+                      android:drawablePadding="4dp"
+                      android:hint="@string/search_any_subject_hobby_i_e_guitar_math"
+                      android:imeOptions="actionSearch"
+                      android:inputType="textPersonName"
+                      android:padding="8dp"
+                      android:textSize="12sp" />&ndash;&gt;
+
+                 &lt;!&ndash; <ImageView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      android:layout_marginStart="8dp"
+                      android:contentDescription="@string/content_description"
+                      android:src="@drawable/ic_filter" />&ndash;&gt;
+              </LinearLayout>-->
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/compass"
+
+                />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textlocation"
+                style="@style/avenue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="9dp"
+                android:text="4th Avenue, Los Angeles" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+
+                style="@style/change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:text="change" />
         </LinearLayout>
 
-        <com.autohub.skln.widgets.CustomViewPager
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/turorsrecycleview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginRight="28dp"
+            android:orientation="horizontal" />
+    </LinearLayout>
+
+    <!--        <TextView
+                android:id="@+id/tv_explore"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12sp"
+                android:text="@string/explore"
+                android:textAllCaps="true"
+                android:textSize="18sp" />-->
+
+
+    <!--    <com.autohub.skln.widgets.CustomViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/search_bar"
-            android:clipToPadding="false" />
-    </RelativeLayout>
+            android:clipToPadding="false" />-->
+
+
 </layout>

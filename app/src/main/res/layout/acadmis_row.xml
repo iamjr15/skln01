@@ -38,15 +38,8 @@
                 android:layout_height="41dp"
                 android:src="@drawable/noun" />
 
-            <!--  <TextView
-                  android:id="@+id/txt"
-                  style="@style/science"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_alignParentBottom="true"
-                  android:layout_marginBottom="13dp"
-                  android:text="science." />
-  -->
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"

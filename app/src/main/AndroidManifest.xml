@@ -39,6 +39,10 @@
         <activity
             android:name=".activities.OnBoardActivity"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
@@ -116,10 +120,7 @@
         <activity
             android:name=".activities.user.StudentClassSelect"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >  <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+            android:windowSoftInputMode="stateHidden" >  </activity>
         <activity
             android:name=".activities.user.StudentSubjectSelect"
             android:screenOrientation="portrait"
