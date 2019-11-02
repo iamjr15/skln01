@@ -49,13 +49,17 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
                     var stringBuilder = StringBuilder(splitarray.size)
                     for (i in splitarray.indices) {
                         if (i == splitarray.size - 1) {
-                            stringBuilder.append(CommonUtils.getClassSuffix(splitarray.get(i).toInt()))
+                            stringBuilder.append(splitarray.get(i) + CommonUtils.getClassSuffix(splitarray.get(i).toInt()))
 
                         } else {
-                            stringBuilder.append(CommonUtils.getClassSuffix(splitarray.get(i).toInt()) + " - ")
+                            stringBuilder.append(splitarray.get(i) + CommonUtils.getClassSuffix(splitarray.get(i).toInt()) + " - ")
 
                         }
                     }
+
+                    txtgrades.setText(stringBuilder.toString())
+
+
                 } else {
                     txtgrades.setText(it.classesToTeach)
 
