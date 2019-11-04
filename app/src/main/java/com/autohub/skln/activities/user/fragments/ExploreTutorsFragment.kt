@@ -31,14 +31,8 @@ import kotlinx.android.synthetic.main.explore_tutor_fragment.*
 import java.util.*
 
 
-class ExploreTutorsFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
-    override fun onNothingSelected(p0: AdapterView<*>?) {
+class ExploreTutorsFragment : BaseFragment() {
 
-    }
-
-    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-    }
 
     private var mBinding: ExploreTutorFragmentBinding? = null
     private var mCurrentLocation: Location? = null
@@ -56,7 +50,7 @@ class ExploreTutorsFragment : BaseFragment(), AdapterView.OnItemSelectedListener
 
     private val tutorsClickListener = ItemClickListener<User> {
 
-        var bundle = Bundle();
+        var bundle = Bundle()
         bundle.putParcelable(AppConstants.KEY_DATA, it);
         ActivityUtils.launchFragment(requireContext(), FullProfileTutorFragment::class.java.name, bundle)
     }
@@ -102,8 +96,8 @@ class ExploreTutorsFragment : BaseFragment(), AdapterView.OnItemSelectedListener
          })*/
 
 
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+        mBinding!!.spinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 mBinding!!.txtgrade.setText("grade ${grades[position]}")
             }
 
