@@ -53,13 +53,9 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
 
                         } else {
                             stringBuilder.append(splitarray.get(i) + CommonUtils.getClassSuffix(splitarray.get(i).toInt()) + " - ")
-
                         }
                     }
-
                     txtgrades.setText(stringBuilder.toString())
-
-
                 } else {
                     txtgrades.setText(it.classesToTeach)
 

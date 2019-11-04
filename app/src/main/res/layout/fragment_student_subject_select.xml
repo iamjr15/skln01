@@ -6,7 +6,8 @@
 
         <variable
             name="callback"
-            type="com.autohub.skln.activities.user.fragments.StudentClassFragment" />
+            type="com.autohub.skln.activities.user.fragments.StudentSubjectSelectFragmnet" />
+
 
     </data>
 
@@ -14,11 +15,11 @@
 
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        tools:context=".activities.user.fragments.StudentClassFragment">
+        tools:context=".activities.user.fragments.StudentSubjectSelectFragmnet">
 
         <LinearLayout
             android:layout_width="200dp"
-            android:layout_height="260dp"
+            android:layout_height="276dp"
             android:orientation="vertical">
             <!-- android:onClick="@{() -> itemClickListener.onClick(acadmicdata)}"-->
             <LinearLayout
@@ -32,17 +33,17 @@
 
                 <RelativeLayout
                     android:id="@+id/rr"
-                    android:layout_width="127dp"
-                    android:layout_height="123dp"
+                    android:layout_width="143dp"
+                    android:layout_height="131dp"
                     android:background="@drawable/selectclass_bg"
                     android:paddingLeft="17dp">
 
                     <ImageView
                         android:id="@+id/img"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="41dp"
+                        android:layout_height="41dp"
                         android:paddingTop="11dp"
-                        android:src="@drawable/one" />
+                        android:src="@drawable/microscope" />
 
                     <RelativeLayout
                         android:id="@+id/greenfirst"
@@ -87,8 +88,8 @@
             <RelativeLayout
                 android:id="@+id/rr2"
 
-                android:layout_width="127dp"
-                android:layout_height="123dp"
+                android:layout_width="143dp"
+                android:layout_height="131dp"
                 android:layout_marginLeft="55dp"
                 android:layout_marginTop="13dp"
                 android:background="@drawable/selectclass_bg"
@@ -97,10 +98,10 @@
 
                 <ImageView
                     android:id="@+id/imgsecond"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
                     android:paddingTop="11dp"
-                    android:src="@drawable/two" />
+                    android:src="@drawable/noun" />
 
                 <RelativeLayout
                     android:id="@+id/greensecond"

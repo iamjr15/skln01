@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSignup"
             style="@style/signup_title_style"
             android:layout_width="wrap_content"
@@ -23,7 +23,8 @@
             android:layout_marginTop="10dp"
             android:text="@string/sign_up" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
+
             android:id="@+id/tvTutorOrStudent"
             style="@style/signup_students_p"
             android:layout_width="wrap_content"
@@ -69,7 +70,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
+
                     android:id="@+id/tvGetToKnow"
                     style="@style/lets_get_"
                     android:paddingStart="12dp"
@@ -160,7 +162,8 @@
                 </RadioGroup>
 
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
+
                     android:id="@+id/tvHintPassword"
 
                     style="@style/enter_emai"
@@ -191,7 +194,8 @@
                         android:paddingBottom="8dp" />
                 </RelativeLayout>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
+
                     android:id="@+id/tvhintpass"
 
                     style="@style/enter_emai"

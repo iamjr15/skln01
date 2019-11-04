@@ -31,7 +31,6 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
                 fragmentsList[i].updateFragment(true)
             } else {
                 fragmentsList[i].updateFragment(isSecondSelect = isSecondSelected)
-
             }
         }
     }
@@ -59,27 +58,28 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         var pagerAdapter = PagerAdapter(supportFragmentManager, fragmentsList)
         mBinding!!.viewpager.adapter = pagerAdapter
         mBinding!!.viewpager.offscreenPageLimit = 5
+        mBinding!!.wormDotsIndicator.setViewPager(mBinding!!.viewpager)
+
 
     }
 
     private fun getFragments(countList: ArrayList<String>) {
 
-
         for (position in countList.indices) {
 
             if (position == 0) {
-                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList<Classdata>(classdatalist.subList(0, 2))))
+                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(0, 2))))
 
             } else if (position == 1)
-                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList<Classdata>(classdatalist.subList(2, 4))))
+                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(2, 4))))
             else if (position == 2)
-                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList<Classdata>(classdatalist.subList(4, 6))))
+                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(4, 6))))
             else if (position == 3)
-                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList<Classdata>(classdatalist.subList(6, 8))))
+                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(6, 8))))
             else if (position == 4)
-                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList<Classdata>(classdatalist.subList(8, 10))))
+                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(8, 10))))
             else
-                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList<Classdata>(classdatalist.subList(10, 12))))
+                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(10, 12))))
         }
     }
 
@@ -88,14 +88,14 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         classdatalist.add(Classdata(R.color.two, R.drawable.two, false, CLASS_2))
         classdatalist.add(Classdata(R.color.three, R.drawable.three, false, CLASS_3))
         classdatalist.add(Classdata(R.color.four, R.drawable.four, false, CLASS_4))
-        classdatalist.add(Classdata(R.color.black, R.drawable.one, false, CLASS_5))
-        classdatalist.add(Classdata(R.color.black, R.drawable.one, false, CLASS_6))
-        classdatalist.add(Classdata(R.color.black, R.drawable.one, false, CLASS_7))
-        classdatalist.add(Classdata(R.color.black, R.drawable.one, false, CLASS_8))
-        classdatalist.add(Classdata(R.color.black, R.drawable.one, false, CLASS_9))
-        classdatalist.add(Classdata(R.color.black, R.drawable.one, false, CLASS_10))
-        classdatalist.add(Classdata(R.color.black, R.drawable.one, false, CLASS_11))
-        classdatalist.add(Classdata(R.color.black, R.drawable.one, false, CLASS_12))
+        classdatalist.add(Classdata(R.color.five, R.drawable.one, false, CLASS_5))
+        classdatalist.add(Classdata(R.color.six, R.drawable.one, false, CLASS_6))
+        classdatalist.add(Classdata(R.color.seven, R.drawable.one, false, CLASS_7))
+        classdatalist.add(Classdata(R.color.eight, R.drawable.one, false, CLASS_8))
+        classdatalist.add(Classdata(R.color.nine, R.drawable.one, false, CLASS_9))
+        classdatalist.add(Classdata(R.color.ten, R.drawable.one, false, CLASS_10))
+        classdatalist.add(Classdata(R.color.eleven, R.drawable.one, false, CLASS_11))
+        classdatalist.add(Classdata(R.color.tweleve, R.drawable.one, false, CLASS_12))
     }
 
 

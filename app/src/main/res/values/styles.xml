@@ -198,7 +198,7 @@
     <!-- Add this snippet to styles.xml. -->
     <style name="class_1_">
         <item name="android:textColor">#ccffffff</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <!-- Text style for "keyboard." -->
@@ -473,6 +473,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Text style for "grade" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="grade">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
 
     <!-- Text style for "4th_avenue" -->
     <!-- Add this snippet to styles.xml. -->
@@ -480,7 +487,12 @@
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">12sp</item>
     </style>
-
+    <style name="mySpinnerItemStyle" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:textColor">@android:color/transparent</item>
+        <item name="android:textSize">12sp</item>
+    </style>
     <!-- Text style for "change" -->
     <!-- Add this snippet to styles.xml. -->
     <style name="change">

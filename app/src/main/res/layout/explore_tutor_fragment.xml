@@ -36,6 +36,36 @@
                 android:layout_marginRight="9dp"
                 android:background="@drawable/gradesfilterbg_drawable">
 
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner"
+                    style="@style/mySpinnerItemStyle"
+                    android:layout_width="74dp"
+                    android:layout_height="23dp"
+                    android:layout_centerInParent="true"
+
+                    android:textAlignment="center" />
+
+                <RelativeLayout
+                    android:layout_width="76dp"
+                    android:layout_height="24dp">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/txtgrade"
+                        style="@style/grade"
+                        android:layout_width="76dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/gradesfilterbg_drawable"
+                        android:clickable="false"
+                        android:descendantFocusability="beforeDescendants"
+                        android:drawableRight="@drawable/downarrowsmall"
+                        android:focusable="false"
+                        android:gravity="center"
+                        android:paddingRight="8dp"
+                        android:text="grade 8"
+                        android:textColor="@android:color/white"
+
+                        />
+                </RelativeLayout>
 
             </RelativeLayout>
 
@@ -99,7 +129,6 @@
                 android:text="4th Avenue, Los Angeles" />
 
             <androidx.appcompat.widget.AppCompatTextView
-
                 style="@style/change"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -6,7 +6,7 @@
 
         <variable
             name="callback"
-            type="com.autohub.skln.activities.user.fragments.StudentClassFragment" />
+            type="com.autohub.skln.activities.user.fragments.HobbiesFragment" />
 
     </data>
 
@@ -14,11 +14,11 @@
 
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        tools:context=".activities.user.fragments.StudentClassFragment">
+        tools:context=".activities.user.fragments.HobbiesFragment">
 
         <LinearLayout
             android:layout_width="200dp"
-            android:layout_height="260dp"
+            android:layout_height="280dp"
             android:orientation="vertical">
             <!-- android:onClick="@{() -> itemClickListener.onClick(acadmicdata)}"-->
             <LinearLayout
@@ -32,8 +32,8 @@
 
                 <RelativeLayout
                     android:id="@+id/rr"
-                    android:layout_width="127dp"
-                    android:layout_height="123dp"
+                    android:layout_width="143dp"
+                    android:layout_height="132dp"
                     android:background="@drawable/selectclass_bg"
                     android:paddingLeft="17dp">
 
@@ -87,8 +87,8 @@
             <RelativeLayout
                 android:id="@+id/rr2"
 
-                android:layout_width="127dp"
-                android:layout_height="123dp"
+                android:layout_width="143dp"
+                android:layout_height="132dp"
                 android:layout_marginLeft="55dp"
                 android:layout_marginTop="13dp"
                 android:background="@drawable/selectclass_bg"

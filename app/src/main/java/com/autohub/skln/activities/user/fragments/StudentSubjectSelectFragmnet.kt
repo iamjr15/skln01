@@ -9,26 +9,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+
 import com.autohub.skln.R
+import com.autohub.skln.databinding.FragmentStudentSubjectSelectBinding
 import com.autohub.skln.databinding.StudenclassFragmentBinding
 import com.autohub.skln.listeners.ClassSelectionListner
 import com.autohub.skln.models.Classdata
-
+import com.autohub.skln.models.SubjectsData
 
 /**
  * A simple [Fragment] subclass.
  */
-class StudentClassFragment : Fragment() {
-    private var mBinding: StudenclassFragmentBinding? = null
-    lateinit var datalist: ArrayList<Classdata>
+class StudentSubjectSelectFragmnet : Fragment() {
+
+    private var mBinding: FragmentStudentSubjectSelectBinding? = null
+    lateinit var datalist: ArrayList<SubjectsData>
     lateinit var classSelectionListner: ClassSelectionListner
     var position: Int = 0
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        datalist = getArguments()?.getParcelableArrayList<Classdata>("data") as ArrayList<Classdata>
+
+        datalist = getArguments()?.getParcelableArrayList<SubjectsData>("data") as ArrayList<SubjectsData>
         position = getArguments()?.getInt("position", 0)!!
-        return inflater.inflate(R.layout.studenclass_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_student_subject_select, container, false)
     }
 
     override fun onAttach(context: Context) {
@@ -37,44 +42,18 @@ class StudentClassFragment : Fragment() {
         super.onAttach(context)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mBinding = StudenclassFragmentBinding.bind(view)
+
+        mBinding = FragmentStudentSubjectSelectBinding.bind(view)
         mBinding!!.callback = this
-        // mBinding.rr
 
         setUi()
     }
 
-    fun onSelectFirst() {
-        classSelectionListner.selectedClass(position = position, isSecondSelected = false, selectedClass = datalist.get(0).classname!!)
-    }
-
-    fun onSelectSecond() {
-        classSelectionListner.selectedClass(position = position, isSecondSelected = true, selectedClass = datalist.get(1).classname!!)
-    }
-
-    fun updateFragment(deselectall: Boolean = false, isSecondSelect: Boolean = false) {
-        if (deselectall) {
-            datalist[0].selected = false
-            datalist[1].selected = false
-        } else if (isSecondSelect) {
-            datalist[0].selected = false
-            datalist[1].selected = true
-        } else {
-            datalist[0].selected = true
-            datalist[1].selected = false
-        }
-
-        setUi()
-
-
-    }
-
-    fun setUi() {
+    private fun setUi() {
         mBinding!!.img.setImageResource(datalist.get(0).icon)
-        mBinding!!.txt.setText("class ${datalist.get(0).classname}. ")
+        mBinding!!.txt.setText("${datalist.get(0).subjectName}. ")
         val unwrappedDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.selectclass_bg)
         val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
         DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(requireContext(), datalist.get(0).color) /* it.color*/)
@@ -84,7 +63,7 @@ class StudentClassFragment : Fragment() {
 
 
         mBinding!!.imgsecond.setImageResource(datalist.get(1).icon)
-        mBinding!!.txtsecond.setText("class ${datalist.get(1).classname}. ")
+        mBinding!!.txtsecond.setText("${datalist.get(1).subjectName}. ")
         val unwrappedDrawablesecond = ContextCompat.getDrawable(requireContext(), R.drawable.selectclass_bg)
         val wrappedDrawablesecond = DrawableCompat.wrap(unwrappedDrawablesecond!!)
         DrawableCompat.setTint(wrappedDrawablesecond, ContextCompat.getColor(requireContext(), datalist.get(1).color) /*it.color*/)
@@ -93,13 +72,35 @@ class StudentClassFragment : Fragment() {
         mBinding!!.greensecond.visibility = if (datalist.get(1).selected) View.VISIBLE else View.GONE
         mBinding!!.whitesecond.visibility = if (datalist.get(1).selected) View.GONE else View.VISIBLE
 
+    }
+
+    fun onSelectFirst() {
+        classSelectionListner.selectedClass(position = position,
+                isSecondSelected = false, selectedClass = datalist.get(0).subjectName!!)
+    }
+
+    fun onSelectSecond() {
+        classSelectionListner.selectedClass(position = position,
+                isSecondSelected = true, selectedClass = datalist.get(1).subjectName!!)
+    }
+
+    fun updateFragment(selected: Boolean, isSecond: Boolean) {
+
+        if (isSecond) {
+            datalist[1].selected = selected
+
+        } else {
+            datalist[0].selected = selected
+
+        }
+        setUi()
 
     }
 
 
     companion object {
-        fun newInstance(position: Int, arrayList: ArrayList<Classdata>): StudentClassFragment {
-            val fragmentFirst = StudentClassFragment()
+        fun newInstance(position: Int, arrayList: ArrayList<SubjectsData>): StudentSubjectSelectFragmnet {
+            val fragmentFirst = StudentSubjectSelectFragmnet()
             val args = Bundle()
             args.putParcelableArrayList("data", arrayList)
             args.putInt("position", position)
@@ -108,5 +109,3 @@ class StudentClassFragment : Fragment() {
         }
     }
 }
-
-

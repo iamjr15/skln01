@@ -60,25 +60,25 @@ public class User implements Parcelable, AppConstants {
                 new AcadmicsData(R.color.computerscience, SUBJECT_COMPUTER_SCIENCE, R.drawable.informatic));
 
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_PHYSICS,
-                new AcadmicsData(R.color.science, SUBJECT_PHYSICS, R.drawable.physics));
+                new AcadmicsData(R.color.physics, SUBJECT_PHYSICS, R.drawable.physics));
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_BIOLOGY,
-                new AcadmicsData(R.color.science, SUBJECT_BIOLOGY, R.drawable.microscope));
+                new AcadmicsData(R.color.biology, SUBJECT_BIOLOGY, R.drawable.microscope));
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_CHEMISTRY,
-                new AcadmicsData(R.color.science, SUBJECT_CHEMISTRY, R.drawable.test_tube));
+                new AcadmicsData(R.color.chemistry, SUBJECT_CHEMISTRY, R.drawable.test_tube));
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_BUSINESS,
-                new AcadmicsData(R.color.science, SUBJECT_BUSINESS, R.drawable.rupee));
+                new AcadmicsData(R.color.business, SUBJECT_BUSINESS, R.drawable.rupee));
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_ACCOUNTANCY,
-                new AcadmicsData(R.color.science, SUBJECT_ACCOUNTANCY, R.drawable.accounting));
+                new AcadmicsData(R.color.account, SUBJECT_ACCOUNTANCY, R.drawable.accounting));
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_ECONOMICS,
-                new AcadmicsData(R.color.science, SUBJECT_ECONOMICS, R.drawable.rating));
+                new AcadmicsData(R.color.economics, SUBJECT_ECONOMICS, R.drawable.rating));
 
 
-        HOBBIES_DATA_HASH_MAP.put(HOBBY_DANCE, new HobbiesData(R.color.dance, HOBBY_DANCE, R.drawable.dancing));
-        HOBBIES_DATA_HASH_MAP.put(HOBBY_DRUM, new HobbiesData(R.color.drum, HOBBY_DRUM, R.drawable.drum));
-        HOBBIES_DATA_HASH_MAP.put(HOBBY_GUITAR, new HobbiesData(R.color.guitar, HOBBY_GUITAR, R.drawable.guitar));
-        HOBBIES_DATA_HASH_MAP.put(HOBBY_KEYBOARD, new HobbiesData(R.color.keyboard, HOBBY_KEYBOARD, R.drawable.piano));
-        HOBBIES_DATA_HASH_MAP.put(HOBBY_MARTIAL, new HobbiesData(R.color.materialarts, HOBBY_MARTIAL, R.drawable.attack));
-        HOBBIES_DATA_HASH_MAP.put(HOBBY_PAINT, new HobbiesData(R.color.painting, HOBBY_PAINT, R.drawable.brush));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_DANCE, new HobbiesData(R.color.dance, HOBBY_DANCE, R.drawable.dancing,false));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_DRUM, new HobbiesData(R.color.drum, HOBBY_DRUM, R.drawable.drum,false));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_GUITAR, new HobbiesData(R.color.guitar, HOBBY_GUITAR, R.drawable.guitar,false));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_KEYBOARD, new HobbiesData(R.color.keyboard, HOBBY_KEYBOARD, R.drawable.piano,false));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_MARTIAL, new HobbiesData(R.color.materialarts, HOBBY_MARTIAL, R.drawable.attack,false));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_PAINT, new HobbiesData(R.color.painting, HOBBY_PAINT, R.drawable.brush,false));
 
 
     }

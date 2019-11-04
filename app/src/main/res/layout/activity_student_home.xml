@@ -43,12 +43,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
-            android:drawableTop="@drawable/ic_tab_toolbox"
+            android:drawableTop="@drawable/eyewear"
             android:drawablePadding="8dp"
             android:gravity="center"
             android:paddingTop="8dp"
             android:paddingBottom="3dp"
-            android:text="@string/toolbox" />
+            android:text="@string/myclasses" />
 
         <TextView
             android:id="@+id/tab_item_explore"

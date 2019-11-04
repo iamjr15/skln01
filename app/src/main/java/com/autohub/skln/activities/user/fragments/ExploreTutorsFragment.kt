@@ -10,9 +10,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.autohub.skln.R
+import com.autohub.skln.activities.user.adaptors.CustomArrayAdapter
 import com.autohub.skln.activities.user.adaptors.ExploreAdaptor
 import com.autohub.skln.databinding.ExploreTutorFragmentBinding
 import com.autohub.skln.fragment.BaseFragment
@@ -24,18 +27,32 @@ import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GpsUtils
 import com.autohub.skln.utills.LocationProvider
 import com.google.android.gms.location.LocationListener
+import kotlinx.android.synthetic.main.explore_tutor_fragment.*
 import java.util.*
 
-/**
- * Created by m.imran
- * Senior Software Engineer at
- * BhimSoft on 2019-08-06.
- */
-class ExploreTutorsFragment : BaseFragment() {
+
+class ExploreTutorsFragment : BaseFragment(), AdapterView.OnItemSelectedListener {
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+    }
+
     private var mBinding: ExploreTutorFragmentBinding? = null
     private var mCurrentLocation: Location? = null
     private var mGpsUtils: GpsUtils? = null
     private var exploreAdaptor: ExploreAdaptor? = null
+
+    var grades = arrayOf(
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+    )
+
 
     private val tutorsClickListener = ItemClickListener<User> {
 
@@ -75,8 +92,30 @@ class ExploreTutorsFragment : BaseFragment() {
         exploreAdaptor = ExploreAdaptor(requireContext(), tutorsClickListener)
         mBinding!!.turorsrecycleview.adapter = exploreAdaptor
 
+        var customAdapter = CustomArrayAdapter(requireContext(), grades)
+        mBinding!!.spinner!!.setAdapter(customAdapter)
+
+        /* mBinding!!.spinner!!.setOnItemClickListener( { adapterView, view, i, l ->
+
+             mBinding!!.txtgrade.setText("grade${grades[i]}")
+
+         })*/
 
 
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                mBinding!!.txtgrade.setText("grade ${grades[position]}")
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
+
+        mBinding!!.txtgrade.setOnClickListener {
+            mBinding!!.spinner!!.performClick()
+
+        }
 
         getTutors()
     }

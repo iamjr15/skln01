@@ -1,244 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/tvSignup"
-        style="@style/signup_title_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/sign_up" />
+    <data>
+        <variable
+            name="callback"
+            type="com.autohub.skln.activities.user.StudentHobbySelect" />
 
-    <TextView
-        android:id="@+id/tvStudent"
-        style="@style/signup_second_title_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvSignup"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="3dp"
-        android:paddingStart="28dp"
-        android:paddingEnd="29dp"
-        android:background="@drawable/button_background_black"
-        android:gravity="center"
-        android:text="@string/student_p" />
+    </data>
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        android:id="@+id/pbSignupProgress"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="9dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_below="@id/tvStudent"
-        android:progressDrawable="@drawable/progress_drawable"
-        android:max="5"
-        android:progress="5" />
+        android:layout_height="match_parent">
 
-    <TextView
-
-        android:id="@+id/tvSelectText"
-        style="@style/signup_general_hint_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pbSignupProgress"
-        android:layout_marginTop="31dp"
-        android:layout_marginStart="12dp"
-        android:gravity="center_horizontal"
-        android:text="@string/select_hobby_text_1" />
-
-    <TextView
-        android:id="@+id/jack_a_dull"
-        style="@style/signup_student_jack_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvSelectText"
-        android:layout_marginTop="3dp"
-        android:layout_marginStart="37dp"
-        android:layout_marginEnd="41dp"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/jack_a_dull" />
-
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_below="@id/jack_a_dull"
-        android:layout_above="@id/btnNext"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="38dp"
-        android:fillViewport="true">
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvSignup"
+            style="@style/signup_title_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            android:text="@string/sign_up" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvStudent"
+            style="@style/signup_second_title_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSignup"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/button_background_black"
+            android:gravity="center"
+            android:paddingStart="28dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="29dp"
+            android:paddingBottom="3dp"
+            android:text="@string/student_p" />
 
-                <LinearLayout
-                    android:id="@+id/LLGuitar"
-                    android:layout_width="@dimen/tile_width"
-                    android:layout_height="@dimen/tile_height"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/tile_guitar"
-                    android:orientation="vertical">
+        <ProgressBar
+            android:id="@+id/pbSignupProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="9dp"
+            android:layout_below="@id/tvStudent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="12dp"
+            android:max="5"
+            android:progress="5"
+            android:progressDrawable="@drawable/progress_drawable" />
 
-                    <ImageView
-                        android:id="@+id/ivGuitar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/chosen_circle" />
-                </LinearLayout>
+        <TextView
 
-                <LinearLayout
-                    android:id="@+id/LLkeyboard"
-                    android:layout_width="@dimen/tile_width"
-                    android:layout_height="@dimen/tile_height"
-                    android:layout_marginStart="80dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/tile_keyboard"
-                    android:orientation="vertical">
+            android:id="@+id/tvSelectText"
+            style="@style/signup_general_hint_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pbSignupProgress"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="31dp"
+            android:gravity="center_horizontal"
+            android:text="@string/select_hobby_text_1" />
 
-                    <ImageView
-                        android:id="@+id/ivKeyboard"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/chosen_circle" />
-                </LinearLayout>
+        <TextView
+            android:id="@+id/jack_a_dull"
+            style="@style/signup_student_jack_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvSelectText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="41dp"
+            android:gravity="center"
+            android:text="@string/jack_a_dull" />
 
-            </LinearLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btnNext"
+            android:layout_below="@id/jack_a_dull"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="15dp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+            android:id="@+id/worm_dots_indicator"
+            app:dotsColor="@android:color/darker_gray"
+            app:dotsCornerRadius="4dp"
+            app:dotsSize="8dp"
+            app:dotsSpacing="2dp"
+            app:dotsStrokeColor="@color/blue"
+            app:dotsStrokeWidth="1dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSelectText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="420dp" />
 
-                <LinearLayout
-                    android:id="@+id/LLMartialArts"
-                    android:layout_width="@dimen/tile_width"
-                    android:layout_height="@dimen/tile_height"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/tile_martial"
-                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/ivMartialArts"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/chosen_circle" />
-                </LinearLayout>
+        <ImageButton
+            android:id="@+id/btnNext"
+            style="@style/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="27dp"
+            android:layout_marginBottom="26dp"
+            android:onClick="@{() -> callback.onNextClick()}"
 
-                <LinearLayout
-                    android:id="@+id/LLDance"
-                    android:layout_width="@dimen/tile_width"
-                    android:layout_height="@dimen/tile_height"
-                    android:layout_marginStart="80dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/tile_dance"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/ivDance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/chosen_circle" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/LLPainting"
-                    android:layout_width="@dimen/tile_width"
-                    android:layout_height="@dimen/tile_height"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/tile_painting"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/ivpainting"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/chosen_circle" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/LLDrum"
-                    android:layout_width="@dimen/tile_width"
-                    android:layout_height="@dimen/tile_height"
-                    android:layout_marginStart="80dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/tile_drum"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/ivDrum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/chosen_circle" />
-                </LinearLayout>
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
-
-    <!--<androidx.appcompat.widget.RecyclerView
-        android:id="@+id/rvClasses"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="5dp"
-        android:layout_below="@id/tvSelectText"
-        android:layout_above="@id/llWarning" />-->
-
-    <ImageButton
-        android:id="@+id/btnNext"
-        style="@style/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="26dp"
-        android:layout_marginEnd="27dp"
         android:background="@drawable/next"
-        android:textAllCaps="false" />
+            android:textAllCaps="false" />
 
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

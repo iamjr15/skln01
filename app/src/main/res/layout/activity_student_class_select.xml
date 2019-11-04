@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -66,302 +67,27 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="wrap_content"
-            android:layout_height="280dp"
+            android:layout_height="wrap_content"
             android:layout_above="@id/btnNext"
             android:layout_below="@id/tvSelectText"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="15dp" />
-        <!--
-                <HorizontalScrollView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
 
-                    android:fillViewport="true">
+        <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+            android:id="@+id/worm_dots_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSelectText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="320dp"
+            app:dotsColor="@android:color/darker_gray"
+            app:dotsCornerRadius="4dp"
+            app:dotsSize="8dp"
+            app:dotsSpacing="2dp"
+            app:dotsStrokeColor="@color/blue"
+            app:dotsStrokeWidth="1dp" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="horizontal">
-
-
-
-                        &lt;!&ndash; <LinearLayout
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:layout_marginStart="20dp"
-                             android:orientation="vertical">
-
-                             <LinearLayout
-                                 android:id="@+id/LLClass1"
-                                 android:layout_width="@dimen/tile_width"
-                                 android:layout_height="@dimen/tile_height"
-                                 android:layout_marginTop="10dp"
-                                 android:layout_marginBottom="10dp"
-                                 android:background="@drawable/tile_class1"
-                                 android:orientation="vertical">
-
-                                 <ImageView
-                                     android:id="@+id/ivClass1"
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:layout_gravity="end"
-                                     android:layout_margin="10dp"
-                                     android:background="@drawable/chosen_circle" />
-                             </LinearLayout>
-
-                             <LinearLayout
-                                 android:id="@+id/LLClass2"
-                                 android:layout_width="@dimen/tile_width"
-                                 android:layout_height="@dimen/tile_height"
-                                 android:layout_marginStart="80dp"
-                                 android:layout_marginTop="10dp"
-                                 android:layout_marginBottom="10dp"
-                                 android:background="@drawable/tile_class2"
-                                 android:orientation="vertical">
-
-                                 <ImageView
-                                     android:id="@+id/ivClass2"
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:layout_gravity="end"
-                                     android:layout_margin="10dp"
-                                     android:background="@drawable/chosen_circle" />
-                             </LinearLayout>
-
-                         </LinearLayout>
-
-                         <LinearLayout
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:orientation="vertical">
-
-                             <LinearLayout
-                                 android:id="@+id/LLClass3"
-                                 android:layout_width="@dimen/tile_width"
-                                 android:layout_height="@dimen/tile_height"
-                                 android:layout_marginTop="10dp"
-                                 android:layout_marginBottom="10dp"
-                                 android:background="@drawable/tile_class3"
-                                 android:orientation="vertical">
-
-                                 <ImageView
-                                     android:id="@+id/ivClass3"
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:layout_gravity="end"
-                                     android:layout_margin="10dp"
-                                     android:background="@drawable/chosen_circle" />
-                             </LinearLayout>
-
-                             <LinearLayout
-                                 android:id="@+id/LLClass4"
-                                 android:layout_width="@dimen/tile_width"
-                                 android:layout_height="@dimen/tile_height"
-                                 android:layout_marginStart="80dp"
-                                 android:layout_marginTop="10dp"
-                                 android:layout_marginBottom="10dp"
-                                 android:background="@drawable/tile_class4"
-                                 android:orientation="vertical">
-
-                                 <ImageView
-                                     android:id="@+id/ivClass4"
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:layout_gravity="end"
-                                     android:layout_margin="10dp"
-                                     android:background="@drawable/chosen_circle" />
-                             </LinearLayout>
-
-                         </LinearLayout>
-
-                         <LinearLayout
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:orientation="vertical">
-
-                             <LinearLayout
-                                 android:id="@+id/LLClass5"
-                                 android:layout_width="@dimen/tile_width"
-                                 android:layout_height="@dimen/tile_height"
-                                 android:layout_marginTop="10dp"
-                                 android:layout_marginBottom="10dp"
-                                 android:background="@drawable/tile_class5"
-                                 android:orientation="vertical">
-
-                                 <ImageView
-                                     android:id="@+id/ivClass5"
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:layout_gravity="end"
-                                     android:layout_margin="10dp"
-                                     android:background="@drawable/chosen_circle" />
-                             </LinearLayout>
-
-                             <LinearLayout
-                                 android:id="@+id/LLClass6"
-                                 android:layout_width="@dimen/tile_width"
-                                 android:layout_height="@dimen/tile_height"
-                                 android:layout_marginStart="80dp"
-                                 android:layout_marginTop="10dp"
-                                 android:layout_marginBottom="10dp"
-                                 android:background="@drawable/tile_class6"
-                                 android:orientation="vertical">
-
-                                 <ImageView
-                                     android:id="@+id/ivClass6"
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:layout_gravity="end"
-                                     android:layout_margin="10dp"
-                                     android:background="@drawable/chosen_circle" />
-                             </LinearLayout>
-                         </LinearLayout>
-
-                         <LinearLayout
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:orientation="vertical">
-
-                             <LinearLayout
-                                 android:id="@+id/LLClass7"
-                                 android:layout_width="@dimen/tile_width"
-                                 android:layout_height="@dimen/tile_height"
-                                 android:layout_marginTop="10dp"
-                                 android:layout_marginBottom="10dp"
-                                 android:background="@drawable/tile_class7"
-                                 android:orientation="vertical">
-
-                                 <ImageView
-                                     android:id="@+id/ivClass7"
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:layout_gravity="end"
-                                     android:layout_margin="10dp"
-                                     android:background="@drawable/chosen_circle" />
-                             </LinearLayout>
-
-                             <LinearLayout
-                                 android:id="@+id/LLClass8"
-                                 android:layout_width="@dimen/tile_width"
-                                 android:layout_height="@dimen/tile_height"
-                                 android:layout_marginStart="80dp"
-                                 android:layout_marginTop="10dp"
-                                 android:layout_marginBottom="10dp"
-                                 android:background="@drawable/tile_class8"
-                                 android:orientation="vertical">
-
-                                 <ImageView
-                                     android:id="@+id/ivClass8"
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:layout_gravity="end"
-                                     android:layout_margin="10dp"
-                                     android:background="@drawable/chosen_circle" />
-                             </LinearLayout>
-                         </LinearLayout>
-
-                         <LinearLayout
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:orientation="vertical">
-
-                             <LinearLayout
-                                 android:id="@+id/LLClass9"
-                                 android:layout_width="@dimen/tile_width"
-                                 android:layout_height="@dimen/tile_height"
-                                 android:layout_marginTop="10dp"
-                                 android:layout_marginBottom="10dp"
-                                 android:background="@drawable/tile_class9"
-                                 android:orientation="vertical">
-
-                                 <ImageView
-                                     android:id="@+id/ivClass9"
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:layout_gravity="end"
-                                     android:layout_margin="10dp"
-                                     android:background="@drawable/chosen_circle" />
-                             </LinearLayout>
-
-                             <LinearLayout
-                                 android:id="@+id/LLClass10"
-                                 android:layout_width="@dimen/tile_width"
-                                 android:layout_height="@dimen/tile_height"
-                                 android:layout_marginStart="80dp"
-                                 android:layout_marginTop="10dp"
-                                 android:layout_marginBottom="10dp"
-                                 android:background="@drawable/tile_class10"
-                                 android:orientation="vertical">
-
-                                 <ImageView
-                                     android:id="@+id/ivClass10"
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:layout_gravity="end"
-                                     android:layout_margin="10dp"
-                                     android:background="@drawable/chosen_circle" />
-                             </LinearLayout>
-                         </LinearLayout>
-
-                         <LinearLayout
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:orientation="vertical">
-
-                             <LinearLayout
-                                 android:id="@+id/LLClass11"
-                                 android:layout_width="@dimen/tile_width"
-                                 android:layout_height="@dimen/tile_height"
-                                 android:layout_marginTop="10dp"
-                                 android:layout_marginBottom="10dp"
-                                 android:background="@drawable/tile_class11"
-                                 android:orientation="vertical">
-
-                                 <ImageView
-                                     android:id="@+id/ivClass11"
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:layout_gravity="end"
-                                     android:layout_margin="10dp"
-                                     android:background="@drawable/chosen_circle" />
-                             </LinearLayout>
-
-                             <LinearLayout
-                                 android:id="@+id/LLClass12"
-                                 android:layout_width="@dimen/tile_width"
-                                 android:layout_height="@dimen/tile_height"
-                                 android:layout_marginStart="80dp"
-                                 android:layout_marginTop="10dp"
-                                 android:layout_marginBottom="10dp"
-                                 android:background="@drawable/tile_class12"
-                                 android:orientation="vertical">
-
-                                 <ImageView
-                                     android:id="@+id/ivClass12"
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:layout_gravity="end"
-                                     android:layout_margin="10dp"
-                                     android:background="@drawable/chosen_circle" />
-                             </LinearLayout>
-                         </LinearLayout>&ndash;&gt;
-
-                    </LinearLayout>
-
-                </HorizontalScrollView>-->
-
-        <!--<androidx.appcompat.widget.RecyclerView
-            android:id="@+id/rvClasses"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="5dp"
-            android:layout_below="@id/tvSelectText"
-            android:layout_above="@id/llWarning" />-->
 
         <ImageButton
             android:id="@+id/btnNext"

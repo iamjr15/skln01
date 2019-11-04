@@ -19,11 +19,17 @@
     <color name="spanblue">#ff3100ff</color>
 
     <color name="science">#ff000000</color>
+    <color name="biology">#ff000000</color>
     <color name="math">#ff120d31</color>
     <color name="english">#ffa57982</color>
     <color name="socialstudies">#ff9381ff</color>
     <color name="language">#ffbc69aa</color>
     <color name="computerscience">#ffef6f6c</color>
+    <color name="physics">#ff9381ff</color>
+    <color name="business">#ff9381ff</color>
+    <color name="economics">#ff873d48</color>
+    <color name="chemistry">#ffbc69aa</color>
+    <color name="account">#ff037171</color>
 
 
     <color name="keyboard">#ff9381ff</color>
@@ -34,11 +40,25 @@
     <color name="guitar">#ff000000</color>
 
 
-    <color name="three">#ff90d7ff</color>
+
+
+
+
+
+
+    <color name="one">#ff000000</color>
     <color name="two">#fff8bdc4</color>
+    <color name="three">#ff90d7ff</color>
     <color name="four">#ffa57982</color>
 
-
+    <color name="five">#ff120d31</color>
+    <color name="six">#ff9381ff</color>
+    <color name="seven">#ffbc69aa</color>
+    <color name="eight">#ffef6f6c</color>
+    <color name="nine">#ff037171</color>
+    <color name="ten">#ff9381ff</color>
+    <color name="eleven">#ff9381ff</color>
+    <color name="tweleve">#ffef6f6c</color>
 
 
 </resources>
