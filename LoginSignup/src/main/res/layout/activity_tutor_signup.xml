@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="callback"
+            type="com.netzwelt.loginsignup.TutorSignupActivity" />
+    </data>
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvSignup"
+            style="@style/signup_title_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/sign_up" />
+
+        <TextView
+            android:id="@+id/tvTutorOrStudent"
+            style="@style/signup_students_p"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSignup"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/signup_back_rect"
+            android:gravity="center"
+            android:paddingStart="28dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="29dp"
+            android:paddingBottom="3dp"
+            android:text="@string/tutor_institutes" />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnNext"
+            android:layout_below="@+id/tvTutorOrStudent"
+            android:paddingTop="29dp"
+            android:paddingEnd="10dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="21dp"
+                android:orientation="vertical">
+
+                <TextView
+
+                    style="@style/please_fol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pleasefollow" />
+
+                <TextView
+                    android:id="@+id/txtwebsite"
+                    style="@style/please_fol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="@string/step1" />
+
+                <TextView
+                    style="@style/please_fol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="@string/step2" />
+
+                <TextView
+                    style="@style/please_fol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="@string/step3" />
+
+                <TextView
+                    style="@style/please_fol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="@string/step4" />
+
+                <TextView
+                    style="@style/if_already"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginRight="76dp"
+                    android:text="If already registered , login by clicking the button below." />
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/loginbtn"
+                    android:layout_width="200dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="23dp"
+                    android:background="@drawable/loginbutton_drawable"
+                    android:drawableRight="@drawable/arrowright"
+                    android:gravity="left|center_vertical"
+                    android:onClick="@{()->callback.login()}"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="11dp"
+                    android:text="@string/login"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+        </ScrollView>
+
+
+    </RelativeLayout>
+</layout>

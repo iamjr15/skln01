@@ -59,6 +59,11 @@ public interface AppConstants {
     String IV = "abcdefgh";
     String KEY = "MyKey";
 
+    //ExploreFilterTypes
+    String ACADMIC_SELECTION_FILTER = "acadmic_selection_filter";
+    String GREAD_SELECTION_FILTER = "greadSelectionFiletr";
+    String ALL_SELECTION_FILTER = "allselectionfilter";
+
     // firestore db keys - tutor
     String KEY_USER_ID = "id";
     String KEY_PHONE_NUMBER = "phoneNumber";

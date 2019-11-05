@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".StudentHomeActivity">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?android:attr/actionBarSize"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_gravity="bottom"
+        android:background="@drawable/home_tab_bg"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tab_item_home"
+            style="@style/tab_item_text_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:drawableTop="@drawable/ic_tab_home"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:paddingBottom="3dp"
+            android:text="@string/home" />
+
+        <TextView
+            android:id="@+id/tab_item_toolbox"
+            style="@style/tab_item_text_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:drawableTop="@drawable/eyewear"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:paddingBottom="3dp"
+            android:text="@string/myclasses" />
+
+        <TextView
+            android:id="@+id/tab_item_explore"
+            style="@style/tab_item_text_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:drawableTop="@drawable/ic_search"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:paddingBottom="3dp"
+            android:text="@string/explore" />
+
+        <TextView
+            android:id="@+id/tab_item_cls_request"
+            style="@style/tab_item_text_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:drawableTop="@drawable/ic_tab_cls_req"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:paddingBottom="3dp"
+            android:text="@string/class_request" />
+
+        <TextView
+            android:id="@+id/tab_item_profile"
+            style="@style/tab_item_text_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:drawableTop="@drawable/ic_tab_profile"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:paddingBottom="3dp"
+            android:text="@string/profile" />
+
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

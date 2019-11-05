@@ -20,7 +20,6 @@ import androidx.core.content.ContextCompat;
 
 import com.autohub.skln.CropActivity;
 import com.autohub.skln.R;
-import com.autohub.skln.activities.user.WelcomeActivity;
 import com.autohub.skln.databinding.FragmentTutorProfileBinding;
 import com.autohub.skln.tutor.EditProfileFragment;
 import com.autohub.skln.utills.ActivityUtils;
@@ -112,7 +111,7 @@ public class FragmentProfile extends BaseFragment {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                ActivityUtils.launchActivity(requireContext(), WelcomeActivity.class);
+          //      ActivityUtils.launchActivity(requireContext(), WelcomeActivity.class);
                 requireActivity().finishAffinity();
             }
         });

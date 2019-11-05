@@ -473,6 +473,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Text style for "you_haven'" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="you_haven">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
     <!-- Text style for "grade" -->
     <!-- Add this snippet to styles.xml. -->
     <style name="grade">
