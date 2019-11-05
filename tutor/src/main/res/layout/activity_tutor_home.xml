@@ -37,7 +37,8 @@
         android:textColor="@color/black"
         android:textSize="25sp"
         fresco:layout_constraintStart_toEndOf="@+id/profile_image"
-        fresco:layout_constraintTop_toTopOf="parent" />
+        fresco:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/montserrat_bold"/>
 
     <TextView
         android:id="@+id/teach_something"
@@ -50,7 +51,8 @@
         android:textSize="18sp"
         fresco:layout_constraintEnd_toEndOf="parent"
         fresco:layout_constraintStart_toEndOf="@+id/profile_image"
-        fresco:layout_constraintTop_toBottomOf="@+id/name" />
+        fresco:layout_constraintTop_toBottomOf="@+id/name"
+        android:fontFamily="@font/montserrat_bold"/>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
@@ -94,13 +96,15 @@
                     <TextView
                         style="@style/already_go"
                         android:text="@string/pending_requests"
-                        android:textSize="19sp" />
+                        android:textSize="19sp"
+                        android:fontFamily="@font/montserrat_bold"/>
 
                     <TextView
                         android:id="@+id/requests"
                         style="@style/click_to_a"
                         android:layout_marginTop="5dp"
-                        android:textSize="62sp" />
+                        android:textSize="62sp"
+                        android:fontFamily="@font/montserrat_bold"/>
 
                 </LinearLayout>
 
@@ -139,7 +143,8 @@
                     <TextView
                         style="@style/already_go"
                         android:text="@string/manage_classes"
-                        android:textSize="19sp" />
+                        android:textSize="19sp"
+                        android:fontFamily="@font/montserrat_bold"/>
 
                 </LinearLayout>
 
@@ -176,7 +181,8 @@
                     <TextView
                         style="@style/already_go"
                         android:text="@string/your_reviews"
-                        android:textSize="19sp" />
+                        android:textSize="19sp"
+                        android:fontFamily="@font/montserrat_bold"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -193,7 +199,8 @@
                         <TextView
                             android:id="@+id/avg_rating"
                             style="@style/click_to_a"
-                            android:textSize="62sp" />
+                            android:textSize="62sp"
+                            android:fontFamily="@font/montserrat_semi_bold"/>
                     </LinearLayout>
                 </LinearLayout>
 
