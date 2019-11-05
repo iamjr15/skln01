@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="teach_something_new">teach something new.</string>
+    <string name="pending_requests">pending requests.</string>
+    <string name="manage_classes">manage classes.</string>
+    <string name="your_reviews">your reviews.</string>
+</resources>
