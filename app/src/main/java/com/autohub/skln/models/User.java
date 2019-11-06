@@ -1,8 +1,11 @@
 package com.autohub.skln.models;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
+
+import androidx.annotation.RequiresApi;
 
 import com.autohub.skln.R;
 import com.autohub.skln.utills.AppConstants;
@@ -19,6 +22,7 @@ import java.util.List;
 public class User implements Parcelable, AppConstants {
     private static final HashMap<String, Integer> FAVORITE_CLASSES = new HashMap<>();
     private static final HashMap<String, AcadmicsData> ACADMICS_DATA_HASH_MAP = new HashMap<>();
+    private static final HashMap<String, AcadmicsData> ACADMICS_SENIORDATA_HASH_MAP = new HashMap<>();
     private static final HashMap<String, HobbiesData> HOBBIES_DATA_HASH_MAP = new HashMap<>();
     private static final HashMap<String, Integer> HOBBIES = new HashMap<>();
 
@@ -59,17 +63,25 @@ public class User implements Parcelable, AppConstants {
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_COMPUTER_SCIENCE,
                 new AcadmicsData(R.color.computerscience, SUBJECT_COMPUTER_SCIENCE, R.drawable.informatic));
 
-        ACADMICS_DATA_HASH_MAP.put(SUBJECT_PHYSICS,
+
+        ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_ENGLISH,
+                new AcadmicsData(R.color.english, SUBJECT_ENGLISH, R.drawable.noun));
+        ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_MATHS,
+                new AcadmicsData(R.color.math, SUBJECT_MATHS, R.drawable.geometry));
+        ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_COMPUTER_SCIENCE,
+                new AcadmicsData(R.color.computerscience, SUBJECT_COMPUTER_SCIENCE, R.drawable.informatic));
+
+        ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_PHYSICS,
                 new AcadmicsData(R.color.physics, SUBJECT_PHYSICS, R.drawable.physics));
-        ACADMICS_DATA_HASH_MAP.put(SUBJECT_BIOLOGY,
+        ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_BIOLOGY,
                 new AcadmicsData(R.color.biology, SUBJECT_BIOLOGY, R.drawable.microscope));
-        ACADMICS_DATA_HASH_MAP.put(SUBJECT_CHEMISTRY,
+        ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_CHEMISTRY,
                 new AcadmicsData(R.color.chemistry, SUBJECT_CHEMISTRY, R.drawable.test_tube));
-        ACADMICS_DATA_HASH_MAP.put(SUBJECT_BUSINESS,
+        ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_BUSINESS,
                 new AcadmicsData(R.color.business, SUBJECT_BUSINESS, R.drawable.rupee));
-        ACADMICS_DATA_HASH_MAP.put(SUBJECT_ACCOUNTANCY,
+        ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_ACCOUNTANCY,
                 new AcadmicsData(R.color.account, SUBJECT_ACCOUNTANCY, R.drawable.accounting));
-        ACADMICS_DATA_HASH_MAP.put(SUBJECT_ECONOMICS,
+        ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_ECONOMICS,
                 new AcadmicsData(R.color.economics, SUBJECT_ECONOMICS, R.drawable.rating));
 
 
@@ -281,14 +293,39 @@ public class User implements Parcelable, AppConstants {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public List<AcadmicsData> getAcadmics() {
+
+        boolean isSeniorClass = studentClass.equals(CLASS_11) || studentClass.equals(CLASS_12);
         List<AcadmicsData> acadmicsDataList = new ArrayList<>();
         if (TextUtils.isEmpty(favoriteClasses)) return acadmicsDataList;
         String[] subjects = favoriteClasses.split(",");
-        for (String subj : subjects) {
-            if (ACADMICS_DATA_HASH_MAP.containsKey(subj.trim()))
-                acadmicsDataList.add(ACADMICS_DATA_HASH_MAP.get(subj.trim()));
+
+        if (isSeniorClass) {
+            ACADMICS_SENIORDATA_HASH_MAP.forEach((s, acadmicsData) ->
+                    acadmicsDataList.add(ACADMICS_SENIORDATA_HASH_MAP.get(s))
+            );
+
+        } else {
+            ACADMICS_DATA_HASH_MAP.forEach((s, acadmicsData) ->
+                    acadmicsDataList.add(ACADMICS_DATA_HASH_MAP.get(s))
+            );
         }
+
+
+
+       /* for (String subj : subjects) {
+//            if (ACADMICS_DATA_HASH_MAP.containsKey(subj.trim()))
+            if (isSeniorClass) {
+                acadmicsDataList.add(ACADMICS_SENIORDATA_HASH_MAP.get(subj.trim()));
+
+            } else {
+                acadmicsDataList.add(ACADMICS_SENIORDATA_HASH_MAP.get(subj.trim()));
+
+            }
+
+        }*/
+
 
         return acadmicsDataList;
     }
@@ -299,8 +336,11 @@ public class User implements Parcelable, AppConstants {
         if (TextUtils.isEmpty(hobbiesToPursue)) return hobbies;
         String[] selectedHobbies = hobbiesToPursue.split(",");
         for (String hobby : selectedHobbies) {
-            if (HOBBIES_DATA_HASH_MAP.containsKey(hobby.trim()))
-                hobbies.add(HOBBIES_DATA_HASH_MAP.get(hobby.trim()));
+           /* if (HOBBIES_DATA_HASH_MAP.containsKey(hobby.trim()))
+                hobbies.add(HOBBIES_DATA_HASH_MAP.get(hobby.trim()));*/
+            hobbies.add(HOBBIES_DATA_HASH_MAP.get(hobby.trim()));
+
+
         }
         return hobbies;
     }
