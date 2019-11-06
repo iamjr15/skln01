@@ -7,4 +7,6 @@
     <string name="accept_request">ACCEPT REQUEST</string>
     <string name="pending_request">PENDING REQUEST</string>
     <string name="send_feedback">Send Feedback</string>
+    <string name="active">ACTIVE</string>
+    <string name="cancelled">CANCELLED</string>
 </resources>
