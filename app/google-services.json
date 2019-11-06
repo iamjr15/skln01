@@ -15,6 +15,38 @@
       },
       "oauth_client": [
         {
+          "client_id": "828206577726-o117ja15862v4paoshooimgbtr1cb1gj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.autohub.skln",
+            "certificate_hash": "e9f5819a710e4a263d4a884e2fe7c994ef583bb9"
+          }
+        },
+        {
+          "client_id": "828206577726-ep31fof695gdivu94vgfahsq249ta7bq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.autohub.skln",
+            "certificate_hash": "1c178ab396ec4de118c8ef133d6a6f8d94c0fe3c"
+          }
+        },
+        {
+          "client_id": "828206577726-nhfvajci6ke9dmoe4rldbo2669rv9vni.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.autohub.skln",
+            "certificate_hash": "5a0846fd63c742458debdb0b5c7d9351fb98cdec"
+          }
+        },
+        {
+          "client_id": "828206577726-qb7l7do93gcmv95omk1estvp3a1nk8fv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.autohub.skln",
+            "certificate_hash": "9cb93dbe3a16c450acd24989d39ad8c8d93433a2"
+          }
+        },
+        {
           "client_id": "828206577726-7llbgk0g3c19m7gqmq79es2u8k5kvlnd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

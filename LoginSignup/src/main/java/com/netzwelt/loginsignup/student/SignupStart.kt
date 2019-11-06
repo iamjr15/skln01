@@ -32,6 +32,8 @@ class SignupStart : BaseActivity() {
     private var mLocation: Location? = null
     private val mLocationListener = LocationListener { location ->
         Log.d(">>>>Location", location.toString())
+
+
         mLocation = location
         LocationProvider.getInstance().getAddressFromLocation(this@SignupStart, location) { address ->
             Log.d(">>>>LocationAddress", "Address is :$address")

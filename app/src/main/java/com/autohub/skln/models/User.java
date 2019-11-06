@@ -73,12 +73,12 @@ public class User implements Parcelable, AppConstants {
                 new AcadmicsData(R.color.economics, SUBJECT_ECONOMICS, R.drawable.rating));
 
 
-        HOBBIES_DATA_HASH_MAP.put(HOBBY_DANCE, new HobbiesData(R.color.dance, HOBBY_DANCE, R.drawable.dancing,false));
-        HOBBIES_DATA_HASH_MAP.put(HOBBY_DRUM, new HobbiesData(R.color.drum, HOBBY_DRUM, R.drawable.drum,false));
-        HOBBIES_DATA_HASH_MAP.put(HOBBY_GUITAR, new HobbiesData(R.color.guitar, HOBBY_GUITAR, R.drawable.guitar,false));
-        HOBBIES_DATA_HASH_MAP.put(HOBBY_KEYBOARD, new HobbiesData(R.color.keyboard, HOBBY_KEYBOARD, R.drawable.piano,false));
-        HOBBIES_DATA_HASH_MAP.put(HOBBY_MARTIAL, new HobbiesData(R.color.materialarts, HOBBY_MARTIAL, R.drawable.attack,false));
-        HOBBIES_DATA_HASH_MAP.put(HOBBY_PAINT, new HobbiesData(R.color.painting, HOBBY_PAINT, R.drawable.brush,false));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_DANCE, new HobbiesData(R.color.dance, HOBBY_DANCE, R.drawable.dancing, false));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_DRUM, new HobbiesData(R.color.drum, HOBBY_DRUM, R.drawable.drum, false));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_GUITAR, new HobbiesData(R.color.guitar, HOBBY_GUITAR, R.drawable.guitar, false));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_KEYBOARD, new HobbiesData(R.color.keyboard, HOBBY_KEYBOARD, R.drawable.piano, false));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_MARTIAL, new HobbiesData(R.color.materialarts, HOBBY_MARTIAL, R.drawable.attack, false));
+        HOBBIES_DATA_HASH_MAP.put(HOBBY_PAINT, new HobbiesData(R.color.painting, HOBBY_PAINT, R.drawable.brush, false));
 
 
     }
@@ -111,11 +111,25 @@ public class User implements Parcelable, AppConstants {
     public String studentClass;
     public String paymentDuration;
     public String city;
+    public String distance = "";
     public float latitude;
     public float longitude;
 
     public User() {
     }
+
+
+
+
+
+   /* public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public String getDistance() {
+        return CommonUtils.getString(distance);
+    }*/
+
 
     protected User(Parcel in) {
         id = in.readString();
@@ -146,6 +160,8 @@ public class User implements Parcelable, AppConstants {
         studentClass = in.readString();
         paymentDuration = in.readString();
         city = in.readString();
+        distance = in.readString();
+
         latitude = in.readFloat();
         longitude = in.readFloat();
     }
@@ -180,6 +196,8 @@ public class User implements Parcelable, AppConstants {
         dest.writeString(studentClass);
         dest.writeString(paymentDuration);
         dest.writeString(city);
+        dest.writeString(distance);
+
         dest.writeFloat(latitude);
         dest.writeFloat(longitude);
     }

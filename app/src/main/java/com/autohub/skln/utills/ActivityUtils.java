@@ -24,6 +24,7 @@ public class ActivityUtils {
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
+
     public static void launchFragment(@NonNull Context context, @NonNull String fragmentName) {
         Intent intent = new Intent(context, FrameActivity.class);
         intent.putExtra(AppConstants.KEY_FRAGMENT, fragmentName);

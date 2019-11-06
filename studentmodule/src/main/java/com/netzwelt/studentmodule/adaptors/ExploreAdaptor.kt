@@ -1,6 +1,7 @@
 package com.netzwelt.studentmodule.adaptors
 
 import android.content.Context
+import android.location.Location
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
     : RecyclerView.Adapter<ExploreAdaptor.Holder>() {
 
     private var userList: List<User> = ArrayList()
+    private var mCurrentLocation: Location? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val exploreRowBinding: ExploreRowBinding =
@@ -40,9 +42,21 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
         userList[position].let {
             with(holder.exploreRowBinding)
             {
+
+                if (mCurrentLocation != null) {
+                    it.distance = String.format("%.2f", CommonUtils.distance(mCurrentLocation!!.latitude, mCurrentLocation!!.longitude,
+
+                            it.latitude.toDouble(), it.longitude.toDouble())) + " Km"
+
+                    txtdistance.setText(it.distance)
+                }
+
+
+
                 user = it
                 tutorname.setText(it.firstName + " " + it.lastName)
                 txtclassprice.setText(it.rate + " / " + it.noOfClasses + " PER " + it.paymentDuration)
+
 
                 var splitarray = it.classesToTeach.split(",")
                 if (splitarray.size > 0) {
@@ -56,6 +70,8 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
                         }
                     }
                     txtgrades.setText(stringBuilder.toString())
+
+
                 } else {
                     txtgrades.setText(it.classesToTeach)
 
@@ -85,8 +101,9 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
         return userList.size
     }
 
-    fun setData(userList: List<User>) {
+    fun setData(userList: List<User>, mCurrentLocation: Location?) {
         this.userList = userList
+        this.mCurrentLocation = mCurrentLocation
         notifyDataSetChanged()
     }
 

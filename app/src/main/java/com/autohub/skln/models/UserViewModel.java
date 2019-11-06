@@ -6,17 +6,18 @@ import androidx.databinding.BaseObservable;
 
 import com.autohub.skln.utills.CommonUtils;
 
-/**
- * Created by m.imran
- * Senior Software Engineer at
- * BhimSoft on 2019-08-02.
- */
+
 public class UserViewModel extends BaseObservable {
     private User mUser;
 
     public UserViewModel(User user) {
         mUser = user;
     }
+
+    public String getRating() {
+        return "4.2";
+    }
+
 
     public String getFullName() {
         return mUser.firstName + " " + mUser.lastName;
@@ -35,7 +36,7 @@ public class UserViewModel extends BaseObservable {
     }
 
     public String getClassesWithAffix() {
-        return mUser.getClassesWithAffix();
+        return mUser.getClassesWithAffix().replace(",", "-");
     }
 
     public String getClassesToTeach() {
@@ -55,7 +56,7 @@ public class UserViewModel extends BaseObservable {
     }
 
     public String getSubjectsToTeach() {
-        return CommonUtils.getString(mUser.subjectsToTeach);
+        return CommonUtils.getString(mUser.subjectsToTeach.trim()).replace(",", " | ");
     }
 
     public String[] getSubjectsToTeachAsArray() {
@@ -82,7 +83,7 @@ public class UserViewModel extends BaseObservable {
     }
 
     public String getNoOfClasses() {
-        return CommonUtils.getString(mUser.noOfClasses);
+        return CommonUtils.getString(mUser.noOfClasses) + " / " + mUser.classFrequency;
     }
 
     public String getQualification() {
@@ -101,12 +102,18 @@ public class UserViewModel extends BaseObservable {
         return CommonUtils.getString(mUser.bioData);
     }
 
+    public String gettDistance() {
+        return mUser.distance;
+    }
+
+
     public String getCostPerClasses() {
         return String.format("RS %1$s/%2$s Classes per %3$s", mUser.rate, mUser.noOfClasses, mUser.paymentDuration);
     }
 
     public String getCostPerDuration() {
-        return String.format("RS %1$s / %2$s", mUser.rate, mUser.paymentDuration);
+        return "$ " + mUser.rate + "/ " + mUser.noOfClasses + " classes " + mUser.paymentDuration;
+        /* String.format("RS %1$s / %2$s", mUser.rate, mUser.paymentDuration);*/
     }
 
     public String getCity() {
@@ -117,6 +124,7 @@ public class UserViewModel extends BaseObservable {
         this.mUser = user;
         notifyChange();
     }
+
 
     public void setBioData(String bio) {
         mUser.bioData = bio;

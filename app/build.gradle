@@ -74,12 +74,10 @@ dependencies {
 //    implementation 'com.google.android.gms:play-services-location:17.0.0'
 //    implementation 'com.google.android.gms:play-services-location:8.3.0'
     api 'com.google.android.gms:play-services-location:17.0.0'
-    api 'com.google.android.gms:play-services-places:17.0.0'
+    // api 'com.google.android.gms:play-services-places:17.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'com.google.android.libraries.places:places:2.1.0'
-
-
+    api "com.google.android.libraries.places:places:2.1.0"
 
     api 'com.google.android.play:core:1.3.4'
 

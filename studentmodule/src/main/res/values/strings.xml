@@ -279,4 +279,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_loginsignup">LoginSignup Module</string>
     <string name="no_tutor_is_available">No Tutor is available</string>
+    <string name="google_key">AIzaSyB47npWQnNm3HrcGAzZXg0t9q15RX9bJLY</string>
+    <string name="teaching_experience">TEACHING EXPERIENCE</string>
+    <string name="you_wo_nt_be_charged_yet">You wo\'nt be charged yet.</string>
 </resources>

@@ -346,6 +346,84 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    <!-- Text style for "request_th" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="request_th">
+        <item name="android:textStyle">bold</item>
+
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_width">wrap_content</item>
+
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+    <!-- Text style for "$_250_/_20" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="costing">
+
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#ff0031f6</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!-- Text style for "class_deta" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="class_deta">
+        <item name="android:textColor">#ff281cd6</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- Text style for "teaching_e" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="teaching_e">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!-- Text style for "0_reviews" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="reviews">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+    <!-- Text style for "you_won't_" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="youwont_">
+        <item name="android:textStyle">bold</item>
+
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- Text style for "12_yrs" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="valuestyles">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textAllCaps">true</item>
+
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- Text style for "john_d." -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="bodystye">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">22sp</item>
+    </style>
     <!-- Text style for "learn_some" -->
     <!-- Add this snippet to styles.xml. -->
     <style name="learn_some">
@@ -494,6 +572,7 @@
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">12sp</item>
     </style>
+
     <style name="mySpinnerItemStyle" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
@@ -603,6 +682,17 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
+    <!-- Text style for "i'm_a_math" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="body">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:fontFamily">@font/montserrat_light</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 
     <style name="SmallText" parent="TextAppearance.AppCompat.Display1">
         <item name="android:textColor">#000000</item>
