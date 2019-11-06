@@ -6,4 +6,5 @@
     <string name="your_reviews">your reviews.</string>
     <string name="accept_request">ACCEPT REQUEST</string>
     <string name="pending_request">PENDING REQUEST</string>
+    <string name="send_feedback">Send Feedback</string>
 </resources>
