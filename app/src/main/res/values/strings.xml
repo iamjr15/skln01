@@ -116,7 +116,7 @@
     <string name="upload_a_p">upload a professional photo which clearly shows your face</string>
     <string name="current_occupation">what\'s your current occupation?</string>
     <string name="teaching_exp">what\'s your teaching experience?</string>
-    <string name="select_qualification">select your qualification.</string>
+    <string name="select_qualification">select qualification.</string>
     <string name="select_area_qualification">select area of qualification.</string>
     <string name="select_board">Select your targeted board.</string>
     <string name="cbse">CBSE</string>
@@ -222,7 +222,7 @@
     <string name="logout">Logout</string>
     <string name="profile">Profile</string>
     <string name="class_to_teach">Class To teach</string>
-    <string name="subject_to_taught">Subject To Taught</string>
+    <string name="subject_to_taught">Subjects Taught</string>
     <string name="select_ocupation">Select Occupation</string>
     <string name="select_treaching_epereience">Select Teaching Experience</string>
     <string name="select_area_of_qualification">Select Area of Qualification</string>
