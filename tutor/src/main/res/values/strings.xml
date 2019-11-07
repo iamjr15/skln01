@@ -28,4 +28,5 @@
     <string name="fri">Fri</string>
     <string name="thu">Thu</string>
     <string name="wed">Wed</string>
+    <string name="schedule">Schedule</string>
 </resources>
