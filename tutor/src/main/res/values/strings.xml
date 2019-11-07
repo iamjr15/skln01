@@ -13,4 +13,19 @@
     <string name="attendance">ATTENDANCE</string>
     <string name="students">STUDENTS</string>
     <string name="edit_schedule">EDIT SCHEDULE</string>
+    <string name="add_batch">Add Batch</string>
+    <string name="batch_name">Batch Name</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="batch_name_hint">i.e - Physics - Morning, Chemistry - Evening</string>
+    <string name="select_class">Select Class</string>
+    <string name="select_subject">Select Subject</string>
+    <string name="select_day_s">Select Day(s)</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="sun">Sun</string>
+    <string name="sat">Sat</string>
+    <string name="fri">Fri</string>
+    <string name="thu">Thu</string>
+    <string name="wed">Wed</string>
 </resources>

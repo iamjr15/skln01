@@ -225,7 +225,7 @@
             <Button
                 android:id="@+id/accept_request"
                 style="@style/Heading"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/message_label"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="16dp"
@@ -242,7 +242,7 @@
         <Button
             android:id="@+id/delete_request"
             style="@style/Heading"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/selector_dark_pink_round"
             android:fontFamily="@font/montserrat_semi_bold"
