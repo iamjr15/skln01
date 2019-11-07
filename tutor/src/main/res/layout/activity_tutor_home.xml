@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
+        android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:padding="10dp"
         android:src="@drawable/search"
-        app:layout_constraintBottom_toTopOf="@+id/name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,9 +22,8 @@
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="72dp"
         fresco:layout_constraintStart_toStartOf="parent"
-        fresco:layout_constraintTop_toTopOf="parent"
+        fresco:layout_constraintTop_toBottomOf="@+id/search"
         fresco:roundedCornerRadius="5dp"
         fresco:roundingBorderWidth="1dp" />
 
@@ -33,12 +32,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="72dp"
+        android:fontFamily="@font/montserrat_bold"
         android:textColor="@color/black"
         android:textSize="25sp"
         fresco:layout_constraintStart_toEndOf="@+id/profile_image"
-        fresco:layout_constraintTop_toTopOf="parent"
-        android:fontFamily="@font/montserrat_bold"/>
+        fresco:layout_constraintTop_toBottomOf="@+id/search"
+        tools:text="Hey, Arnold." />
 
     <TextView
         android:id="@+id/teach_something"
