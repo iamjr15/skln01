@@ -9,4 +9,8 @@
     <string name="send_feedback">Send Feedback</string>
     <string name="active">ACTIVE</string>
     <string name="cancelled">CANCELLED</string>
+    <string name="info_text_batch_options">share the batch code with your students to add them in this batch.</string>
+    <string name="attendance">ATTENDANCE</string>
+    <string name="students">STUDENTS</string>
+    <string name="edit_schedule">EDIT SCHEDULE</string>
 </resources>
