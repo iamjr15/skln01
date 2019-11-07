@@ -1,4 +1,4 @@
-package com.netzwelt.studentmodule
+package com.netzwelt.studentmodule.fragments
 
 
 import android.content.Context
@@ -14,7 +14,11 @@ import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.skln.models.AcadmicsData
 import com.autohub.skln.models.HobbiesData
 import com.autohub.skln.models.User
+import com.autohub.skln.utills.GlideApp
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.androidapp.ui.home.fragments.country.AcadmicsAdaptor
+import com.google.firebase.storage.FirebaseStorage
+import com.netzwelt.studentmodule.R
 import com.netzwelt.studentmodule.databinding.FragmentStudentHomeBinding
 
 class FragmentHome : BaseFragment() {
@@ -58,17 +62,18 @@ class FragmentHome : BaseFragment() {
         mBinding!!.hobbiesrecycleview.adapter = hobbiesAdaptor
 
         setUpUserInfo()
+        setupProfile()
     }
 
-/*    private fun setupProfile() {
-        val ref = FirebaseStorage.getInstance().reference.child("tutor/" +
+    private fun setupProfile() {
+        val ref = FirebaseStorage.getInstance().reference.child("student/" +
                 firebaseAuth.currentUser!!.uid + ".jpg")
         GlideApp.with(this)
                 .load(ref)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
                 .skipMemoryCache(true)
                 .into(mBinding!!.profilePicture)
-    }*/
+    }
 
     private fun setUpUserInfo() {
         firebaseStore.collection(getString(R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).get()

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".StudentHomeActivity">
+    tools:context=".activities.StudentHomeActivity">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/container"
@@ -74,7 +74,7 @@
             android:gravity="center"
             android:paddingTop="8dp"
             android:paddingBottom="3dp"
-            android:text="@string/class_request" />
+            android:text="@string/my_request" />
 
         <TextView
             android:id="@+id/tab_item_profile"

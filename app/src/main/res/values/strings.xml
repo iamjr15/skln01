@@ -177,6 +177,8 @@
     <string name="toolbox">Toolbox</string>
     <string name="myclasses">My Classes</string>
     <string name="class_request">Class Requests</string>
+    <string name="my_request">My Requests</string>
+
     <string name="average_rating">AVG.\nRATINGS</string>
     <string name="requests_month">REQUESTS\nTHIS MONTH</string>
     <string name="unpaid_month">UNPAID\nTHIS MONTH</string>
@@ -233,7 +235,7 @@
     <string name="update">Update</string>
     <string name="you_can_select_class_11_12_or_vice_versa">You can select class 11/12 and vice versa.</string>
     <string name="select_different_value">Select different value</string>
-    <string name="class_requests">Class Requests</string>
+    <string name="class_requests">My Requests</string>
     <string name="no_data_found">No Data Found</string>
     <string name="delete_request">Delete Request</string>
     <string name="request_message">Please contact the student by clicking the contact button above.</string>
@@ -261,6 +263,7 @@
     <string name="cancel_request">Cancel Request</string>
     <string name="request_message_student">PLEASE CONTACT THE TEACHER BY CLICKING THE CONTACT BUTTON ABOVE.</string>
     <string name="new_request_sent">Your Request has been sent.</string>
+
     <string name="contact_skill_master">Contact Skillmaster</string>
     <string name="see_location_on_map">See Location on Map</string>
     <string name="show">show</string>

@@ -1,4 +1,4 @@
-package com.autohub.skln.adapters;
+package com.netzwelt.studentmodule.adaptors;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,18 +8,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.autohub.skln.databinding.ItemRequestBinding;
 import com.autohub.skln.listeners.ItemClickListener;
 import com.autohub.skln.models.RequestViewModel;
+import com.netzwelt.studentmodule.databinding.ItemRequestBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by m.imran
- * Senior Software Engineer at
- * BhimSoft on 2019-08-05.
- */
+
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.Holder> {
     private final List<RequestViewModel> mData = new ArrayList<>();
     private final LayoutInflater mLayoutInflater;

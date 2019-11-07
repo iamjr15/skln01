@@ -16,7 +16,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
-import com.autohub.skln.fragment.FragmentClassRequests;
 import com.autohub.skln.fragment.FragmentProfile;
 import com.autohub.skln.fragment.FragmentToolbox;
 import com.autohub.skln.utills.AppConstants;
@@ -116,9 +115,9 @@ public class TutorHomeActivity extends BaseActivity {
             } else if (position == 2) {
                 Bundle bundle = new Bundle();
                 bundle.putString(AppConstants.KEY_TYPE, "tutor");
-                FragmentClassRequests fragmentClassRequests = new FragmentClassRequests();
-                fragmentClassRequests.setArguments(bundle);
-                return fragmentClassRequests;
+//                FragmentClassRequests fragmentClassRequests = new FragmentClassRequests();
+//                fragmentClassRequests.setArguments(bundle);
+                return null/*fragmentClassRequests*/;
             } else if (position == 3) {
                 return new FragmentProfile();
             }

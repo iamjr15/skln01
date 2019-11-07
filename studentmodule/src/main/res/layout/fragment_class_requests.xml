@@ -22,12 +22,10 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
                 <TextView
-                    style="@style/Subhead"
+                    style="@style/my_request"
                     android:layout_width="match_parent"
                     android:gravity="center"
-                    android:text="@string/class_requests"
-                    android:textSize="21sp"
-                    android:textAllCaps="true" />
+                    android:text="@string/class_requests" />
             </androidx.appcompat.widget.Toolbar>
 
             <com.google.android.material.tabs.TabLayout
@@ -47,7 +45,7 @@
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="26dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

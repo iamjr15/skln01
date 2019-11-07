@@ -1,4 +1,4 @@
-package com.netzwelt.studentmodule
+package com.netzwelt.studentmodule.fragments
 
 import android.Manifest
 import android.app.Activity
@@ -21,12 +21,17 @@ import com.autohub.skln.models.ExploreFilter
 import com.autohub.skln.models.User
 import com.autohub.skln.utills.*
 import com.autohub.skln.utills.AppConstants.*
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.gms.location.LocationListener
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.google.firebase.storage.FirebaseStorage
+import com.netzwelt.studentmodule.R
+import com.netzwelt.studentmodule.activities.StudentHomeActivity
+import com.netzwelt.studentmodule.activities.TutorFullProfileActivity
 import com.netzwelt.studentmodule.adaptors.CustomArrayAdapter
 import com.netzwelt.studentmodule.adaptors.ExploreAdaptor
 import com.netzwelt.studentmodule.databinding.ExploreTutorFragmentBinding
@@ -78,9 +83,9 @@ class ExploreTutorsFragment : BaseFragment() {
 
     private val tutorsClickListener = ItemClickListener<User> {
 
-        var bundle = Bundle()
-        bundle.putParcelable(KEY_DATA, it);
-        ActivityUtils.launchFragment(requireContext(), TutorFullProfileFragment::class.java.name, bundle)
+
+        startFullProfileActivityForResult(it)
+
     }
 
 
@@ -90,13 +95,35 @@ class ExploreTutorsFragment : BaseFragment() {
     }
 
 
+    fun startFullProfileActivityForResult(user: User) {
+        val intent = Intent(context, TutorFullProfileActivity::class.java)
+        var bundle = Bundle()
+        bundle.putParcelable(KEY_DATA, user)
+        bundle.putString("fromwhere", "searchfrg")
+        intent.putExtras(bundle)
+        activity!!.startActivityForResult(intent, StudentHomeActivity.TUROR_REQUEST)
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mGpsUtils = GpsUtils(requireActivity())
+
+
         if (checkGooglePlayServices() && isLocationPermissionGranted) {
             Log.d(">>>>Location", "Oncreate")
             LocationProvider.getInstance().start(requireContext(), mLocationListener)
         }
+    }
+
+    private fun setupProfile() {
+        val ref = FirebaseStorage.getInstance().reference.child("student/" +
+                firebaseAuth.currentUser!!.uid + ".jpg")
+        GlideApp.with(this)
+                .load(ref)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                .skipMemoryCache(true)
+                .into(mBinding!!.profilePicture)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -125,7 +152,7 @@ class ExploreTutorsFragment : BaseFragment() {
             val intent = Autocomplete.IntentBuilder(
                     AutocompleteActivityMode.FULLSCREEN, placeFields)
                     .build(requireContext())
-            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+            activity!!.startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
 
 
         }
@@ -160,7 +187,7 @@ class ExploreTutorsFragment : BaseFragment() {
 
         }
         exploreFilter = ExploreFilter("all", "", 0.toFloat(), 0.toFloat(), filterType = ALL_SELECTION_FILTER)
-
+        setupProfile()
         getTutors(exploreFilter)
     }
 

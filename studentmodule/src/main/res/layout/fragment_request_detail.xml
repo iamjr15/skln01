@@ -39,24 +39,27 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="12dp"
                 android:contentDescription="@string/content_description"
-                android:src="@drawable/ic_flash" />
+                android:src="@drawable/ic_request_tick" />
 
             <TextView
                 android:id="@+id/request_status"
-                style="@style/Heading"
+                style="@style/your_reque"
                 android:layout_below="@id/request_logo"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="12dp"
-                android:text="@string/new_request_received"
-                android:textColor="@color/white"
-                android:textSize="13sp" />
+                android:layout_marginTop="7dp"
+                android:text="@string/new_request_sent"
+                android:textColor="@color/white" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/request_status"
-                android:layout_margin="16dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginBottom="31dp"
+
                 android:background="@color/white"
                 android:paddingBottom="4dp"
                 app:cardBackgroundColor="@color/white"
@@ -88,7 +91,7 @@
 
                         <TextView
                             android:id="@+id/name"
-                            style="@style/Heading"
+                            style="@style/bodystye"
                             android:layout_margin="8dp"
                             android:text="@{userViewModel.fullName}"
                             android:textAllCaps="true"
@@ -109,7 +112,7 @@
 
                         <TextView
                             android:id="@+id/subject"
-                            style="@style/Heading"
+                            style="@style/subjecttextstyle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -117,8 +120,6 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="@{requestViewModel.subject}"
-                            android:textAllCaps="true"
-                            android:textSize="13sp"
                             tools:text="Physics" />
 
                         <View
@@ -131,7 +132,7 @@
 
                         <TextView
                             android:id="@+id/group"
-                            style="@style/Heading"
+                            style="@style/subjecttextstyle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -139,8 +140,6 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="@{tutorViewModel.classType}"
-                            android:textAllCaps="true"
-                            android:textSize="13sp"
                             tools:text="GROUP CLASSES" />
                     </LinearLayout>
 
@@ -148,17 +147,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:background="#756C6C" />
-
+<!--                        android:text="@{tutorViewModel.costPerDuration}"
+-->
                     <TextView
                         android:id="@+id/rate"
-                        style="@style/Heading"
+                        style="@style/subjecttextstyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="8dp"
-                        android:text="@{tutorViewModel.costPerDuration}"
-                        android:textAllCaps="true"
-                        android:textSize="13sp"
                         tools:text="FEES: RS.4000 / MONTH" />
 
                     <View
@@ -168,62 +165,64 @@
 
                     <TextView
                         android:id="@+id/payment_method"
-                        style="@style/Heading"
+                        style="@style/subjecttextstyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="8dp"
                         android:text="PAYMENT METHOD:CASH"
-                        android:textAllCaps="true"
                         android:textSize="13sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <Button
                 android:id="@+id/add_batch"
-                style="@style/Heading"
+                style="@style/subjecttextstyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cv"
                 android:layout_gravity="center"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
-                android:background="@drawable/selector_white_round"
+                android:background="@drawable/rectangle21_drawable"
                 android:paddingStart="64dp"
                 android:paddingLeft="64dp"
                 android:paddingRight="64dp"
-                android:text="@string/add_to_batch"
+                android:text="@string/see_location_on_map"
                 android:textSize="14sp" />
 
             <Button
+
                 android:id="@+id/contact_std"
-                style="@style/Heading"
+                style="@style/subjecttextstyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/add_batch"
                 android:layout_gravity="center"
                 android:layout_marginLeft="32dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:layout_marginRight="32dp"
-                android:background="@drawable/selector_white_round"
+                android:background="@drawable/rectangle172_drawable"
                 android:paddingStart="64dp"
                 android:paddingLeft="64dp"
                 android:paddingRight="64dp"
-                android:text="@string/contact_student"
+                android:text="@string/contact_skill_master"
                 android:textAlignment="center"
                 android:textSize="14sp" />
 
 
             <TextView
                 android:id="@+id/message_label"
-                style="@style/Heading"
+                style="@style/please_con"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/contact_std"
                 android:layout_gravity="center_vertical|end"
-                android:layout_margin="16dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="17dp"
+                android:layout_marginRight="20dp"
                 android:gravity="center"
-                android:text="@string/request_message"
+                android:text="@string/request_message_student"
                 android:textAllCaps="true"
                 android:textColor="#ffffff"
                 android:textSize="13sp" />
@@ -232,12 +231,13 @@
 
         <Button
             android:id="@+id/delete_request"
-            style="@style/Heading"
+            style="@style/subjecttextstyle"
+            android:layout_width="wrap_content"
             android:layout_height="56dp"
-            android:background="@drawable/selector_white_round_blue_bordered"
+            android:background="@drawable/rectangle175_drawable"
             android:gravity="center"
             android:minWidth="220dp"
-            android:text="@string/delete_request"
+            android:text="@string/cancel_request"
             android:textSize="17sp"
             app:layout_anchor="@id/rly"
             app:layout_anchorGravity="bottom|center_horizontal" />

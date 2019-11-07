@@ -39,6 +39,8 @@ public class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseFirestore = FirebaseFirestore.getInstance();
+
+
     }
 
     protected FirebaseAuth getFirebaseAuth() {

@@ -33,7 +33,7 @@ class OnBoardActivity : BaseActivity() {
                 startActivity(i)
                 finish()*/
 
-                Intent().setClassName(BuildConfig.APPLICATION_ID, "com.netzwelt.studentmodule.StudentHomeActivity")
+                Intent().setClassName(BuildConfig.APPLICATION_ID, "com.netzwelt.studentmodule.activities.StudentHomeActivity")
                         .also {
 
                             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

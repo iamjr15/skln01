@@ -331,17 +331,25 @@ public class User implements Parcelable, AppConstants {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public List<HobbiesData> getHobbies() {
         List<HobbiesData> hobbies = new ArrayList<>();
         if (TextUtils.isEmpty(hobbiesToPursue)) return hobbies;
         String[] selectedHobbies = hobbiesToPursue.split(",");
-        for (String hobby : selectedHobbies) {
-           /* if (HOBBIES_DATA_HASH_MAP.containsKey(hobby.trim()))
-                hobbies.add(HOBBIES_DATA_HASH_MAP.get(hobby.trim()));*/
+
+        HOBBIES_DATA_HASH_MAP.forEach((s, hobbiesData) ->
+
+                hobbies.add(HOBBIES_DATA_HASH_MAP.get(s))
+
+        );
+
+        /*for (String hobby : selectedHobbies) {
+         *//* if (HOBBIES_DATA_HASH_MAP.containsKey(hobby.trim()))
+                hobbies.add(HOBBIES_DATA_HASH_MAP.get(hobby.trim()));*//*
             hobbies.add(HOBBIES_DATA_HASH_MAP.get(hobby.trim()));
 
 
-        }
+        }*/
         return hobbies;
     }
 

@@ -11,19 +11,20 @@
 
         <variable
             name="callback"
-            type="com.netzwelt.studentmodule.TutorFullProfileFragment" />
+            type="com.netzwelt.studentmodule.activities.TutorFullProfileActivity" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:context=".activities.TutorFullProfileActivity">
 
 
         <RelativeLayout
-            android:background="@android:color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
 
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -318,25 +319,24 @@
 
                 <!--                    android:text="@{model.bioData}"
                 -->
-                <TextView
+                <!--         <TextView
+
+                             style="@style/body"
+                             android:layout_marginStart="8dp"
+                             android:layout_marginTop="7dp"
+                             android:layout_marginEnd="8dp"
+                             android:text="@{model.bioData}"
+                             tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s" />
+         -->
+                <com.skyhope.showmoretextview.ShowMoreTextView
                     android:id="@+id/bio"
                     style="@style/body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="7dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@{model.bioData}"
-                    tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s" />
+                    android:layout_marginEnd="8dp" />
 
-                <TextView
-                    android:id="@+id/read_more"
-
-                    style="@style/BodyText"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="16dp"
-                    android:onClick="@{() -> callback.onReadMoreClick()}"
-                    android:text="...read more"
-                    android:textColor="@color/blue"
-                    android:textSize="11sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -602,18 +602,13 @@
 
                 <RadioGroup
                     android:id="@+id/subjectradio"
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="8dp">
 
-                    <!--  <RadioButton
-                          style="@style/teaching_e"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text="Physics" />-->
-                </RadioGroup>
 
+                </RadioGroup>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/teaching_e"
@@ -625,31 +620,12 @@
 
                 <RadioGroup
                     android:id="@+id/classtyperadio"
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="8dp">
 
-                    <!-- <RadioButton
-                         android:id="@+id/radioindividual"
-                         style="@style/teaching_e"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="Individual" />
 
-                     <RadioButton
-                         android:id="@+id/radiogroup"
-                         style="@style/teaching_e"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="Group" />
-
-                     <RadioButton
-                         android:id="@+id/radionoprefrence"
-                         style="@style/teaching_e"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="No Prefrence" />-->
                 </RadioGroup>
 
                 <View

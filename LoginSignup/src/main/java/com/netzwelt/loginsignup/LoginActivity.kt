@@ -317,7 +317,7 @@ class LoginActivity : BaseActivity() {
     }
 
     companion object {
-        const val STUDENT_FEATURE = "com.netzwelt.studentmodule.StudentHomeActivity"
+        const val STUDENT_FEATURE = "com.netzwelt.studentmodule.activities.StudentHomeActivity"
         //  private const val GET_CURRENT_LOCATION_FEATURE = "com.example.location_picker.CurrentLocation"
     }
 }

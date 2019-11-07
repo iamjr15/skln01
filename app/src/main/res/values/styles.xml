@@ -346,6 +346,41 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    <!-- Text style for "please_con" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="please_con">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+    <!-- Text style for "physics" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="subjecttextstyle">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+    <!-- Text style for "ryan_kils" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="ryan_kils">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_light</item>
+
+    </style>
+
+    <!-- Text style for "your_reque" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="your_reque">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
     <!-- Text style for "request_th" -->
     <!-- Add this snippet to styles.xml. -->
     <style name="request_th">
@@ -490,6 +525,16 @@
         <item name="android:textSize">17sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="my_request">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
     </style>
 
     <!-- Text style for "academics" -->
