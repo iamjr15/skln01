@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.netzwelt.loginsignup">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <dist:module
+        dist:instant="false"
+        dist:onDemand="true"
+        dist:title="@string/title_loginsignup">
+        <dist:delivery>
+            <dist:on-demand />
+        </dist:delivery>
+
+        <dist:fusing dist:include="true" />
+    </dist:module>
+
+    <application tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".TutororStudentSelection"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.FrameActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".TutorSignupActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+
+
+        <activity
+            android:name=".student.StudentHey"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".student.SignupStart"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".student.NumberVerificationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".student.StudentClassSelect"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
+
+
+        </activity>
+        <activity
+            android:name=".student.StudentSubjectSelect"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
+
+
+        </activity>
+        <activity
+            android:name=".student.StudentSubjectSelect_Senior"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
+
+
+        </activity>
+        <activity
+            android:name=".student.StudentHobbySelect"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
+
+
+        </activity>
+
+
+    </application>
+
+</manifest>

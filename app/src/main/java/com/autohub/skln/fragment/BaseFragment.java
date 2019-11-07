@@ -1,6 +1,7 @@
 package com.autohub.skln.fragment;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
@@ -52,6 +53,11 @@ public class BaseFragment extends Fragment {
         if (requireActivity() instanceof BaseActivity) {
             ((BaseActivity) requireActivity()).showSnackError(message);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     protected final void showSnackError(@StringRes int message) {

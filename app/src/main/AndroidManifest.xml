@@ -18,13 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar.FrameActivity"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.tutor.TutorSignupActivity" />
 
 
-        <activity
-            android:name=".activities.user.StudentHomeActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_api_key" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -38,22 +37,14 @@
             </intent-filter>
 
         </activity>
-        <activity
-            android:name=".activities.user.WelcomeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.user.StudentHey"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".activities.LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.FrameActivity"
-            android:windowSoftInputMode="stateHidden" />
+
+
         <activity
             android:name=".tutor.TutorSubjectSelect_Senior"
             android:screenOrientation="portrait"
@@ -63,17 +54,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.FrameActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activities.TutorOrStudent"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.user.SignupStart"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activities.user.NumberVerificationActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+
         <activity
             android:name=".tutor.TutorCategorySelect"
             android:screenOrientation="portrait"
@@ -106,38 +88,11 @@
             android:name=".tutor.TutorCreatePackage"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity
             android:name=".utills.GalleryUtil"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".activities.user.StudentClassSelect"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
-
-
-        </activity>
-        <activity
-            android:name=".activities.user.StudentSubjectSelect"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
-
-
-        </activity>
-        <activity
-            android:name=".activities.user.StudentSubjectSelect_Senior"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
-
-
-        </activity>
-        <activity
-            android:name=".activities.user.StudentHobbySelect"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
-
-
-        </activity>
         <activity
             android:name=".FrameActivity"
             android:screenOrientation="portrait"

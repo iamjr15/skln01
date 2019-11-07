@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.autohub.skln.models.UserViewModel" />
+
+        <variable
+            name="callback"
+            type="com.netzwelt.studentmodule.TutorFullProfileFragment" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> callback.onBackClick()}"
+                android:paddingLeft="18dp"
+                android:paddingTop="27dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp"
+
+                android:src="@drawable/backarrow" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_picture"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="17dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/name"
+                style="@style/bodystye"
+                android:layout_below="@+id/profile_picture"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:text="@{model.getFirstAndLastNameLetter}"
+                android:textSize="22sp"
+                tools:text="Muhammad Imran" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="22dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="27dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_heart" />
+
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                tools:ignore="MissingConstraints">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:orientation="horizontal">
+
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginRight="22dp">
+
+                            <RelativeLayout
+                                android:id="@+id/rr"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/rateimage"
+
+                                    android:layout_width="13dp"
+                                    android:layout_height="11dp"
+                                    android:layout_alignBottom="@+id/txtrating"
+                                    android:src="@drawable/ratingicon" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/smallexploretest"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toRightOf="@+id/rateimage"
+
+                                    android:text="@{model.rating}"
+                                    tools:text="4.2" />
+                            </RelativeLayout>
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/_rating"
+                                android:layout_width="76dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/rr"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/ratingbg_drawable"
+                                android:gravity="center"
+                                android:paddingTop="2dp"
+
+                                android:paddingBottom="2dp"
+                                android:text="rating." />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="22dp">
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtgrades"
+                                style="@style/smallexploretest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+
+                                android:text="@{model.getClassesWithAffix}"
+
+                                tools:text="8th - 12th" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/_rating"
+                                android:layout_width="76dp"
+
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txtgrades"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/gratebg_drawable"
+                                android:gravity="center"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:text="grades." />
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true">
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtexperience"
+                                style="@style/smallexploretest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:text="@{model.getTeachingExp}"
+
+                                tools:text="2+ yrs" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/_rating"
+                                android:layout_width="76dp"
+
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txtexperience"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/experiencebg_drawable"
+                                android:gravity="center"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:text="experience." />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:orientation="horizontal">
+
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="22dp">
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtdistence"
+                                style="@style/smallexploretest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:text="@{model.gettDistance}"
+
+                                tools:text="1 km" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/_rating"
+                                android:layout_width="76dp"
+
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txtdistence"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/distance_drawable"
+                                android:gravity="center"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:text="distance." />
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true">
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtclasstype"
+                                style="@style/smallexploretest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:text="@{model.getClassType}"
+
+                                tools:text="group/individual" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/_rating"
+                                android:layout_width="76dp"
+
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txtclasstype"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/classtype_drawable"
+                                android:gravity="center"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
+                                android:text="class type." />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="14dp"
+                    android:background="@drawable/roundrect_withblueborder"
+                    android:minWidth="332dp"
+                    android:minHeight="31dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtsubjects"
+                        style="@style/physics__"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="7dp"
+                        android:gravity="center"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:text="@{model.getSubjectsToTeach}"
+
+                        tools:text="PHYSICS | CHEMISTRY | COMPUTER SCIENCE" />
+
+
+                </RelativeLayout>
+
+                <!--                    android:text="@{model.bioData}"
+                -->
+                <TextView
+                    android:id="@+id/bio"
+                    style="@style/body"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@{model.bioData}"
+                    tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s" />
+
+                <TextView
+                    android:id="@+id/read_more"
+
+                    style="@style/BodyText"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
+                    android:onClick="@{() -> callback.onReadMoreClick()}"
+                    android:text="...read more"
+                    android:textColor="@color/blue"
+                    android:textSize="11sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/teaching_e"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/teaching_experience"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/teaching_experience"
+                        style="@style/valuestyles"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.teachingExp}"
+                        tools:text="1-2YRS" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/teaching_e"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/occupation"
+                        android:textAllCaps="true" />
+
+                    <TextView
+                        android:id="@+id/occupation"
+                        style="@style/valuestyles"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.occupation}"
+                        tools:text="1-2YRS" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/teaching_e"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/qualification"
+                        android:textAllCaps="true" />
+
+                    <TextView
+                        android:id="@+id/qualification"
+                        style="@style/valuestyles"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.qualification}"
+                        tools:text="1-2YRS" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/teaching_e"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/area_of_qualification"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/area_of_qualification"
+                        style="@style/valuestyles"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.areaQualification}"
+                        android:textSize="11sp"
+                        tools:text="1-2YRS" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+
+                <com.autohub.skln.widgets.UnderLineTextView
+                    style="@style/class_deta"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="25dp"
+                    android:text="Class Details"
+                    android:textAllCaps="true"
+                    android:textColor="@color/blue"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/teaching_e"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/class_type"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/class_type"
+                        style="@style/teaching_e"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.classType}"
+                        android:textSize="11sp"
+                        tools:text="1-2YRS" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/teaching_e"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/number_of_classes"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/number_of_classes"
+                        style="@style/teaching_e"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.noOfClasses}"
+                        android:textSize="11sp"
+                        tools:text="1-2YRS" />
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <TextView
+                        style="@style/teaching_e"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/max_student_capacity"
+                        android:textAllCaps="true"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/max_student_capacity"
+                        style="@style/teaching_e"
+                        android:layout_gravity="end|center_vertical"
+                        android:gravity="end"
+                        android:text="@{model.maxStudentsCapacity}"
+                        android:textSize="11sp"
+                        tools:text="25" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+                <com.autohub.skln.widgets.UnderLineTextView
+                    style="@style/class_deta"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Request this class"
+                    android:textAllCaps="true"
+                    android:textColor="@color/blue"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/teaching_e"
+                    android:layout_marginTop="15dp"
+
+                    android:padding="8dp"
+                    android:text="select subject(s)" />
+
+                <RadioGroup
+                    android:id="@+id/subjectradio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <!--  <RadioButton
+                          style="@style/teaching_e"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="Physics" />-->
+                </RadioGroup>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/teaching_e"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="select class type" />
+
+                <RadioGroup
+                    android:id="@+id/classtyperadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <!-- <RadioButton
+                         android:id="@+id/radioindividual"
+                         style="@style/teaching_e"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Individual" />
+
+                     <RadioButton
+                         android:id="@+id/radiogroup"
+                         style="@style/teaching_e"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Group" />
+
+                     <RadioButton
+                         android:id="@+id/radionoprefrence"
+                         style="@style/teaching_e"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="No Prefrence" />-->
+                </RadioGroup>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/lineGrayColor" />
+
+
+                <TextView
+                    android:id="@+id/cost_per_duration"
+                    style="@style/costing"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="8dp"
+                    android:text="@{model.getCostPerDuration}"
+                    android:textAllCaps="true"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold"
+                    tools:text="$ 250 / 20 classes month" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/lineGrayColor" />
+
+
+                <Button
+                    android:id="@+id/request_this_class"
+                    style="@style/request_th"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/requestclassbutton_drawable"
+                    android:gravity="center"
+                    android:onClick="@{() -> callback.onRequestClick()}"
+
+                    android:text="@string/request_this_class"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    style="@style/youwont_"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:text="@string/you_wo_nt_be_charged_yet" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        style="@style/reviews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:text="0 REVIEWS" />
+
+                    <TextView
+                        style="@style/Heading"
+                        android:layout_marginStart="16dp"
+                        android:drawableStart="@drawable/ic_star_full"
+                        android:drawablePadding="4dp"
+                        android:text="@string/_0_0"
+                        android:textColor="#FFDF00" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:src="@drawable/ic_arrow_down" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</layout>

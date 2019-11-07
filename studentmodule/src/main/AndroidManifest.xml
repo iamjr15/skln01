@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="com.netzwelt.studentmodule">
+
+    <dist:module
+        dist:instant="false"
+        dist:onDemand="true"
+        dist:title="@string/title_studentmodule">
+        <dist:delivery>
+            <dist:on-demand />
+        </dist:delivery>
+
+        <dist:fusing dist:include="true" />
+    </dist:module>
+
+    <application>
+
+        <activity
+            android:name=".StudentHomeActivity"
+            android:screenOrientation="portrait"
+
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".MainActivity"></activity>
+    </application>
+
+</manifest>
