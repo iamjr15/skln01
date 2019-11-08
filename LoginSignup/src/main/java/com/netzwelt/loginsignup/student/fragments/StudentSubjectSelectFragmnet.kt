@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 
-import com.autohub.skln.listeners.ClassSelectionListner
-import com.autohub.skln.models.SubjectsData
+import com.netzwelt.loginsignup.listners.ClassSelectionListner
+import com.netzwelt.loginsignup.student.models.SubjectsData
 import com.netzwelt.loginsignup.R
 import com.netzwelt.loginsignup.databinding.FragmentStudentSubjectSelectBinding
 
@@ -29,8 +29,8 @@ class StudentSubjectSelectFragmnet : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        datalist = getArguments()?.getParcelableArrayList<SubjectsData>("data") as ArrayList<SubjectsData>
-        position = getArguments()?.getInt("position", 0)!!
+        datalist = arguments?.getParcelableArrayList<SubjectsData>("data") as ArrayList<SubjectsData>
+        position = arguments?.getInt("position", 0)!!
         return inflater.inflate(R.layout.fragment_student_subject_select, container, false)
     }
 
@@ -51,21 +51,21 @@ class StudentSubjectSelectFragmnet : Fragment() {
 
     private fun setUi() {
         mBinding!!.img.setImageResource(datalist.get(0).icon)
-        mBinding!!.txt.setText("${datalist.get(0).subjectName}. ")
+        mBinding!!.txt.text = "${datalist.get(0).subjectName}. "
         val unwrappedDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.selectclass_bg)
         val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
         DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(requireContext(), datalist.get(0).color) /* it.color*/)
-        mBinding!!.rr.setBackground(wrappedDrawable)
+        mBinding!!.rr.background = wrappedDrawable
         mBinding!!.greenfirst.visibility = if (datalist.get(0).selected) View.VISIBLE else View.GONE
         mBinding!!.whitefirst.visibility = if (datalist.get(0).selected) View.GONE else View.VISIBLE
 
 
         mBinding!!.imgsecond.setImageResource(datalist.get(1).icon)
-        mBinding!!.txtsecond.setText("${datalist.get(1).subjectName}. ")
+        mBinding!!.txtsecond.text = "${datalist.get(1).subjectName}. "
         val unwrappedDrawablesecond = ContextCompat.getDrawable(requireContext(), R.drawable.selectclass_bg)
         val wrappedDrawablesecond = DrawableCompat.wrap(unwrappedDrawablesecond!!)
         DrawableCompat.setTint(wrappedDrawablesecond, ContextCompat.getColor(requireContext(), datalist.get(1).color) /*it.color*/)
-        mBinding!!.rr2.setBackground(wrappedDrawablesecond)
+        mBinding!!.rr2.background = wrappedDrawablesecond
 
         mBinding!!.greensecond.visibility = if (datalist.get(1).selected) View.VISIBLE else View.GONE
         mBinding!!.whitesecond.visibility = if (datalist.get(1).selected) View.GONE else View.VISIBLE
@@ -102,7 +102,7 @@ class StudentSubjectSelectFragmnet : Fragment() {
             val args = Bundle()
             args.putParcelableArrayList("data", arrayList)
             args.putInt("position", position)
-            fragmentFirst.setArguments(args)
+            fragmentFirst.arguments = args
             return fragmentFirst
         }
     }

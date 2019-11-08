@@ -16,7 +16,7 @@
                 android:id="@+id/profile_picture"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="23dp"
+                android:layout_marginStart="23dp"
                 android:layout_marginTop="13dp"
                 android:contentDescription="@string/content_description"
                 android:src="@drawable/default_pic" />
@@ -27,17 +27,17 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="17dp"
-                android:layout_marginRight="12dp"
-                android:layout_toLeftOf="@+id/rr"
+                android:layout_marginEnd="12dp"
+                android:layout_toStartOf="@+id/rr"
                 android:src="@drawable/search" />
 
             <RelativeLayout
                 android:id="@+id/rr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="17dp"
-                android:layout_marginRight="9dp"
+                android:layout_marginEnd="9dp"
                 android:background="@drawable/gradesfilterbg_drawable">
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -61,10 +61,10 @@
                         android:background="@drawable/gradesfilterbg_drawable"
                         android:clickable="false"
                         android:descendantFocusability="beforeDescendants"
-                        android:drawableRight="@drawable/downarrowsmall"
+                        android:drawableEnd="@drawable/downarrowsmall"
                         android:focusable="false"
                         android:gravity="center"
-                        android:paddingRight="8dp"
+                        android:paddingEnd="8dp"
                         android:text="grade 8"
                         android:textColor="@android:color/white"
 
@@ -80,7 +80,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="28dp"
+            android:layout_marginStart="28dp"
             android:layout_marginTop="18dp"
             android:orientation="horizontal">
 
@@ -96,7 +96,7 @@
                 style="@style/avenue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="9dp"
+                android:layout_marginStart="9dp"
                 android:text="4th Avenue, Los Angeles" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -104,7 +104,7 @@
                 style="@style/change"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:padding="4dp"
                 android:text="change" />
         </LinearLayout>

@@ -31,9 +31,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> callback.onBackClick()}"
-                android:paddingLeft="18dp"
+                android:paddingStart="18dp"
                 android:paddingTop="27dp"
-                android:paddingRight="5dp"
+                android:paddingEnd="5dp"
                 android:paddingBottom="5dp"
 
                 android:src="@drawable/backarrow" />
@@ -60,9 +60,9 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="22dp"
                 android:layout_height="20dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="27dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:src="@drawable/ic_heart" />
 
         </RelativeLayout>
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="12dp"
-                android:paddingBottom="12dp"
+                android:paddingBottom="100dp"
                 tools:ignore="MissingConstraints">
 
 
@@ -96,8 +96,8 @@
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_marginRight="22dp">
+                            android:layout_alignParentStart="true"
+                            android:layout_marginEnd="22dp">
 
                             <RelativeLayout
                                 android:id="@+id/rr"
@@ -110,14 +110,13 @@
 
                                     android:layout_width="13dp"
                                     android:layout_height="11dp"
-                                    android:layout_alignBottom="@+id/txtrating"
                                     android:src="@drawable/ratingicon" />
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     style="@style/smallexploretest"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_toRightOf="@+id/rateimage"
+                                    android:layout_toEndOf="@+id/rateimage"
 
                                     android:text="@{model.rating}"
                                     tools:text="4.2" />
@@ -136,14 +135,14 @@
                                 android:paddingTop="2dp"
 
                                 android:paddingBottom="2dp"
-                                android:text="rating." />
+                                android:text="@string/rating" />
                         </RelativeLayout>
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="22dp">
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="22dp">
 
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -169,14 +168,14 @@
                                 android:gravity="center"
                                 android:paddingTop="2dp"
                                 android:paddingBottom="2dp"
-                                android:text="grades." />
+                                android:text="@string/grades" />
                         </RelativeLayout>
 
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true">
+                            android:layout_alignParentEnd="true">
 
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -201,7 +200,7 @@
                                 android:gravity="center"
                                 android:paddingTop="2dp"
                                 android:paddingBottom="2dp"
-                                android:text="experience." />
+                                android:text="@string/experience" />
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -224,8 +223,8 @@
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="22dp">
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="22dp">
 
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -234,7 +233,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
-                                android:text="@{model.gettDistance}"
+                                android:text="@{model.gettDistance.toString()}"
 
                                 tools:text="1 km" />
 
@@ -250,14 +249,14 @@
                                 android:gravity="center"
                                 android:paddingTop="2dp"
                                 android:paddingBottom="2dp"
-                                android:text="distance." />
+                                android:text="@string/distance" />
                         </RelativeLayout>
 
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true">
+                            android:layout_alignParentEnd="true">
 
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -282,7 +281,7 @@
                                 android:gravity="center"
                                 android:paddingTop="2dp"
                                 android:paddingBottom="2dp"
-                                android:text="class type." />
+                                android:text="@string/class_typesmall" />
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -474,7 +473,7 @@
                     style="@style/class_deta"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="25dp"
-                    android:text="Class Details"
+                    android:text="@string/class_details"
                     android:textAllCaps="true"
                     android:textColor="@color/blue"
                     android:textSize="15sp"
@@ -587,7 +586,7 @@
                     style="@style/class_deta"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:text="Request this class"
+                    android:text="@string/request_this_class_small"
                     android:textAllCaps="true"
                     android:textColor="@color/blue"
                     android:textSize="15sp"
@@ -598,7 +597,7 @@
                     android:layout_marginTop="15dp"
 
                     android:padding="8dp"
-                    android:text="select subject(s)" />
+                    android:text="@string/select_subject_s" />
 
                 <RadioGroup
                     android:id="@+id/subjectradio"
@@ -616,7 +615,7 @@
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
                     android:paddingBottom="8dp"
-                    android:text="select class type" />
+                    android:text="@string/select_class_type_small" />
 
                 <RadioGroup
                     android:id="@+id/classtyperadio"
@@ -690,7 +689,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:text="0 REVIEWS" />
+                        android:text="@string/_0_reviews" />
 
                     <TextView
                         style="@style/Heading"

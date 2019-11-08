@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.netzwelt.studentmodule.adaptors.HobbiesAdaptor
 import com.autohub.skln.fragment.BaseFragment
-import com.autohub.skln.listeners.HomeListners
+import com.netzwelt.studentmodule.listners.HomeListners
 import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.skln.models.AcadmicsData
 import com.autohub.skln.models.HobbiesData

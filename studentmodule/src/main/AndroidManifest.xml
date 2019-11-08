@@ -15,10 +15,11 @@
     </dist:module>
 
     <application>
+        <activity android:name=".activities.EditStudentProfileActivity"></activity>
         <activity
             android:name=".activities.TutorFullProfileActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.StudentHomeActivity"
             android:screenOrientation="portrait"

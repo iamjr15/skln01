@@ -1,5 +1,6 @@
 package com.netzwelt.studentmodule.adaptors
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import android.text.TextUtils
@@ -36,6 +37,7 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
     }
 
 
+    @SuppressLint("CheckResult")
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
         holder.exploreRowBinding.setItemClickListener(mItemClickListener)
@@ -44,14 +46,8 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
             {
 
                 if (mCurrentLocation != null) {
-                    it.distance = String.format("%.2f", CommonUtils.distance(mCurrentLocation!!.latitude, mCurrentLocation!!.longitude,
-
-                            it.latitude.toDouble(), it.longitude.toDouble())) + " Km"
-
-                    txtdistance.setText(it.distance)
+                    txtdistance.setText("${it.distance.toString()} Km")
                 }
-
-
 
                 user = it
                 tutorname.setText(it.firstName + " " + it.lastName)

@@ -6,7 +6,7 @@
     <string name="db_root_students">students</string>
     <string name="db_root_requests">requests</string>
 
-    <string name="app_name">SKLN</string>
+
     <string name="login">login</string>
     <string name="sign_up">signup</string>
     <string name="sign_up_now"> &#160;Signup Now</string>
@@ -286,4 +286,22 @@
     <string name="readmore">read more</string>
     <string name="readless">read less</string>
     <string name="no_class_request_found">No class request found</string>
+    <string name="keyboard">keyboard</string>
+    <string name="rating">rating.</string>
+    <string name="grades">grades.</string>
+    <string name="experience">experience.</string>
+    <string name="distance">distance.</string>
+    <string name="class_typesmall">class type.</string>
+    <string name="class_details">Class Details</string>
+    <string name="request_this_class_small">Request this class</string>
+    <string name="select_subject_s">select subject(s)</string>
+    <string name="select_class_type_small">select class type</string>
+    <string name="_0_reviews">0 REVIEWS</string>
+    <string name="tools_4_2">4.2</string>
+    <string name="tools_8th_12th">8th - 12th</string>
+    <string name="tools_1_km">1 km</string>
+    <string name="toolsgroun_individual">groun/individual</string>
+    <string name="toolsrichard_nixon_richard_s_physics">Richard Nixon | Richard\'s Physics</string>
+    <string name="toolsphysics_chemistry_computer_science">PHYSICS | CHEMISTRY | COMPUTER SCIENCE</string>
+    <string name="send_feedback">send feedback</string>
 </resources>

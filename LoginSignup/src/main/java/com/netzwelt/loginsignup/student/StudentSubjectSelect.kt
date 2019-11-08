@@ -15,8 +15,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.autohub.skln.BaseActivity
 import com.netzwelt.loginsignup.student.fragments.StudentSubjectSelectFragmnet
-import com.autohub.skln.listeners.ClassSelectionListner
-import com.autohub.skln.models.SubjectsData
+import com.netzwelt.loginsignup.listners.ClassSelectionListner
+import com.netzwelt.loginsignup.student.models.SubjectsData
 import com.autohub.skln.utills.AppConstants.*
 import com.google.firebase.firestore.SetOptions
 import com.netzwelt.loginsignup.R
@@ -90,14 +90,14 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
             val spannable = SpannableStringBuilder(resources.getString(R.string.select_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.BLUE), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
-            mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE);
-            mBinding!!.pbSignupProgress.setProgress(3);
+            mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE)
+            mBinding!!.pbSignupProgress.progress = 3
         } else {
-            mBinding!!.pbSignupProgress.setProgress(4);
+            mBinding!!.pbSignupProgress.progress = 4
             val spannable = SpannableStringBuilder(resources.getString(R.string.select_least_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.RED), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
-            mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE);
+            mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE)
         }
 
 
@@ -135,10 +135,10 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
     fun onNextClick() {
         val stringBuilder = StringBuilder()
-        if (selectedSubjects!!.size > 0) {
-            stringBuilder.append(selectedSubjects!![0])
-            for (i in 1 until selectedSubjects!!.size) {
-                stringBuilder.append(", ").append(selectedSubjects!![i])
+        if (selectedSubjects.size > 0) {
+            stringBuilder.append(selectedSubjects[0])
+            for (i in 1 until selectedSubjects.size) {
+                stringBuilder.append(", ").append(selectedSubjects[i])
             }
         }
 

@@ -21,8 +21,8 @@ import java.util.ArrayList
 import java.util.HashMap
 
 import com.netzwelt.loginsignup.student.fragments.StudentSubjectSelect_SeniorFragment
-import com.autohub.skln.listeners.ClassSelectionListner
-import com.autohub.skln.models.SubjectsData
+import com.netzwelt.loginsignup.listners.ClassSelectionListner
+import com.netzwelt.loginsignup.student.models.SubjectsData
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 import com.autohub.skln.utills.AppConstants.KEY_STDT_FAVORITE_CLASSES
@@ -159,10 +159,10 @@ class StudentSubjectSelect_Senior : BaseActivity(), ClassSelectionListner {
 
     fun onNextClick() {
         val stringBuilder = StringBuilder()
-        if (selectedSubjects!!.size > 0) {
-            stringBuilder.append(selectedSubjects!![0])
-            for (i in 1 until selectedSubjects!!.size) {
-                stringBuilder.append(", ").append(selectedSubjects!![i])
+        if (selectedSubjects.size > 0) {
+            stringBuilder.append(selectedSubjects[0])
+            for (i in 1 until selectedSubjects.size) {
+                stringBuilder.append(", ").append(selectedSubjects[i])
             }
         }
 

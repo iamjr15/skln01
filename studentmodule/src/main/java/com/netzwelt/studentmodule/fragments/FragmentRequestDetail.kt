@@ -63,8 +63,12 @@ class FragmentRequestDetail : BaseFragment() {
     }
 
     private fun openMap() {
-        var uri = String.format(Locale.ENGLISH, "geo:%f,%f", mTutor?.latitude, mTutor?.longitude);
-        var intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        var uri =
+                Uri.parse("geo:<${mTutor?.latitude}>,<${mTutor?.longitude}>?q=<${mTutor?.latitude}>," +
+                        "<${mTutor?.longitude}>(${mTutor?.firstName}  + ${mTutor?.lastName} )")
+
+
+        var intent = Intent(Intent.ACTION_VIEW, uri)
         activity!!.startActivity(intent)
     }
 

@@ -1,4 +1,4 @@
-package com.autohub.skln.models
+package com.netzwelt.loginsignup.student.models
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -8,8 +8,7 @@ data class Classdata(var color: Int, var icon: Int, var selected: Boolean, var c
             parcel.readInt(),
             parcel.readInt(),
             parcel.readByte() != 0.toByte(),
-            parcel.readString()) {
-    }
+            parcel.readString())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(color)

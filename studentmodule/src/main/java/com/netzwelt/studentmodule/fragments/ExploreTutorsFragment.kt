@@ -17,7 +17,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.listeners.ItemClickListener
-import com.autohub.skln.models.ExploreFilter
+import com.netzwelt.studentmodule.models.ExploreFilter
 import com.autohub.skln.models.User
 import com.autohub.skln.utills.*
 import com.autohub.skln.utills.AppConstants.*
@@ -148,7 +148,6 @@ class ExploreTutorsFragment : BaseFragment() {
                     Place.Field.LAT_LNG
             )
 
-            // Start the autocomplete intent.
             val intent = Autocomplete.IntentBuilder(
                     AutocompleteActivityMode.FULLSCREEN, placeFields)
                     .build(requireContext())
@@ -156,9 +155,6 @@ class ExploreTutorsFragment : BaseFragment() {
 
 
         }
-
-
-
 
 
         mBinding!!.turorsrecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -215,6 +211,11 @@ class ExploreTutorsFragment : BaseFragment() {
                 for (document in task.result!!) {
                     val user = document.toObject(User::class.java)
                     if (checkFilterfoData(exploreFilter, user)) {
+                        if (mCurrentLocation != null) {
+                            user.distance = String.format("%.2f", CommonUtils.distance(mCurrentLocation!!.latitude, mCurrentLocation!!.longitude,
+                                    user.latitude.toDouble(), user.longitude.toDouble())).replace(",",".").toDouble()
+                        }
+
                         tutorsList.add(user)
 
                     }
@@ -229,8 +230,10 @@ class ExploreTutorsFragment : BaseFragment() {
 
                 }
 
-                exploreAdaptor!!.setData(tutorsList, mCurrentLocation)
-                //  mBinding.viewPager.setAdapter(new ExplorePagerAdapter(ExploreTutorsFragment.this, users));
+                if (mCurrentLocation != null) {
+                    var newList = tutorsList.sortedBy { it.distance }
+                    exploreAdaptor!!.setData(newList, mCurrentLocation)
+                } else exploreAdaptor!!.setData(tutorsList, mCurrentLocation)
             } else {
                 Log.d(">>>Explore", "Error getting documents: ", task.exception)
             }

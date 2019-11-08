@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.BuildConfig
@@ -63,7 +64,11 @@ class LoginActivity : BaseActivity() {
             mBinding!!.rremail.visibility = View.VISIBLE
             mBinding!!.tvHintloginid.visibility = View.GONE
             mBinding!!.rrloginid.visibility = View.GONE
+            mBinding!!.tvForgotPassword.text = resources.getString(R.string.forgot_pass)
+
         } else {
+
+            mBinding!!.tvForgotPassword.text = resources.getString(R.string.forgot_pass)
             mBinding!!.tvHintemamil.visibility = View.GONE
             mBinding!!.rremail.visibility = View.GONE
             mBinding!!.tvHintloginid.visibility = View.VISIBLE
@@ -99,29 +104,6 @@ class LoginActivity : BaseActivity() {
 
         validateUserCredentials()
 
-
-        /*  var db_root = getString(R.string.db_root_tutors)
-          if (TYPE_STUDENT.equals(mAccountType, ignoreCase = true)) {
-              db_root = getString(R.string.db_root_students)
-          }*/
-
-
-        /* var db_root = getString(R.string.db_root_students)
-         val currentUser = firebaseAuth.currentUser ?: return
-         firebaseStore.collection(db_root).document(currentUser.uid).get().addOnCompleteListener(OnCompleteListener { task ->
-             if (task.isSuccessful) {
-                 val snapshot = task.result
-                 if (snapshot == null) {
-                     showNeedToRegister()
-                     return@OnCompleteListener
-                 }
-                 val savedPassword = snapshot.getString(KEY_PASSWORD)
-                 validateUser(savedPassword)
-                 hideLoading()
-             } else {
-                 showNeedToRegister()
-             }
-         })*/
     }
 
     private fun validateUserCredentials() {
@@ -146,41 +128,6 @@ class LoginActivity : BaseActivity() {
                     hideLoading()
 
                 }
-
-
-        var db_root = getString(R.string.db_root_students)
-        /*     firebaseStore.collection(db_root).whereEqualTo(KEY_EMAIL, mBinding!!.edtemail.text.toString().trim())
-                     .whereEqualTo(KEY_PASSWORD, encrypt(mBinding!!.edtPassword.text.toString().trim())).get().addOnCompleteListener {
-                         hideLoading()
-                         if (it.isSuccessful && !it.result!!.isEmpty) {
-                             val snapshot = it.result
-                             if (snapshot == null) {
-                                 showNeedToRegister()
-                                 return@addOnCompleteListener
-                             }
-
-
-                             *//*val profileUpdates = UserProfileChangeRequest.Builder()
-                                .setDisplayName("")
-                                .
-                                .build()
-*//*
-
-                        *//*   val i = Intent(this@LoginActivity, StudentHomeActivity::class.java)
-                           i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                           startActivity(i)
-                           finish()*//*
-
-                        // Move user to Home screen
-                    } else {
-                        showNeedToRegister()
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Log.w("", "Error writing document", e)
-                    hideLoading()
-                    showNeedToRegister()
-                }*/
 
 
     }
@@ -213,11 +160,6 @@ class LoginActivity : BaseActivity() {
 
         }
 
-
-        //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        // startActivity(intent)
-        // finishAffinity()
     }
 
     private fun loadAndLaunchModule(name: String, feature_name: String) {

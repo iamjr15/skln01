@@ -7,10 +7,10 @@
             <corners android:radius="3dp" />
             <solid android:color="#ff33e876" />
 
-            <item android:name="android:shadowColor">#2933e876</item>
-            <!-- TextView shadow offsets do not respect scale. -->
+          <!--  <item android:name="android:shadowColor">#2933e876</item>
+            &lt;!&ndash; TextView shadow offsets do not respect scale. &ndash;&gt;
             <item android:name="android:shadowDx">0</item>
-            <item android:name="android:shadowDy">10</item>
+            <item android:name="android:shadowDy">10</item>-->
         </shape>
     </item>
 </selector>

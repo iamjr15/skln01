@@ -10,8 +10,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.autohub.skln.BaseActivity
 import com.netzwelt.loginsignup.student.fragments.StudentClassFragment
-import com.autohub.skln.listeners.ClassSelectionListner
-import com.autohub.skln.models.Classdata
+import com.netzwelt.loginsignup.listners.ClassSelectionListner
+import com.netzwelt.loginsignup.student.models.Classdata
 import com.autohub.skln.utills.AppConstants.*
 import com.google.firebase.firestore.SetOptions
 import com.netzwelt.loginsignup.R

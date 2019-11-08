@@ -16,7 +16,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.autohub.skln.BaseActivity;
 import com.autohub.skln.R;
-import com.autohub.skln.fragment.FragmentProfile;
 import com.autohub.skln.fragment.FragmentToolbox;
 import com.autohub.skln.utills.AppConstants;
 
@@ -119,7 +118,7 @@ public class TutorHomeActivity extends BaseActivity {
 //                fragmentClassRequests.setArguments(bundle);
                 return null/*fragmentClassRequests*/;
             } else if (position == 3) {
-                return new FragmentProfile();
+                return new FragmentHome();
             }
             return null;
         }

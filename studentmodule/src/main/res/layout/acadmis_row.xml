@@ -18,7 +18,7 @@
 
 
         android:layout_height="wrap_content"
-        android:layout_marginRight="9dp"
+        android:layout_marginEnd="9dp"
         android:onClick="@{() -> itemClickListener.onClick(acadmicdata)}"
 
         android:orientation="horizontal">
@@ -29,7 +29,7 @@
             android:layout_height="116dp"
             android:background="@drawable/acadmic_rowbg_drawable"
 
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
             android:paddingTop="15dp">
 
             <ImageView
@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
 
-                    android:text="keyboard" />
+                    android:text="@string/keyboard" />
 
             </RelativeLayout>
 

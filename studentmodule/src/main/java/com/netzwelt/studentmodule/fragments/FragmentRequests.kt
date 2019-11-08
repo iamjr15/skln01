@@ -1,7 +1,6 @@
 package com.netzwelt.studentmodule.fragments
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 
-import com.autohub.skln.FrameActivity
-
 import com.netzwelt.studentmodule.adaptors.RequestAdapter
 import com.autohub.skln.fragment.BaseFragment
-import com.autohub.skln.listeners.HomeListners
+import com.netzwelt.studentmodule.listners.HomeListners
 import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.skln.models.Request
 import com.autohub.skln.models.RequestViewModel
@@ -33,7 +30,11 @@ class FragmentRequests : BaseFragment() {
     private lateinit var homeListner: HomeListners
 
     private val mItemClickListener = ItemClickListener<RequestViewModel> { requestViewModel ->
-        homeListner.onClassRequestSelectListner(requestViewModel)
+        if(!requestViewModel.request.requestStatus.equals(Request.STATUS.DELETED))
+        {
+            homeListner.onClassRequestSelectListner(requestViewModel)
+
+        }
     }
 
     override fun onAttach(context: Context) {

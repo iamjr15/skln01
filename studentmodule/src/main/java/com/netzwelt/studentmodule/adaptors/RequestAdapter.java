@@ -42,8 +42,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.Holder> 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         holder.mBinding.setModel(mData.get(position));
-        holder.mBinding.next.setOnClickListener(mOnClickListener);
-        holder.mBinding.next.setTag(position);
+        holder.mBinding.ll.setOnClickListener(mOnClickListener);
+        holder.mBinding.ll.setTag(position);
     }
 
     @Override

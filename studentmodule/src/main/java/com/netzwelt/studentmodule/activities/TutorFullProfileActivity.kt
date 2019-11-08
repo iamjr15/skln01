@@ -71,7 +71,7 @@ class TutorFullProfileActivity : BaseActivity() {
         addSubjectRadioButtons(mUserViewModel!!.user.subjectsToTeach.split(","))
         mUserViewModel!!.user.classType?.split(",")?.let { addClassTypeRadioButtons(it) }
 
-        mBinding!!.txtdistence.setText(mUserViewModel!!.user.distance)
+        mBinding!!.txtdistence.setText(mUserViewModel!!.user.distance.toString())
 
 
         if (mUserViewModel!!.user.pictureUrl != null) {

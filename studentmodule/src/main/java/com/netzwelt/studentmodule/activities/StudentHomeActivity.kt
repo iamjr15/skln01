@@ -13,16 +13,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
-import com.autohub.skln.fragment.FragmentProfile
 import com.autohub.skln.fragment.FragmentToolbox
-import com.autohub.skln.listeners.HomeListners
+import com.netzwelt.studentmodule.listners.HomeListners
 import com.autohub.skln.models.RequestViewModel
 import com.autohub.skln.models.User
 import com.autohub.skln.utills.AppConstants
 import com.netzwelt.studentmodule.R
-import com.netzwelt.studentmodule.fragments.ExploreBaseFragment
-import com.netzwelt.studentmodule.fragments.FragmentHome
-import com.netzwelt.studentmodule.fragments.MyRequestBaseFragment
+import com.netzwelt.studentmodule.fragments.*
 import kotlinx.android.synthetic.main.activity_student_home.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
@@ -35,7 +32,6 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         bundle.putParcelable(AppConstants.KEY_DATA, requestViewModel)
         fragmentClassRequests.showRequestDetailFragment(bundle)
         setStatusBarColor(R.drawable.bg_purple_blue)
-
     }
 
 
@@ -150,7 +146,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
                 fragmentClassRequests = MyRequestBaseFragment()
                 return fragmentClassRequests
             } else {
-                val fragmentProfile = FragmentProfile()
+                val fragmentProfile = StudentProfileFragment()
                 val bundle = Bundle()
                 bundle.putString(AppConstants.KEY_TYPE, "student")
                 fragmentProfile.arguments = bundle
