@@ -11,6 +11,8 @@
 
 
     <RelativeLayout
+        android:background="@android:color/white"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -31,21 +33,21 @@
                 android:paddingLeft="22dp"
                 android:paddingTop="26dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     style="@style/welcome_on"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
                     android:text="@string/welcome_onboard" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     style="@style/hey_there_"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="76dp"
                     android:text="@string/heythere" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     style="@style/hey_there_"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -173,6 +173,8 @@
     <string name="labelpass">password</string>
     <string name="labelsetpass">SET PASSWORD</string>
     <string name="forgot_pass">forgot password?</string>
+    <string name="forgot_passid">forgot password/ID?</string>
+
     <string name="home">Home</string>
     <string name="toolbox">Toolbox</string>
     <string name="myclasses">My Classes</string>
@@ -284,4 +286,5 @@
     <string name="title_student">Student</string>
     <string name="title_student_feature">Student</string>
     <string name="title_studentmodule">Student</string>
+    <string name="loginsignupfeature">LoginSignup</string>
 </resources>

@@ -47,7 +47,7 @@ class ExploreTutorsFragment : BaseFragment() {
     private var mGpsUtils: GpsUtils? = null
     private var exploreAdaptor: ExploreAdaptor? = null
     private lateinit var exploreFilter: ExploreFilter
-
+    private var userLatLang: Location? = null
     var grades = arrayOf(
             "1",
             "2",
@@ -69,6 +69,8 @@ class ExploreTutorsFragment : BaseFragment() {
         var location = Location(LocationManager.GPS_PROVIDER);
         location.setLatitude(user.latitude.toDouble())
         location.setLongitude(user.longitude.toDouble())
+
+        userLatLang = location
 
         LocationProvider.getInstance().getAddressFromLocation(requireContext(), location) { address ->
             Log.d(">>>>LocationAddress", "Address is :$address")
@@ -123,6 +125,8 @@ class ExploreTutorsFragment : BaseFragment() {
                 .load(ref)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
                 .skipMemoryCache(true)
+                .placeholder(R.drawable.default_pic)
+
                 .into(mBinding!!.profilePicture)
     }
 
@@ -211,13 +215,15 @@ class ExploreTutorsFragment : BaseFragment() {
                 for (document in task.result!!) {
                     val user = document.toObject(User::class.java)
                     if (checkFilterfoData(exploreFilter, user)) {
-                        if (mCurrentLocation != null) {
+                        if (userLatLang != null) {
+                            user.distance = String.format("%.2f", CommonUtils.distance(userLatLang!!.latitude, userLatLang!!.longitude,
+                                    user.latitude.toDouble(), user.longitude.toDouble())).replace(",", ".").toDouble()
+
+                        } else if (mCurrentLocation != null) {
                             user.distance = String.format("%.2f", CommonUtils.distance(mCurrentLocation!!.latitude, mCurrentLocation!!.longitude,
-                                    user.latitude.toDouble(), user.longitude.toDouble())).replace(",",".").toDouble()
+                                    user.latitude.toDouble(), user.longitude.toDouble())).replace(",", ".").toDouble()
                         }
-
                         tutorsList.add(user)
-
                     }
                     Log.d(">>>Explore", "Data Is " + user.firstName + " , " + user.gender)
                 }
@@ -245,6 +251,9 @@ class ExploreTutorsFragment : BaseFragment() {
         if (exploreFilter.filterType.equals(ALL_SELECTION_FILTER)) {
             return true
         } else if (exploreFilter.filterType.equals(ACADMIC_SELECTION_FILTER)) {
+            /*
+            * Showing tutors with in 5km range of student and with student class and subjects
+            * */
             if (tutorData.classesToTeach.split(",").contains(exploreFilter.studentClass) &&
                     tutorData.subjectsToTeach.contains(exploreFilter.subjectName)
                     && CommonUtils.distance(tutorData.latitude.toDouble(),

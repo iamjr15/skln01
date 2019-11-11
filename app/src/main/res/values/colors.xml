@@ -39,6 +39,9 @@
     <color name="materialarts">#ff120d31</color>
     <color name="guitar">#ff000000</color>
     <color name="readmorecolor">#ff281cd6</color>
+    <color name="tabindicator">#0055fe</color>
+
+
 
 
 
@@ -57,9 +60,9 @@
     <color name="seven">#ffbc69aa</color>
     <color name="eight">#ffef6f6c</color>
     <color name="nine">#ff037171</color>
-    <color name="ten">#ff9381ff</color>
+    <color name="ten">#ff95a3b3</color>
     <color name="eleven">#ff9381ff</color>
-    <color name="tweleve">#ffef6f6c</color>
+    <color name="tweleve">#ffff5964</color>
 
 
 </resources>

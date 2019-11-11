@@ -78,7 +78,7 @@ class StudentProfileFragment : BaseFragment() {
                 firebaseAuth.currentUser!!.uid + ".jpg")
         GlideApp.with(this)
                 .load(ref)
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.default_pic)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
                 .skipMemoryCache(true)
                 .into(mBinding!!.profilePicture)

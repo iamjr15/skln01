@@ -10,6 +10,8 @@
     </data>
 
     <RelativeLayout
+        android:background="@android:color/white"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -90,10 +92,10 @@
                 </LinearLayout>
 
                 <com.goodiebag.pinview.Pinview
-                    android:layout_marginTop="31dp"
                     android:id="@+id/pinView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="31dp"
                     android:visibility="gone"
                     app:cursorVisible="true"
                     app:forceKeyboard="true"
@@ -108,34 +110,34 @@
                     app:textSize="7sp" />
 
                 <Button
-                    android:layout_marginTop="26dp"
                     android:id="@+id/btnResendCode"
                     style="@style/resend_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="26dp"
                     android:background="@drawable/round_rect_drawable"
-                    android:visibility="gone"
                     android:gravity="center"
                     android:onClick="@{()->callback.onResendClick()}"
                     android:paddingStart="70dp"
                     android:paddingTop="6dp"
                     android:paddingEnd="70dp"
                     android:paddingBottom="6dp"
-                    android:text="@string/resend_code" />
+                    android:text="@string/resend_code"
+                    android:visibility="gone" />
             </LinearLayout>
         </ScrollView>
 
         <Button
-            style="@style/btnnext"
             android:id="@+id/btnNext"
-            android:layout_height="wrap_content"
-            android:background="@drawable/nextbtnbg_drawable"
-            android:visibility="gone"
+            style="@style/btnnext"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:background="@drawable/nextbtnbg_drawable"
             android:gravity="end|center_vertical"
             android:onClick="@{()->callback.onNextClick()}"
-            android:text="@string/next" />
+            android:text="@string/next"
+            android:visibility="gone" />
     </RelativeLayout>
 </layout>

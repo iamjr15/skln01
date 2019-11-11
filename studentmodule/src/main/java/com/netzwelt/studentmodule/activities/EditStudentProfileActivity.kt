@@ -62,7 +62,6 @@ class EditStudentProfileActivity : BaseActivity() {
 
 
     private fun encryptedPassword(): String {
-
         try {
             return encrypt(mBinding!!.password.text.toString())
         } catch (e: NoSuchPaddingException) {
@@ -246,7 +245,7 @@ class EditStudentProfileActivity : BaseActivity() {
                 firebaseAuth.currentUser!!.uid + ".jpg")
         GlideApp.with(this)
                 .load(ref)
-                .placeholder(R.drawable.dummyexploreimage)
+                .placeholder(R.drawable.default_pic)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .into(mBinding!!.profilePicture)
@@ -275,40 +274,78 @@ class EditStudentProfileActivity : BaseActivity() {
     }
 
     fun makeSaveRequest() {
-        showLoading()
-        val user = HashMap<String, Any>()
-        if (mBinding!!.edtFirstName.text.toString().split(" ").size > 1) {
-            user[AppConstants.KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[0]
+        if (isVerified()) {
+            showLoading()
+            val user = HashMap<String, Any>()
+            if (mBinding!!.edtFirstName.text.toString().split(" ").size > 1) {
+                user[AppConstants.KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[0]
 
-            user[AppConstants.KEY_LAST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[1]
+                user[AppConstants.KEY_LAST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[1]
 
-        } else {
-            user[AppConstants.KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString()
+            } else {
+                user[AppConstants.KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString()
 
+            }
+/*
+* Need to create seprate module for Phone number and password editing.
+* And also need to link this changed values with old firebase User Id
+*
+* */
+            // user.put(AppConstants.KEY_PASSWORD, encryptedPassword())
+            // user[AppConstants.KEY_PHONE_NUMBER] = mBinding!!.codePicker.fullNumberWithPlus
+            user[AppConstants.KEY_STDT_LEAST_FAV_CLASSES] = mBinding!!.leastFavuSubj.text.toString()
+            user[AppConstants.KEY_STDT_FAVORITE_CLASSES] = mBinding!!.favoriteSubj.text.toString()
+            user[AppConstants.KEY_STDT_CLASS] = this.user!!.studentClass.trim { it <= ' ' }
+            user[AppConstants.KEY_STDT_HOBBIES] = mBinding!!.favHobby.text.toString()
+            val dbRoot = getString(com.autohub.skln.R.string.db_root_students)
+            firebaseStore.collection(dbRoot).document(firebaseAuth
+                    .currentUser!!.uid).set(user, SetOptions.merge())
+                    .addOnSuccessListener {
+                        hideLoading()
+                        Toast.makeText(this,
+                                "Profile Updated.", Toast.LENGTH_SHORT).show()
+
+                        ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
+                        finishAffinity()
+
+                    }
+                    .addOnFailureListener { e ->
+                        hideLoading()
+                        showSnackError(e.message)
+                    }
         }
 
-        user.put(AppConstants.KEY_PASSWORD, encryptedPassword())
-        user[AppConstants.KEY_PHONE_NUMBER] = mBinding!!.codePicker.fullNumberWithPlus
-        user[AppConstants.KEY_STDT_LEAST_FAV_CLASSES] = mBinding!!.leastFavuSubj.text.toString()
-        user[AppConstants.KEY_STDT_FAVORITE_CLASSES] = mBinding!!.favoriteSubj.text.toString()
-        user[AppConstants.KEY_STDT_CLASS] = this.user!!.studentClass.trim { it <= ' ' }
-        user[AppConstants.KEY_STDT_HOBBIES] = mBinding!!.favHobby.text.toString()
-        val dbRoot = getString(com.autohub.skln.R.string.db_root_students)
-        firebaseStore.collection(dbRoot).document(firebaseAuth
-                .currentUser!!.uid).set(user, SetOptions.merge())
-                .addOnSuccessListener {
-                    hideLoading()
-                    Toast.makeText(this,
-                            "Profile Updated.", Toast.LENGTH_SHORT).show()
+    }
 
-                    ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
-                    finishAffinity()
+    private fun isVerified(): Boolean {
+        val password = mBinding!!.password.text
+        if (mBinding!!.edtFirstName.text.isEmpty() || mBinding!!.edtFirstName.text.toString().length < 2) {
 
-                }
-                .addOnFailureListener { e ->
-                    hideLoading()
-                    showSnackError(e.message)
-                }
+            showSnackError(resources.getString(R.string.enter_name))
+            mBinding!!.edtFirstName.requestFocus()
+            return false
+        } else if (password == null || password.length == 0) {
+            showSnackError(resources.getString(R.string.enter_password))
+            mBinding!!.password.requestFocus()
+            return false
+
+        } else if (!mBinding!!.codePicker.isValidFullNumber) {
+            showSnackError(resources.getString(R.string.enter_valid_number))
+            return false
+
+        } else if (mBinding!!.leastFavuSubj.text.toString().equals("")) {
+            return true
+
+        } else if (mBinding!!.favoriteSubj.text.toString().equals("")) {
+            return true
+
+        } else if (mBinding!!.favHobby.text.toString().equals("")) {
+            return true
+
+
+        }
+        return true
+
     }
 
 

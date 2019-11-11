@@ -22,6 +22,7 @@ import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.netzwelt.loginsignup.LoginActivity
 import com.netzwelt.loginsignup.R
+import com.netzwelt.loginsignup.utility.Utilities
 
 
 class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
@@ -88,6 +89,8 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
         mBinding!!.viewpager.offscreenPageLimit = 2
         mBinding!!.wormDotsIndicator.setViewPager(mBinding!!.viewpager)
 
+        Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 80.0f, 100.0f)
+
 
     }
 
@@ -96,6 +99,8 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
             Intent().setClassName(BuildConfig.APPLICATION_ID, name)
                     .also {
                         startActivity(it)
+                        finishAffinity()
+
                     }
             return
         } else {
@@ -111,6 +116,8 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
         manager.startInstall(request).addOnSuccessListener {
 
             hideLoading()
+            finishAffinity()
+
         }.addOnFailureListener {
             showSnackError(it.message)
             hideLoading()

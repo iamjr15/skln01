@@ -16,6 +16,8 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:background="@android:color/white"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -222,7 +224,6 @@
                     android:maxLines="1"
                     android:padding="5dp"
                     android:textAlignment="viewStart" />
-
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatTextView

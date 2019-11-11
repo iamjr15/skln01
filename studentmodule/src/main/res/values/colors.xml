@@ -18,6 +18,8 @@
     <color name="purpleColor">#A97CCD</color>
     <color name="spanblue">#ff3100ff</color>
 
+    <color name="tabindicator">#0055fe</color>
+
     <color name="science">#ff000000</color>
     <color name="biology">#ff000000</color>
     <color name="math">#ff120d31</color>
@@ -30,6 +32,13 @@
     <color name="economics">#ff873d48</color>
     <color name="chemistry">#ffbc69aa</color>
     <color name="account">#ff037171</color>
+
+    <color name="magentaPink">#fffc85dc</color>
+    <color name="lightBlue">#ff80a1fb</color>
+    <color name="yellow">#fff6c44e</color>
+    <color name="darkBlue">#ff0b26d8</color>
+    <color name="skyblue">#ff039be5</color>
+
 
 
     <color name="keyboard">#ff9381ff</color>

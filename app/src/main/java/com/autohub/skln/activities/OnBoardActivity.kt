@@ -28,11 +28,6 @@ class OnBoardActivity : BaseActivity() {
     private fun checkPrefrences() {
         if (firebaseAuth.currentUser != null) {
             if (appPreferenceHelper.signUpComplete) {
-                /*val i = Intent(this@OnBoardActivity, com.netzwelt.studentmodule.StudentHomeActivity::class.java)
-                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(i)
-                finish()*/
-
                 Intent().setClassName(BuildConfig.APPLICATION_ID, "com.netzwelt.studentmodule.activities.StudentHomeActivity")
                         .also {
 
@@ -41,18 +36,12 @@ class OnBoardActivity : BaseActivity() {
                             finish()
                         }
             } else {
-                /*val i = Intent(this@OnBoardActivity, com.netzwelt.loginsignup.student.StudentClassSelect::class.java)
-                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(i)
-                finish()*/
+
                 Intent().setClassName(BuildConfig.APPLICATION_ID, "com.netzwelt.loginsignup.student.StudentClassSelect")
-
                         .also {
-
                             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(it)
                             finish()
-
                         }
 
             }
@@ -61,17 +50,16 @@ class OnBoardActivity : BaseActivity() {
 
     fun onLogin() {
 
-        loadAndLaunchModule(LOGIN__FEATURE, "LoginSignup")
-        // ActivityUtils.launchActivity(this@OnBoardActivity, LoginActivity::class.java)
+        loadAndLaunchModule(LOGIN__FEATURE, getString(R.string.loginsignupfeature))
     }
 
     fun onSignup() {
-        loadAndLaunchModule(LOGIN_SIGNUP_FEATURE, "LoginSignup")
-
-        // ActivityUtils.launchActivity(this@OnBoardActivity, TutorOrStudent::class.java)
+        loadAndLaunchModule(LOGIN_SIGNUP_FEATURE, getString(R.string.loginsignupfeature))
     }
 
-
+    /*
+    * Load the Signup Login Module and Lauch the Login in Activity in the Module
+    * */
     private fun loadAndLaunchModule(name: String, feature_name: String) {
         if (manager.installedModules.contains(feature_name)) {
             Intent().setClassName(BuildConfig.APPLICATION_ID, name)
@@ -83,28 +71,22 @@ class OnBoardActivity : BaseActivity() {
             showLoading()
         }
 
-        // Create request to install a feature module by name.
         val request = SplitInstallRequest.newBuilder()
                 .addModule(feature_name)
                 .build()
 
-        // Load and install the requested feature module.
         manager.startInstall(request).addOnSuccessListener {
-
             hideLoading()
         }.addOnFailureListener {
             showSnackError(it.message)
             hideLoading()
         }
     }
-    //com.example.login_signup_feature
-    //com.example.login_signup_feature.base.LoginActivity
-    //login_signup_feature
+
 
     companion object {
         private const val LOGIN_SIGNUP_FEATURE = "com.netzwelt.loginsignup.TutororStudentSelection"
         private const val LOGIN__FEATURE = "com.netzwelt.loginsignup.LoginActivity"
-        //  private const val GET_CURRENT_LOCATION_FEATURE = "com.example.location_picker.CurrentLocation"
     }
 
 }

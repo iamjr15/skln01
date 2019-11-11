@@ -112,7 +112,6 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
 
 
     fun onNextClick() {
-
         if (mVerificationId == null || mBinding!!.pinView.value.length != mBinding!!.pinView.pinLength) {
             showSnackError(R.string.enter_correct_otp)
             return
@@ -149,14 +148,15 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
                 .addOnCompleteListener(this) { linkWithCredentials() }
     }
 
+    /*
+    * Link user email and password with firebase userID
+    * */
     private fun linkWithCredentials() {
         val credential = EmailAuthProvider.getCredential(userMap!![KEY_EMAIL]!!.toString(),
                 userMap!![KEY_PASSWORD]!!.toString())
         firebaseAuth.currentUser!!.linkWithCredential(credential)
                 .addOnCompleteListener(this@NumberVerificationActivity) { task ->
                     hideLoading()
-
-
                     if (task.isSuccessful) {
                         saveUserData()
                     } else {
@@ -165,6 +165,10 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
                 }
     }
 
+    /*
+    * Save user data in firebase firestore After Sucessful Phonenumber verification
+    *
+    * */
     private fun saveUserData() {
 
         firebaseStore.collection(getString(R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).set(userMap!!, SetOptions.merge())

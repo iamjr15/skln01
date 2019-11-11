@@ -22,8 +22,6 @@ class MyRequestBaseFragment : Fragment() {
 
     public fun showRequestFragmentClass() {
         fragmentClassRequests = FragmentClassRequests()
-
-
         getChildFragmentManager()
                 .beginTransaction()
                 .replace(R.id.explorecontainer, fragmentClassRequests!!).commit()

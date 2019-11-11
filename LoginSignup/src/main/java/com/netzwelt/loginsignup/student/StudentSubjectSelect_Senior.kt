@@ -38,6 +38,7 @@ import com.autohub.skln.utills.AppConstants.SUBJECT_MATHS
 import com.autohub.skln.utills.AppConstants.SUBJECT_PHYSICS
 import com.netzwelt.loginsignup.R
 import com.netzwelt.loginsignup.databinding.ActivityStudentSubjectSeniorBinding
+import com.netzwelt.loginsignup.utility.Utilities
 
 class StudentSubjectSelect_Senior : BaseActivity(), ClassSelectionListner {
 
@@ -106,11 +107,11 @@ class StudentSubjectSelect_Senior : BaseActivity(), ClassSelectionListner {
             spannable.setSpan(ForegroundColorSpan(Color.BLUE), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             mBinding!!.tvSelectText!!.setText(spannable, TextView.BufferType.SPANNABLE)
-            mBinding!!.pbSignupProgress!!.progress = 3
-
+            Utilities.animateProgressbar(mBinding!!.pbSignupProgress,40.0f,60.0f)
 
         } else {
-            mBinding!!.pbSignupProgress!!.progress = 4
+            Utilities.animateProgressbar(mBinding!!.pbSignupProgress,60.0f,80.0f)
+
             val spannable = SpannableStringBuilder(resources.getString(R.string.select_least_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.RED), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)

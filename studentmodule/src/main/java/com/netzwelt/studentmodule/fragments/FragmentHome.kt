@@ -14,11 +14,13 @@ import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.skln.models.AcadmicsData
 import com.autohub.skln.models.HobbiesData
 import com.autohub.skln.models.User
+import com.autohub.skln.utills.ActivityUtils
 import com.autohub.skln.utills.GlideApp
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.androidapp.ui.home.fragments.country.AcadmicsAdaptor
 import com.google.firebase.storage.FirebaseStorage
 import com.netzwelt.studentmodule.R
+import com.netzwelt.studentmodule.activities.AddClassActivity
 import com.netzwelt.studentmodule.databinding.FragmentStudentHomeBinding
 
 class FragmentHome : BaseFragment() {
@@ -26,13 +28,9 @@ class FragmentHome : BaseFragment() {
     private var acadmicsAdaptor: AcadmicsAdaptor? = null
     private var hobbiesAdaptor: HobbiesAdaptor? = null
     private lateinit var homeListner: HomeListners
-
     private lateinit var user: User
-
     private val acadmicClickListener = ItemClickListener<AcadmicsData> {
-
         homeListner.onAcadmicsSelect(user, it.classname)
-
     }
 
     private val hobbiesClickListener = ItemClickListener<HobbiesData> {
@@ -52,7 +50,6 @@ class FragmentHome : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding = FragmentStudentHomeBinding.bind(view)
-
         mBinding!!.acadmicrecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         acadmicsAdaptor = AcadmicsAdaptor(requireContext(), acadmicClickListener)
         mBinding!!.acadmicrecycleview.adapter = acadmicsAdaptor
@@ -63,6 +60,11 @@ class FragmentHome : BaseFragment() {
 
         setUpUserInfo()
         setupProfile()
+        mBinding!!.rrGotoclass.setOnClickListener {
+            ActivityUtils.launchActivity(requireContext(),
+                    AddClassActivity::class.java)
+        }
+
     }
 
     private fun setupProfile() {
@@ -72,6 +74,7 @@ class FragmentHome : BaseFragment() {
                 .load(ref)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
                 .skipMemoryCache(true)
+                .placeholder(R.drawable.default_pic)
                 .into(mBinding!!.profilePicture)
     }
 

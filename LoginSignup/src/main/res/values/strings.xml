@@ -175,6 +175,9 @@
     <string name="labelpass">password</string>
     <string name="labelsetpass">SET PASSWORD</string>
     <string name="forgot_pass">forgot password?</string>
+
+    <string name="forgot_passid">forgot password/ID?</string>
+
     <string name="home">Home</string>
     <string name="toolbox">Toolbox</string>
     <string name="myclasses">My Classes</string>

@@ -22,9 +22,7 @@ class FragmentClassRequests : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       /* if (arguments != null) {
-            mType = arguments!!.getString(AppConstants.KEY_TYPE, "student")
-        }*/
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

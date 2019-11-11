@@ -18,6 +18,7 @@ import com.autohub.skln.utills.LocationProvider
 import com.google.android.gms.location.LocationListener
 import com.netzwelt.loginsignup.R
 import com.netzwelt.loginsignup.databinding.TutorSignupStartBinding
+import com.netzwelt.loginsignup.utility.Utilities
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.security.InvalidAlgorithmParameterException
 import java.security.InvalidKeyException
@@ -31,9 +32,6 @@ class SignupStart : BaseActivity() {
     private var mCity: String? = null
     private var mLocation: Location? = null
     private val mLocationListener = LocationListener { location ->
-        Log.d(">>>>Location", location.toString())
-
-
         mLocation = location
         LocationProvider.getInstance().getAddressFromLocation(this@SignupStart, location) { address ->
             Log.d(">>>>LocationAddress", "Address is :$address")
@@ -43,7 +41,7 @@ class SignupStart : BaseActivity() {
 
     private fun getEncryptedPassword(): String {
         try {
-            return BaseActivity.encrypt(getString(mBinding!!.edtPassword.text))
+            return encrypt(getString(mBinding!!.edtPassword.text))
         } catch (e: NoSuchPaddingException) {
             e.printStackTrace()
         } catch (e: NoSuchAlgorithmException) {
@@ -71,6 +69,9 @@ class SignupStart : BaseActivity() {
         if (!mGpsUtils.isGpsEnabled) {
             mGpsUtils.turnGPSOn { Log.d(">>>>Location", "enabled") }
         }
+
+        Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 0.0f, 20.0f)
+
     }
 
     fun onNextClick() {
@@ -100,10 +101,10 @@ class SignupStart : BaseActivity() {
                 Toast.makeText(this, "Please check you GPS setting, we need You location", Toast.LENGTH_SHORT).show()
                 return
             }
-            /*        authenticateEmailPass()*/
 
             makeSaveRequest()
         }
+
     }
 
     private fun makeSaveRequest() {
@@ -119,25 +120,6 @@ class SignupStart : BaseActivity() {
         var extras = Bundle()
         extras.putSerializable(KEY_USERMAP, userMap)
         ActivityUtils.launchActivity(this@SignupStart, NumberVerificationActivity::class.java, extras)
-    }
-
-    private fun authenticateEmailPass() {
-        showLoading()
-        firebaseAuth.createUserWithEmailAndPassword(mBinding!!.edtemail.text.toString(), getString(mBinding!!.edtPassword.text))
-                .addOnCompleteListener {
-                    hideLoading()
-
-                    if (it.isSuccessful) {
-                        makeSaveRequest()
-                    } else {
-                        Toast.makeText(applicationContext, "Registration failed! Please try again later", Toast.LENGTH_LONG).show()
-                    }
-
-                }.addOnFailureListener {
-                    hideLoading()
-                    Toast.makeText(applicationContext, "Registration failed! Please try again later", Toast.LENGTH_LONG).show()
-
-                }
     }
 
     override fun attachBaseContext(newBase: Context) {

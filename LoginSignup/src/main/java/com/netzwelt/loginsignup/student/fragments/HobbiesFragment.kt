@@ -9,16 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import com.autohub.skln.fragment.BaseFragment
 
 import com.netzwelt.loginsignup.listners.ClassSelectionListner
 import com.autohub.skln.models.HobbiesData
 import com.netzwelt.loginsignup.R
 import com.netzwelt.loginsignup.databinding.FragmentHobbiesBinding
 
-/**
- * A simple [Fragment] subclass.
- */
-class HobbiesFragment : Fragment() {
+
+class HobbiesFragment : BaseFragment() {
     private var mBinding: FragmentHobbiesBinding? = null
     lateinit var datalist: ArrayList<HobbiesData>
     lateinit var classSelectionListner: ClassSelectionListner

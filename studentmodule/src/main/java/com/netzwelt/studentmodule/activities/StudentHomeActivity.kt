@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
-import com.autohub.skln.fragment.FragmentToolbox
 import com.netzwelt.studentmodule.listners.HomeListners
 import com.autohub.skln.models.RequestViewModel
 import com.autohub.skln.models.User
@@ -138,7 +137,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
                 return FragmentHome()
             } else if (position == 1) {
-                return FragmentToolbox()
+                return MyClassesFragment()
             } else if (position == 2) {
                 explorebaseFragment = ExploreBaseFragment()
                 return explorebaseFragment

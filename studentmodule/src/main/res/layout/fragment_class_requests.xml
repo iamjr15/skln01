@@ -30,11 +30,14 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
+                style="@style/tabtext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:elevation="0dp"
+
                 app:tabGravity="fill"
-                app:tabIndicatorColor="@color/blue"
+                app:tabIndicatorColor="@color/tabindicator"
+
                 app:tabIndicatorFullWidth="false"
                 app:tabIndicatorHeight="1dp"
                 app:tabMode="fixed"
