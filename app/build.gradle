@@ -30,15 +30,7 @@ android {
         sourceCompatibility = "8"
     }
 
-
-    dynamicFeatures = [":tutor"]
-
-
-
-
     dynamicFeatures = [":LoginSignup", ":studentmodule"]
-
-
 }
 
 dependencies {
