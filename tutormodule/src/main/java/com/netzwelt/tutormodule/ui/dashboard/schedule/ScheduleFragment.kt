@@ -1,28 +1,37 @@
-package com.netzwelt.tutormodule.ui
+package com.netzwelt.tutormodule.ui.dashboard.schedule
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.autohub.skln.BaseActivity
+import com.autohub.skln.fragment.BaseFragment
 import com.netzwelt.tutormodule.R
 import com.netzwelt.tutormodule.databinding.FragmentTutorScheduleBinding
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
-class FragmentTutorSchedule : BaseActivity() {
+/**
+ * Created by Vt Netzwelt
+ */
+
+class ScheduleFragment : BaseFragment() {
 
     private lateinit var mBinding: FragmentTutorScheduleBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_tutor_schedule, container, false)
 
-        mBinding = DataBindingUtil.setContentView(this, R.layout.fragment_tutor_schedule)
+    companion object {
+        fun newInstance(): ScheduleFragment = ScheduleFragment()
+    }
 
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mBinding = FragmentTutorScheduleBinding.bind(view)
         val dates = getDates("01-01-" + Calendar.getInstance().get(Calendar.YEAR),
                 "31-12-" + Calendar.getInstance().get(Calendar.YEAR))
 
@@ -50,9 +59,9 @@ class FragmentTutorSchedule : BaseActivity() {
     }
 
     private fun initializeCalendarView(dates: List<String>) {
-        mBinding.calendarView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        mBinding.calendarView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
 
-        val adapter = TutorScheduleAdapter(dates)
+        val adapter = ScheduleAdapter(dates)
         mBinding.calendarView.adapter = adapter
     }
 
@@ -85,5 +94,4 @@ class FragmentTutorSchedule : BaseActivity() {
             cal1.add(Calendar.DATE, 1)
         }
         return dates
-    }
-}
+    }}

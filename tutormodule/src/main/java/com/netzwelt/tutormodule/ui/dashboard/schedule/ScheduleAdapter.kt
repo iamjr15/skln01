@@ -1,4 +1,4 @@
-package com.netzwelt.tutormodule.ui
+package com.netzwelt.tutormodule.ui.dashboard.schedule
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.netzwelt.tutormodule.R
 
-class TutorScheduleAdapter(private val list: List<String>) :
-        RecyclerView.Adapter<TutorScheduleAdapter.ViewHolder>() {
+class ScheduleAdapter(private val list: List<String>) :
+        RecyclerView.Adapter<ScheduleAdapter.ViewHolder>() {
 
     var selectedPosition = -1
 

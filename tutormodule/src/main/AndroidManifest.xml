@@ -14,8 +14,6 @@
     </dist:module>
 
     <application>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".ui.FragmentTutorSchedule" />
         <activity android:name=".ui.dashboard.DashboardActivity" />
     </application>
 
