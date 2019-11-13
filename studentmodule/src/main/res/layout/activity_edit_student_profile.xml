@@ -148,7 +148,7 @@
 
                             android:layout_marginTop="14dp"
 
-                            android:src="@drawable/dummyexploreimage" />
+                            android:src="@drawable/default_pic" />
 
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -162,7 +162,6 @@
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
-
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentBottom="true"
@@ -495,7 +494,6 @@
                         android:background="@drawable/selector_black"
                         android:onClick="@{() -> callback.makeSaveRequest()}"
                         android:text="@string/updatebtn"
-
                         android:textColor="@color/white"
                         android:textSize="21sp" />
 
