@@ -1,4 +1,4 @@
-package com.example.androidapp.ui.home.fragments.country
+package com.netzwelt.studentmodule.adaptors
 
 import android.content.Context
 
@@ -13,6 +13,10 @@ import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.skln.models.AcadmicsData
 import com.netzwelt.studentmodule.R
 import com.netzwelt.studentmodule.databinding.AcadmisRowBinding
+
+/**
+ * Created by Vt Netzwelt
+ */
 
 
 class AcadmicsAdaptor(var context: Context, var mItemClickListener: ItemClickListener<AcadmicsData>)
@@ -34,18 +38,18 @@ class AcadmicsAdaptor(var context: Context, var mItemClickListener: ItemClickLis
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        holder.countriesRowBinding.setItemClickListener(mItemClickListener)
+        holder.countriesRowBinding.itemClickListener = mItemClickListener
         acadmicDataList[position].let {
             with(holder.countriesRowBinding)
             {
                 acadmicdata = it
                 img.setImageResource(it.icon)
-                txt.setText(it.classname)
+                txt.text = it.classname
 
                 val unwrappedDrawable = ContextCompat.getDrawable(context, R.drawable.acadmic_rowbg_drawable)
                 val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-                DrawableCompat.setTint(wrappedDrawable, context.resources.getColor(it.color)/* it.color*/)
-                rr.setBackground(wrappedDrawable)
+                DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(context,it.color))
+                rr.background = wrappedDrawable
             }
         }
 
@@ -62,11 +66,7 @@ class AcadmicsAdaptor(var context: Context, var mItemClickListener: ItemClickLis
 
     inner class Holder(var countriesRowBinding: AcadmisRowBinding) :
             RecyclerView.ViewHolder(countriesRowBinding.root) {
-        fun bind(obj: Any) {
-            with(countriesRowBinding)
-            {
-
-            }
+        fun bind() {
         }
     }
 

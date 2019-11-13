@@ -97,7 +97,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/shadow_rect"
-                        android:drawableLeft="@drawable/email"
+                        android:drawableStart="@drawable/email"
                         android:drawablePadding="9dp"
                         android:inputType="textEmailAddress"
                         android:paddingLeft="12dp"
@@ -133,7 +133,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/shadow_rect"
-                        android:drawableLeft="@drawable/name"
+                        android:drawableStart="@drawable/name"
                         android:drawablePadding="9dp"
                         android:paddingLeft="12dp"
                         android:paddingRight="12dp"
@@ -165,9 +165,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/txtshowpass"
+                        android:layout_toStartOf="@+id/txtshowpass"
                         android:background="@android:color/transparent"
-                        android:drawableLeft="@drawable/password"
+                        android:drawableStart="@drawable/password"
 
                         android:drawablePadding="9dp"
                         android:inputType="textPassword"
@@ -179,15 +179,16 @@
                     <TextView
                         android:id="@+id/txtshowpass"
                         style="@style/show"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:clickable="true"
 
                         android:focusable="true"
                         android:onClick="@{()->callback.updatepasswordVisibility()}"
-                        android:paddingRight="11dp"
+                        android:paddingEnd="11dp"
                         android:paddingBottom="8dp"
-                        android:text="@string/show" />
+                        android:text="@string/show"
+                        tools:ignore="RtlSymmetry" />
 
                 </RelativeLayout>
 
@@ -198,11 +199,12 @@
                     android:layout_marginTop="23dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:paddingRight="12dp"
+                    android:paddingEnd="12dp"
 
                     android:text="@string/forgot_pass"
                     android:textColor="@color/blue"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="RtlSymmetry" />
 
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -212,13 +214,14 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="43dp"
                     android:background="@drawable/loginbutton_drawable"
-                    android:drawableRight="@drawable/arrowright"
+                    android:drawableEnd="@drawable/arrowright"
                     android:gravity="left|center_vertical"
                     android:onClick="@{()->callback.login()}"
-                    android:paddingLeft="14dp"
-                    android:paddingRight="7dp"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="7dp"
                     android:text="@string/login"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    tools:ignore="RtlHardcoded" />
 
 
                 <LinearLayout

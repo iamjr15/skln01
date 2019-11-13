@@ -8,7 +8,6 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -22,41 +21,43 @@ import com.autohub.skln.utills.AppConstants.*
 import com.google.firebase.firestore.SetOptions
 import com.netzwelt.loginsignup.R
 import com.netzwelt.loginsignup.databinding.ActivityStudentSubjectSelectBinding
-import com.netzwelt.loginsignup.utility.ProgressBarAnimation
 import com.netzwelt.loginsignup.utility.Utilities
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * Created by Vt Netzwelt
+ */
 class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
     private var selectedSubjects: ArrayList<String> = ArrayList()
 
 
-    override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedSubject: String) {
+    override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: String) {
 
 
         for (i in fragmentsList.indices) {
             if (position == i) {
                 if (isSecondSelected) {
-                    if (selectedSubjects.contains(selectedSubject)) {
-                        selectedSubjects.remove(selectedSubject)
+                    if (selectedSubjects.contains(selectedClass)) {
+                        selectedSubjects.remove(selectedClass)
                         fragmentsList[i].updateFragment(isSecond = true, selected = false)
 
                     } else {
-                        selectedSubjects.add(selectedSubject)
+                        selectedSubjects.add(selectedClass)
 
                         fragmentsList[i].updateFragment(isSecond = true, selected = true)
 
                     }
 
                 } else {
-                    if (selectedSubjects.contains(selectedSubject)) {
-                        selectedSubjects.remove(selectedSubject)
+                    if (selectedSubjects.contains(selectedClass)) {
+                        selectedSubjects.remove(selectedClass)
                         fragmentsList[i].updateFragment(isSecond = false, selected = false)
 
                     } else {
-                        selectedSubjects.add(selectedSubject)
+                        selectedSubjects.add(selectedClass)
 
                         fragmentsList[i].updateFragment(isSecond = false, selected = true)
 
@@ -82,7 +83,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         selectedSubjects = ArrayList()
         insertSubjectData()
 
-        var countList: ArrayList<String> = ArrayList()
+        val countList: ArrayList<String> = ArrayList()
         countList.add("1")
         countList.add("2")
         countList.add("3")
@@ -94,10 +95,10 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
             spannable.setSpan(ForegroundColorSpan(Color.BLUE), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE)
-            Utilities.animateProgressbar(mBinding!!.pbSignupProgress,40.0f,60.0f)
+            Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 40.0f, 60.0f)
 
         } else {
-            Utilities.animateProgressbar(mBinding!!.pbSignupProgress,60.0f,80.0f)
+            Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 60.0f, 80.0f)
 
             val spannable = SpannableStringBuilder(resources.getString(R.string.select_least_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.RED), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
@@ -107,7 +108,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
 
         getFragments(countList)
-        var pagerAdapter = PagerAdapter(supportFragmentManager, fragmentsList)
+        val pagerAdapter = PagerAdapter(supportFragmentManager, fragmentsList)
         mBinding!!.viewpager.adapter = pagerAdapter
         mBinding!!.viewpager.offscreenPageLimit = 2
         mBinding!!.wormDotsIndicator.setViewPager(mBinding!!.viewpager)
@@ -115,19 +116,16 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
     }
 
 
-
     private fun getFragments(countList: ArrayList<String>) {
 
 
         for (position in countList.indices) {
 
-            if (position == 0) {
-                fragmentsList.add(StudentSubjectSelectFragmnet.newInstance(position, ArrayList<SubjectsData>(subjectsDataList.subList(0, 2))))
-
-            } else if (position == 1)
-                fragmentsList.add(StudentSubjectSelectFragmnet.newInstance(position, ArrayList<SubjectsData>(subjectsDataList.subList(2, 4))))
-            else
-                fragmentsList.add(StudentSubjectSelectFragmnet.newInstance(position, ArrayList<SubjectsData>(subjectsDataList.subList(4, 6))))
+            when (position) {
+                0 -> fragmentsList.add(StudentSubjectSelectFragmnet.newInstance(position, ArrayList(subjectsDataList.subList(0, 2))))
+                1 -> fragmentsList.add(StudentSubjectSelectFragmnet.newInstance(position, ArrayList(subjectsDataList.subList(2, 4))))
+                else -> fragmentsList.add(StudentSubjectSelectFragmnet.newInstance(position, ArrayList(subjectsDataList.subList(4, 6))))
+            }
         }
     }
 
@@ -149,9 +147,9 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
             }
         }
 
-        println("===================" + stringBuilder.toString())
+        println("===================$stringBuilder")
 
-        if (stringBuilder.length == 0) {
+        if (stringBuilder.isEmpty()) {
             showSnackError(R.string.choose_subjects)
             return
         }
@@ -182,7 +180,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
                 }
     }
 
-    inner class PagerAdapter(fragmentManager: FragmentManager, fragmentsList: ArrayList<StudentSubjectSelectFragmnet>) :
+    inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<StudentSubjectSelectFragmnet>) :
             FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         // 2
@@ -202,7 +200,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         }
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
+    /* override fun attachBaseContext(newBase: Context) {
+         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+     }*/
 }

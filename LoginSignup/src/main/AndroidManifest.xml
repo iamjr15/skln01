@@ -25,11 +25,10 @@
         <activity
             android:name=".TutororStudentSelection"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.FrameActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".TutorSignupActivity"
@@ -64,9 +63,9 @@
 
         </activity>
         <activity
-            android:name=".student.StudentSubjectSelect_Senior"
+            android:name=".student.StudentSubjectSelectSeniorActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".student.StudentHobbySelect"
             android:screenOrientation="portrait"

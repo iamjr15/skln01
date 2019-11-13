@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import com.netzwelt.studentmodule.R
 
 /**
- * A simple [Fragment] subclass.
+ * Created by Vt Netzwelt
  */
 class ExploreBaseFragment : Fragment() {
 
     internal var view: View? = null
-    public var exploreTutorsFragment: ExploreTutorsFragment? = null
+    var exploreTutorsFragment: ExploreTutorsFragment? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -26,23 +26,23 @@ class ExploreBaseFragment : Fragment() {
         return view
     }
 
-    public fun showExploreFragment() {
+    fun showExploreFragment() {
 
         exploreTutorsFragment = ExploreTutorsFragment()
 
 
-        getChildFragmentManager()
+        childFragmentManager
                 .beginTransaction()
                 .replace(R.id.explorecontainer, exploreTutorsFragment!!).commit()
     }
 
-    public fun showRequestDetailFragment(bundle: Bundle) {
+    fun showRequestDetailFragment(bundle: Bundle) {
         exploreTutorsFragment = null
 
-        var fragment = FragmentRequestDetail()
+        val fragment = FragmentRequestDetail()
         fragment.arguments = bundle
 
-        getChildFragmentManager()
+        childFragmentManager
                 .beginTransaction()
                 .replace(R.id.explorecontainer, fragment).commit()
 

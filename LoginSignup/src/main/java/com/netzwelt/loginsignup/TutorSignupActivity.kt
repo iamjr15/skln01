@@ -10,7 +10,9 @@ import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.utills.ActivityUtils
 import com.netzwelt.loginsignup.databinding.ActivityTutorSignupBinding
-
+/**
+ * Created by Vt Netzwelt
+ */
 class TutorSignupActivity : BaseActivity() {
     private var mBinding: ActivityTutorSignupBinding? = null
 

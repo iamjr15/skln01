@@ -9,6 +9,10 @@ import com.autohub.skln.listeners.ItemClickListener
 import com.netzwelt.studentmodule.R
 import com.netzwelt.studentmodule.databinding.EnrolledclassesRowBinding
 
+/**
+ * Created by Vt Netzwelt
+ */
+
 class EnrolledClassesAdaptor(var context: Context, var mItemClickListener: ItemClickListener<String>)
     : RecyclerView.Adapter<EnrolledClassesAdaptor.Holder>() {
 
@@ -88,13 +92,9 @@ class EnrolledClassesAdaptor(var context: Context, var mItemClickListener: ItemC
         notifyDataSetChanged()
     }
 
-    inner class Holder(var exploreRowBinding: EnrolledclassesRowBinding) :
+    inner class Holder(exploreRowBinding: EnrolledclassesRowBinding) :
             RecyclerView.ViewHolder(exploreRowBinding.root) {
-        fun bind(obj: Any) {
-            with(exploreRowBinding)
-            {
-
-            }
+        fun bind() {
         }
     }
 

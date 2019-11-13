@@ -1,1 +1,1 @@
-include ':app', ':LoginSignup', ':studentmodule'
+include ':app', ':LoginSignup', ':studentmodule', ':tutormodule'

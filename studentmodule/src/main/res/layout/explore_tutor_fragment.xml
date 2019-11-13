@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:background="@android:color/white"
@@ -65,10 +66,10 @@
                         android:focusable="false"
                         android:gravity="center"
                         android:paddingEnd="8dp"
-                        android:text="grade 8"
+                        tools:text="grade 8"
                         android:textColor="@android:color/white"
 
-                        />
+                        tools:ignore="RtlSymmetry" />
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -97,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="9dp"
-                android:text="4th Avenue, Los Angeles" />
+                tools:text="4th Avenue, Los Angeles" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/changeaddress"
@@ -106,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:padding="4dp"
-                android:text="change" />
+                android:text="@string/change" />
         </LinearLayout>
 
         <RelativeLayout

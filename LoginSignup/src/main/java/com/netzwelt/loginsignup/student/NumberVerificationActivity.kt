@@ -26,7 +26,9 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
+/**
+ * Created by Vt Netzwelt
+ */
 class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListener {
     private var mBinding: ActivityNumberVerificationBinding? = null
     private var mVerificationId: String? = null
@@ -74,12 +76,12 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
                 Toast.makeText(this@NumberVerificationActivity, R.string.enter_valid_number, Toast.LENGTH_SHORT).show()
             }
         }
-        setCustomTypeface((findViewById<View>(R.id.codePicker) as CountryCodePicker).textView_selectedCountry, BaseActivity.FONT_TYPE_CERAPRO_BOLD)
+        setCustomTypeface((findViewById<View>(R.id.codePicker) as CountryCodePicker).textView_selectedCountry, FONT_TYPE_CERAPRO_BOLD)
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
+    /* override fun attachBaseContext(newBase: Context) {
+         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+     }*/
 
     private fun verifyPhoneNumber() {
         if (mBinding!!.codePicker.isValidFullNumber) {
@@ -185,16 +187,22 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
 
     }
 
-    override fun onEditorAction(textView: TextView, actionId: Int, keyEvent: KeyEvent): Boolean {
-        if (actionId == EditorInfo.IME_ACTION_DONE && mBinding!!.codePicker.isValidFullNumber) {
-            phoneNum = mBinding!!.codePicker.fullNumberWithPlus
-            mBinding!!.pinView.visibility = View.VISIBLE
-            mBinding!!.btnResendCode.visibility = View.VISIBLE
-            mBinding!!.btnNext.visibility = View.VISIBLE
-            verifyPhoneNumber()
-            return true
+    override fun onEditorAction(textView: TextView, actionId: Int, keyEvent: KeyEvent?): Boolean {
+        try {
+
+            if (actionId == EditorInfo.IME_ACTION_DONE && mBinding!!.codePicker.isValidFullNumber) {
+                phoneNum = mBinding!!.codePicker.fullNumberWithPlus
+                mBinding!!.pinView.visibility = View.VISIBLE
+                mBinding!!.btnResendCode.visibility = View.VISIBLE
+                mBinding!!.btnNext.visibility = View.VISIBLE
+                verifyPhoneNumber()
+                return true
+            }
+            Toast.makeText(this@NumberVerificationActivity, R.string.enter_valid_number, Toast.LENGTH_SHORT).show()
+            return false
+        } catch (e: Exception) {
+            showSnackError(e.toString())
         }
-        Toast.makeText(this@NumberVerificationActivity, R.string.enter_valid_number, Toast.LENGTH_SHORT).show()
         return false
     }
 }

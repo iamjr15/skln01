@@ -32,7 +32,7 @@ public class CustomViewPager extends ViewPager implements ViewPager.PageTransfor
         setPadding(mPageMargin, mPageMargin, mPageMargin, mPageMargin);
     }
 
-    public int dp2px(Resources resource, int dp) {
+    private int dp2px(Resources resource, int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resource.getDisplayMetrics());
     }
 

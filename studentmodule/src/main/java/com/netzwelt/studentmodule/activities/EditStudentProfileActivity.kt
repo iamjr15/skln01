@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
@@ -13,7 +12,6 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.CropActivity
-import com.autohub.skln.activities.OnBoardActivity
 import com.autohub.skln.models.User
 import com.autohub.skln.utills.ActivityUtils
 import com.autohub.skln.utills.AppConstants
@@ -28,13 +26,13 @@ import com.netzwelt.studentmodule.databinding.ActivityEditStudentProfileBinding
 import com.vansuita.pickimage.bundle.PickSetup
 import com.vansuita.pickimage.dialog.PickImageDialog
 import java.io.*
-import java.security.InvalidAlgorithmParameterException
-import java.security.InvalidKeyException
-import java.security.NoSuchAlgorithmException
+
 import java.util.*
-import javax.crypto.BadPaddingException
-import javax.crypto.IllegalBlockSizeException
-import javax.crypto.NoSuchPaddingException
+
+
+/**
+ * Created by Vt Netzwelt
+ */
 
 class EditStudentProfileActivity : BaseActivity() {
     private var mBinding: ActivityEditStudentProfileBinding? = null
@@ -46,39 +44,23 @@ class EditStudentProfileActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_edit_student_profile)
         mBinding!!.callback = this
+
         setUpUserInfo()
+    }
+
+    fun onBackClick() {
+        onBackPressed()
     }
 
 
     fun showHidePass() {
         if (mBinding!!.showHidePassword.text.toString().equals("show", ignoreCase = true)) {
             mBinding!!.password.transformationMethod = null
-            mBinding!!.showHidePassword.text = "hide"
+            mBinding!!.showHidePassword.text = getString(R.string.hide)
         } else {
             mBinding!!.password.transformationMethod = PasswordTransformationMethod()
-            mBinding!!.showHidePassword.text = "show"
+            mBinding!!.showHidePassword.text = getString(R.string.showpas)
         }
-    }
-
-
-    private fun encryptedPassword(): String {
-        try {
-            return encrypt(mBinding!!.password.text.toString())
-        } catch (e: NoSuchPaddingException) {
-            e.printStackTrace()
-        } catch (e: NoSuchAlgorithmException) {
-            e.printStackTrace()
-        } catch (e: InvalidAlgorithmParameterException) {
-            e.printStackTrace()
-        } catch (e: InvalidKeyException) {
-            e.printStackTrace()
-        } catch (e: BadPaddingException) {
-            e.printStackTrace()
-        } catch (e: IllegalBlockSizeException) {
-            e.printStackTrace()
-        }
-
-        return mBinding!!.password.text.toString()
     }
 
 
@@ -93,8 +75,8 @@ class EditStudentProfileActivity : BaseActivity() {
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
         var selectedItems: List<String> = ArrayList()
-        if (user!!.hobbiesToPursue != null && !user!!.hobbiesToPursue.isEmpty()) {
-            selectedItems = Arrays.asList(*user!!.hobbiesToPursue.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+        if (user!!.hobbiesToPursue != null && user!!.hobbiesToPursue.isNotEmpty()) {
+            selectedItems = listOf(*user!!.hobbiesToPursue.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
         }
         val selectedHobbies = ArrayList<String>()
         for (i in selectedItems.indices) {
@@ -107,21 +89,21 @@ class EditStudentProfileActivity : BaseActivity() {
 
         AlertDialog.Builder(this)
                 .setTitle("Choose your favourite hobby")
-                .setMultiChoiceItems(namesArr, booleans) { dialogInterface, i, b ->
+                .setMultiChoiceItems(namesArr, booleans) { _, i, b ->
                     if (b) {
                         selectedHobbies.add(items[i])
                     } else {
                         selectedHobbies.remove(items[i])
                     }
                 }
-                .setPositiveButton("OK") { dialog, whichButton ->
+                .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                     var selectedHobbyString = ""
                     for (i in selectedHobbies.indices) {
-                        if (i == selectedHobbies.size - 1) {
-                            selectedHobbyString += selectedHobbies[i]
+                        selectedHobbyString += if (i == selectedHobbies.size - 1) {
+                            selectedHobbies[i]
                         } else {
-                            selectedHobbyString += selectedHobbies[i] + ","
+                            selectedHobbies[i] + ","
                         }
                     }
                     mBinding!!.favHobby.text = selectedHobbyString
@@ -144,7 +126,7 @@ class EditStudentProfileActivity : BaseActivity() {
         AlertDialog.Builder(this)
                 .setSingleChoiceItems(namesArr, indexSelected, null)
                 .setTitle("Select Current Grade")
-                .setPositiveButton("OK") { dialog, whichButton ->
+                .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                     var selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
                     if (selectedPosition < 0) {
@@ -173,16 +155,16 @@ class EditStudentProfileActivity : BaseActivity() {
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
         var selectedItems: List<String> = ArrayList()
-        if (user!!.favoriteClasses != null && !user!!.leastFavoriteClasses.isEmpty() && !isLeastFav) {
+        if (user!!.favoriteClasses != null && user!!.leastFavoriteClasses.isNotEmpty() && !isLeastFav) {
             //            if (!isLeastFav) {
-            selectedItems = Arrays.asList(*user!!.favoriteClasses.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+            selectedItems = listOf(*user!!.favoriteClasses.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
             //            } else {
 
             //            }
         }
-        if (user!!.leastFavoriteClasses != null && !user!!.leastFavoriteClasses.isEmpty() && isLeastFav) {
+        if (user!!.leastFavoriteClasses != null && user!!.leastFavoriteClasses.isNotEmpty() && isLeastFav) {
             //            if (!isLeastFav) {
-            selectedItems = Arrays.asList(*user!!.leastFavoriteClasses.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+            selectedItems = listOf(*user!!.leastFavoriteClasses.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
             //            } else {
 
             //            }
@@ -199,15 +181,15 @@ class EditStudentProfileActivity : BaseActivity() {
         }
 
 
-        var title = ""
-        if (!isLeastFav) {
-            title = "Choose Favourite Subject"
+        val title: String
+        title = if (!isLeastFav) {
+            "Choose Favourite Subject"
         } else {
-            title = "Choose Least Favourite Subject"
+            "Choose Least Favourite Subject"
         }
         AlertDialog.Builder(this)
                 .setMultiChoiceItems(namesArr, booleans
-                ) { dialogInterface, i, b ->
+                ) { _, i, b ->
                     if (b) {
                         selectedSub.add(items[i])
                     } else {
@@ -215,14 +197,14 @@ class EditStudentProfileActivity : BaseActivity() {
                     }
                 }
                 .setTitle(title)
-                .setPositiveButton("OK") { dialog, whichButton ->
+                .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                     var selectedSubString = ""
                     for (i in selectedSub.indices) {
-                        if (i == selectedSub.size - 1) {
-                            selectedSubString += selectedSub[i]
+                        selectedSubString += if (i == selectedSub.size - 1) {
+                            selectedSub[i]
                         } else {
-                            selectedSubString += selectedSub[i] + ","
+                            selectedSub[i] + ","
                         }
                     }
                     if (isLeastFav) {
@@ -239,7 +221,7 @@ class EditStudentProfileActivity : BaseActivity() {
     private fun setUpUserInfo() {
 
 
-        var path = "student/"
+        val path = "student/"
 
         val ref = FirebaseStorage.getInstance().reference.child(path +
                 firebaseAuth.currentUser!!.uid + ".jpg")
@@ -324,7 +306,7 @@ class EditStudentProfileActivity : BaseActivity() {
             showSnackError(resources.getString(R.string.enter_name))
             mBinding!!.edtFirstName.requestFocus()
             return false
-        } else if (password == null || password.length == 0) {
+        } else if (password == null || password.isEmpty()) {
             showSnackError(resources.getString(R.string.enter_password))
             mBinding!!.password.requestFocus()
             return false
@@ -333,13 +315,13 @@ class EditStudentProfileActivity : BaseActivity() {
             showSnackError(resources.getString(R.string.enter_valid_number))
             return false
 
-        } else if (mBinding!!.leastFavuSubj.text.toString().equals("")) {
+        } else if (mBinding!!.leastFavuSubj.text.toString() == "") {
             return true
 
-        } else if (mBinding!!.favoriteSubj.text.toString().equals("")) {
+        } else if (mBinding!!.favoriteSubj.text.toString() == "") {
             return true
 
-        } else if (mBinding!!.favHobby.text.toString().equals("")) {
+        } else if (mBinding!!.favHobby.text.toString() == "") {
             return true
 
 
@@ -392,7 +374,7 @@ class EditStudentProfileActivity : BaseActivity() {
             buf.read(bytes, 0, bytes.size)
             buf.close()
 
-            var path = "student/"
+            val path = "student/"
             /* if (mProfileType.equals("student", ignoreCase = true)) {
                  path = "student/"
              }*/
@@ -421,7 +403,7 @@ class EditStudentProfileActivity : BaseActivity() {
         val user = HashMap<String, Any>()
         user[AppConstants.KEY_PROFILE_PICTURE] = pathString
 
-        var root = getString(R.string.db_root_students)
+        val root = getString(R.string.db_root_students)
         /*  if (mProfileType.equals("student", ignoreCase = true)) {
               root = getString(R.string.db_root_students)
           }*/

@@ -2,6 +2,10 @@ package com.autohub.skln.utills;
 
 import com.autohub.skln.BuildConfig;
 
+
+/**
+ *Modified by Vt Netzwelt
+ */
 public interface AppConstants {
     int GPS_REQUEST = 3434;
     String PREF_NAME = "Skln_Prefs";

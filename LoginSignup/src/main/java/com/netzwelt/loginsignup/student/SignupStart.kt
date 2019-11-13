@@ -27,6 +27,9 @@ import javax.crypto.BadPaddingException
 import javax.crypto.IllegalBlockSizeException
 import javax.crypto.NoSuchPaddingException
 
+/**
+ * Created by Vt Netzwelt
+ */
 class SignupStart : BaseActivity() {
     private var mBinding: TutorSignupStartBinding? = null
     private var mCity: String? = null
@@ -72,6 +75,11 @@ class SignupStart : BaseActivity() {
 
         Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 0.0f, 20.0f)
 
+        if (!checkGooglePlayServices() && !isLocationPermissionGranted) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 2321)
+
+        }
+
     }
 
     fun onNextClick() {
@@ -90,7 +98,7 @@ class SignupStart : BaseActivity() {
                 return
             }
 
-            if (password == null || password.length == 0) {
+            if (password == null || password.isEmpty()) {
                 mBinding!!.edtPassword.error = resources.getString(R.string.enter_password)
                 mBinding!!.edtPassword.requestFocus()
 //                showSnackError(R.string.enter_password)
@@ -108,31 +116,29 @@ class SignupStart : BaseActivity() {
     }
 
     private fun makeSaveRequest() {
-        var userMap = HashMap<String, Any>()
-        userMap.put(KEY_FIRST_NAME, mBinding!!.edtFirstName.text.toString())
-        userMap.put(KEY_LAST_NAME, mBinding!!.edtLastName.text.toString())
-        userMap.put(KEY_EMAIL, mBinding!!.edtemail.text.toString())
-        userMap.put(KEY_SEX, if (mBinding!!.radioMale.isChecked) MALE else FEMALE)
-        userMap.put(KEY_PASSWORD, getEncryptedPassword())
-        userMap.put(KEY_CITY, mCity!!)
-        userMap.put(KEY_LATITUDE, mLocation!!.latitude)
-        userMap.put(KEY_LONGITUDE, mLocation!!.longitude)
-        var extras = Bundle()
+        val userMap = HashMap<String, Any>()
+        userMap[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString()
+        userMap[KEY_LAST_NAME] = mBinding!!.edtLastName.text.toString()
+        userMap[KEY_EMAIL] = mBinding!!.edtemail.text.toString()
+        userMap[KEY_SEX] = if (mBinding!!.radioMale.isChecked) MALE else FEMALE
+        userMap[KEY_PASSWORD] = getEncryptedPassword()
+        userMap[KEY_CITY] = mCity!!
+        userMap[KEY_LATITUDE] = mLocation!!.latitude
+        userMap[KEY_LONGITUDE] = mLocation!!.longitude
+        val extras = Bundle()
         extras.putSerializable(KEY_USERMAP, userMap)
         ActivityUtils.launchActivity(this@SignupStart, NumberVerificationActivity::class.java, extras)
     }
 
-    override fun attachBaseContext(newBase: Context) {
+    /*override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
+    }*/
 
     override fun onResume() {
         super.onResume()
-        if (checkGooglePlayServices() && isLocationPermissionGranted) {
+        if (!checkGooglePlayServices() && isLocationPermissionGranted) {
             Log.d(">>>>Location", "Oncreate")
             LocationProvider.getInstance().start(this, mLocationListener)
-        } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 2321)
         }
     }
 
@@ -144,8 +150,8 @@ class SignupStart : BaseActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 2321) {
-            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (checkGooglePlayServices() && isLocationPermissionGranted) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (!checkGooglePlayServices() && isLocationPermissionGranted) {
                     LocationProvider.getInstance().start(this, mLocationListener)
                 }
             }

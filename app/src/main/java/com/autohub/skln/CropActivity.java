@@ -102,9 +102,9 @@ public class CropActivity extends BaseActivity {
 
     private static class FileFromBitmap extends AsyncTask<Void, Void, File> {
 
-        private Bitmap bitmap;
-        private File mOriginalFile;
-        private CropListener mCropListener;
+        private final Bitmap bitmap;
+        private final File mOriginalFile;
+        private final CropListener mCropListener;
 
         FileFromBitmap(Bitmap bitmap, File directory, CropListener cropListener) {
             this.bitmap = bitmap;

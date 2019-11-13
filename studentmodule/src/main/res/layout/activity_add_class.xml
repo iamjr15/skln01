@@ -80,7 +80,7 @@
                     android:background="@drawable/selector_black"
                     android:fontFamily="@font/montserrat_semi_bold"
                     android:onClick="@{() -> callback.onOkClick()}"
-                    android:text="ok"
+                    android:text="@string/ok"
                     android:textColor="@color/white"
                     android:textSize="17sp" />
 
@@ -117,13 +117,13 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="@string/enter_your_batch_code_to_continue"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="20dp"
                         android:layout_height="26dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:src="@drawable/arrowright"
                         android:tint="@color/black" />
 
@@ -139,7 +139,8 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    tools:ignore="LabelFor" />
 
 
                 <Button
@@ -154,7 +155,7 @@
                     android:background="@drawable/selector_black"
                     android:fontFamily="@font/montserrat_semi_bold"
                     android:onClick="@{() -> callback.onAddclick()}"
-                    android:text="add"
+                    android:text="@string/addbtn"
 
 
                     android:textColor="@color/white"

@@ -11,24 +11,27 @@ import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 
+/**
+ * Created by Vt Netzwelt
+ */
+
 class OnBoardActivity : BaseActivity() {
 
     private var mBinding: ActivityOnBoardBinding? = null
     private lateinit var manager: SplitInstallManager
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         manager = SplitInstallManagerFactory.create(this)
-
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_on_board)
         mBinding!!.callback = this
         checkPrefrences()
     }
 
+
     private fun checkPrefrences() {
         if (firebaseAuth.currentUser != null) {
             if (appPreferenceHelper.signUpComplete) {
-                Intent().setClassName(BuildConfig.APPLICATION_ID, "com.netzwelt.studentmodule.activities.StudentHomeActivity")
+                Intent().setClassName(BuildConfig.APPLICATION_ID, STUDENTHOMEACTIVITY_PATH)
                         .also {
 
                             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -37,7 +40,7 @@ class OnBoardActivity : BaseActivity() {
                         }
             } else {
 
-                Intent().setClassName(BuildConfig.APPLICATION_ID, "com.netzwelt.loginsignup.student.StudentClassSelect")
+                Intent().setClassName(BuildConfig.APPLICATION_ID, STUDENTCLASSACTIVITY_PATH)
                         .also {
                             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(it)
@@ -87,6 +90,9 @@ class OnBoardActivity : BaseActivity() {
     companion object {
         private const val LOGIN_SIGNUP_FEATURE = "com.netzwelt.loginsignup.TutororStudentSelection"
         private const val LOGIN__FEATURE = "com.netzwelt.loginsignup.LoginActivity"
+
+        private const val STUDENTHOMEACTIVITY_PATH = "com.netzwelt.studentmodule.activities.StudentHomeActivity"
+        private const val STUDENTCLASSACTIVITY_PATH = "com.netzwelt.loginsignup.student.StudentClassSelect"
     }
 
 }

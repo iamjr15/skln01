@@ -9,7 +9,9 @@ import com.autohub.skln.utills.AppConstants.KEY_FIRST_NAME
 import com.netzwelt.loginsignup.R
 import com.netzwelt.loginsignup.databinding.ActivityStudentHeyBinding
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
-
+/**
+ * Created by Vt Netzwelt
+ */
 class StudentHey : BaseActivity() {
 
     private var mBinding: ActivityStudentHeyBinding? = null
@@ -34,16 +36,16 @@ class StudentHey : BaseActivity() {
 
     fun onNextClick() {
         val i: Intent
-        if (mIsSeniorClass)
-            i = Intent(this, StudentSubjectSelect_Senior::class.java)
+        i = if (mIsSeniorClass)
+            Intent(this, StudentSubjectSelectSeniorActivity::class.java)
         else
-            i = Intent(this, StudentSubjectSelect::class.java)
+            Intent(this, StudentSubjectSelect::class.java)
 
         i.putExtra("favorite_or_least", true)
         startActivity(i)
     }
 
-    override fun attachBaseContext(newBase: Context) {
+   /* override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
+    }*/
 }

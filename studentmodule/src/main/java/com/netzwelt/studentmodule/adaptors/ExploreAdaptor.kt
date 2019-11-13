@@ -20,6 +20,10 @@ import com.google.firebase.storage.FirebaseStorage
 import com.netzwelt.studentmodule.R
 import com.netzwelt.studentmodule.databinding.ExploreRowBinding
 
+/**
+ * Created by Vt Netzwelt
+ */
+
 class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickListener<User>)
     : RecyclerView.Adapter<ExploreAdaptor.Holder>() {
 
@@ -40,43 +44,41 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
     @SuppressLint("CheckResult")
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        holder.exploreRowBinding.setItemClickListener(mItemClickListener)
+        holder.exploreRowBinding.itemClickListener = mItemClickListener
         userList[position].let {
             with(holder.exploreRowBinding)
             {
 
-                if (mCurrentLocation != null) {
-                    txtdistance.setText("${it.distance.toString()} Km")
-                }
+                if (mCurrentLocation != null) txtdistance.text = "${it.distance} Km"
 
                 user = it
-                tutorname.setText(it.firstName + " " + it.lastName)
-                txtclassprice.setText(it.rate + " / " + it.noOfClasses + " PER " + it.paymentDuration)
+                tutorname.text = """${it.firstName} ${it.lastName}"""
+                txtclassprice.text = """${it.rate} / ${it.noOfClasses} PER ${it.paymentDuration}"""
 
 
-                var splitarray = it.classesToTeach.split(",")
-                if (splitarray.size > 0) {
-                    var stringBuilder = StringBuilder(splitarray.size)
+                val splitarray = it.classesToTeach.split(",")
+                if (splitarray.isNotEmpty()) {
+                    val stringBuilder = StringBuilder(splitarray.size)
                     for (i in splitarray.indices) {
                         if (i == splitarray.size - 1) {
-                            stringBuilder.append(splitarray.get(i) + CommonUtils.getClassSuffix(splitarray.get(i).toInt()))
+                            stringBuilder.append(splitarray[i] + CommonUtils.getClassSuffix(splitarray[i].toInt()))
 
                         } else {
-                            stringBuilder.append(splitarray.get(i) + CommonUtils.getClassSuffix(splitarray.get(i).toInt()) + " - ")
+                            stringBuilder.append(splitarray[i] + CommonUtils.getClassSuffix(splitarray[i].toInt()) + " - ")
                         }
                     }
-                    txtgrades.setText(stringBuilder.toString())
+                    txtgrades.text = stringBuilder.toString()
 
 
                 } else {
-                    txtgrades.setText(it.classesToTeach)
+                    txtgrades.text = it.classesToTeach
 
                 }
 
 
 
-                txtclasstype.setText(it.classType)
-                txtsubjects.setText(it.subjectsToTeach.replace(",", " | "))
+                txtclasstype.text = it.classType
+                txtsubjects.text = it.subjectsToTeach.replace(",", " | ")
 
                 if (!TextUtils.isEmpty(it.pictureUrl)) {
                     val pathReference1 = FirebaseStorage.getInstance().reference.child(it.pictureUrl)
@@ -105,11 +107,7 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
 
     inner class Holder(var exploreRowBinding: ExploreRowBinding) :
             RecyclerView.ViewHolder(exploreRowBinding.root) {
-        fun bind(obj: Any) {
-            with(exploreRowBinding)
-            {
-
-            }
+        fun bind() {
         }
     }
 

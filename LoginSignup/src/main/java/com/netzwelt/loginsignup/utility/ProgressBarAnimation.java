@@ -3,12 +3,14 @@ package com.netzwelt.loginsignup.utility;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.ProgressBar;
-
+/**
+ * Created by Vt Netzwelt
+ */
 public class ProgressBarAnimation
         extends Animation {
-    private ProgressBar progressBar;
-    private float from;
-    private float to;
+    private final ProgressBar progressBar;
+    private final float from;
+    private final float to;
 
     public ProgressBarAnimation(ProgressBar progressBar, float from, float to) {
         super();

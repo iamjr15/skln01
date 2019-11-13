@@ -12,6 +12,9 @@ import com.autohub.skln.models.HobbiesData
 import com.netzwelt.studentmodule.R
 import com.netzwelt.studentmodule.databinding.HobbiesRowBinding
 
+/**
+ * Created by Vt Netzwelt
+ */
 
 class HobbiesAdaptor(var context: Context, var mItemClickListener: ItemClickListener<HobbiesData>)
     : RecyclerView.Adapter<HobbiesAdaptor.Holder>() {
@@ -32,18 +35,18 @@ class HobbiesAdaptor(var context: Context, var mItemClickListener: ItemClickList
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        holder.hobiesRowBinding.setItemClickListener(mItemClickListener)
+        holder.hobiesRowBinding.itemClickListener = mItemClickListener
         hobbiesDatalist[position].let {
             with(holder.hobiesRowBinding)
             {
                 hobbiesData = it
                 img.setImageResource(it.icon)
-                txt.setText(it.hobbyName)
+                txt.text = it.hobbyName
 
                 val unwrappedDrawable = ContextCompat.getDrawable(context, com.autohub.skln.R.drawable.acadmic_rowbg_drawable)
                 val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-                DrawableCompat.setTint(wrappedDrawable, context.resources.getColor(it.color)/* it.color*/)
-                rr.setBackground(unwrappedDrawable)
+                DrawableCompat.setTint(wrappedDrawable,ContextCompat.getColor(context,it.color)/* it.color*/)
+                rr.background = unwrappedDrawable
             }
         }
 
@@ -60,11 +63,7 @@ class HobbiesAdaptor(var context: Context, var mItemClickListener: ItemClickList
 
     inner class Holder(var hobiesRowBinding: HobbiesRowBinding) :
             RecyclerView.ViewHolder(hobiesRowBinding.root) {
-        fun bind(obj: Any) {
-            with(hobiesRowBinding)
-            {
-
-            }
+        fun bind() {
         }
     }
 

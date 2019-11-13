@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <data>
@@ -14,11 +15,11 @@
     </data>
 
     <LinearLayout
-        android:background="@android:color/white"
-
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
+        android:background="@android:color/white"
         android:onClick="@{() -> itemClickListener.onClick(user)}"
         android:orientation="vertical">
 
@@ -49,13 +50,13 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    android:baselineAligned="false">
 
                     <RelativeLayout
                         android:layout_width="0dp"
 
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
                         android:layout_weight="1">
 
                         <RelativeLayout
@@ -99,7 +100,6 @@
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
                         android:layout_weight="1">
 
 
@@ -137,12 +137,12 @@
                     android:layout_below="@+id/ll"
                     android:layout_alignParentBottom="true"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    android:baselineAligned="false">
 
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
                         android:layout_gravity="bottom"
                         android:layout_weight="1">
 
@@ -176,7 +176,6 @@
                         android:layout_width="0dp"
 
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
                         android:layout_gravity="bottom"
                         android:layout_weight="1">
 
@@ -233,7 +232,7 @@
 
         <RelativeLayout
 
-            android:layout_width="wrap_content"
+            android:layout_width="224dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:background="@drawable/explorebuttonbg"
@@ -244,15 +243,19 @@
                 style="@style/explorebuttontextstyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:text="$ 250 / 20 CLASSES PER MONTH" />
+                android:layout_toStartOf="@+id/arrow"
+                android:singleLine="true"
+                tools:text="$ 250 / 20 CLASSES PER MONTH" />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/arrow"
                 android:layout_width="16dp"
                 android:layout_height="12dp"
-                android:layout_marginStart="16dp"
-                android:layout_toEndOf="@+id/txtclassprice"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
 
                 android:src="@drawable/arrowright" />
         </RelativeLayout>

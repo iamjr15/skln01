@@ -20,6 +20,10 @@ import com.google.firebase.storage.FirebaseStorage
 import com.netzwelt.studentmodule.R
 import com.netzwelt.studentmodule.databinding.ActivityTutorFullProfileBinding
 
+/**
+ * Created by Vt Netzwelt
+ */
+
 class TutorFullProfileActivity : BaseActivity() {
 
     private var mBinding: ActivityTutorFullProfileBinding? = null
@@ -40,7 +44,7 @@ class TutorFullProfileActivity : BaseActivity() {
         mBinding!!.bio.setShowingLine(2)
         mBinding!!.bio.addShowMoreText(getString(R.string.readmore))
         mBinding!!.bio.addShowLessText(getString(R.string.readless))
-        mBinding!!.bio.setText(mUserViewModel!!.bioData)
+        mBinding!!.bio.text = mUserViewModel!!.bioData
         mBinding!!.bio.setShowLessTextColor(ContextCompat.getColor(this, R.color.readmorecolor))
         mBinding!!.bio.setShowMoreColor(ContextCompat.getColor(this, R.color.readmorecolor))
 
@@ -55,12 +59,6 @@ class TutorFullProfileActivity : BaseActivity() {
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-
-    }
-
     private fun getCurrentUser() {
         firebaseStore.collection(getString(com.autohub.skln.R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).get()
                 .addOnSuccessListener { documentSnapshot -> mCurrentUser = documentSnapshot.toObject(User::class.java) }
@@ -71,7 +69,7 @@ class TutorFullProfileActivity : BaseActivity() {
         addSubjectRadioButtons(mUserViewModel!!.user.subjectsToTeach.split(","))
         mUserViewModel!!.user.classType?.split(",")?.let { addClassTypeRadioButtons(it) }
 
-        mBinding!!.txtdistence.setText(mUserViewModel!!.user.distance.toString())
+        mBinding!!.txtdistence.text = mUserViewModel!!.user.distance.toString()
 
 
         if (mUserViewModel!!.user.pictureUrl != null) {
@@ -79,7 +77,8 @@ class TutorFullProfileActivity : BaseActivity() {
             GlideApp.with(this)
                     .load(pathReference1)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .fallback(com.autohub.skln.R.drawable.default_pic)
+                    .placeholder(R.drawable.default_pic)
+                    .fallback(R.drawable.default_pic)
                     .into(mBinding!!.profilePicture)
         }
 
@@ -92,7 +91,7 @@ class TutorFullProfileActivity : BaseActivity() {
         val studentId = firebaseAuth.currentUser!!.uid
         val tutorId = mUserViewModel!!.userId
         val request = Request(studentId, tutorId, subject, mUserViewModel!!.firstName, mCurrentUser!!.firstName, mCurrentUser!!.studentClass, classtype)///* mUserViewModel!!.classType*/
-        val dbRoot = getString(com.autohub.skln.R.string.db_root_requests)
+        val dbRoot = getString(R.string.db_root_requests)
         firebaseStore.collection(dbRoot).add(request).addOnSuccessListener { documentReference ->
             Log.d(">>>>Request", "DocumentSnapshot added with ID: " + documentReference.id)
             hideLoading()
@@ -107,8 +106,8 @@ class TutorFullProfileActivity : BaseActivity() {
         }.addOnFailureListener { hideLoading() }
     }
 
-    fun addSubjectRadioButtons(subjects: List<String>) {
-        if (subjects.size == 0) {
+    private fun addSubjectRadioButtons(subjects: List<String>) {
+        if (subjects.isEmpty()) {
             val rdbtn = RadioButton(this)
             rdbtn.id = View.generateViewId()
             //rdbtn.text = "Radio " + rdbtn.id
@@ -116,17 +115,17 @@ class TutorFullProfileActivity : BaseActivity() {
             mBinding!!.classtyperadio.addView(rdbtn)
         }
 
-        for (i in 0 until subjects.size) {
+        for (element in subjects) {
             val rdbtn = RadioButton(this)
             rdbtn.id = View.generateViewId()
             //rdbtn.text = "Radio " + rdbtn.id
-            rdbtn.text = subjects[i]
+            rdbtn.text = element
             mBinding!!.subjectradio.addView(rdbtn)
         }
     }
 
-    fun addClassTypeRadioButtons(classtype: List<String>) {
-        if (classtype.size == 0) {
+    private fun addClassTypeRadioButtons(classtype: List<String>) {
+        if (classtype.isEmpty()) {
             val rdbtn = RadioButton(this)
             rdbtn.id = View.generateViewId()
             //rdbtn.text = "Radio " + rdbtn.id
@@ -134,11 +133,11 @@ class TutorFullProfileActivity : BaseActivity() {
             mBinding!!.classtyperadio.addView(rdbtn)
         }
 
-        for (i in 0 until classtype.size) {
+        for (element in classtype) {
             val rdbtn = RadioButton(this)
             rdbtn.id = View.generateViewId()
             //rdbtn.text = "Radio " + rdbtn.id
-            rdbtn.text = classtype[i]
+            rdbtn.text = element
             mBinding!!.classtyperadio.addView(rdbtn)
         }
     }
@@ -149,21 +148,19 @@ class TutorFullProfileActivity : BaseActivity() {
 
     fun onRequestClick() {
 
-        if (mBinding!!.subjectradio.checkedRadioButtonId == -1) {
-            showSnackError("Please select a subject")
+        when {
+            mBinding!!.subjectradio.checkedRadioButtonId == -1 -> showSnackError("Please select a subject")
+            mBinding!!.classtyperadio.checkedRadioButtonId == -1 -> showSnackError("Please select a class type")
+            else -> {
+                var selectedsubjectRadio = (findViewById(mBinding!!.subjectradio.checkedRadioButtonId)) as RadioButton
+                println("==================== Selected subject" + selectedsubjectRadio.text.toString())
 
-        } else if (mBinding!!.classtyperadio.checkedRadioButtonId == -1) {
-            showSnackError("Please select a class type")
-
-        } else {
-            var selectedsubjectRadio = (findViewById(mBinding!!.subjectradio.checkedRadioButtonId)) as RadioButton
-            println("==================== Selected subject" + selectedsubjectRadio.text.toString())
-
-            var selectedclasstypeRadio = (findViewById(mBinding!!.classtyperadio.checkedRadioButtonId)) as RadioButton
-            println("==================== Selected subject" + selectedclasstypeRadio.text.toString())
-            makeRequest(selectedsubjectRadio.text.toString(), selectedclasstypeRadio.text.toString())
+                var selectedclasstypeRadio = (findViewById(mBinding!!.classtyperadio.checkedRadioButtonId)) as RadioButton
+                println("==================== Selected subject" + selectedclasstypeRadio.text.toString())
+                makeRequest(selectedsubjectRadio.text.toString(), selectedclasstypeRadio.text.toString())
 
 
+            }
         }
     }
 }

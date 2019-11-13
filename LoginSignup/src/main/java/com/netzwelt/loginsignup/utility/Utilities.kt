@@ -2,7 +2,9 @@ package com.netzwelt.loginsignup.utility
 
 import android.widget.ProgressBar
 
-
+/**
+ * Created by Vt Netzwelt
+ */
 class Utilities {
     companion object {
         fun animateProgressbar(progressbar: ProgressBar, from: Float, to: Float) {

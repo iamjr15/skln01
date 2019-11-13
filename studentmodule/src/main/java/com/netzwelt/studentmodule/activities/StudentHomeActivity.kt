@@ -23,6 +23,9 @@ import kotlinx.android.synthetic.main.activity_student_home.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
 
+/**
+ * Created by Vt Netzwelt
+ */
 
 class StudentHomeActivity : BaseActivity(), HomeListners {
 
@@ -35,7 +38,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
 
     override fun onAcadmicsSelect(user: User, classname: String) {
-        mViewPager!!.setCurrentItem(2)
+        mViewPager!!.currentItem = 2
         explorebaseFragment.exploreTutorsFragment?.updateExploreData(user, classname)
 
     }
@@ -79,10 +82,12 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
                 }
                 for (i in mTabs.indices) {
                     if (position == i) {
-                        mTabs[i].setTextColor(resources.getColor(R.color.black))
+                        mTabs[i].setTextColor(ContextCompat.getColor(this@StudentHomeActivity,R.color.black))
                         setTextViewDrawableColor(mTabs[i], R.color.black)
                     } else {
-                        mTabs[i].setTextColor(resources.getColor(R.color.light_grey))
+
+                        mTabs[i].setTextColor(ContextCompat.getColor(this@StudentHomeActivity,R.color.light_grey))
+
                         setTextViewDrawableColor(mTabs[i], R.color.light_grey)
                     }
                 }
@@ -103,7 +108,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
             }
             setStatusBarColor(R.drawable.white_header)
 
-            mViewPager!!.setCurrentItem(2)
+            mViewPager!!.currentItem = 2
         }
 
 
@@ -113,7 +118,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
             }
             setStatusBarColor(R.drawable.white_header)
 
-            mViewPager!!.setCurrentItem(3)
+            mViewPager!!.currentItem = 3
         }
     }
 
@@ -125,31 +130,31 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         }
     }
 
-    override fun attachBaseContext(newBase: Context) {
+    /*override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
+    }*/
 
     inner class SectionsPagerAdapter internal constructor(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getItem(position: Int): Fragment {
-            if (position == 0) {
-
-
-                return FragmentHome()
-            } else if (position == 1) {
-                return MyClassesFragment()
-            } else if (position == 2) {
-                explorebaseFragment = ExploreBaseFragment()
-                return explorebaseFragment
-            } else if (position == 3) {
-                fragmentClassRequests = MyRequestBaseFragment()
-                return fragmentClassRequests
-            } else {
-                val fragmentProfile = StudentProfileFragment()
-                val bundle = Bundle()
-                bundle.putString(AppConstants.KEY_TYPE, "student")
-                fragmentProfile.arguments = bundle
-                return fragmentProfile
+            when (position) {
+                0 -> return FragmentHome()
+                1 -> return MyClassesFragment()
+                2 -> {
+                    explorebaseFragment = ExploreBaseFragment()
+                    return explorebaseFragment
+                }
+                3 -> {
+                    fragmentClassRequests = MyRequestBaseFragment()
+                    return fragmentClassRequests
+                }
+                else -> {
+                    val fragmentProfile = StudentProfileFragment()
+                    val bundle = Bundle()
+                    bundle.putString(AppConstants.KEY_TYPE, "student")
+                    fragmentProfile.arguments = bundle
+                    return fragmentProfile
+                }
             }
         }
 

@@ -3,6 +3,10 @@ package com.autohub.skln.pref;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+
+/**
+ *Modified by Vt Netzwelt
+ */
 public class PreferencesImpl implements PreferencesHelper {
 
     private final SharedPreferences mPrefs;

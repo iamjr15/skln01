@@ -24,33 +24,35 @@ import com.netzwelt.loginsignup.LoginActivity
 import com.netzwelt.loginsignup.R
 import com.netzwelt.loginsignup.utility.Utilities
 
-
+/**
+ * Created by Vt Netzwelt
+ */
 class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
     private lateinit var manager: SplitInstallManager
 
 
-    override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedhobby: String) {
+    override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: String) {
         for (i in fragmentsList.indices) {
             if (position == i) {
                 if (isSecondSelected) {
-                    if (selectedHobbies.contains(selectedhobby)) {
-                        selectedHobbies.remove(selectedhobby)
+                    if (selectedHobbies.contains(selectedClass)) {
+                        selectedHobbies.remove(selectedClass)
                         fragmentsList[i].updateFragment(isSecond = true, selected = false)
 
                     } else {
-                        selectedHobbies.add(selectedhobby)
+                        selectedHobbies.add(selectedClass)
 
                         fragmentsList[i].updateFragment(isSecond = true, selected = true)
 
                     }
 
                 } else {
-                    if (selectedHobbies.contains(selectedhobby)) {
-                        selectedHobbies.remove(selectedhobby)
+                    if (selectedHobbies.contains(selectedClass)) {
+                        selectedHobbies.remove(selectedClass)
                         fragmentsList[i].updateFragment(isSecond = false, selected = false)
 
                     } else {
-                        selectedHobbies.add(selectedhobby)
+                        selectedHobbies.add(selectedClass)
 
                         fragmentsList[i].updateFragment(isSecond = false, selected = true)
 
@@ -78,13 +80,13 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
         mBinding!!.callback = this
         insertHobbiesData()
 
-        var countList: ArrayList<String> = ArrayList()
+        val countList: ArrayList<String> = ArrayList()
         countList.add("1")
         countList.add("2")
         countList.add("3")
 
         getFragments(countList)
-        var pagerAdapter = PagerAdapter(supportFragmentManager, fragmentsList)
+        val pagerAdapter = PagerAdapter(supportFragmentManager, fragmentsList)
         mBinding!!.viewpager.adapter = pagerAdapter
         mBinding!!.viewpager.offscreenPageLimit = 2
         mBinding!!.wormDotsIndicator.setViewPager(mBinding!!.viewpager)
@@ -129,13 +131,11 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
 
         for (position in countList.indices) {
 
-            if (position == 0) {
-                fragmentsList.add(HobbiesFragment.newInstance(position, ArrayList<HobbiesData>(hobbiesDataList.subList(0, 2))))
-
-            } else if (position == 1)
-                fragmentsList.add(HobbiesFragment.newInstance(position, ArrayList<HobbiesData>(hobbiesDataList.subList(2, 4))))
-            else
-                fragmentsList.add(HobbiesFragment.newInstance(position, ArrayList<HobbiesData>(hobbiesDataList.subList(4, 6))))
+            when (position) {
+                0 -> fragmentsList.add(HobbiesFragment.newInstance(position, ArrayList(hobbiesDataList.subList(0, 2))))
+                1 -> fragmentsList.add(HobbiesFragment.newInstance(position, ArrayList(hobbiesDataList.subList(2, 4))))
+                else -> fragmentsList.add(HobbiesFragment.newInstance(position, ArrayList(hobbiesDataList.subList(4, 6))))
+            }
         }
     }
 
@@ -162,7 +162,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
             }
         }
 
-        if (stringBuilder.length == 0) {
+        if (stringBuilder.isEmpty()) {
             showSnackError(R.string.choose_hobbies)
             return
         }
@@ -200,7 +200,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
                 }
     }
 
-    inner class PagerAdapter(fragmentManager: FragmentManager, fragmentsList: ArrayList<HobbiesFragment>) :
+    inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<HobbiesFragment>) :
             FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         // 2
@@ -225,9 +225,9 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
            super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
        }*/
 
-    override fun attachBaseContext(newBase: Context) {
+/*    override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
 
-    }
+    }*/
 
 }

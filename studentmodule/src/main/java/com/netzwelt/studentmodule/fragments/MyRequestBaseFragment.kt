@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.netzwelt.studentmodule.R
 
-
+/**
+ * Created by Vt Netzwelt
+ */
 class MyRequestBaseFragment : Fragment() {
     internal var view: View? = null
-    public var fragmentClassRequests: FragmentClassRequests? = null
+    var fragmentClassRequests: FragmentClassRequests? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -20,21 +22,21 @@ class MyRequestBaseFragment : Fragment() {
         return view
     }
 
-    public fun showRequestFragmentClass() {
+    fun showRequestFragmentClass() {
         fragmentClassRequests = FragmentClassRequests()
-        getChildFragmentManager()
+        childFragmentManager
                 .beginTransaction()
                 .replace(R.id.explorecontainer, fragmentClassRequests!!).commit()
     }
 
 
-    public fun showRequestDetailFragment(bundle: Bundle) {
+    fun showRequestDetailFragment(bundle: Bundle) {
         fragmentClassRequests = null
 
-        var fragment = FragmentRequestDetail()
+        val fragment = FragmentRequestDetail()
         fragment.arguments = bundle
 
-        getChildFragmentManager()
+        childFragmentManager
                 .beginTransaction()
                 .replace(R.id.explorecontainer, fragment).commit()
 
