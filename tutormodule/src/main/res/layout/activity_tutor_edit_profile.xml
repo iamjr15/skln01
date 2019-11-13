@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fitsSystemWindows="false">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="@color/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/montserrat_light"
+                        android:gravity="center"
+                        android:text="@string/edit_profile"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <FrameLayout
+                        android:id="@+id/addProfilePicture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="16dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/profile_picture"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/default_pic" />
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="bottom|end"
+                            android:src="@drawable/ic_imageedit"
+                            android:paddingBottom="8dp" />
+                    </FrameLayout>
+                </LinearLayout>
+
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appbar_layout"
+            tools:context=".BaseActivity">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/class_to_teach"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/class_to_teach"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/bg_round_transparent"
+                    android:drawableEnd="@drawable/arrow_right"
+                    android:fontFamily="@font/montserrat_light"
+                    android:paddingStart="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    tools:text="4th,5th,6th" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/subject_to_taught"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/subject_to_taught"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/bg_round_transparent"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/arrow_right"
+                    android:focusable="true"
+                    android:fontFamily="@font/montserrat_light"
+                    android:paddingStart="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    tools:text="Maths, Science, Computer Science" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/select_ocupation"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/select_occupation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/bg_round_transparent"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/arrow_right"
+                    android:focusable="true"
+                    android:fontFamily="@font/montserrat_light"
+                    android:paddingStart="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    tools:text="Full-time tutor" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/select_treaching_epereience"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/teaching_experience"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/bg_round_transparent"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/arrow_right"
+                    android:focusable="true"
+                    android:fontFamily="@font/montserrat_light"
+                    android:paddingStart="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    tools:text="2-3 years" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/select_qualification"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/qualification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/bg_round_transparent"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/arrow_right"
+                    android:focusable="true"
+                    android:fontFamily="@font/montserrat_light"
+                    android:paddingStart="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    tools:text="Post-graduate" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/select_area_of_qualification"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/area_of_qualification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/bg_round_transparent"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/arrow_right"
+                    android:focusable="true"
+                    android:fontFamily="@font/montserrat_light"
+                    android:paddingStart="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    tools:text="P.hD" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/select_targeted_board"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/targeted_board"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/bg_round_transparent"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/arrow_right"
+                    android:focusable="true"
+                    android:fontFamily="@font/montserrat_light"
+                    android:paddingStart="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    tools:text="CBSE" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/bio"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/bio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/bg_round_transparent"
+                    android:foregroundGravity="top"
+                    android:gravity="start"
+                    android:maxLength="240"
+                    android:minHeight="144dp"
+                    android:paddingStart="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="16dp"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/_240_remaining"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

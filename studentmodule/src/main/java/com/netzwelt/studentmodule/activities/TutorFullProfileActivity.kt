@@ -77,8 +77,8 @@ class TutorFullProfileActivity : BaseActivity() {
             GlideApp.with(this)
                     .load(pathReference1)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.default_pic)
-                    .fallback(R.drawable.default_pic)
+                    .placeholder(com.autohub.skln.R.drawable.default_pic)
+                    .fallback(com.autohub.skln.R.drawable.default_pic)
                     .into(mBinding!!.profilePicture)
         }
 

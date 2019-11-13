@@ -1,6 +1,5 @@
 package com.netzwelt.loginsignup
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -19,7 +18,6 @@ import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.google.firebase.auth.EmailAuthProvider
 import com.netzwelt.loginsignup.databinding.ActivityLoginBinding
 import com.netzwelt.loginsignup.student.SignupStart
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 /**
  * Created by Vt Netzwelt
@@ -68,6 +66,8 @@ class LoginActivity : BaseActivity() {
     }
 
     fun login() {
+        Toast.makeText(this, "Tutor Verified!", Toast.LENGTH_SHORT).show()
+        loadAndLaunchModule(TUTOR_FEATURE, "tutormodule")
 
         val email = mBinding!!.edtemail.text
         if (email == null) {
@@ -190,6 +190,6 @@ class LoginActivity : BaseActivity() {
 
     companion object {
         const val STUDENT_FEATURE = "com.netzwelt.studentmodule.activities.StudentHomeActivity"
-        const val TUTOR_FEATURE = "com.netzwelt.tutormodule.MainActivity"
+        const val TUTOR_FEATURE = "com.netzwelt.tutormodule.ui.dashboard.DashboardActivity"
     }
 }
