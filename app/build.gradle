@@ -31,7 +31,7 @@ android {
     }
 
 
-    dynamicFeatures = [":LoginSignup", ":studentmodule"]
+    dynamicFeatures = [":LoginSignup", ":studentmodule", ":tutormodule"]
 
 
 }

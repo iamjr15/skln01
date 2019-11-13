@@ -68,6 +68,7 @@ class LoginActivity : BaseActivity() {
     }
 
     fun login() {
+
         val email = mBinding!!.edtemail.text
         if (email == null) {
             mBinding!!.edtemail.error = resources.getString(R.string.enter_email)
@@ -132,12 +133,14 @@ class LoginActivity : BaseActivity() {
 
 
     private fun moveNext() {
-        if (mAccountType.equals(AppConstants.TYPE_TUTOR, ignoreCase = true)) {
-            Toast.makeText(this, "Tutor Verified!", Toast.LENGTH_SHORT).show()
-        } else {
+        if (mBinding!!.radiostudent.isChecked) {
             Toast.makeText(this, "Student Verified!", Toast.LENGTH_SHORT).show()
             appPreferenceHelper.setSignupComplete(true)
             loadAndLaunchModule(STUDENT_FEATURE, "studentmodule")
+        } else {
+            Toast.makeText(this, "Tutor Verified!", Toast.LENGTH_SHORT).show()
+            loadAndLaunchModule(TUTOR_FEATURE, "tutormodule")
+
         }
 
     }
@@ -184,11 +187,9 @@ class LoginActivity : BaseActivity() {
 
     }
 
-    /*override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }*/
 
     companion object {
         const val STUDENT_FEATURE = "com.netzwelt.studentmodule.activities.StudentHomeActivity"
+        const val TUTOR_FEATURE = "com.netzwelt.tutormodule.MainActivity"
     }
 }
