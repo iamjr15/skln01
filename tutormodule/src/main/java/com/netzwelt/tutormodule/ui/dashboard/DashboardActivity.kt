@@ -11,17 +11,27 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
 import com.netzwelt.tutormodule.R
-import com.netzwelt.tutormodule.ui.dashboard.home.HomeFragment
+import com.netzwelt.tutormodule.ui.dashboard.home.HomeBaseFragment
+import com.netzwelt.tutormodule.ui.dashboard.listner.HomeListner
 import com.netzwelt.tutormodule.ui.dashboard.profile.ProfileFragment
 import com.netzwelt.tutormodule.ui.dashboard.requests.ClassRequestBaseFragment
 import com.netzwelt.tutormodule.ui.dashboard.schedule.ScheduleFragment
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import java.util.*
 
-class DashboardActivity : BaseActivity() {
+class DashboardActivity : BaseActivity(), HomeListner {
+    override fun pendingRequestSelect() {
+        mViewPager!!.setCurrentItem(2)
+
+    }
+
+    override fun managerSelected() {
+        homeBaseFragment.showManagerFragment()
+    }
 
     private val mTabs = ArrayList<TextView>()
     private var mViewPager: ViewPager? = null
+    private lateinit var homeBaseFragment: HomeBaseFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +40,23 @@ class DashboardActivity : BaseActivity() {
         mTabs.add(tab_item_schedule)
         mTabs.add(tab_item_request)
         mTabs.add(tab_item_profile)
-
         val sectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
         mViewPager = findViewById(R.id.container)
         mViewPager!!.adapter = sectionsPagerAdapter
         mViewPager!!.offscreenPageLimit = 4
+
+
+        tab_item_home.setOnClickListener {
+            if (homeBaseFragment.homeFragment == null) {
+                homeBaseFragment.showHomefragment()
+            }
+            setStatusBarColor(R.drawable.white_header)
+
+            mViewPager!!.currentItem = 0
+        }
+
+
         mViewPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(i: Int, v: Float, i1: Int) {
 
@@ -65,6 +86,8 @@ class DashboardActivity : BaseActivity() {
             }
         })
 
+
+
         for (tab in mTabs) {
             tab.setOnClickListener { mViewPager!!.currentItem = mTabs.indexOf(tab) }
         }
@@ -83,7 +106,12 @@ class DashboardActivity : BaseActivity() {
 
         override fun getItem(position: Int): Fragment {
             when (position) {
-                0 -> return HomeFragment()
+                0 -> {
+                    homeBaseFragment = HomeBaseFragment()
+                    return homeBaseFragment
+
+
+                }
                 1 -> return ScheduleFragment()
                 2 -> {
                     return ClassRequestBaseFragment()
@@ -98,5 +126,6 @@ class DashboardActivity : BaseActivity() {
             return 4
         }
     }
+
 
 }
