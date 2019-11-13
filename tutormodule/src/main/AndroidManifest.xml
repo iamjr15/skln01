@@ -15,6 +15,7 @@
 
     <application>
         <activity android:name=".ui.dashboard.DashboardActivity" />
+        <activity android:name=".ui.dashboard.profile.EditProfileActivity" />
     </application>
 
 </manifest>

@@ -3,217 +3,205 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:padding="10dp"
-            android:src="@drawable/search"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="24dp"
-            android:src="@drawable/default_pic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search" />
-
-        <TextView
-            android:id="@+id/name"
-            app:layout_constraintStart_toEndOf="@+id/profile_image"
-            app:layout_constraintTop_toBottomOf="@+id/search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            tools:text="Hey, Arnold." />
-
-        <TextView
-            android:id="@+id/teach_something"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/profile_image"
-            app:layout_constraintTop_toBottomOf="@+id/name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:text="@string/teach_something_new"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-
-        <ScrollView
-            android:id="@+id/scroll_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/teach_something"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:clipToPadding="false"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ImageView
+                android:id="@+id/search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:padding="10dp"
+                android:src="@drawable/search"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="24dp"
+                android:src="@drawable/default_pic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                app:layout_constraintStart_toEndOf="@+id/profile_image"
+                app:layout_constraintTop_toBottomOf="@+id/search"
+                tools:text="Hey, Arnold." />
+
+            <TextView
+                android:id="@+id/teach_something"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="@string/teach_something_new"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/profile_image"
+                app:layout_constraintTop_toBottomOf="@+id/name" />
+
+            <RelativeLayout
+                android:id="@+id/pending_request"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/blue_rect"
+                android:backgroundTint="@color/magentaPink"
+                android:orientation="vertical"
+                android:padding="11dp"
+                app:layout_constraintBottom_toTopOf="@+id/manage_classes"
 
-                <RelativeLayout
-                    android:id="@+id/pending_request"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/teach_something">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/already_go"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="@string/pending_requests"
+                        android:textSize="19sp" />
+
+                    <TextView
+                        android:id="@+id/requests"
+                        style="@style/click_to_a"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:textSize="62sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="13dp"
+                    android:src="@drawable/homearrow_right" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/manage_classes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/blue_rect"
+                android:backgroundTint="@color/lightBlue"
+                android:orientation="vertical"
+                android:padding="11dp"
+                app:layout_constraintBottom_toTopOf="@+id/reviews"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pending_request">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/already_go"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="@string/manage_classes"
+                        android:textSize="19sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="13dp"
+                    android:src="@drawable/homearrow_right" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/blue_rect"
+                android:backgroundTint="@color/yellow"
+                android:orientation="vertical"
+                android:padding="11dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/manage_classes">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/blue_rect"
-                    android:backgroundTint="@color/magentaPink"
-                    android:orientation="vertical"
-                    android:padding="11dp"
-                    app:layout_constraintBottom_toTopOf="@+id/manage_classes"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/already_go"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:text="@string/pending_requests"
-                            android:textSize="19sp" />
-
-                        <TextView
-                            android:id="@+id/requests"
-                            style="@style/click_to_a"
-                            android:layout_marginTop="5dp"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:textSize="62sp" />
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="13dp"
-                        android:src="@drawable/homearrow_right" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/manage_classes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/blue_rect"
-                    android:backgroundTint="@color/lightBlue"
-                    android:orientation="vertical"
-                    android:padding="11dp"
-                    app:layout_constraintBottom_toTopOf="@+id/reviews"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/pending_request">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/already_go"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:text="@string/manage_classes"
-                            android:textSize="19sp" />
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="13dp"
-                        android:src="@drawable/homearrow_right" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/reviews"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/blue_rect"
-                    android:backgroundTint="@color/yellow"
-                    android:orientation="vertical"
-                    android:padding="11dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/manage_classes">
+                    <TextView
+                        style="@style/already_go"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="@string/your_reviews"
+                        android:textSize="19sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="54dp"
+                            android:layout_height="52dp"
+                            android:layout_margin="15dp"
+                            android:src="@drawable/ic_star_full"
+                            android:tint="@color/white" />
 
                         <TextView
-                            style="@style/already_go"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:text="@string/your_reviews"
-                            android:textSize="19sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="54dp"
-                                android:layout_height="52dp"
-                                android:layout_margin="15dp"
-                                android:src="@drawable/ic_star_full"
-                                android:tint="@color/white" />
-
-                            <TextView
-                                android:id="@+id/avg_rating"
-                                style="@style/click_to_a"
-                                android:fontFamily="@font/montserrat_semi_bold"
-                                android:textSize="62sp" />
-                        </LinearLayout>
+                            android:id="@+id/avg_rating"
+                            style="@style/click_to_a"
+                            android:fontFamily="@font/montserrat_semi_bold"
+                            android:textSize="62sp" />
                     </LinearLayout>
+                </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="13dp"
-                        android:src="@drawable/homearrow_right" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="13dp"
+                    android:src="@drawable/homearrow_right" />
 
-                </RelativeLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+            </RelativeLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

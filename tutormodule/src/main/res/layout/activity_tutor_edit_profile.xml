@@ -3,89 +3,94 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:fitsSystemWindows="false">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar_layout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:background="@color/white"
+            android:fitsSystemWindows="false">
 
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/collapsing_toolbar"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:contentScrim="@color/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:id="@+id/collapsing_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    app:contentScrim="@color/colorPrimary"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/montserrat_light"
-                        android:gravity="center"
-                        android:text="@string/edit_profile"
-                        android:textAllCaps="true"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:orientation="vertical">
 
-                    <FrameLayout
-                        android:id="@+id/addProfilePicture"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="16dp"
-                        android:clickable="true"
-                        android:focusable="true">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="@font/montserrat_light"
+                            android:gravity="center"
+                            android:text="@string/edit_profile"
+                            android:textAllCaps="true"
+                            android:textColor="@color/light_grey"
+                            android:textSize="18sp" />
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/profile_picture"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_margin="8dp"
-                            android:src="@drawable/default_pic" />
+                        <RelativeLayout
+                            android:layout_width="105dp"
+                            android:layout_height="105dp"
+                            android:layout_gravity="center_horizontal">
 
-                        <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_gravity="bottom|end"
-                            android:src="@drawable/ic_imageedit"
-                            android:paddingBottom="8dp" />
-                    </FrameLayout>
-                </LinearLayout>
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/profile_picture"
+                                android:layout_width="105dp"
+                                android:layout_height="105dp"
+                                android:layout_marginTop="14dp"
+                                android:src="@drawable/default_pic" />
 
 
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-        </com.google.android.material.appbar.AppBarLayout>
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginEnd="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:src="@drawable/ic_circle_white" />
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appbar_layout"
-            tools:context=".BaseActivity">
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginEnd="4dp"
+                                android:layout_marginBottom="4dp"
+                                android:src="@drawable/ic_imageedit" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appbar_layout">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -324,9 +329,23 @@
                     android:text="@string/_240_remaining"
                     android:textSize="12sp" />
 
+                <Button
+                    android:id="@+id/updateProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginRight="64dp"
+                    android:layout_marginBottom="25dp"
+                    android:background="@drawable/bg_round_black"
+                    android:backgroundTint="@color/black"
+                    android:text="@string/update"
+                    android:textColor="@color/white"
+                    android:textSize="21sp" />
             </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
