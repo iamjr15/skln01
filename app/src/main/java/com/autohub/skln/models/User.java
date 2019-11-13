@@ -16,13 +16,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Modified by Vt Netzwelt
+ */
 
 public class User implements Parcelable, AppConstants {
     private static final HashMap<String, Integer> FAVORITE_CLASSES = new HashMap<>();
     private static final HashMap<String, AcadmicsData> ACADMICS_DATA_HASH_MAP = new HashMap<>();
     private static final HashMap<String, AcadmicsData> ACADMICS_SENIORDATA_HASH_MAP = new HashMap<>();
     private static final HashMap<String, HobbiesData> HOBBIES_DATA_HASH_MAP = new HashMap<>();
-    private static final HashMap<String, Integer> HOBBIES = new HashMap<>();
 
     static {
         FAVORITE_CLASSES.put(SUBJECT_SCIENCE, R.drawable.microscope);
@@ -39,12 +41,7 @@ public class User implements Parcelable, AppConstants {
         FAVORITE_CLASSES.put(SUBJECT_ACCOUNTANCY, R.drawable.accounting);
         FAVORITE_CLASSES.put(SUBJECT_ECONOMICS, R.drawable.rating);
 
-        HOBBIES.put(HOBBY_DANCE, R.drawable.tile_dance);
-        HOBBIES.put(HOBBY_DRUM, R.drawable.tile_drum);
-        HOBBIES.put(HOBBY_GUITAR, R.drawable.tile_guitar);
-        HOBBIES.put(HOBBY_KEYBOARD, R.drawable.tile_keyboard);
-        HOBBIES.put(HOBBY_MARTIAL, R.drawable.tile_martial);
-        HOBBIES.put(HOBBY_PAINT, R.drawable.tile_painting);
+
 
 
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_SCIENCE,
@@ -295,8 +292,8 @@ public class User implements Parcelable, AppConstants {
 
         boolean isSeniorClass = studentClass.equals(CLASS_11) || studentClass.equals(CLASS_12);
         List<AcadmicsData> acadmicsDataList = new ArrayList<>();
-        if (TextUtils.isEmpty(favoriteClasses)) return acadmicsDataList;
-        String[] subjects = favoriteClasses.split(",");
+//        if (TextUtils.isEmpty(favoriteClasses)) return acadmicsDataList;
+//        String[] subjects = favoriteClasses.split(",");
 
         if (isSeniorClass) {
             for (Map.Entry<String, AcadmicsData> entry : ACADMICS_SENIORDATA_HASH_MAP.entrySet()) {
@@ -332,8 +329,8 @@ public class User implements Parcelable, AppConstants {
 
     public List<HobbiesData> getHobbies() {
         List<HobbiesData> hobbies = new ArrayList<>();
-        if (TextUtils.isEmpty(hobbiesToPursue)) return hobbies;
-        String[] selectedHobbies = hobbiesToPursue.split(",");
+//        if (TextUtils.isEmpty(hobbiesToPursue)) return hobbies;
+//        String[] selectedHobbies = hobbiesToPursue.split(",");
 
         for (Map.Entry<String, HobbiesData> entry : HOBBIES_DATA_HASH_MAP.entrySet()) {
             hobbies.add(HOBBIES_DATA_HASH_MAP.get(entry.getKey()));

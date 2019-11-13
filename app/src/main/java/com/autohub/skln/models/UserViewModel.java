@@ -7,6 +7,10 @@ import androidx.databinding.BaseObservable;
 import com.autohub.skln.utills.CommonUtils;
 
 
+/**
+ *Modified by Vt Netzwelt
+ */
+
 public class UserViewModel extends BaseObservable {
     private User mUser;
 

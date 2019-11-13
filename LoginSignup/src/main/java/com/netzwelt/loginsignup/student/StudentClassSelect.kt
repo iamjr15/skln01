@@ -22,7 +22,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.set
 
-
+/**
+ * Created by Vt Netzwelt
+ */
 class StudentClassSelect : BaseActivity(), ClassSelectionListner {
     override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: String) {
         this.selectedClass = selectedClass
@@ -43,11 +45,11 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this, com.netzwelt.loginsignup.R.layout.activity_student_class_select)
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_student_class_select)
         mBinding!!.callback = this
         insertClassData()
 
-        var countList: ArrayList<String> = ArrayList()
+        val countList: ArrayList<String> = ArrayList()
         countList.add("1")
         countList.add("2")
         countList.add("3")
@@ -55,13 +57,12 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         countList.add("5")
         countList.add("6")
         getFragments(countList)
-        var pagerAdapter = PagerAdapter(supportFragmentManager, fragmentsList)
+        val pagerAdapter = PagerAdapter(supportFragmentManager, fragmentsList)
         mBinding!!.viewpager.adapter = pagerAdapter
         mBinding!!.viewpager.offscreenPageLimit = 5
         mBinding!!.wormDotsIndicator.setViewPager(mBinding!!.viewpager)
 //        Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 1.0f, 2.0f)
         Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 20.0f, 40.0f)
-
 
 
     }
@@ -71,19 +72,14 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
 
         for (position in countList.indices) {
 
-            if (position == 0) {
-                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(0, 2))))
-
-            } else if (position == 1)
-                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(2, 4))))
-            else if (position == 2)
-                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(4, 6))))
-            else if (position == 3)
-                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(6, 8))))
-            else if (position == 4)
-                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(8, 10))))
-            else
-                fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(10, 12))))
+            when (position) {
+                0 -> fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(0, 2))))
+                1 -> fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(2, 4))))
+                2 -> fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(4, 6))))
+                3 -> fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(6, 8))))
+                4 -> fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(8, 10))))
+                else -> fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(10, 12))))
+            }
         }
     }
 
@@ -102,13 +98,13 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         classdatalist.add(Classdata(R.color.tweleve, R.drawable.tweleve, false, CLASS_12))
     }
 
-
+/*
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
+    }*/
 
 
-    inner class PagerAdapter(fragmentManager: FragmentManager, fragmentsList: ArrayList<StudentClassFragment>) :
+    inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<StudentClassFragment>) :
             FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         // 2

@@ -64,7 +64,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/hey_student_next_bg"
-                android:src="@drawable/next_arrow" />
+                android:src="@drawable/next_arrow"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
     </LinearLayout>

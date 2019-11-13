@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * Created by Vt Netzwelt
+ */
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.Holder> {
     private final List<RequestViewModel> mData = new ArrayList<>();
     private final LayoutInflater mLayoutInflater;

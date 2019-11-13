@@ -45,10 +45,10 @@ import javax.crypto.spec.SecretKeySpec;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    protected static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 11332;
-    protected static final int FONT_TYPE_MONTSERRAT_BOLD = 0;
+    private static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 11332;
+    private static final int FONT_TYPE_MONTSERRAT_BOLD = 0;
     protected static final int FONT_TYPE_CERAPRO_BOLD = 1;
-    protected static final int FONT_TYPE_MONTSERRAT_REGULAR = 2;
+    private static final int FONT_TYPE_MONTSERRAT_REGULAR = 2;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseFirestore mFirebaseFirestore;
@@ -206,10 +206,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             GooglePlayServicesUtil.getErrorDialog(checkGooglePlayServices,
                     this, REQUEST_CODE_RECOVER_PLAY_SERVICES).show();
 
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
 
     }
 

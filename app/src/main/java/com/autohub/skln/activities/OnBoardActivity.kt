@@ -11,11 +11,14 @@ import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 
+/**
+ * Created by Vt Netzwelt
+ */
+
 class OnBoardActivity : BaseActivity() {
 
     private var mBinding: ActivityOnBoardBinding? = null
     private lateinit var manager: SplitInstallManager
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         manager = SplitInstallManagerFactory.create(this)

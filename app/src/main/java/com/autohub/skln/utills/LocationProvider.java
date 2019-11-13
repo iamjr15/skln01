@@ -88,7 +88,7 @@ public class LocationProvider implements GoogleApiClient.ConnectionCallbacks, Go
 
     public void stopLocationUpdates() {
         try {
-            if(mGoogleApiClient.isConnected()){
+            if (mGoogleApiClient.isConnected()) {
                 LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             }
             if (mGoogleApiClient.isConnected() || mGoogleApiClient.isConnecting()) {
@@ -121,8 +121,8 @@ public class LocationProvider implements GoogleApiClient.ConnectionCallbacks, Go
             return "";
         }
         float distanceTo = currentLocation.distanceTo(toLocation);
-        Log.d(">>>Distance", distanceTo+"");
-        if(distanceTo<500){
+        Log.d(">>>Distance", distanceTo + "");
+        if (distanceTo < 500) {
             return String.format(Locale.ENGLISH, "%.1f %s", distanceTo, "m");
         }
         float distance = distanceTo / 1000.0f;

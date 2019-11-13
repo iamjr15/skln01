@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.netzwelt.studentmodule.R
-import com.netzwelt.studentmodule.adaptors.EnrolledClassesAdaptor
 import com.netzwelt.studentmodule.adaptors.ScheduleCalenderAdapter
 import com.netzwelt.studentmodule.adaptors.SchedulesAdaptor
 import com.netzwelt.studentmodule.databinding.FragmentScheduleBinding
@@ -19,7 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * A simple [Fragment] subclass.
+ * Created by Vt Netzwelt
  */
 class ScheduleFragment : Fragment() {
     private lateinit var mBinding: FragmentScheduleBinding
@@ -41,9 +40,9 @@ class ScheduleFragment : Fragment() {
         initializeCalendarView(dates)
         setUpSeekBar(dates)
 
-        mBinding!!.schedulerecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        mBinding.schedulerecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         adaptor = SchedulesAdaptor(requireContext())
-        mBinding!!.schedulerecycleview.adapter = adaptor
+        mBinding.schedulerecycleview.adapter = adaptor
 
     }
 
@@ -52,12 +51,10 @@ class ScheduleFragment : Fragment() {
         mBinding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                if (i < 10) {
-                    mBinding.calendarView.scrollToPosition(0)
-                } else if (i > 90) {
-                    mBinding.calendarView.scrollToPosition(dates.size - 1)
-                } else if ((i * 3) < (dates.size - 1)) {
-                    mBinding.calendarView.scrollToPosition(i * 3)
+                when {
+                    i < 10 -> mBinding.calendarView.scrollToPosition(0)
+                    i > 90 -> mBinding.calendarView.scrollToPosition(dates.size - 1)
+                    (i * 3) < (dates.size - 1) -> mBinding.calendarView.scrollToPosition(i * 3)
                 }
             }
 

@@ -5,10 +5,7 @@
     <item android:width="360dp" android:height="44dp">
         <shape android:shape="rectangle">
             <gradient android:angle="0" android:centerColor="#ffec1432" android:endColor="#ffec1432" android:startColor="#ffe8364e" android:type="linear" android:useLevel="false" />
-            <item android:name="android:shadowColor">#4da8a8a8</item>
-            <!-- TextView shadow offsets do not respect scale. -->
-            <item android:name="android:shadowDx">0</item>
-            <item android:name="android:shadowDy">0</item>
+
         </shape>
     </item>
 </selector>

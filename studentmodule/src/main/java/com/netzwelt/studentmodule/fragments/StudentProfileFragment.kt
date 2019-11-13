@@ -1,40 +1,27 @@
 package com.netzwelt.studentmodule.fragments
 
-import android.Manifest
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import com.autohub.skln.CropActivity
 import com.autohub.skln.activities.OnBoardActivity
 import com.autohub.skln.fragment.BaseFragment
-import com.autohub.skln.tutor.EditProfileFragment
 import com.autohub.skln.utills.ActivityUtils
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.GlideApp
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-
 import com.netzwelt.studentmodule.R
 import com.netzwelt.studentmodule.activities.EditStudentProfileActivity
 import com.netzwelt.studentmodule.databinding.FragmentStudentProfileBinding
-import com.vansuita.pickimage.bundle.PickSetup
-import com.vansuita.pickimage.dialog.PickImageDialog
-import java.io.*
-import java.util.HashMap
 
-
+/**
+ * Created by Vt Netzwelt
+ */
 class StudentProfileFragment : BaseFragment() {
 
     private var mBinding: FragmentStudentProfileBinding? = null
@@ -48,8 +35,8 @@ class StudentProfileFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (getArguments() != null) {
-            mProfileType = getArguments()!!.getString(AppConstants.KEY_TYPE, "student");
+        if (arguments != null) {
+            mProfileType = arguments!!.getString(AppConstants.KEY_TYPE, "student")
         }
         mBinding = FragmentStudentProfileBinding.bind(view)
         mBinding!!.calback = this
@@ -57,16 +44,12 @@ class StudentProfileFragment : BaseFragment() {
         setupProfile()
         mBinding!!.logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            getAppPreferenceHelper().setSignupComplete(false)
+            appPreferenceHelper.setSignupComplete(false)
 
             ActivityUtils.launchActivity(requireContext(), OnBoardActivity::class.java)
             requireActivity().finishAffinity()
         }
         // mBinding!!.profilePicture.setOnClickListener { onAddPicture() }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     private fun setupProfile() {

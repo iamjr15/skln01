@@ -9,10 +9,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.netzwelt.studentmodule.R
 
+/**
+ * Created by Vt Netzwelt
+ */
+
 class ScheduleCalenderAdapter(private val list: List<String>) :
         RecyclerView.Adapter<ScheduleCalenderAdapter.ViewHolder>() {
 
-    var selectedPosition = -1
+    private var selectedPosition = -1
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, int: Int): ViewHolder {
         val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_calendar_view, viewGroup, false)

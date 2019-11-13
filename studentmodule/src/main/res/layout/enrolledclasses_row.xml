@@ -40,7 +40,7 @@
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:text="Physics - Morning" />
+                    tools:text="Physics - Morning" />
 
                 <!--<RadioButton
                     android:id="@+id/active_button"
@@ -90,7 +90,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/next"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/batch_name"
-                    android:text="Class 12  |  Physics" />
+                    tools:text="Class 12  |  Physics" />
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -101,7 +101,8 @@
                     android:src="@drawable/ic_watch"
                     app:layout_constraintEnd_toStartOf="@+id/time"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/class_name" />
+                    app:layout_constraintTop_toBottomOf="@+id/class_name"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/time"
@@ -115,7 +116,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/next"
                     app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toBottomOf="@+id/class_name"
-                    android:text="7:30 PM - 9 PM | TUE, THU, FRI" />
+                    tools:text="7:30 PM - 9 PM | TUE, THU, FRI" />
 
                 <ImageView
                     android:id="@+id/next"
@@ -125,7 +126,8 @@
                     android:src="@drawable/deleteicon"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
 
                 <FrameLayout
                     android:id="@+id/image_layout"
@@ -169,7 +171,7 @@
                     android:textSize="13sp"
                     app:layout_constraintStart_toEndOf="@+id/image_layout"
                     app:layout_constraintTop_toBottomOf="@+id/time"
-                    android:text="21 students" />
+                    tools:text="21 students" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

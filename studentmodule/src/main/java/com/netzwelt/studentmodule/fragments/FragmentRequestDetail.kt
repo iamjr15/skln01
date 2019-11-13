@@ -22,6 +22,9 @@ import com.netzwelt.studentmodule.R
 import com.netzwelt.studentmodule.databinding.FragmentRequestDetailBinding
 import java.util.*
 
+/**
+ * Created by Vt Netzwelt
+ */
 
 class FragmentRequestDetail : BaseFragment() {
     private var mRequestViewModel: RequestViewModel? = null
@@ -56,19 +59,19 @@ class FragmentRequestDetail : BaseFragment() {
         setUpUi()
         mBinding!!.contactStd.setOnClickListener { opDialer() }
         mBinding!!.addBatch.setOnClickListener { openMap() }
-        if (mRequestViewModel!!.request.requestStatus.equals(Request.STATUS.PENDING.value)) {
-            mBinding!!.contactStd.setEnabled(false)
+        if (mRequestViewModel!!.request.requestStatus == Request.STATUS.PENDING.value) {
+            mBinding!!.contactStd.isEnabled = false
         }
 
     }
 
     private fun openMap() {
-        var uri =
+        val uri =
                 Uri.parse("geo:<${mTutor?.latitude}>,<${mTutor?.longitude}>?q=<${mTutor?.latitude}>," +
                         "<${mTutor?.longitude}>(${mTutor?.firstName}  + ${mTutor?.lastName} )")
 
 
-        var intent = Intent(Intent.ACTION_VIEW, uri)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
         activity!!.startActivity(intent)
     }
 
@@ -132,7 +135,7 @@ class FragmentRequestDetail : BaseFragment() {
                     mBinding!!.tutorViewModel = UserViewModel(tutor)
                     mTutor = tutor
                     loadPicture()
-                    mBinding!!.rate.setText("fees : $${tutor!!.rate} / ${tutor!!.paymentDuration}")
+                    mBinding!!.rate.text = "fees : $${tutor!!.rate} / ${tutor.paymentDuration}"
                 }
                 .addOnFailureListener { e ->
                     hideLoading()

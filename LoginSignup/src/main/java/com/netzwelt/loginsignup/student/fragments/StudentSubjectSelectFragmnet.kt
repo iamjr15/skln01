@@ -14,16 +14,15 @@ import com.netzwelt.loginsignup.listners.ClassSelectionListner
 import com.netzwelt.loginsignup.student.models.SubjectsData
 import com.netzwelt.loginsignup.R
 import com.netzwelt.loginsignup.databinding.FragmentStudentSubjectSelectBinding
-
 /**
- * A simple [Fragment] subclass.
+ * Created by Vt Netzwelt
  */
 class StudentSubjectSelectFragmnet : Fragment() {
 
     private var mBinding: FragmentStudentSubjectSelectBinding? = null
-    lateinit var datalist: ArrayList<SubjectsData>
-    lateinit var classSelectionListner: ClassSelectionListner
-    var position: Int = 0
+    private lateinit var datalist: ArrayList<SubjectsData>
+    private lateinit var classSelectionListner: ClassSelectionListner
+    private var position: Int = 0
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -50,36 +49,36 @@ class StudentSubjectSelectFragmnet : Fragment() {
     }
 
     private fun setUi() {
-        mBinding!!.img.setImageResource(datalist.get(0).icon)
-        mBinding!!.txt.text = "${datalist.get(0).subjectName}. "
+        mBinding!!.img.setImageResource(datalist[0].icon)
+        mBinding!!.txt.text = "${datalist[0].subjectName}. "
         val unwrappedDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.selectclass_bg)
         val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-        DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(requireContext(), datalist.get(0).color) /* it.color*/)
+        DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(requireContext(), datalist[0].color) /* it.color*/)
         mBinding!!.rr.background = wrappedDrawable
-        mBinding!!.greenfirst.visibility = if (datalist.get(0).selected) View.VISIBLE else View.GONE
-        mBinding!!.whitefirst.visibility = if (datalist.get(0).selected) View.GONE else View.VISIBLE
+        mBinding!!.greenfirst.visibility = if (datalist[0].selected) View.VISIBLE else View.GONE
+        mBinding!!.whitefirst.visibility = if (datalist[0].selected) View.GONE else View.VISIBLE
 
 
-        mBinding!!.imgsecond.setImageResource(datalist.get(1).icon)
-        mBinding!!.txtsecond.text = "${datalist.get(1).subjectName}. "
+        mBinding!!.imgsecond.setImageResource(datalist[1].icon)
+        mBinding!!.txtsecond.text = "${datalist[1].subjectName}. "
         val unwrappedDrawablesecond = ContextCompat.getDrawable(requireContext(), R.drawable.selectclass_bg)
         val wrappedDrawablesecond = DrawableCompat.wrap(unwrappedDrawablesecond!!)
-        DrawableCompat.setTint(wrappedDrawablesecond, ContextCompat.getColor(requireContext(), datalist.get(1).color) /*it.color*/)
+        DrawableCompat.setTint(wrappedDrawablesecond, ContextCompat.getColor(requireContext(), datalist[1].color) /*it.color*/)
         mBinding!!.rr2.background = wrappedDrawablesecond
 
-        mBinding!!.greensecond.visibility = if (datalist.get(1).selected) View.VISIBLE else View.GONE
-        mBinding!!.whitesecond.visibility = if (datalist.get(1).selected) View.GONE else View.VISIBLE
+        mBinding!!.greensecond.visibility = if (datalist[1].selected) View.VISIBLE else View.GONE
+        mBinding!!.whitesecond.visibility = if (datalist[1].selected) View.GONE else View.VISIBLE
 
     }
 
     fun onSelectFirst() {
         classSelectionListner.selectedClass(position = position,
-                isSecondSelected = false, selectedClass = datalist.get(0).subjectName!!)
+                isSecondSelected = false, selectedClass = datalist[0].subjectName!!)
     }
 
     fun onSelectSecond() {
         classSelectionListner.selectedClass(position = position,
-                isSecondSelected = true, selectedClass = datalist.get(1).subjectName!!)
+                isSecondSelected = true, selectedClass = datalist[1].subjectName!!)
     }
 
     fun updateFragment(selected: Boolean, isSecond: Boolean) {

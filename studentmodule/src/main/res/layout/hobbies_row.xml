@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -31,13 +32,15 @@
 
             android:background="@drawable/acadmic_rowbg_drawable"
             android:paddingStart="10dp"
-            android:paddingTop="15dp">
+            android:paddingTop="15dp"
+            tools:ignore="RtlSymmetry">
 
             <ImageView
                 android:id="@+id/img"
                 android:layout_width="41dp"
                 android:layout_height="41dp"
-                android:src="@drawable/microscope" />
+                android:src="@drawable/microscope"
+                tools:ignore="ContentDescription" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -51,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
 
-                    android:text="keyboard" />
+                    tools:text="keyboard" />
 
             </RelativeLayout>
 

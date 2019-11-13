@@ -2,7 +2,9 @@ package com.autohub.skln.models
 
 import android.os.Parcel
 import android.os.Parcelable
-
+/**
+ * Created by Vt Netzwelt
+ */
 data class HobbiesData(val color: Int, val hobbyName: String?, val icon: Int, var selected: Boolean = false) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readInt(),

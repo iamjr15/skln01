@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@android:color/white">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:elevation="0dp">
 
-            <com.google.android.material.appbar.CollapsingToolbarLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+                android:layout_marginBottom="50dp"
+                android:orientation="vertical">
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="22dp">
-
-                    <!--    <ImageView
-                            android:id="@+id/logo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_gravity="center_horizontal"
-                            android:contentDescription="@string/content_description"
-                            android:src="@drawable/logo_top" />-->
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/profile_picture"
@@ -51,7 +49,7 @@
                         android:layout_toEndOf="@id/profile_picture"
                         android:fontFamily="@font/montserrat_bold"
                         android:lines="2"
-                        android:text="Hey, \nLaunrene." />
+                        tools:text="Hey, \nLaunrene." />
 
                     <TextView
                         style="@style/learn_some"
@@ -61,20 +59,6 @@
                         android:text="@string/learn_something_new" />
 
                 </RelativeLayout>
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scroll_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
 
                 <RelativeLayout
@@ -86,7 +70,8 @@
                     android:background="@drawable/blue_rect"
                     android:orientation="vertical"
                     android:paddingStart="13dp"
-                    android:paddingTop="11dp">
+                    android:paddingTop="11dp"
+                    tools:ignore="RtlSymmetry">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -112,7 +97,8 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="13dp"
-                        android:src="@drawable/homearrow_right" />
+                        android:src="@drawable/homearrow_right"
+                        tools:ignore="ContentDescription" />
 
                 </RelativeLayout>
 
@@ -132,8 +118,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
+                    android:clipToPadding="false"
                     android:orientation="horizontal"
-                    android:paddingStart="26dp">
+
+                    android:paddingStart="26dp"
+                    tools:ignore="RtlSymmetry">
 
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -144,86 +133,23 @@
                     android:layout_marginTop="19dp"
                     android:paddingStart="26dp"
                     android:text="@string/hobbies"
-                    android:textAllCaps="true" />
+                    android:textAllCaps="true"
+                    tools:ignore="RtlSymmetry" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/hobbiesrecycleview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
+                    android:clipToPadding="false"
                     android:orientation="horizontal"
-                    android:paddingStart="26dp">
+                    android:paddingStart="26dp"
+                    tools:ignore="RtlSymmetry">
 
 
                 </androidx.recyclerview.widget.RecyclerView>
 
-                <!--    <TextView
-                        style="@style/Subhead"
-                        android:layout_marginTop="12dp"
-                        android:paddingStart="26dp"
 
-                        android:paddingEnd="16dp"
-                        android:text="@string/classes_today"
-                        android:textAllCaps="true"
-                        android:textSize="14sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/bg_round"
-                        android:orientation="vertical"
-                        android:padding="8dp">
-
-                        <TextView
-                            style="@style/Subhead"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="11:25 am"
-                            android:textAllCaps="true"
-                            android:textSize="23sp" />
-
-                        <TextView
-                            style="@style/BodyText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:text="Physics morning batch"
-                            android:textAllCaps="true"
-                            android:textSize="15sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/bg_round"
-                        android:orientation="vertical"
-                        android:padding="8dp">
-
-                        <TextView
-                            style="@style/Subhead"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="04:25 pm"
-                            android:textAllCaps="true"
-                            android:textSize="23sp" />
-
-                        <TextView
-                            style="@style/BodyText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:text="Chemistry afternoon batch"
-                            android:textAllCaps="true"
-                            android:textSize="15sp" />
-
-                    </LinearLayout>-->
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

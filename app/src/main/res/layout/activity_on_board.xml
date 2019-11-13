@@ -22,7 +22,8 @@
             android:background="@drawable/onboard"
             android:orientation="horizontal"
             android:weightSum="2"
-            tools:context=".activities.OnBoardActivity">
+            tools:context=".activities.OnBoardActivity"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -30,8 +31,9 @@
                 android:layout_weight="1.1"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingLeft="22dp"
-                android:paddingTop="26dp">
+                android:paddingStart="22dp"
+                android:paddingTop="26dp"
+                tools:ignore="RtlSymmetry">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/welcome_on"

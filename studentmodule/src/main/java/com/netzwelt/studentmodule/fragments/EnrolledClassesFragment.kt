@@ -14,7 +14,7 @@ import com.netzwelt.studentmodule.adaptors.EnrolledClassesAdaptor
 import com.netzwelt.studentmodule.databinding.FragmentEnrolledClassesBinding
 
 /**
- * A simple [Fragment] subclass.
+ * Created by Vt Netzwelt
  */
 class EnrolledClassesFragment : Fragment() {
     private var mBinding: FragmentEnrolledClassesBinding? = null
@@ -33,7 +33,6 @@ class EnrolledClassesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding = FragmentEnrolledClassesBinding.bind(view)
-
         mBinding!!.enrolledrecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         adaptor = EnrolledClassesAdaptor(requireContext(), tutorsClickListener)
         mBinding!!.enrolledrecycleview.adapter = adaptor

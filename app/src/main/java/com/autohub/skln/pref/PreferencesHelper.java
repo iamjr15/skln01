@@ -1,6 +1,10 @@
 package com.autohub.skln.pref;
 
 
+/**
+ *Modified by Vt Netzwelt
+ */
+
 public interface PreferencesHelper {
 
     void setUserPhoneNumber(String phone);

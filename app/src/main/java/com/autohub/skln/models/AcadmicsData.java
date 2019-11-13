@@ -1,6 +1,8 @@
 package com.autohub.skln.models;
 
-
+/**
+ * Created by Vt Netzwelt
+ */
 public class AcadmicsData {
     private int color;
     private String classname;
@@ -22,10 +24,6 @@ public class AcadmicsData {
 
     public String getClassname() {
         return classname;
-    }
-
-    public void setClassname(String classname) {
-        this.classname = classname;
     }
 
     public int getIcon() {

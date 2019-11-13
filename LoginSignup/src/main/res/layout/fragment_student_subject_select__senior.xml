@@ -6,24 +6,23 @@
 
         <variable
             name="callback"
-            type="com.netzwelt.loginsignup.student.fragments.StudentSubjectSelect_SeniorFragment" />
+            type="com.netzwelt.loginsignup.student.fragments.StudentSubjectSelectSeniorFragment" />
 
 
     </data>
 
     <FrameLayout
-        android:background="@android:color/white"
-
-
         android:layout_width="200dp"
+
+
         android:layout_height="wrap_content"
-        tools:context="com.netzwelt.loginsignup.student.fragments.StudentSubjectSelect_SeniorFragment">
+        android:background="@android:color/white"
+        tools:context="com.netzwelt.loginsignup.student.fragments.StudentSubjectSelectSeniorFragment">
 
         <LinearLayout
             android:layout_width="200dp"
-            android:layout_height="300dp"
+            android:layout_height="280dp"
             android:orientation="vertical">
-            <!-- android:onClick="@{() -> itemClickListener.onClick(acadmicdata)}"-->
 
             <View
                 android:id="@+id/view"
@@ -35,7 +34,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="9dp"
+                android:layout_marginEnd="9dp"
                 android:onClick="@{() -> callback.onSelectFirst()}"
 
 
@@ -43,23 +42,25 @@
 
                 <RelativeLayout
                     android:id="@+id/rr"
-                    android:layout_width="143dp"
-                    android:layout_height="131dp"
+                    android:layout_width="127dp"
+                    android:layout_height="123dp"
                     android:background="@drawable/selectclass_bg"
-                    android:paddingLeft="17dp">
+                    android:paddingStart="17dp"
+                    tools:ignore="RtlSymmetry">
 
                     <ImageView
                         android:id="@+id/img"
                         android:layout_width="41dp"
                         android:layout_height="41dp"
                         android:paddingTop="11dp"
-                        android:src="@drawable/microscope" />
+                        android:src="@drawable/microscope"
+                        tools:ignore="ContentDescription" />
 
                     <RelativeLayout
                         android:id="@+id/greenfirst"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_margin="11dp"
                         android:background="@drawable/greenselect_drawable"
                         android:visibility="gone" />
@@ -68,7 +69,7 @@
                         android:id="@+id/whitefirst"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_margin="11dp"
                         android:background="@drawable/whitecircle_drawable"
                         android:visibility="visible" />
@@ -87,7 +88,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
 
-                            android:text="class 1." />
+                            tools:text="class 1." />
 
                     </RelativeLayout>
 
@@ -99,27 +100,29 @@
 
                 android:id="@+id/rr2"
 
-                android:layout_width="143dp"
-                android:layout_height="131dp"
-                android:layout_marginLeft="55dp"
+                android:layout_width="127dp"
+                android:layout_height="123dp"
+                android:layout_marginStart="55dp"
                 android:layout_marginTop="13dp"
                 android:background="@drawable/selectclass_bg"
                 android:onClick="@{() -> callback.onSelectSecond()}"
-                android:paddingLeft="17dp">
+                android:paddingStart="17dp"
+                tools:ignore="RtlSymmetry">
 
                 <ImageView
                     android:id="@+id/imgsecond"
                     android:layout_width="41dp"
                     android:layout_height="41dp"
                     android:paddingTop="11dp"
-                    android:src="@drawable/noun" />
+                    android:src="@drawable/noun"
+                    tools:ignore="ContentDescription" />
 
                 <RelativeLayout
                     android:id="@+id/greensecond"
                     android:layout_width="wrap_content"
 
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_margin="11dp"
                     android:background="@drawable/greenselect_drawable"
                     android:visibility="gone" />
@@ -128,7 +131,7 @@
                     android:id="@+id/whitesecond"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_margin="11dp"
                     android:background="@drawable/whitecircle_drawable"
                     android:visibility="visible" />
@@ -147,7 +150,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
 
-                        android:text="class 2." />
+                        tools:text="class 2." />
 
                 </RelativeLayout>
 

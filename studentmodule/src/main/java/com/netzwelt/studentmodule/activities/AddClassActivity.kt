@@ -7,6 +7,10 @@ import androidx.databinding.DataBindingUtil
 import com.netzwelt.studentmodule.R
 import com.netzwelt.studentmodule.databinding.ActivityAddClassBinding
 
+/**
+ * Created by Vt Netzwelt
+ */
+
 class AddClassActivity : AppCompatActivity() {
     private var mBinding: ActivityAddClassBinding? = null
 

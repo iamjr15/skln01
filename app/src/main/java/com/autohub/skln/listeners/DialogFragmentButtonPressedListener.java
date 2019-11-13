@@ -9,7 +9,7 @@ public class DialogFragmentButtonPressedListener<T> implements Parcelable {
 
     }
 
-    public DialogFragmentButtonPressedListener(Parcel in) {
+    private DialogFragmentButtonPressedListener(Parcel in) {
     }
 
     @Override

@@ -14,7 +14,7 @@ import com.netzwelt.studentmodule.databinding.FragmentMyClassesBinding
 import java.util.ArrayList
 
 /**
- * A simple [Fragment] subclass.
+ * Created by Vt Netzwelt
  */
 class MyClassesFragment : Fragment() {
     private var mBinding: FragmentMyClassesBinding? = null
@@ -31,19 +31,17 @@ class MyClassesFragment : Fragment() {
 
         mBinding = FragmentMyClassesBinding.bind(view)
         val adapter = ViewPagerAdapter(childFragmentManager)
-        adapter.addData(getFragmentClassRequests("Schedule"/*, user*/, ScheduleFragment()), "Schedule")
-        adapter.addData(getFragmentClassRequests("Enrolled classes"/*, user*/, EnrolledClassesFragment()), "Enrolled classes")
+        adapter.addData(getFragmentClassRequests(ScheduleFragment()), "Schedule")
+        adapter.addData(getFragmentClassRequests(EnrolledClassesFragment()), "Enrolled classes")
 
         mBinding!!.tabs.setupWithViewPager(mBinding!!.viewpager)
         mBinding!!.viewpager.adapter = adapter
     }
 
-    private fun getFragmentClassRequests(type: String, fragment: Fragment/*, user: User?*/): Fragment {
+    private fun getFragmentClassRequests(fragment: Fragment/*, user: User?*/): Fragment {
         /* val bundle = Bundle()
          bundle.putString(AppConstants.KEY_TYPE, type)
          bundle.putParcelable(AppConstants.KEY_DATA, user)*/
-        var root = "Student"
-
         //    bundle.putString("_user_type", mType)
         //  latestRequests.arguments = bundle
         return fragment

@@ -15,10 +15,7 @@
         <shape android:shape="rectangle">
             <solid android:color="#ffffffff" />
             <size android:width="134dp" android:height="37dp" />
-            <item android:name="android:shadowColor">#29000000</item>
-            <!-- TextView shadow offsets do not respect scale. -->
-            <item android:name="android:shadowDx">0</item>
-            <item android:name="android:shadowDy">8</item>
+
         </shape>
 
     </item>

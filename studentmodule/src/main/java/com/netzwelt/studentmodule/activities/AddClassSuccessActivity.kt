@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.netzwelt.studentmodule.R
 
+/**
+ * Created by Vt Netzwelt
+ */
+
 class AddClassSuccessActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

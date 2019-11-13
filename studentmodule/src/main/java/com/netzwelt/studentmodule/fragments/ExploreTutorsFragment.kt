@@ -37,7 +37,9 @@ import com.netzwelt.studentmodule.adaptors.ExploreAdaptor
 import com.netzwelt.studentmodule.databinding.ExploreTutorFragmentBinding
 import java.util.*
 
-
+/**
+ * Created by Vt Netzwelt
+ */
 class ExploreTutorsFragment : BaseFragment() {
 
 
@@ -48,33 +50,19 @@ class ExploreTutorsFragment : BaseFragment() {
     private var exploreAdaptor: ExploreAdaptor? = null
     private lateinit var exploreFilter: ExploreFilter
     private var userLatLang: Location? = null
-    var grades = arrayOf(
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12"
-    )
+    var grades = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
 
-    var AUTOCOMPLETE_REQUEST_CODE = 1
     fun updateExploreData(user: User, subjectName: String) {
 
-        var location = Location(LocationManager.GPS_PROVIDER);
-        location.setLatitude(user.latitude.toDouble())
-        location.setLongitude(user.longitude.toDouble())
+        val location = Location(LocationManager.GPS_PROVIDER)
+        location.latitude = user.latitude.toDouble()
+        location.longitude = user.longitude.toDouble()
 
         userLatLang = location
 
         LocationProvider.getInstance().getAddressFromLocation(requireContext(), location) { address ->
             Log.d(">>>>LocationAddress", "Address is :$address")
-            mBinding!!.textlocation.setText(address)
+            mBinding!!.textlocation.text = address
         }
 
 
@@ -97,9 +85,9 @@ class ExploreTutorsFragment : BaseFragment() {
     }
 
 
-    fun startFullProfileActivityForResult(user: User) {
+    private fun startFullProfileActivityForResult(user: User) {
         val intent = Intent(context, TutorFullProfileActivity::class.java)
-        var bundle = Bundle()
+        val bundle = Bundle()
         bundle.putParcelable(KEY_DATA, user)
         bundle.putString("fromwhere", "searchfrg")
         intent.putExtras(bundle)
@@ -148,7 +136,7 @@ class ExploreTutorsFragment : BaseFragment() {
             if (!Places.isInitialized()) {
                 Places.initialize(this.activity!!.application, getString(R.string.google_key))
             }
-            val placeFields = Arrays.asList(Place.Field.ADDRESS,
+            val placeFields = listOf(Place.Field.ADDRESS,
                     Place.Field.LAT_LNG
             )
 
@@ -165,8 +153,10 @@ class ExploreTutorsFragment : BaseFragment() {
         exploreAdaptor = ExploreAdaptor(requireContext(), tutorsClickListener)
         mBinding!!.turorsrecycleview.adapter = exploreAdaptor
 
-        var customAdapter = CustomArrayAdapter(requireContext(), grades)
-        mBinding!!.spinner!!.setAdapter(customAdapter)
+        val customAdapter = CustomArrayAdapter(requireContext(), grades)
+        with(mBinding!!.spinner!!) {
+            adapter = customAdapter
+        }
 
 
 
@@ -211,7 +201,7 @@ class ExploreTutorsFragment : BaseFragment() {
     private fun getTutors(exploreFilter: ExploreFilter) {
         firebaseStore.collection(getString(R.string.db_root_tutors)).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                tutorsList = ArrayList<User>()
+                tutorsList = ArrayList()
                 for (document in task.result!!) {
                     val user = document.toObject(User::class.java)
                     if (checkFilterfoData(exploreFilter, user)) {
@@ -237,7 +227,7 @@ class ExploreTutorsFragment : BaseFragment() {
                 }
 
                 if (mCurrentLocation != null) {
-                    var newList = tutorsList.sortedBy { it.distance }
+                    val newList = tutorsList.sortedBy { it.distance }
                     exploreAdaptor!!.setData(newList, mCurrentLocation)
                 } else exploreAdaptor!!.setData(tutorsList, mCurrentLocation)
             } else {
@@ -248,9 +238,9 @@ class ExploreTutorsFragment : BaseFragment() {
 
     private fun checkFilterfoData(exploreFilter: ExploreFilter, tutorData: User): Boolean {
 
-        if (exploreFilter.filterType.equals(ALL_SELECTION_FILTER)) {
+        if (exploreFilter.filterType == ALL_SELECTION_FILTER) {
             return true
-        } else if (exploreFilter.filterType.equals(ACADMIC_SELECTION_FILTER)) {
+        } else if (exploreFilter.filterType == ACADMIC_SELECTION_FILTER) {
             /*
             * Showing tutors with in 5km range of student and with student class and subjects
             * */
@@ -273,8 +263,8 @@ class ExploreTutorsFragment : BaseFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == BaseFragment.REQUEST_CODE_RECOVER_PLAY_SERVICES) {
-            if (resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_CODE_RECOVER_PLAY_SERVICES) {
+            if (resultCode == RESULT_OK) {
                 LocationProvider.getInstance().start(requireContext(), mLocationListener)
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(requireContext(), "Google Play Services must be installed.",
@@ -285,7 +275,7 @@ class ExploreTutorsFragment : BaseFragment() {
             if (resultCode == RESULT_OK) {
                 var place = Autocomplete.getPlaceFromIntent(data!!)              // this.onPlaceSelected(place);
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                var status = Autocomplete.getStatusFromIntent(data!!);                //  this.onError(status)
+                var status = Autocomplete.getStatusFromIntent(data!!)                //  this.onError(status)
             }
         }
     }
@@ -294,12 +284,16 @@ class ExploreTutorsFragment : BaseFragment() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 2321) {
-            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (checkGooglePlayServices() && isLocationPermissionGranted) {
                     LocationProvider.getInstance().start(requireContext(), mLocationListener)
                 }
             }
         }
+    }
+
+    companion object {
+        const val AUTOCOMPLETE_REQUEST_CODE = 1
     }
 
 

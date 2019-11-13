@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.netzwelt.studentmodule.R
 import com.netzwelt.studentmodule.databinding.SchedulesRowBinding
 
+/**
+ * Created by Vt Netzwelt
+ */
 class SchedulesAdaptor(var context: Context)
     : RecyclerView.Adapter<SchedulesAdaptor.Holder>() {
 
@@ -87,13 +90,9 @@ class SchedulesAdaptor(var context: Context)
         notifyDataSetChanged()
     }
 
-    inner class Holder(var exploreRowBinding: SchedulesRowBinding) :
+    inner class Holder(exploreRowBinding: SchedulesRowBinding) :
             RecyclerView.ViewHolder(exploreRowBinding.root) {
-        fun bind(obj: Any) {
-            with(exploreRowBinding)
-            {
-
-            }
+        fun bind() {
         }
     }
 

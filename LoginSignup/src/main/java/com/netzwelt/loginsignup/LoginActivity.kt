@@ -6,32 +6,24 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.text.method.PasswordTransformationMethod
 import android.view.View
-import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.BuildConfig
-import com.autohub.skln.activities.OnBoardActivity
-import com.netzwelt.loginsignup.student.SignupStart
-import com.autohub.skln.tutor.TutorHomeActivity
 import com.autohub.skln.utills.ActivityUtils
 import com.autohub.skln.utills.AppConstants
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.google.firebase.auth.EmailAuthProvider
 import com.netzwelt.loginsignup.databinding.ActivityLoginBinding
+import com.netzwelt.loginsignup.student.SignupStart
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
-import java.security.InvalidAlgorithmParameterException
-import java.security.InvalidKeyException
-import java.security.NoSuchAlgorithmException
-import javax.crypto.BadPaddingException
-import javax.crypto.IllegalBlockSizeException
-import javax.crypto.NoSuchPaddingException
 
+/**
+ * Created by Vt Netzwelt
+ */
 class LoginActivity : BaseActivity() {
     private var mBinding: ActivityLoginBinding? = null
     private val mAccountType = AppConstants.TYPE_STUDENT
@@ -45,7 +37,7 @@ class LoginActivity : BaseActivity() {
         manager = SplitInstallManagerFactory.create(this)
         mBinding!!.callback = this
 
-        mBinding!!.usertype.setOnCheckedChangeListener { group, checkedId ->
+        mBinding!!.usertype.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.radiostudent) {
                 updateUi(true)
             } else {
@@ -192,10 +184,9 @@ class LoginActivity : BaseActivity() {
 
     }
 
-
-    override fun attachBaseContext(newBase: Context) {
+    /*override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
+    }*/
 
     companion object {
         const val STUDENT_FEATURE = "com.netzwelt.studentmodule.activities.StudentHomeActivity"

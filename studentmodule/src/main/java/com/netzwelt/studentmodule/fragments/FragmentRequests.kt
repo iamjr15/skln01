@@ -22,6 +22,10 @@ import com.netzwelt.studentmodule.databinding.FragmentRequestsBinding
 import java.util.ArrayList
 
 
+/**
+ * Created by Vt Netzwelt
+ */
+
 class FragmentRequests : BaseFragment() {
     private var mType: String? = null
     private var mUserType: String? = null
@@ -30,7 +34,7 @@ class FragmentRequests : BaseFragment() {
     private lateinit var homeListner: HomeListners
 
     private val mItemClickListener = ItemClickListener<RequestViewModel> { requestViewModel ->
-        if(!requestViewModel.request.requestStatus.equals(Request.STATUS.DELETED))
+        if(!requestViewModel.request.requestStatus.equals(Request.STATUS.CANCELED.value))
         {
             homeListner.onClassRequestSelectListner(requestViewModel)
 

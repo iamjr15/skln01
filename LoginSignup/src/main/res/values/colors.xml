@@ -3,20 +3,14 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#D3D3D3</color>
     <color name="colorAccent">#ff707070</color>
-    <color name="colorGrayDark">#ff707070</color>
     <color name="black">#ff000000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#ffffffff</color>
     <color name="light_grey">#ff707070</color>
     <color name="green">#ff03cc40</color>
-    <color name="selectedGreen">#ff71b72d</color>
     <color name="blue">#ff2929f1</color>
-    <color name="blue_jack">#ff1800f5</color>
     <color name="snack_back_color">#ba0505</color>
-    <color name="lineGrayColor">#707070</color>
-    <color name="lineBlackColor">#000000</color>
-    <color name="purpleColor">#A97CCD</color>
-    <color name="spanblue">#ff3100ff</color>
+    <color name="blue_jack">#ff1800f5</color>
 
     <color name="science">#ff000000</color>
     <color name="biology">#ff000000</color>
@@ -40,13 +34,6 @@
     <color name="guitar">#ff000000</color>
 
 
-
-
-
-
-
-
-    <color name="one">#ff000000</color>
     <color name="two">#fff8bdc4</color>
     <color name="three">#ff90d7ff</color>
     <color name="four">#ffa57982</color>
