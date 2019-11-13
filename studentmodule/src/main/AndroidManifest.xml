@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.netzwelt.studentmodule">
 
     <dist:module
@@ -14,14 +15,24 @@
         <dist:fusing dist:include="true" />
     </dist:module>
 
-    <application>
-
+    <application tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activities.AddClassSuccessActivity"></activity>
         <activity
-            android:name=".StudentHomeActivity"
+            android:name=".activities.AddClassActivity"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".activities.EditStudentProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.TutorFullProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.StudentHomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

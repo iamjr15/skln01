@@ -11,11 +11,7 @@ import androidx.annotation.Nullable;
 import java.util.HashMap;
 import java.util.HashSet;
 
-/**
- * Created by m.imran
- * Senior Software Engineer at
- * BhimSoft on 2019-08-02.
- */
+
 public class CommonUtils {
     private static final HashMap<String, String> ROMAN_CLASSES = new HashMap<>();
 

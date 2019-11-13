@@ -6,7 +6,7 @@
     <string name="db_root_students">students</string>
     <string name="db_root_requests">requests</string>
 
-    <string name="app_name">SKLN</string>
+
     <string name="login">login</string>
     <string name="sign_up">signup</string>
     <string name="sign_up_now"> &#160;Signup Now</string>
@@ -179,6 +179,7 @@
     <string name="toolbox">Toolbox</string>
     <string name="myclasses">My Classes</string>
     <string name="class_request">Class Requests</string>
+    <string name="my_request">My Requests</string>
     <string name="average_rating">AVG.\nRATINGS</string>
     <string name="requests_month">REQUESTS\nTHIS MONTH</string>
     <string name="unpaid_month">UNPAID\nTHIS MONTH</string>
@@ -235,7 +236,7 @@
     <string name="update">Update</string>
     <string name="you_can_select_class_11_12_or_vice_versa">You can select class 11/12 and vice versa.</string>
     <string name="select_different_value">Select different value</string>
-    <string name="class_requests">Class Requests</string>
+    <string name="class_requests">My Requests</string>
     <string name="no_data_found">No Data Found</string>
     <string name="delete_request">Delete Request</string>
     <string name="request_message">Please contact the student by clicking the contact button above.</string>
@@ -273,13 +274,71 @@
     <string name="step3">3. Go through the procedure step by step.</string>
     <string name="step4">4. A login ID will be generated which you need to enter along with your password when you login.</string>
     <string name="already_go_to_a_class">already go to a class?</string>
+    <string name="addedinclass">you have been added into - \"Physics Morning Batch - XI\" Successfully.</string>
+
+
     <string name="click_to_add_it_your_classes">click to add it your classes.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_loginsignup">LoginSignup Module</string>
-    <string name="no_tutor_is_available">No Tutor is available</string>
+    <string name="no_tutor_is_available">No Tutor is available !</string>
     <string name="google_key">AIzaSyB47npWQnNm3HrcGAzZXg0t9q15RX9bJLY</string>
     <string name="teaching_experience">TEACHING EXPERIENCE</string>
     <string name="you_wo_nt_be_charged_yet">You wo\'nt be charged yet.</string>
+    <string name="readmore">read more</string>
+    <string name="readless">read less</string>
+    <string name="no_class_request_found">No class request found !</string>
+    <string name="keyboard">keyboard</string>
+    <string name="rating">rating.</string>
+    <string name="grades">grades.</string>
+    <string name="experience">experience.</string>
+    <string name="distance">distance.</string>
+    <string name="class_typesmall">class type.</string>
+    <string name="class_details">Class Details</string>
+    <string name="request_this_class_small">Request this class</string>
+    <string name="select_subject_s">select subject(s)</string>
+    <string name="select_class_type_small">select class type</string>
+    <string name="_0_reviews">0 REVIEWS</string>
+    <string name="tools_4_2">4.2</string>
+    <string name="tools_8th_12th">8th - 12th</string>
+    <string name="tools_1_km">1 km</string>
+    <string name="toolsgroun_individual">groun/individual</string>
+    <string name="toolsrichard_nixon_richard_s_physics">Richard Nixon | Richard\'s Physics</string>
+    <string name="toolsphysics_chemistry_computer_science">PHYSICS | CHEMISTRY | COMPUTER SCIENCE</string>
+    <string name="send_feedback">send feedback</string>
+    <string name="you_haven_t_enrolled_into_any_class_yet">You haven\'t enrolled into any class yet !</string>
+
+
+    <string name="teach_something_new">teach something new.</string>
+    <string name="pending_requests">pending requests.</string>
+    <string name="manage_classes">manage classes.</string>
+    <string name="your_reviews">your reviews.</string>
+    <string name="accept_request">ACCEPT REQUEST</string>
+    <string name="pending_request">PENDING REQUEST</string>
+    <string name="active">ACTIVE</string>
+    <string name="cancelled">CANCELLED</string>
+    <string name="info_text_batch_options">share the batch code with your students to add them in this batch.</string>
+    <string name="attendance">ATTENDANCE</string>
+    <string name="students">STUDENTS</string>
+    <string name="edit_schedule">EDIT SCHEDULE</string>
+    <string name="add_batch">Add Batch</string>
+    <string name="batch_name">Batch Name</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="batch_name_hint">i.e - Physics - Morning, Chemistry - Evening</string>
+    <string name="select_class">Select Class</string>
+    <string name="select_day_s">Select Day(s)</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="sun">Sun</string>
+    <string name="sat">Sat</string>
+    <string name="fri">Fri</string>
+    <string name="thu">Thu</string>
+    <string name="wed">Wed</string>
+    <string name="schedule">Schedule</string>
+    <string name="add_your_class">add your class</string>
+    <string name="enter_your_batch_code_to_continue">Enter your batch code to continue</string>
+    <string name="my_classes">My classes</string>
+
 </resources>

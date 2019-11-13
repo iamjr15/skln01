@@ -12,6 +12,8 @@
     </data>
 
     <FrameLayout
+        android:background="@android:color/white"
+
 
         android:layout_width="200dp"
         android:layout_height="wrap_content"

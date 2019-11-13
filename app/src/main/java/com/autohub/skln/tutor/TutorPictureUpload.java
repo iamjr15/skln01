@@ -164,7 +164,7 @@ public class TutorPictureUpload extends BaseActivity {
         }
     }
 
-    private boolean checkIfAlreadyhavePermission() {
+    public boolean checkIfAlreadyhavePermission() {
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         return result == PackageManager.PERMISSION_GRANTED;
     }

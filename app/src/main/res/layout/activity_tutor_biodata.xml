@@ -85,6 +85,7 @@
         android:layout_marginBottom="26dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/next"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        />
 
 </RelativeLayout>

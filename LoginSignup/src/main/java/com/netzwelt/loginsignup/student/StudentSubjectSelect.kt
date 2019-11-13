@@ -8,6 +8,7 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -15,12 +16,14 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.autohub.skln.BaseActivity
 import com.netzwelt.loginsignup.student.fragments.StudentSubjectSelectFragmnet
-import com.autohub.skln.listeners.ClassSelectionListner
-import com.autohub.skln.models.SubjectsData
+import com.netzwelt.loginsignup.listners.ClassSelectionListner
+import com.netzwelt.loginsignup.student.models.SubjectsData
 import com.autohub.skln.utills.AppConstants.*
 import com.google.firebase.firestore.SetOptions
 import com.netzwelt.loginsignup.R
 import com.netzwelt.loginsignup.databinding.ActivityStudentSubjectSelectBinding
+import com.netzwelt.loginsignup.utility.ProgressBarAnimation
+import com.netzwelt.loginsignup.utility.Utilities
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
 import kotlin.collections.ArrayList
@@ -90,14 +93,16 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
             val spannable = SpannableStringBuilder(resources.getString(R.string.select_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.BLUE), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
-            mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE);
-            mBinding!!.pbSignupProgress.setProgress(3);
+            mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE)
+            Utilities.animateProgressbar(mBinding!!.pbSignupProgress,40.0f,60.0f)
+
         } else {
-            mBinding!!.pbSignupProgress.setProgress(4);
+            Utilities.animateProgressbar(mBinding!!.pbSignupProgress,60.0f,80.0f)
+
             val spannable = SpannableStringBuilder(resources.getString(R.string.select_least_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.RED), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
-            mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE);
+            mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE)
         }
 
 
@@ -106,7 +111,9 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         mBinding!!.viewpager.adapter = pagerAdapter
         mBinding!!.viewpager.offscreenPageLimit = 2
         mBinding!!.wormDotsIndicator.setViewPager(mBinding!!.viewpager)
+
     }
+
 
 
     private fun getFragments(countList: ArrayList<String>) {
@@ -135,10 +142,10 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
     fun onNextClick() {
         val stringBuilder = StringBuilder()
-        if (selectedSubjects!!.size > 0) {
-            stringBuilder.append(selectedSubjects!![0])
-            for (i in 1 until selectedSubjects!!.size) {
-                stringBuilder.append(", ").append(selectedSubjects!![i])
+        if (selectedSubjects.size > 0) {
+            stringBuilder.append(selectedSubjects[0])
+            for (i in 1 until selectedSubjects.size) {
+                stringBuilder.append(", ").append(selectedSubjects[i])
             }
         }
 

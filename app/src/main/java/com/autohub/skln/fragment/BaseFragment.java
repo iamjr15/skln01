@@ -11,6 +11,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.autohub.skln.BaseActivity;
+import com.autohub.skln.pref.PreferencesImpl;
+import com.autohub.skln.utills.AppConstants;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,14 +35,22 @@ public class BaseFragment extends Fragment {
     protected static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 11332;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseFirestore mFirebaseFirestore;
-
+    private PreferencesImpl mPreferencesImpl;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseFirestore = FirebaseFirestore.getInstance();
+        mPreferencesImpl = new PreferencesImpl(getActivity(), AppConstants.PREF_NAME);
+
+
+
     }
 
+
+    protected PreferencesImpl getAppPreferenceHelper() {
+        return mPreferencesImpl;
+    }
     protected FirebaseAuth getFirebaseAuth() {
         return mFirebaseAuth;
     }

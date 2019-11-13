@@ -102,7 +102,7 @@ public class UserViewModel extends BaseObservable {
         return CommonUtils.getString(mUser.bioData);
     }
 
-    public String gettDistance() {
+    public Double gettDistance() {
         return mUser.distance;
     }
 

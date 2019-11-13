@@ -66,10 +66,7 @@
         <activity
             android:name=".student.StudentSubjectSelect_Senior"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
-
-
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".student.StudentHobbySelect"
             android:screenOrientation="portrait"

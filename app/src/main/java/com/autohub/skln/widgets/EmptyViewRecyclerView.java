@@ -8,11 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-/**
- * Created by m.imran
- * Senior Software Engineer at
- * BhimSoft on 2019-06-12.
- */
+
 public class EmptyViewRecyclerView extends RecyclerView {
     private View mEmptyView;
     private boolean isAlreadyRegistered;

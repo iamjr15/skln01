@@ -8,7 +8,6 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.autohub.skln.listeners.ItemClickListener
-import com.autohub.skln.models.AcadmicsData
 import com.autohub.skln.models.HobbiesData
 import com.netzwelt.studentmodule.R
 import com.netzwelt.studentmodule.databinding.HobbiesRowBinding

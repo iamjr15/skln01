@@ -14,6 +14,8 @@
     </data>
 
     <LinearLayout
+        android:background="@android:color/white"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
@@ -38,7 +40,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/imgprofile"
+                android:layout_toEndOf="@+id/imgprofile"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -53,7 +55,7 @@
                         android:layout_width="0dp"
 
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_weight="1">
 
                         <RelativeLayout
@@ -74,8 +76,8 @@
                                 style="@style/smallexploretest"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_toRightOf="@+id/rateimage"
-                                android:text="4.2" />
+                                android:layout_toEndOf="@+id/rateimage"
+                                android:text="@string/tools_4_2" />
                         </RelativeLayout>
 
 
@@ -91,13 +93,13 @@
                             android:paddingTop="2dp"
 
                             android:paddingBottom="2dp"
-                            android:text="rating." />
+                            android:text="@string/rating" />
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_weight="1">
 
 
@@ -107,7 +109,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:text="8th - 12th" />
+                            android:text="@string/tools_8th_12th" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/_rating"
@@ -121,7 +123,7 @@
                             android:gravity="center"
                             android:paddingTop="2dp"
                             android:paddingBottom="2dp"
-                            android:text="grades." />
+                            android:text="@string/grades" />
                     </RelativeLayout>
 
 
@@ -140,7 +142,7 @@
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_gravity="bottom"
                         android:layout_weight="1">
 
@@ -152,7 +154,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:text="1 km" />
+                            android:text="@string/tools_1_km" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/_rating"
@@ -167,14 +169,14 @@
                             android:gravity="center"
                             android:paddingTop="2dp"
                             android:paddingBottom="2dp"
-                            android:text="distance." />
+                            android:text="@string/distance" />
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="0dp"
 
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_gravity="bottom"
                         android:layout_weight="1">
 
@@ -186,7 +188,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
 
-                            android:text="groun/individual" />
+                            android:text="@string/toolsgroun_individual" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/_rating"
@@ -200,7 +202,7 @@
                             android:gravity="center"
                             android:paddingTop="2dp"
                             android:paddingBottom="2dp"
-                            android:text="class type." />
+                            android:text="@string/class_typesmall" />
                     </RelativeLayout>
 
 
@@ -219,7 +221,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:text="Richard Nixon | Richard's Physics" />
+            android:text="@string/toolsrichard_nixon_richard_s_physics" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtsubjects"
@@ -227,7 +229,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:text="PHYSICS | CHEMISTRY | COMPUTER SCIENCE" />
+            android:text="@string/toolsphysics_chemistry_computer_science" />
 
         <RelativeLayout
 
@@ -248,8 +250,8 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="16dp"
                 android:layout_height="12dp"
-                android:layout_marginLeft="16dp"
-                android:layout_toRightOf="@+id/txtclassprice"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/txtclassprice"
                 android:layout_centerVertical="true"
 
                 android:src="@drawable/arrowright" />

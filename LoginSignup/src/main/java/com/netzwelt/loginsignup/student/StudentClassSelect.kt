@@ -9,17 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.autohub.skln.BaseActivity
-import com.netzwelt.loginsignup.student.fragments.StudentClassFragment
-import com.autohub.skln.listeners.ClassSelectionListner
-import com.autohub.skln.models.Classdata
 import com.autohub.skln.utills.AppConstants.*
 import com.google.firebase.firestore.SetOptions
 import com.netzwelt.loginsignup.R
 import com.netzwelt.loginsignup.databinding.ActivityStudentClassSelectBinding
+import com.netzwelt.loginsignup.listners.ClassSelectionListner
+import com.netzwelt.loginsignup.student.fragments.StudentClassFragment
+import com.netzwelt.loginsignup.student.models.Classdata
+import com.netzwelt.loginsignup.utility.Utilities
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.indices
 import kotlin.collections.set
 
 
@@ -43,7 +43,7 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_student_class_select)
+        mBinding = DataBindingUtil.setContentView(this, com.netzwelt.loginsignup.R.layout.activity_student_class_select)
         mBinding!!.callback = this
         insertClassData()
 
@@ -59,9 +59,13 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         mBinding!!.viewpager.adapter = pagerAdapter
         mBinding!!.viewpager.offscreenPageLimit = 5
         mBinding!!.wormDotsIndicator.setViewPager(mBinding!!.viewpager)
+//        Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 1.0f, 2.0f)
+        Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 20.0f, 40.0f)
+
 
 
     }
+
 
     private fun getFragments(countList: ArrayList<String>) {
 
@@ -88,14 +92,14 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         classdatalist.add(Classdata(R.color.two, R.drawable.two, false, CLASS_2))
         classdatalist.add(Classdata(R.color.three, R.drawable.three, false, CLASS_3))
         classdatalist.add(Classdata(R.color.four, R.drawable.four, false, CLASS_4))
-        classdatalist.add(Classdata(R.color.five, R.drawable.four, false, CLASS_5))
-        classdatalist.add(Classdata(R.color.six, R.drawable.four, false, CLASS_6))
-        classdatalist.add(Classdata(R.color.seven, R.drawable.four, false, CLASS_7))
-        classdatalist.add(Classdata(R.color.eight, R.drawable.four, false, CLASS_8))
-        classdatalist.add(Classdata(R.color.nine, R.drawable.four, false, CLASS_9))
-        classdatalist.add(Classdata(R.color.ten, R.drawable.four, false, CLASS_10))
-        classdatalist.add(Classdata(R.color.eleven, R.drawable.four, false, CLASS_11))
-        classdatalist.add(Classdata(R.color.tweleve, R.drawable.four, false, CLASS_12))
+        classdatalist.add(Classdata(R.color.five, R.drawable.five, false, CLASS_5))
+        classdatalist.add(Classdata(R.color.six, R.drawable.six, false, CLASS_6))
+        classdatalist.add(Classdata(R.color.seven, R.drawable.seven, false, CLASS_7))
+        classdatalist.add(Classdata(R.color.eight, R.drawable.eight, false, CLASS_8))
+        classdatalist.add(Classdata(R.color.nine, R.drawable.nine, false, CLASS_9))
+        classdatalist.add(Classdata(R.color.ten, R.drawable.ten, false, CLASS_10))
+        classdatalist.add(Classdata(R.color.eleven, R.drawable.eleven, false, CLASS_11))
+        classdatalist.add(Classdata(R.color.tweleve, R.drawable.tweleve, false, CLASS_12))
     }
 
 

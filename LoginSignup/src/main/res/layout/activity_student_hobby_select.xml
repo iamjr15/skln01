@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="callback"
             type="com.netzwelt.loginsignup.student.StudentHobbySelect" />
@@ -11,7 +12,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
 
         <TextView
             android:id="@+id/tvSignup"
@@ -48,8 +51,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="14dp"
             android:layout_marginEnd="12dp"
-            android:max="5"
-            android:progress="5"
+            android:max="100"
             android:progressDrawable="@drawable/progress_drawable" />
 
         <TextView
@@ -89,17 +91,17 @@
 
         <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
             android:id="@+id/worm_dots_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSelectText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="420dp"
             app:dotsColor="@android:color/darker_gray"
             app:dotsCornerRadius="4dp"
             app:dotsSize="8dp"
             app:dotsSpacing="2dp"
             app:dotsStrokeColor="@color/blue"
-            app:dotsStrokeWidth="1dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvSelectText"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="420dp" />
+            app:dotsStrokeWidth="1dp" />
 
 
         <ImageButton
@@ -111,9 +113,9 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="27dp"
             android:layout_marginBottom="26dp"
-            android:onClick="@{() -> callback.onNextClick()}"
+            android:background="@drawable/next"
 
-        android:background="@drawable/next"
+            android:onClick="@{() -> callback.onNextClick()}"
             android:textAllCaps="false" />
 
     </RelativeLayout>

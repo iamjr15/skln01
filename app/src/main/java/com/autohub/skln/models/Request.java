@@ -3,11 +3,7 @@ package com.autohub.skln.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by m.imran
- * Senior Software Engineer at
- * BhimSoft on 2019-08-05.
- */
+
 public class Request implements Parcelable {
     public enum STATUS {
         PENDING("pending"), CANCELED("canceled"), ACCEPTED("accepted"), DELETED("deleted");

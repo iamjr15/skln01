@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.BuildConfig
@@ -42,17 +43,15 @@ class LoginActivity : BaseActivity() {
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         manager = SplitInstallManagerFactory.create(this)
-
         mBinding!!.callback = this
 
-        mBinding!!.usertype.setOnCheckedChangeListener(
-                RadioGroup.OnCheckedChangeListener { group, checkedId ->
-                    if (checkedId == R.id.radiostudent) {
-                        updateUi(true)
-                    } else {
-                        updateUi(false)
-                    }
-                })
+        mBinding!!.usertype.setOnCheckedChangeListener { group, checkedId ->
+            if (checkedId == R.id.radiostudent) {
+                updateUi(true)
+            } else {
+                updateUi(false)
+            }
+        }
 
     }
 
@@ -63,7 +62,11 @@ class LoginActivity : BaseActivity() {
             mBinding!!.rremail.visibility = View.VISIBLE
             mBinding!!.tvHintloginid.visibility = View.GONE
             mBinding!!.rrloginid.visibility = View.GONE
+            mBinding!!.tvForgotPassword.text = resources.getString(R.string.forgot_pass)
+
         } else {
+
+            mBinding!!.tvForgotPassword.text = resources.getString(R.string.forgot_passid)
             mBinding!!.tvHintemamil.visibility = View.GONE
             mBinding!!.rremail.visibility = View.GONE
             mBinding!!.tvHintloginid.visibility = View.VISIBLE
@@ -99,29 +102,6 @@ class LoginActivity : BaseActivity() {
 
         validateUserCredentials()
 
-
-        /*  var db_root = getString(R.string.db_root_tutors)
-          if (TYPE_STUDENT.equals(mAccountType, ignoreCase = true)) {
-              db_root = getString(R.string.db_root_students)
-          }*/
-
-
-        /* var db_root = getString(R.string.db_root_students)
-         val currentUser = firebaseAuth.currentUser ?: return
-         firebaseStore.collection(db_root).document(currentUser.uid).get().addOnCompleteListener(OnCompleteListener { task ->
-             if (task.isSuccessful) {
-                 val snapshot = task.result
-                 if (snapshot == null) {
-                     showNeedToRegister()
-                     return@OnCompleteListener
-                 }
-                 val savedPassword = snapshot.getString(KEY_PASSWORD)
-                 validateUser(savedPassword)
-                 hideLoading()
-             } else {
-                 showNeedToRegister()
-             }
-         })*/
     }
 
     private fun validateUserCredentials() {
@@ -135,52 +115,13 @@ class LoginActivity : BaseActivity() {
                     if (it.isSuccessful) {
                         moveNext()
                     } else {
-                        showNeedToRegister()
-
+                        showSnackError(it.exception.toString())
                     }
-
-
                 }.addOnFailureListener {
-                    showNeedToRegister()
-
+                    showSnackError(it.message)
                     hideLoading()
 
                 }
-
-
-        var db_root = getString(R.string.db_root_students)
-        /*     firebaseStore.collection(db_root).whereEqualTo(KEY_EMAIL, mBinding!!.edtemail.text.toString().trim())
-                     .whereEqualTo(KEY_PASSWORD, encrypt(mBinding!!.edtPassword.text.toString().trim())).get().addOnCompleteListener {
-                         hideLoading()
-                         if (it.isSuccessful && !it.result!!.isEmpty) {
-                             val snapshot = it.result
-                             if (snapshot == null) {
-                                 showNeedToRegister()
-                                 return@addOnCompleteListener
-                             }
-
-
-                             *//*val profileUpdates = UserProfileChangeRequest.Builder()
-                                .setDisplayName("")
-                                .
-                                .build()
-*//*
-
-                        *//*   val i = Intent(this@LoginActivity, StudentHomeActivity::class.java)
-                           i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                           startActivity(i)
-                           finish()*//*
-
-                        // Move user to Home screen
-                    } else {
-                        showNeedToRegister()
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Log.w("", "Error writing document", e)
-                    hideLoading()
-                    showNeedToRegister()
-                }*/
 
 
     }
@@ -199,102 +140,42 @@ class LoginActivity : BaseActivity() {
 
 
     private fun moveNext() {
-        val intent: Intent
         if (mAccountType.equals(AppConstants.TYPE_TUTOR, ignoreCase = true)) {
             Toast.makeText(this, "Tutor Verified!", Toast.LENGTH_SHORT).show()
-            //  intent = Intent(this, TutorHomeActivity::class.java)
         } else {
             Toast.makeText(this, "Student Verified!", Toast.LENGTH_SHORT).show()
-            //  intent = Intent(this, com.netzwelt.studentmodule.StudentHomeActivity::class.java)
             appPreferenceHelper.setSignupComplete(true)
-
             loadAndLaunchModule(STUDENT_FEATURE, "studentmodule")
-
-
         }
 
-
-        //intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        // startActivity(intent)
-        // finishAffinity()
     }
 
+    /*
+        * Load the Student/Tutor Module
+        * */
     private fun loadAndLaunchModule(name: String, feature_name: String) {
         if (manager.installedModules.contains(feature_name)) {
             Intent().setClassName(BuildConfig.APPLICATION_ID, name)
                     .also {
                         startActivity(it)
+                        finishAffinity()
                     }
             return
         } else {
             showLoading()
         }
 
-        // Create request to install a feature module by name.
         val request = SplitInstallRequest.newBuilder()
                 .addModule(feature_name)
                 .build()
 
-        // Load and install the requested feature module.
         manager.startInstall(request).addOnSuccessListener {
-
             hideLoading()
+            finishAffinity()
         }.addOnFailureListener {
             showSnackError(it.message)
             hideLoading()
         }
-    }
-
-
-    private fun validateUser(savedPass: String?) {
-        val pass = getString(mBinding!!.edtPassword.text)
-        try {
-            if (BaseActivity.encrypt(pass) == savedPass) {
-                val intent: Intent
-                if (mAccountType.equals(AppConstants.TYPE_TUTOR, ignoreCase = true)) {
-                    Toast.makeText(this, "Tutor Verified!", Toast.LENGTH_SHORT).show()
-                    intent = Intent(this, TutorHomeActivity::class.java)
-                } else {
-                    Toast.makeText(this, "Student Verified!", Toast.LENGTH_SHORT).show()
-                    //  intent = Intent(this, com.netzwelt.studentmodule.StudentHomeActivity::class.java)
-                }
-                /* intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                 startActivity(intent)
-                 finishAffinity()*/
-            } else if (savedPass == null) {
-                showNeedToRegister()
-                finishAffinity()
-            } else {
-                Toast.makeText(this, "Password not matched!", Toast.LENGTH_SHORT).show()
-            }
-        } catch (e: NoSuchPaddingException) {
-            e.printStackTrace()
-        } catch (e: NoSuchAlgorithmException) {
-            e.printStackTrace()
-        } catch (e: InvalidAlgorithmParameterException) {
-            e.printStackTrace()
-        } catch (e: InvalidKeyException) {
-            e.printStackTrace()
-        } catch (e: BadPaddingException) {
-            e.printStackTrace()
-        } catch (e: IllegalBlockSizeException) {
-            e.printStackTrace()
-        }
-
-    }
-
-    private fun showNeedToRegister() {
-        Snackbar.make(findViewById(android.R.id.content), R.string.wrong_crendentials, Snackbar.LENGTH_LONG)
-                /*.setAction("Sign Up") {
-                    val intent = Intent(this@LoginActivity, TutorOrStudent::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                }*/
-                .setActionTextColor(resources.getColor(android.R.color.holo_red_light))
-                .show()
     }
 
     fun signUp() {
@@ -317,7 +198,6 @@ class LoginActivity : BaseActivity() {
     }
 
     companion object {
-        const val STUDENT_FEATURE = "com.netzwelt.studentmodule.StudentHomeActivity"
-        //  private const val GET_CURRENT_LOCATION_FEATURE = "com.example.location_picker.CurrentLocation"
+        const val STUDENT_FEATURE = "com.netzwelt.studentmodule.activities.StudentHomeActivity"
     }
 }

@@ -1,11 +1,8 @@
 package com.autohub.skln.models;
 
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
-
-import androidx.annotation.RequiresApi;
 
 import com.autohub.skln.R;
 import com.autohub.skln.utills.AppConstants;
@@ -17,6 +14,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 
 public class User implements Parcelable, AppConstants {
@@ -123,9 +121,9 @@ public class User implements Parcelable, AppConstants {
     public String studentClass;
     public String paymentDuration;
     public String city;
-    public String distance = "";
-    public float latitude;
-    public float longitude;
+    public double distance = 0.0;
+    public float latitude= 0.0f;
+    public float longitude= 0.0f;
 
     public User() {
     }
@@ -172,7 +170,7 @@ public class User implements Parcelable, AppConstants {
         studentClass = in.readString();
         paymentDuration = in.readString();
         city = in.readString();
-        distance = in.readString();
+        distance = in.readDouble();
 
         latitude = in.readFloat();
         longitude = in.readFloat();
@@ -208,7 +206,7 @@ public class User implements Parcelable, AppConstants {
         dest.writeString(studentClass);
         dest.writeString(paymentDuration);
         dest.writeString(city);
-        dest.writeString(distance);
+        dest.writeDouble(distance);
 
         dest.writeFloat(latitude);
         dest.writeFloat(longitude);
@@ -293,7 +291,6 @@ public class User implements Parcelable, AppConstants {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public List<AcadmicsData> getAcadmics() {
 
         boolean isSeniorClass = studentClass.equals(CLASS_11) || studentClass.equals(CLASS_12);
@@ -302,14 +299,16 @@ public class User implements Parcelable, AppConstants {
         String[] subjects = favoriteClasses.split(",");
 
         if (isSeniorClass) {
-            ACADMICS_SENIORDATA_HASH_MAP.forEach((s, acadmicsData) ->
-                    acadmicsDataList.add(ACADMICS_SENIORDATA_HASH_MAP.get(s))
-            );
+            for (Map.Entry<String, AcadmicsData> entry : ACADMICS_SENIORDATA_HASH_MAP.entrySet()) {
+                acadmicsDataList.add(ACADMICS_SENIORDATA_HASH_MAP.get(entry.getKey()));
+            }
+
 
         } else {
-            ACADMICS_DATA_HASH_MAP.forEach((s, acadmicsData) ->
-                    acadmicsDataList.add(ACADMICS_DATA_HASH_MAP.get(s))
-            );
+
+            for (Map.Entry<String, AcadmicsData> entry : ACADMICS_DATA_HASH_MAP.entrySet()) {
+                acadmicsDataList.add(ACADMICS_DATA_HASH_MAP.get(entry.getKey()));
+            }
         }
 
 
@@ -335,13 +334,20 @@ public class User implements Parcelable, AppConstants {
         List<HobbiesData> hobbies = new ArrayList<>();
         if (TextUtils.isEmpty(hobbiesToPursue)) return hobbies;
         String[] selectedHobbies = hobbiesToPursue.split(",");
-        for (String hobby : selectedHobbies) {
-           /* if (HOBBIES_DATA_HASH_MAP.containsKey(hobby.trim()))
-                hobbies.add(HOBBIES_DATA_HASH_MAP.get(hobby.trim()));*/
+
+        for (Map.Entry<String, HobbiesData> entry : HOBBIES_DATA_HASH_MAP.entrySet()) {
+            hobbies.add(HOBBIES_DATA_HASH_MAP.get(entry.getKey()));
+        }
+
+
+
+        /*for (String hobby : selectedHobbies) {
+         *//* if (HOBBIES_DATA_HASH_MAP.containsKey(hobby.trim()))
+                hobbies.add(HOBBIES_DATA_HASH_MAP.get(hobby.trim()));*//*
             hobbies.add(HOBBIES_DATA_HASH_MAP.get(hobby.trim()));
 
 
-        }
+        }*/
         return hobbies;
     }
 

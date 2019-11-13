@@ -4,7 +4,8 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -77,13 +78,14 @@
 
 
                 <RelativeLayout
+                    android:id="@+id/rr_gotoclass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="11dp"
-                    android:layout_marginRight="7dp"
+                    android:layout_marginStart="11dp"
+                    android:layout_marginEnd="7dp"
                     android:background="@drawable/blue_rect"
                     android:orientation="vertical"
-                    android:paddingLeft="13dp"
+                    android:paddingStart="13dp"
                     android:paddingTop="11dp">
 
                     <LinearLayout
@@ -107,9 +109,9 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="13dp"
+                        android:layout_marginEnd="13dp"
                         android:src="@drawable/homearrow_right" />
 
                 </RelativeLayout>

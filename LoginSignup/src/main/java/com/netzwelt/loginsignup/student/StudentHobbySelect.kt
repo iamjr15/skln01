@@ -10,19 +10,19 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.BuildConfig
 import com.netzwelt.loginsignup.student.fragments.HobbiesFragment
-import com.autohub.skln.listeners.ClassSelectionListner
+import com.netzwelt.loginsignup.listners.ClassSelectionListner
 import com.autohub.skln.models.HobbiesData
 import com.autohub.skln.utills.AppConstants.*
 import com.google.firebase.firestore.SetOptions
 import com.netzwelt.loginsignup.databinding.ActivityStudentHobbySelectBinding
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
-import com.google.android.play.core.splitcompat.SplitCompat
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.netzwelt.loginsignup.LoginActivity
 import com.netzwelt.loginsignup.R
+import com.netzwelt.loginsignup.utility.Utilities
 
 
 class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
@@ -89,6 +89,8 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
         mBinding!!.viewpager.offscreenPageLimit = 2
         mBinding!!.wormDotsIndicator.setViewPager(mBinding!!.viewpager)
 
+        Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 80.0f, 100.0f)
+
 
     }
 
@@ -97,6 +99,8 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
             Intent().setClassName(BuildConfig.APPLICATION_ID, name)
                     .also {
                         startActivity(it)
+                        finishAffinity()
+
                     }
             return
         } else {
@@ -112,6 +116,8 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
         manager.startInstall(request).addOnSuccessListener {
 
             hideLoading()
+            finishAffinity()
+
         }.addOnFailureListener {
             showSnackError(it.message)
             hideLoading()
@@ -136,23 +142,23 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
     private fun insertHobbiesData() {
 
 
-        hobbiesDataList.add(HobbiesData(R.color.guitar, HOBBY_GUITAR, R.drawable.guitar));
-        hobbiesDataList.add(HobbiesData(R.color.keyboard, HOBBY_KEYBOARD, R.drawable.piano));
-        hobbiesDataList.add(HobbiesData(R.color.materialarts, HOBBY_MARTIAL, R.drawable.attack));
+        hobbiesDataList.add(HobbiesData(R.color.guitar, HOBBY_GUITAR, R.drawable.guitar))
+        hobbiesDataList.add(HobbiesData(R.color.keyboard, HOBBY_KEYBOARD, R.drawable.piano))
+        hobbiesDataList.add(HobbiesData(R.color.materialarts, HOBBY_MARTIAL, R.drawable.attack))
 
         hobbiesDataList.add(HobbiesData(R.color.dance, HOBBY_DANCE, R.drawable.dancing))
-        hobbiesDataList.add(HobbiesData(R.color.painting, HOBBY_PAINT, R.drawable.brush));
+        hobbiesDataList.add(HobbiesData(R.color.painting, HOBBY_PAINT, R.drawable.brush))
 
-        hobbiesDataList.add(HobbiesData(R.color.drum, HOBBY_DRUM, R.drawable.drum));
+        hobbiesDataList.add(HobbiesData(R.color.drum, HOBBY_DRUM, R.drawable.drum))
 
     }
 
     fun onNextClick() {
         val stringBuilder = StringBuilder()
-        if (selectedHobbies!!.size > 0) {
-            stringBuilder.append(selectedHobbies!![0])
-            for (i in 1 until selectedHobbies!!.size) {
-                stringBuilder.append(", ").append(selectedHobbies!![i])
+        if (selectedHobbies.size > 0) {
+            stringBuilder.append(selectedHobbies[0])
+            for (i in 1 until selectedHobbies.size) {
+                stringBuilder.append(", ").append(selectedHobbies[i])
             }
         }
 

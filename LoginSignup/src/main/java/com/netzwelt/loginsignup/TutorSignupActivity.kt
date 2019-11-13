@@ -26,7 +26,6 @@ class TutorSignupActivity : BaseActivity() {
 
     }
 
-
     fun login() {
         ActivityUtils.launchActivity(this@TutorSignupActivity, LoginActivity::class.java)
         finish()

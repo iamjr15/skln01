@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        tools:context=".fragments.EnrolledClassesFragment">
+
+
+        <RelativeLayout
+            android:id="@+id/rrempty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/defaultimg"
+                android:layout_width="267dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/foggnocomment" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/you_haven"
+                android:layout_width="223dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/defaultimg"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="@string/you_haven_t_enrolled_into_any_class_yet" />
+        </RelativeLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/enrolledrecycleview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </FrameLayout>
+</layout>
