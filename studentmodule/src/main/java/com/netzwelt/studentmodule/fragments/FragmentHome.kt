@@ -77,7 +77,7 @@ class FragmentHome : BaseFragment() {
                 .load(ref)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
                 .skipMemoryCache(true)
-                .placeholder(R.drawable.default_pic)
+                .placeholder(com.autohub.skln.R.drawable.default_pic)
                 .into(mBinding!!.profilePicture)
     }
 

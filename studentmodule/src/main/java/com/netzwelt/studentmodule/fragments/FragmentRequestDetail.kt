@@ -105,7 +105,7 @@ class FragmentRequestDetail : BaseFragment() {
         GlideApp.with(requireContext())
                 .load(pathReference1)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .fallback(R.drawable.default_pic)
+                .fallback(com.autohub.skln.R.drawable.default_pic)
                 .into(mBinding!!.profilePicture)
     }
 

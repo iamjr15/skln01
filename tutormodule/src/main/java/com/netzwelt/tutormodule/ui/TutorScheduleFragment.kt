@@ -1,4 +1,4 @@
-package com.autohub.skln.tutor
+package com.netzwelt.tutormodule.ui
 
 import android.os.Bundle
 import android.widget.SeekBar
@@ -6,7 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.autohub.skln.BaseActivity
-import com.autohub.skln.tutor.databinding.FragmentTutorScheduleBinding
+import com.netzwelt.tutormodule.R
+import com.netzwelt.tutormodule.databinding.FragmentTutorScheduleBinding
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*

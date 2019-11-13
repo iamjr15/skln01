@@ -227,7 +227,7 @@ class EditStudentProfileActivity : BaseActivity() {
                 firebaseAuth.currentUser!!.uid + ".jpg")
         GlideApp.with(this)
                 .load(ref)
-                .placeholder(R.drawable.default_pic)
+                .placeholder(com.autohub.skln.R.drawable.default_pic)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .into(mBinding!!.profilePicture)
