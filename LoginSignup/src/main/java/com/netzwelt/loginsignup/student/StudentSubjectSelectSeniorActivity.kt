@@ -23,7 +23,6 @@ import java.util.HashMap
 import com.netzwelt.loginsignup.student.fragments.StudentSubjectSelectSeniorFragment
 import com.netzwelt.loginsignup.listners.ClassSelectionListner
 import com.netzwelt.loginsignup.student.models.SubjectsData
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 import com.autohub.skln.utills.AppConstants.KEY_STDT_FAVORITE_CLASSES
 import com.autohub.skln.utills.AppConstants.KEY_STDT_LEAST_FAV_CLASSES
@@ -39,6 +38,7 @@ import com.autohub.skln.utills.AppConstants.SUBJECT_PHYSICS
 import com.netzwelt.loginsignup.R
 import com.netzwelt.loginsignup.databinding.ActivityStudentSubjectSeniorBinding
 import com.netzwelt.loginsignup.utility.Utilities
+
 /**
  * Created by Vt Netzwelt
  */
@@ -109,10 +109,10 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
             spannable.setSpan(ForegroundColorSpan(Color.BLUE), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             this.mBinding!!.tvSelectText!!.setText(spannable, TextView.BufferType.SPANNABLE)
-            Utilities.animateProgressbar(mBinding!!.pbSignupProgress,40.0f,60.0f)
+            Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 40.0f, 60.0f)
 
         } else {
-            Utilities.animateProgressbar(mBinding!!.pbSignupProgress,60.0f,80.0f)
+            Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 60.0f, 80.0f)
 
             val spannable = SpannableStringBuilder(resources.getString(R.string.select_least_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.RED), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
@@ -143,15 +143,15 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
     }
 
     private fun insertSubjectData() {
-        subjectsDataList.add(SubjectsData(R.color.math, R.drawable.geometry, false, SUBJECT_MATHS))
-        subjectsDataList.add(SubjectsData(R.color.english, R.drawable.noun, false, SUBJECT_ENGLISH))
-        subjectsDataList.add(SubjectsData(R.color.physics, R.drawable.physics, false, SUBJECT_PHYSICS))
-        subjectsDataList.add(SubjectsData(R.color.account, R.drawable.accounting, false, SUBJECT_ACCOUNTANCY))
-        subjectsDataList.add(SubjectsData(R.color.biology, R.drawable.microscope, false, SUBJECT_BIOLOGY))
-        subjectsDataList.add(SubjectsData(R.color.computerscience, R.drawable.informatic, false, SUBJECT_COMPUTER_SCIENCE))
-        subjectsDataList.add(SubjectsData(R.color.chemistry, R.drawable.biology, false, SUBJECT_CHEMISTRY))
-        subjectsDataList.add(SubjectsData(R.color.economics, R.drawable.rating, false, SUBJECT_ECONOMICS))
-        subjectsDataList.add(SubjectsData(R.color.business, R.drawable.rupee, false, SUBJECT_BUSINESS))
+        subjectsDataList.add(SubjectsData(R.color.math, com.autohub.skln.R.drawable.geometry, false, SUBJECT_MATHS))
+        subjectsDataList.add(SubjectsData(R.color.english, com.autohub.skln.R.drawable.noun, false, SUBJECT_ENGLISH))
+        subjectsDataList.add(SubjectsData(R.color.physics, com.autohub.skln.R.drawable.physics, false, SUBJECT_PHYSICS))
+        subjectsDataList.add(SubjectsData(R.color.account, com.autohub.skln.R.drawable.accounting, false, SUBJECT_ACCOUNTANCY))
+        subjectsDataList.add(SubjectsData(R.color.biology, com.autohub.skln.R.drawable.microscope, false, SUBJECT_BIOLOGY))
+        subjectsDataList.add(SubjectsData(R.color.computerscience, com.autohub.skln.R.drawable.informatic, false, SUBJECT_COMPUTER_SCIENCE))
+        subjectsDataList.add(SubjectsData(R.color.chemistry, com.autohub.skln.R.drawable.test_tube, false, SUBJECT_CHEMISTRY))
+        subjectsDataList.add(SubjectsData(R.color.economics, com.autohub.skln.R.drawable.rating, false, SUBJECT_ECONOMICS))
+        subjectsDataList.add(SubjectsData(R.color.business, com.autohub.skln.R.drawable.rupee, false, SUBJECT_BUSINESS))
 
 
     }
@@ -215,9 +215,9 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
         }
     }
 
-   /* override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }*/
+    /* override fun attachBaseContext(newBase: Context) {
+         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+     }*/
 
 
 }

@@ -130,12 +130,12 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
     }
 
     private fun insertSubjectData() {
-        subjectsDataList.add(SubjectsData(R.color.science, R.drawable.microscope, false, SUBJECT_SCIENCE))
-        subjectsDataList.add(SubjectsData(R.color.english, R.drawable.noun, false, SUBJECT_ENGLISH))
-        subjectsDataList.add(SubjectsData(R.color.math, R.drawable.geometry, false, SUBJECT_MATHS))
-        subjectsDataList.add(SubjectsData(R.color.socialstudies, R.drawable.strike, false, SUBJECT_SOCIAL_STUDIES))
-        subjectsDataList.add(SubjectsData(R.color.language, R.drawable.language, false, SUBJECT_LANGUAGES))
-        subjectsDataList.add(SubjectsData(R.color.computerscience, R.drawable.informatic, false, SUBJECT_COMPUTER_SCIENCE))
+        subjectsDataList.add(SubjectsData(R.color.science, com.autohub.skln.R.drawable.microscope, false, SUBJECT_SCIENCE))
+        subjectsDataList.add(SubjectsData(R.color.english, com.autohub.skln.R.drawable.noun, false, SUBJECT_ENGLISH))
+        subjectsDataList.add(SubjectsData(R.color.math, com.autohub.skln.R.drawable.geometry, false, SUBJECT_MATHS))
+        subjectsDataList.add(SubjectsData(R.color.socialstudies, com.autohub.skln.R.drawable.strike, false, SUBJECT_SOCIAL_STUDIES))
+        subjectsDataList.add(SubjectsData(R.color.language, com.autohub.skln.R.drawable.language, false, SUBJECT_LANGUAGES))
+        subjectsDataList.add(SubjectsData(R.color.computerscience, com.autohub.skln.R.drawable.informatic, false, SUBJECT_COMPUTER_SCIENCE))
     }
 
     fun onNextClick() {
