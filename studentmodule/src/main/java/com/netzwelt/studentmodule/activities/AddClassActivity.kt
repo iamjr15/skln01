@@ -20,11 +20,8 @@ class AddClassActivity : AppCompatActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_class)
         mBinding!!.callback = this
     }
-
-
     fun onAddclick() {
         mBinding!!.lladdclass.visibility = View.GONE
-
         mBinding!!.lladdclasssucess.visibility = View.VISIBLE
     }
 
