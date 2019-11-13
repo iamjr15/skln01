@@ -66,8 +66,10 @@ class LoginActivity : BaseActivity() {
     }
 
     fun login() {
-        Toast.makeText(this, "Tutor Verified!", Toast.LENGTH_SHORT).show()
-        loadAndLaunchModule(TUTOR_FEATURE, "tutormodule")
+        if (!mBinding!!.radiostudent.isChecked) {
+            Toast.makeText(this, "Tutor Verified!", Toast.LENGTH_SHORT).show()
+            loadAndLaunchModule(TUTOR_FEATURE, "tutormodule")
+        }
 
         val email = mBinding!!.edtemail.text
         if (email == null) {

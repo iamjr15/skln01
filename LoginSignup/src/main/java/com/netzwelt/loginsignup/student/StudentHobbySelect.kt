@@ -142,14 +142,14 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
     private fun insertHobbiesData() {
 
 
-        hobbiesDataList.add(HobbiesData(R.color.guitar, HOBBY_GUITAR, R.drawable.guitar))
-        hobbiesDataList.add(HobbiesData(R.color.keyboard, HOBBY_KEYBOARD, R.drawable.piano))
-        hobbiesDataList.add(HobbiesData(R.color.materialarts, HOBBY_MARTIAL, R.drawable.attack))
+        hobbiesDataList.add(HobbiesData(R.color.guitar, HOBBY_GUITAR, com.autohub.skln.R.drawable.guitar))
+        hobbiesDataList.add(HobbiesData(R.color.keyboard, HOBBY_KEYBOARD, com.autohub.skln.R.drawable.piano))
+        hobbiesDataList.add(HobbiesData(R.color.materialarts, HOBBY_MARTIAL, com.autohub.skln.R.drawable.attack))
 
-        hobbiesDataList.add(HobbiesData(R.color.dance, HOBBY_DANCE, R.drawable.dancing))
-        hobbiesDataList.add(HobbiesData(R.color.painting, HOBBY_PAINT, R.drawable.brush))
+        hobbiesDataList.add(HobbiesData(R.color.dance, HOBBY_DANCE, com.autohub.skln.R.drawable.dancing))
+        hobbiesDataList.add(HobbiesData(R.color.painting, HOBBY_PAINT, com.autohub.skln.R.drawable.brush))
 
-        hobbiesDataList.add(HobbiesData(R.color.drum, HOBBY_DRUM, R.drawable.drum))
+        hobbiesDataList.add(HobbiesData(R.color.drum, HOBBY_DRUM, com.autohub.skln.R.drawable.drum))
 
     }
 

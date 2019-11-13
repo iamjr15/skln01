@@ -89,7 +89,6 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
                             .apply(options).into(imgprofile)
 
                 }
-
             }
         }
 
