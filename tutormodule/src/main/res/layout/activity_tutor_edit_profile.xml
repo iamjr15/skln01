@@ -33,17 +33,31 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/montserrat_light"
-                            android:gravity="center"
-                            android:text="@string/edit_profile"
-                            android:textAllCaps="true"
-                            android:textColor="@color/light_grey"
-                            android:textSize="18sp" />
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/backimage"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/backarrow"
+                                android:layout_margin="16dp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="16dp"
+                                android:fontFamily="@font/montserrat_light"
+                                android:gravity="center"
+                                android:text="@string/edit_profile"
+                                android:textAllCaps="true"
+                                android:textColor="@color/light_grey"
+                                android:textSize="18sp" />
+                        </LinearLayout>
 
                         <RelativeLayout
                             android:layout_width="105dp"
@@ -54,9 +68,8 @@
                                 android:id="@+id/profile_picture"
                                 android:layout_width="105dp"
                                 android:layout_height="105dp"
-                                android:layout_marginTop="14dp"
+                                android:layout_marginTop="16dp"
                                 android:src="@drawable/default_pic" />
-
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="wrap_content"
