@@ -8,6 +8,7 @@ import com.autohub.skln.fragment.BaseFragment
 import com.netzwelt.tutormodule.R
 
 class RequestsFragment : BaseFragment() {
+    internal var view: View? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_pending_request, container, false)
