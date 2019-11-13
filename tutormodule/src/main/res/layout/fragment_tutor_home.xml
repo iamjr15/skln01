@@ -53,7 +53,7 @@
             android:textColor="@color/black"
             android:textSize="18sp" />
 
-        <androidx.core.widget.NestedScrollView
+        <ScrollView
             android:id="@+id/scroll_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -213,7 +213,7 @@
 
                 </RelativeLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

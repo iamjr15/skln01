@@ -20,8 +20,8 @@
                 android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="155dp"
-                android:elevation="5dp"
-                android:background="@drawable/tutor_profile_header">
+                android:background="@drawable/tutor_profile_header"
+                android:elevation="5dp">
 
                 <TextView
                     android:id="@+id/label_profile"
@@ -45,7 +45,9 @@
                     android:gravity="center_vertical"
                     android:textColor="@color/white"
                     android:textSize="24sp"
-                    tools:text="John D." />
+                    tools:text="John D."
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
 
             </RelativeLayout>
 
@@ -53,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:layout_marginTop="120dp"
+                android:layout_marginTop="110dp"
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="24dp"
                 android:background="@color/white"
@@ -69,31 +71,41 @@
 
                     <TextView
                         android:id="@+id/id"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:ellipsize="end"
                         android:fontFamily="@font/montserrat_semi_bold"
                         android:gravity="start"
+                        android:singleLine="true"
                         android:textAllCaps="true"
+
                         android:textColor="@color/black"
                         android:textSize="21sp"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/profile_picture"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="SKL566" />
 
                     <TextView
                         android:id="@+id/type"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:ellipsize="end"
                         android:fontFamily="@font/montserrat_semi_bold"
                         android:gravity="start"
+                        android:singleLine="true"
                         android:textAllCaps="true"
+
                         android:textColor="@color/black"
                         android:textSize="13sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/id"
+                        app:layout_constraintEnd_toStartOf="@+id/profile_picture"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/id"
                         tools:text="Individual Tutor" />
 
@@ -101,7 +113,8 @@
                         android:id="@+id/profile_picture"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@color/white"
+                        android:src="@drawable/default_pic"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -114,7 +127,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="12dp"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/frameLayout">
 
