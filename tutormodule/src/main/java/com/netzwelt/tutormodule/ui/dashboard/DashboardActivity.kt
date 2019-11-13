@@ -32,7 +32,6 @@ class DashboardActivity : BaseActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_schedule -> {
-
                 val scheduleFragment = ScheduleFragment.newInstance()
                 openFragment(scheduleFragment)
                 return@OnNavigationItemSelectedListener true
