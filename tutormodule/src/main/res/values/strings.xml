@@ -33,6 +33,7 @@
     <string name="class_requests">Class Requests</string>
     <string name="profile">Profile</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="no_class_request_found">No class request found !</string>
 
 
     <string name="db_root_tutors">tutors</string>

@@ -10,21 +10,20 @@ import com.netzwelt.tutormodule.R
 
 class ClassRequestBaseFragment : Fragment() {
     internal var view: View? = null
-//    var fragmentClassRequests: FragmentClassRequests? = null
+    var fragmentRequests: RequestsFragment? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_class_request_base, container, false)
         showRequestFragmentClass()
         return view
     }
 
     fun showRequestFragmentClass() {
-        /* fragmentClassRequests = FragmentClassRequests()
-         childFragmentManager
-                 .beginTransaction()
-                 .replace(R.id.requestcontainer, fragmentClassRequests!!).commit()*/
+        fragmentRequests = RequestsFragment()
+        childFragmentManager
+                .beginTransaction()
+                .replace(R.id.requestcontainer, fragmentRequests!!).commit()
     }
 
 
