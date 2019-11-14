@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.netzwelt.tutormodule.R
 
-class ScheduleAdapter(private val list: List<String>) :
-        RecyclerView.Adapter<ScheduleAdapter.ViewHolder>() {
+class ScheduleCalenderAdapter(private val list: List<String>) :
+        RecyclerView.Adapter<ScheduleCalenderAdapter.ViewHolder>() {
 
     var selectedPosition = -1
 

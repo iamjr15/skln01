@@ -21,6 +21,7 @@ import java.util.*
 class ScheduleFragment : BaseFragment() {
 
     private lateinit var mBinding: FragmentTutorScheduleBinding
+    private lateinit var adaptor: ScheduleAdaptor
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_tutor_schedule, container, false)
@@ -56,12 +57,19 @@ class ScheduleFragment : BaseFragment() {
 
             }
         })
+
+
+
+        mBinding.schedulerecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        adaptor = ScheduleAdaptor(requireContext())
+        mBinding.schedulerecycleview.adapter = adaptor
+
     }
 
     private fun initializeCalendarView(dates: List<String>) {
         mBinding.calendarView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
 
-        val adapter = ScheduleAdapter(dates)
+        val adapter = ScheduleCalenderAdapter(dates)
         mBinding.calendarView.adapter = adapter
     }
 

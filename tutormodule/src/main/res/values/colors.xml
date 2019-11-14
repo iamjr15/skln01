@@ -12,5 +12,6 @@
     <color name="light_grey">#ff707070</color>
     <color name="tabindicator">#0055fe</color>
     <color name="lineGrayColor">#707070</color>
+    <color name="skyblue">#ff039be5</color>
 
 </resources>
