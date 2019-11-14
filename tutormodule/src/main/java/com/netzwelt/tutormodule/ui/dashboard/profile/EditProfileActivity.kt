@@ -17,6 +17,7 @@ import com.autohub.skln.BaseActivity
 import com.autohub.skln.CropActivity
 import com.autohub.skln.models.User
 import com.autohub.skln.models.UserViewModel
+import com.autohub.skln.utills.ActivityUtils
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.GlideApp
@@ -30,6 +31,7 @@ import com.netzwelt.tutormodule.R
 import com.netzwelt.tutormodule.databinding.ActivityTutorEditProfileBinding
 import com.vansuita.pickimage.bundle.PickSetup
 import com.vansuita.pickimage.dialog.PickImageDialog
+import kotlinx.android.synthetic.main.activity_tutor_edit_profile.*
 import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -58,7 +60,6 @@ class EditProfileActivity : BaseActivity() {
     }
 
     val selectedClass = ArrayList<String>()
-    val selectedSubject = ArrayList<String>()
     val selectedExp = ArrayList<String>()
     val selectedQualification = ArrayList<String>()
     val selectedQualificationAreas = ArrayList<String>()
@@ -95,7 +96,7 @@ class EditProfileActivity : BaseActivity() {
         items.add(AppConstants.SUBJECT_MATHS)
         items.add(AppConstants.SUBJECT_ENGLISH)
 
-        showDialog(items, mBinding!!.subjectToTaught, "Choose Subject", selectedSub,false)
+        showMultiSelectionDialog(items, mBinding!!.subjectToTaught, getString(R.string.subject_to_taught), selectedSub)
 
 
     }
@@ -118,34 +119,52 @@ class EditProfileActivity : BaseActivity() {
         items.add("Class " + AppConstants.CLASS_12 + CommonUtils.getClassSuffix(AppConstants.CLASS_12.toInt()))
         val namesArr = items.toTypedArray()
 
-        showDialog(items, mBinding!!.classToTeach, "Choose classes to teach", selectedClass,false)
+        showMultiSelectionDialog(items, mBinding!!.classToTeach, getString(R.string.class_to_teach), selectedClass)
     }
 
     fun onSelectOccupation() {
         var items = getResources().getStringArray(R.array.occupation_arrays).toList()
 
-        showDialog(items, mBinding!!.selectOccupation, "Choose Occupation", selectedOccupation,false)
+        showSingleSelectionDialog(items, mBinding!!.selectOccupation, getString(R.string.select_ocupation), selectedOccupation)
 
     }
 
     fun onSelectExperience() {
 
         var items = getResources().getStringArray(R.array.experience_arrays).toList()
-        showDialog(items, mBinding!!.teachingExperience, "Choose experience", selectedExp,false)
+        showSingleSelectionDialog(items, mBinding!!.teachingExperience, getString(R.string.select_treaching_epereience), selectedExp)
         //showExperience()
     }
 
     fun onSelectQualification() {
-
+        selectedQualificationAreas.clear()
+        mBinding.areaOfQualification.text = ""
         var items = getResources().getStringArray(R.array.qualification_arrays).toList()
-        showDialog(items, mBinding!!.qualification, "Choose Qualification", selectedQualification,false)
+        showSingleSelectionDialog(items, mBinding!!.qualification, getString(R.string.select_qualification), selectedQualification)
     }
 
     fun onSelectQualificationArea() {
+        lateinit var items: List<String>
+        if (selectedQualification.size > 0) {
+            if (selectedQualification[0].equals("Graduate")) {
+                items = getResources().getStringArray(R.array.area_qualifi_arrays_1).toList()
 
-        var items = getResources().getStringArray(R.array.area_qualifi_arrays_1).toList()
+            } else if (selectedQualification[0].equals("Post-Graduate")) {
+                items = getResources().getStringArray(R.array.area_qualifi_arrays_2).toList()
 
-        showDialog(items, mBinding!!.areaOfQualification, "Choose Qualification areas", selectedQualificationAreas,false)
+            } else {
+                items = getResources().getStringArray(R.array.area_qualifi_arrays_1).toList()
+
+            }
+
+            showMultiSelectionDialog(items, mBinding!!.areaOfQualification, getString(R.string.select_area_of_qualification), selectedQualificationAreas)
+
+        } else {
+            showSnackError("Please select your qualification first.")
+
+        }
+
+
     }
 
     fun onSelectTargetBoard() {
@@ -155,11 +174,11 @@ class EditProfileActivity : BaseActivity() {
         items.add(AppConstants.BOARD_STATE)
 
 
-        showDialog(items, mBinding!!.targetedBoard, "Choose Board", selectedTargetBoard,false)
+        showMultiSelectionDialog(items, mBinding!!.targetedBoard, getString(R.string.select_targeted_board), selectedTargetBoard)
 //        showTargetBoard()
     }
 
-    fun showDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>,isSingle :Boolean) {
+    fun showMultiSelectionDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>) {
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
         val selectedvalues = ArrayList<String>()
@@ -200,6 +219,41 @@ class EditProfileActivity : BaseActivity() {
 
     }
 
+    fun showSingleSelectionDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>) {
+        val namesArr = items.toTypedArray()
+        var indexSelected = -1
+        if (selectedItems.size > 0) {
+            for (i in namesArr.indices) {
+                if (namesArr[i].equals(selectedItems[0])) {
+                    indexSelected = i
+                    break
+                } else {
+                    indexSelected = 0
+                }
+            }
+        } else {
+            indexSelected = 0
+
+        }
+
+
+        AlertDialog.Builder(this)
+                .setSingleChoiceItems(namesArr, indexSelected, null)
+                .setTitle(title)
+                .setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                    var selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
+                    if (selectedPosition < 0) {
+                        selectedPosition = 0
+                    }
+                    testview.text = namesArr[selectedPosition]
+                    selectedItems.clear()
+                    selectedItems.add(namesArr[selectedPosition])
+                    /*  mBinding!!.grade.text = namesArr[selectedPosition]
+                      user!!.studentClass = (selectedPosition + 1).toString()*/
+                }
+                .show()
+    }
 
     fun onAddPicture() {
         val galleryPermissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -272,8 +326,10 @@ class EditProfileActivity : BaseActivity() {
                 "j9MtRdT5L0g62QiQ7z514z0hQz52"/*firebaseAuth.currentUser!!.uid*/ + ".jpg")
         GlideApp.with(this)
                 .load(ref)
+                .placeholder(com.autohub.skln.R.drawable.default_pic)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
                 .skipMemoryCache(true)
+
                 .into(mBinding.profilePicture)
     }
 
@@ -331,8 +387,44 @@ class EditProfileActivity : BaseActivity() {
             Log.d(">>>RegisterAcRes", croppedUri!!.toString() + " , " + originalUri!!.toString())
             mBinding.profilePicture.setImageURI(croppedUri)
             mBinding.profilePicture.tag = croppedUri.path
-            uploadImage(croppedUri)
+            // uploadImage(croppedUri)
         }
+    }
+
+    fun makeSaveRequest() {
+        if (isVerified()) {
+            showSnackError("In progress")
+
+        }
+
+
+    }
+
+    private fun isVerified(): Boolean {
+        if (mBinding!!.classToTeach.text.isEmpty()) {
+            showSnackError("Please select classes you teach.")
+            return false
+        } else if (subject_to_taught.text.isEmpty()) {
+            showSnackError("Please select subjects you teach.")
+            return false
+
+        } else if (select_occupation.text.isEmpty()) {
+            showSnackError("Please select your occupation.")
+            return false
+
+        } else if (teaching_experience.text.isEmpty()) {
+            showSnackError("Please select your teaching experience.")
+            return false
+
+        } else if (qualification.text.isEmpty()) {
+            showSnackError("Please select your qualification.")
+            return false
+
+        } else {
+            return true
+
+        }
+
     }
 
 

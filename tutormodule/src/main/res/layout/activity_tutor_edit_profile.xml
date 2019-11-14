@@ -56,25 +56,25 @@
 
 
                                 android:layout_gravity="center_vertical"
-                                android:tint="@color/black"
-                                android:padding="8dp"
                                 android:layout_margin="16dp"
                                 android:onClick="@{() -> callback.onBackClick()}"
-                                android:src="@drawable/backarrow" />
+                                android:padding="8dp"
+                                android:src="@drawable/backarrow"
+                                android:tint="@color/black" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="16dp"
+                                android:layout_marginEnd="32dp"
                                 android:layout_marginBottom="16dp"
                                 android:fontFamily="@font/montserrat_light"
                                 android:gravity="center"
                                 android:text="@string/edit_profile"
                                 android:textAllCaps="true"
                                 android:textColor="@color/light_grey"
-                                android:textSize="18sp"
-                                android:layout_marginEnd="32dp"/>
+                                android:textSize="18sp" />
                         </LinearLayout>
 
                         <RelativeLayout
@@ -176,9 +176,9 @@
                     android:clickable="true"
                     android:drawableEnd="@drawable/arrow_right"
                     android:focusable="true"
-                    android:onClick="@{() -> callback.onSubjectTaughtClick()}"
-
                     android:fontFamily="@font/montserrat_light"
+
+                    android:onClick="@{() -> callback.onSubjectTaughtClick()}"
                     android:paddingStart="8dp"
                     android:paddingTop="16dp"
                     android:paddingEnd="8dp"
@@ -243,10 +243,10 @@
                     android:drawableEnd="@drawable/arrow_right"
                     android:focusable="true"
                     android:fontFamily="@font/montserrat_light"
+                    android:onClick="@{() -> callback.onSelectExperience()}"
                     android:paddingStart="8dp"
                     android:paddingTop="16dp"
                     android:paddingEnd="8dp"
-                    android:onClick="@{() -> callback.onSelectExperience()}"
 
                     android:paddingBottom="16dp"
                     android:text="@{userViewModel.getTeachingExp()}"
@@ -275,13 +275,13 @@
                     android:drawableEnd="@drawable/arrow_right"
                     android:focusable="true"
                     android:fontFamily="@font/montserrat_light"
+                    android:onClick="@{() -> callback.onSelectQualification()}"
                     android:paddingStart="8dp"
                     android:paddingTop="16dp"
                     android:paddingEnd="8dp"
                     android:paddingBottom="16dp"
                     android:text="@{userViewModel.getQualification()}"
                     android:textColor="@color/black"
-                    android:onClick="@{() -> callback.onSelectQualification()}"
 
 
                     android:textSize="14sp"
@@ -308,11 +308,11 @@
                     android:drawableEnd="@drawable/arrow_right"
                     android:focusable="true"
                     android:fontFamily="@font/montserrat_light"
+                    android:onClick="@{() -> callback.onSelectQualificationArea()}"
                     android:paddingStart="8dp"
                     android:paddingTop="16dp"
                     android:paddingEnd="8dp"
                     android:paddingBottom="16dp"
-                    android:onClick="@{() -> callback.onSelectQualificationArea()}"
 
 
                     android:text="@{userViewModel.getAreaQualification()}"
@@ -341,10 +341,10 @@
                     android:drawableEnd="@drawable/arrow_right"
                     android:focusable="true"
                     android:fontFamily="@font/montserrat_light"
+                    android:onClick="@{() -> callback.onSelectTargetBoard()}"
                     android:paddingStart="8dp"
                     android:paddingTop="16dp"
                     android:paddingEnd="8dp"
-                    android:onClick="@{() -> callback.onSelectTargetBoard()}"
 
 
                     android:paddingBottom="16dp"
@@ -405,6 +405,8 @@
                     android:background="@drawable/bg_round_black"
                     android:backgroundTint="@color/black"
                     android:text="@string/update"
+                    android:onClick="@{() -> callback.makeSaveRequest()}"
+
                     android:textColor="@color/white"
                     android:textSize="21sp" />
             </LinearLayout>
