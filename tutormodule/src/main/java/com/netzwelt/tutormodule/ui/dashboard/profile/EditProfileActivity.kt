@@ -70,7 +70,7 @@ class EditProfileActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_tutor_edit_profile)
-        mBinding!!.callback = this
+        mBinding.callback = this
         mStorageReference = FirebaseStorage.getInstance().reference
         mUserViewModel = UserViewModel(User())
         mBinding.userViewModel = mUserViewModel
@@ -95,7 +95,7 @@ class EditProfileActivity : BaseActivity() {
         items.add(AppConstants.SUBJECT_MATHS)
         items.add(AppConstants.SUBJECT_ENGLISH)
 
-        showDialog(items, mBinding!!.subjectToTaught, "Choose Subject", selectedSub,false)
+        showDialog(items, mBinding.subjectToTaught, "Choose Subject", selectedSub,false)
 
 
     }
@@ -118,34 +118,34 @@ class EditProfileActivity : BaseActivity() {
         items.add("Class " + AppConstants.CLASS_12 + CommonUtils.getClassSuffix(AppConstants.CLASS_12.toInt()))
         val namesArr = items.toTypedArray()
 
-        showDialog(items, mBinding!!.classToTeach, "Choose classes to teach", selectedClass,false)
+        showDialog(items, mBinding.classToTeach, "Choose classes to teach", selectedClass,false)
     }
 
     fun onSelectOccupation() {
         var items = getResources().getStringArray(R.array.occupation_arrays).toList()
 
-        showDialog(items, mBinding!!.selectOccupation, "Choose Occupation", selectedOccupation,false)
+        showDialog(items, mBinding.selectOccupation, "Choose Occupation", selectedOccupation,false)
 
     }
 
     fun onSelectExperience() {
 
         var items = getResources().getStringArray(R.array.experience_arrays).toList()
-        showDialog(items, mBinding!!.teachingExperience, "Choose experience", selectedExp,false)
+        showDialog(items, mBinding.teachingExperience, "Choose experience", selectedExp,false)
         //showExperience()
     }
 
     fun onSelectQualification() {
 
         var items = getResources().getStringArray(R.array.qualification_arrays).toList()
-        showDialog(items, mBinding!!.qualification, "Choose Qualification", selectedQualification,false)
+        showDialog(items, mBinding.qualification, "Choose Qualification", selectedQualification,false)
     }
 
     fun onSelectQualificationArea() {
 
         var items = getResources().getStringArray(R.array.area_qualifi_arrays_1).toList()
 
-        showDialog(items, mBinding!!.areaOfQualification, "Choose Qualification areas", selectedQualificationAreas,false)
+        showDialog(items, mBinding.areaOfQualification, "Choose Qualification areas", selectedQualificationAreas,false)
     }
 
     fun onSelectTargetBoard() {
@@ -155,7 +155,7 @@ class EditProfileActivity : BaseActivity() {
         items.add(AppConstants.BOARD_STATE)
 
 
-        showDialog(items, mBinding!!.targetedBoard, "Choose Board", selectedTargetBoard,false)
+        showDialog(items, mBinding.targetedBoard, "Choose Board", selectedTargetBoard,false)
 //        showTargetBoard()
     }
 

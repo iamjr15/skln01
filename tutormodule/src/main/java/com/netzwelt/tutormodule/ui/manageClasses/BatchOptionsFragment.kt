@@ -31,7 +31,7 @@ class BatchOptionsFragment : BaseFragment() {
 
     fun openEditScheduleScreen() {
         val bundle = Bundle()
-        bundle.putBoolean("type", false)
+        bundle.putBoolean("showAddBatch", false)
         val addBatchFragment = AddBatchFragment()
         addBatchFragment.arguments = bundle
         openFragment(addBatchFragment)
