@@ -40,23 +40,26 @@
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/backimage"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
                                 android:layout_gravity="center_vertical"
                                 android:src="@drawable/backarrow"
-                                android:layout_margin="16dp"/>
+                                android:tint="@color/black"
+                                android:padding="8dp"/>
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_margin="16dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="16dp"
                                 android:fontFamily="@font/montserrat_light"
                                 android:gravity="center"
                                 android:text="@string/edit_profile"
                                 android:textAllCaps="true"
                                 android:textColor="@color/light_grey"
-                                android:textSize="18sp" />
+                                android:textSize="18sp"
+                                android:layout_marginEnd="32dp"/>
                         </LinearLayout>
 
                         <RelativeLayout
