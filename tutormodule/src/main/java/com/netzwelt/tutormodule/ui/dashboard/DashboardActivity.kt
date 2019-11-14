@@ -36,7 +36,7 @@ class DashboardActivity : BaseActivity(), HomeListener {
 
         mViewPager = findViewById(R.id.container)
         mViewPager.adapter = sectionsPagerAdapter
-        mViewPager.offscreenPageLimit = 4
+        mViewPager.offscreenPageLimit = 3
 
 
         tab_item_home.setOnClickListener {
@@ -123,7 +123,7 @@ class DashboardActivity : BaseActivity(), HomeListener {
         homeBaseFragment.showBatchOptionsFragment()
     }
 
-    override fun showAddBatchFragment(showAddBatch : Boolean) {
+    override fun showAddBatchFragment(showAddBatch: Boolean) {
         homeBaseFragment.showAddBatchFragment(showAddBatch)
     }
 
