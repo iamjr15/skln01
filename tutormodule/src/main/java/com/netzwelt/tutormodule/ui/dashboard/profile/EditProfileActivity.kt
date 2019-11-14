@@ -64,6 +64,7 @@ class EditProfileActivity : BaseActivity() {
     val selectedQualificationAreas = ArrayList<String>()
     val selectedTargetBoard = ArrayList<String>()
     val selectedSub = ArrayList<String>()
+    val selectedOccupation = ArrayList<String>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,34 +118,34 @@ class EditProfileActivity : BaseActivity() {
         items.add("Class " + AppConstants.CLASS_12 + CommonUtils.getClassSuffix(AppConstants.CLASS_12.toInt()))
         val namesArr = items.toTypedArray()
 
-        showDialog(items, mBinding!!.classToTeach, "Choose classes to teach", selectedSub)
+        showDialog(items, mBinding!!.classToTeach, "Choose classes to teach", selectedClass)
     }
 
     fun onSelectOccupation() {
         var items = getResources().getStringArray(R.array.occupation_arrays).toList()
 
-        showDialog(items, mBinding!!.selectOccupation, "Choose Occupation", selectedSub)
+        showDialog(items, mBinding!!.selectOccupation, "Choose Occupation", selectedOccupation)
 
     }
 
     fun onSelectExperience() {
 
         var items = getResources().getStringArray(R.array.experience_arrays).toList()
-        showDialog(items, mBinding!!.teachingExperience, "Choose experience", selectedSub)
+        showDialog(items, mBinding!!.teachingExperience, "Choose experience", selectedExp)
         //showExperience()
     }
 
     fun onSelectQualification() {
 
         var items = getResources().getStringArray(R.array.qualification_arrays).toList()
-        showDialog(items, mBinding!!.qualification, "Choose Qualification", selectedSub)
+        showDialog(items, mBinding!!.qualification, "Choose Qualification", selectedQualification)
     }
 
     fun onSelectQualificationArea() {
 
         var items = getResources().getStringArray(R.array.area_qualifi_arrays_1).toList()
 
-        showDialog(items, mBinding!!.areaOfQualification, "Choose Qualification areas", selectedSub)
+        showDialog(items, mBinding!!.areaOfQualification, "Choose Qualification areas", selectedQualificationAreas)
     }
 
     fun onSelectTargetBoard() {
@@ -154,19 +155,19 @@ class EditProfileActivity : BaseActivity() {
         items.add(AppConstants.BOARD_STATE)
 
 
-        showDialog(items, mBinding!!.targetedBoard, "Choose Board", selectedSub)
+        showDialog(items, mBinding!!.targetedBoard, "Choose Board", selectedTargetBoard)
 //        showTargetBoard()
     }
 
     fun showDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>) {
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
-        val selectedOccupation = ArrayList<String>()
+        val selectedvalues = ArrayList<String>()
 
         for (i in selectedItems.indices) {
             if (items.contains(selectedItems[i])) {
                 booleans[items.indexOf(selectedItems[i])] = true
-                selectedOccupation.add(selectedItems[i])
+                selectedvalues.add(selectedItems[i])
             }
         }
 
@@ -174,25 +175,25 @@ class EditProfileActivity : BaseActivity() {
                 .setMultiChoiceItems(namesArr, booleans
                 ) { _, i, b ->
                     if (b) {
-                        selectedOccupation.add(items[i])
+                        selectedvalues.add(items[i])
                     } else {
-                        selectedOccupation.remove(items[i])
+                        selectedvalues.remove(items[i])
                     }
                 }
                 .setTitle(title)
                 .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                     var selectedSubString = ""
-                    for (i in selectedOccupation.indices) {
-                        selectedSubString += if (i == selectedOccupation.size - 1) {
-                            selectedOccupation[i]
+                    for (i in selectedvalues.indices) {
+                        selectedSubString += if (i == selectedvalues.size - 1) {
+                            selectedvalues[i]
                         } else {
-                            selectedOccupation[i] + ","
+                            selectedvalues[i] + ","
                         }
                     }
                     testview.text = selectedSubString
-                    selectedSub.clear()
-                    selectedSub.addAll(selectedOccupation)
+                    selectedItems.clear()
+                    selectedItems.addAll(selectedvalues)
 
                 }
                 .show()

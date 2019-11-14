@@ -4,9 +4,13 @@
 
     <data>
 
+        <variable
+            name="callback"
+            type="com.netzwelt.tutormodule.ui.dashboard.classmanager.ClassManagerFragment" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
@@ -26,21 +30,39 @@
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-                <TextView
-                    style="@style/my_request"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:text="@string/manage_classesheader" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/my_request"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/manage_classesheader" />
+
+                    <ImageView
+                        android:id="@+id/add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:gravity="end"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_plus"
+                        android:onClick="@{() -> callback.openAddBatchScreen()}"/>
+
+                </LinearLayout>
+
             </androidx.appcompat.widget.Toolbar>
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
+                style="@style/bodystye"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:elevation="0dp"
                 app:tabGravity="fill"
-                style="@style/bodystye"
-
                 app:tabIndicatorColor="@color/tabindicator"
                 app:tabIndicatorFullWidth="false"
                 app:tabIndicatorHeight="1dp"
