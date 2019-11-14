@@ -76,8 +76,8 @@ class EditProfileActivity : BaseActivity() {
         mUserViewModel = UserViewModel(User())
         mBinding.userViewModel = mUserViewModel
         mBinding.bio.addTextChangedListener(mWatcherWrapper)
-        setupProfile()
-        setUpUserInfo()
+       // setupProfile()
+      //  setUpUserInfo()
 
     }
 
