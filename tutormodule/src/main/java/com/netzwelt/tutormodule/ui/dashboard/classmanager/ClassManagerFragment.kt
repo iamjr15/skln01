@@ -1,6 +1,7 @@
 package com.netzwelt.tutormodule.ui.dashboard.classmanager
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,7 @@ import androidx.fragment.app.Fragment
 import com.autohub.skln.utills.ViewPagerAdapter
 import com.netzwelt.tutormodule.R
 import com.netzwelt.tutormodule.databinding.FragmentClassManagerBinding
-import com.netzwelt.tutormodule.ui.manageClasses.AddBatchFragment
+import com.netzwelt.tutormodule.ui.dashboard.listner.HomeListener
 
 /**
  * A simple [Fragment] subclass.
@@ -17,12 +18,19 @@ import com.netzwelt.tutormodule.ui.manageClasses.AddBatchFragment
 class ClassManagerFragment : Fragment() {
 
     private lateinit var mBinding: FragmentClassManagerBinding
+    private lateinit var homeListener: HomeListener
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_class_manager, container, false)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        homeListener = context as HomeListener
+
     }
 
 
@@ -45,13 +53,7 @@ class ClassManagerFragment : Fragment() {
     }
 
     fun openAddBatchScreen() {
-        val bundle = Bundle()
-        bundle.putBoolean("type", true)
-        val addBatchFragment = AddBatchFragment()
-        addBatchFragment.arguments = bundle
-        childFragmentManager
-                .beginTransaction()
-                .replace(R.id.classManagerContainer, addBatchFragment).commit()
+        homeListener.showAddBatchFragment(true)
     }
 
 }

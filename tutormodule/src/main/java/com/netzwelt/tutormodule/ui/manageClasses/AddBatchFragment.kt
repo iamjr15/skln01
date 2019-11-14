@@ -1,6 +1,7 @@
 package com.netzwelt.tutormodule.ui.manageClasses
 
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,13 +14,17 @@ import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.CommonUtils
 import com.netzwelt.tutormodule.R
 import com.netzwelt.tutormodule.databinding.FragmentTutorAddBatchBinding
+import com.netzwelt.tutormodule.ui.dashboard.listner.HomeListener
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 class AddBatchFragment : BaseFragment() {
+
     private lateinit var mBinding: FragmentTutorAddBatchBinding
+    private lateinit var homeListener: HomeListener
+
     private var isAddBatch: Boolean = true
     private val selectedSub = ArrayList<String>()
     private val selectedClass = ArrayList<String>()
@@ -38,7 +43,14 @@ class AddBatchFragment : BaseFragment() {
 
         if (!isAddBatch) {
             mBinding.textHeading.text = resources.getString(R.string.edit_schedule)
+        }else{
+            mBinding.textHeading.text = resources.getString(R.string.add_batch)
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        homeListener = context as HomeListener
     }
 
     fun openTimePicker(view: View) {
@@ -92,11 +104,7 @@ class AddBatchFragment : BaseFragment() {
     }
 
     fun openBatchOptions() {
-        val batchOptionsFragment = BatchOptionsFragment()
-        val fragmentTransaction = fragmentManager!!.beginTransaction()
-        fragmentTransaction.replace(R.id.addBatchContainer, batchOptionsFragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
+        homeListener.showBatchOptionsFragment()
     }
 
     fun onDaySelected(view: View) {
@@ -117,15 +125,15 @@ class AddBatchFragment : BaseFragment() {
         }
     }
 
-    fun showDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>, isSingle: Boolean) {
+    private fun showDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>, isSingle: Boolean) {
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
-        val selectedvalues = ArrayList<String>()
+        val selectedValues = ArrayList<String>()
 
         for (i in selectedItems.indices) {
             if (items.contains(selectedItems[i])) {
                 booleans[items.indexOf(selectedItems[i])] = true
-                selectedvalues.add(selectedItems[i])
+                selectedValues.add(selectedItems[i])
             }
         }
 
@@ -133,25 +141,25 @@ class AddBatchFragment : BaseFragment() {
                 .setMultiChoiceItems(namesArr, booleans
                 ) { _, i, b ->
                     if (b) {
-                        selectedvalues.add(items[i])
+                        selectedValues.add(items[i])
                     } else {
-                        selectedvalues.remove(items[i])
+                        selectedValues.remove(items[i])
                     }
                 }
                 .setTitle(title)
                 .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                     var selectedSubString = ""
-                    for (i in selectedvalues.indices) {
-                        selectedSubString += if (i == selectedvalues.size - 1) {
-                            selectedvalues[i]
+                    for (i in selectedValues.indices) {
+                        selectedSubString += if (i == selectedValues.size - 1) {
+                            selectedValues[i]
                         } else {
-                            selectedvalues[i] + ","
+                            selectedValues[i] + ","
                         }
                     }
                     testview.text = selectedSubString
                     selectedItems.clear()
-                    selectedItems.addAll(selectedvalues)
+                    selectedItems.addAll(selectedValues)
 
                 }
                 .show()

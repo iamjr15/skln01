@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import com.autohub.skln.fragment.BaseFragment
 import com.netzwelt.tutormodule.R
 import com.netzwelt.tutormodule.databinding.FragmentTutorHomeBinding
-import com.netzwelt.tutormodule.ui.dashboard.listner.HomeListner
+import com.netzwelt.tutormodule.ui.dashboard.listner.HomeListener
 
 class HomeFragment : BaseFragment() {
     private lateinit var mBinding: FragmentTutorHomeBinding
-    private lateinit var homeListner: HomeListner
+    private lateinit var homeListner: HomeListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_tutor_home, container, false)
@@ -31,17 +31,18 @@ class HomeFragment : BaseFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        homeListner = context as HomeListner
+        homeListner = context as HomeListener
     }
 
     fun onpendingrequestClick() {
         homeListner.pendingRequestSelect()
 
     }
- fun onManageClassClick() {
-     homeListner.managerSelected()
+
+    fun onManageClassClick() {
+        homeListner.managerSelected()
 
 
- }
+    }
 
 }
