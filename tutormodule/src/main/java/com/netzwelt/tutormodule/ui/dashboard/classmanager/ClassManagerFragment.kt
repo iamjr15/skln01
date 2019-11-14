@@ -51,7 +51,7 @@ class ClassManagerFragment : Fragment() {
         addBatchFragment.arguments = bundle
         childFragmentManager
                 .beginTransaction()
-                .replace(R.id.container, addBatchFragment).commit()
+                .replace(R.id.classManagerContainer, addBatchFragment).commit()
     }
 
 }

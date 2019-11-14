@@ -71,7 +71,7 @@ class EditProfileActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_tutor_edit_profile)
-        mBinding!!.callback = this
+        mBinding.callback = this
         mStorageReference = FirebaseStorage.getInstance().reference
         mUserViewModel = UserViewModel(User())
         mBinding.userViewModel = mUserViewModel
