@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.autohub.skln.fragment.BaseFragment
 import com.netzwelt.tutormodule.R
 import com.netzwelt.tutormodule.ui.dashboard.classmanager.ClassManagerFragment
 import com.netzwelt.tutormodule.ui.dashboard.classmanager.StudentsListFragment
@@ -17,7 +18,7 @@ import com.netzwelt.tutormodule.ui.manageClasses.BatchOptionsFragment
 /**
  * A simple [Fragment] subclass.
  */
-class HomeBaseFragment : Fragment() {
+class HomeBaseFragment : BaseFragment() {
 
     internal var view: View? = null
     var homeFragment: HomeFragment? = null

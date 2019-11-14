@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.utills.ViewPagerAdapter
 import com.netzwelt.tutormodule.R
 import com.netzwelt.tutormodule.databinding.FragmentClassManagerBinding
@@ -15,7 +16,7 @@ import com.netzwelt.tutormodule.ui.dashboard.listner.HomeListener
 /**
  * A simple [Fragment] subclass.
  */
-class ClassManagerFragment : Fragment() {
+class ClassManagerFragment : BaseFragment() {
 
     private lateinit var mBinding: FragmentClassManagerBinding
     private lateinit var homeListener: HomeListener

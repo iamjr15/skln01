@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.autohub.skln.fragment.BaseFragment
 import com.netzwelt.tutormodule.R
 
 
-class ClassRequestBaseFragment : Fragment() {
+class ClassRequestBaseFragment : BaseFragment() {
     internal var view: View? = null
     var fragmentRequests: RequestsFragment? = null
 

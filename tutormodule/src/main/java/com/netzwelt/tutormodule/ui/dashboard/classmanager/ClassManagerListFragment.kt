@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.autohub.skln.fragment.BaseFragment
 
 import com.netzwelt.tutormodule.R
 
@@ -13,7 +14,7 @@ import com.netzwelt.tutormodule.R
  * A simple [Fragment] subclass.
  */
 
-class ClassManagerListFragment : Fragment() {
+class ClassManagerListFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

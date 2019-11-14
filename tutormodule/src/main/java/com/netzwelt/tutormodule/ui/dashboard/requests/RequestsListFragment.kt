@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.autohub.skln.fragment.BaseFragment
 
 import com.netzwelt.tutormodule.R
 import com.netzwelt.tutormodule.databinding.FragmentRequestsListBinding
@@ -14,7 +15,7 @@ import com.netzwelt.tutormodule.databinding.FragmentRequestsListBinding
 /**
  * A simple [Fragment] subclass.
  */
-class RequestsListFragment : Fragment() {
+class RequestsListFragment : BaseFragment() {
 
     private lateinit var mAdapter: RequestsAdaptor
 
