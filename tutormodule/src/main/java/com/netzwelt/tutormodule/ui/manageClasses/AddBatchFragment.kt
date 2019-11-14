@@ -15,6 +15,7 @@ import com.autohub.skln.utills.CommonUtils
 import com.netzwelt.tutormodule.R
 import com.netzwelt.tutormodule.databinding.FragmentTutorAddBatchBinding
 import com.netzwelt.tutormodule.ui.dashboard.listner.HomeListener
+import kotlinx.android.synthetic.main.activity_tutor_edit_profile.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -28,6 +29,7 @@ class AddBatchFragment : BaseFragment() {
     private var isAddBatch: Boolean = true
     private val selectedSub = ArrayList<String>()
     private val selectedClass = ArrayList<String>()
+    private var counter = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_tutor_add_batch, container, false)
@@ -43,7 +45,7 @@ class AddBatchFragment : BaseFragment() {
 
         if (!isAddBatch) {
             mBinding.textHeading.text = resources.getString(R.string.edit_schedule)
-        }else{
+        } else {
             mBinding.textHeading.text = resources.getString(R.string.add_batch)
         }
     }
@@ -104,7 +106,9 @@ class AddBatchFragment : BaseFragment() {
     }
 
     fun openBatchOptions() {
-        homeListener.showBatchOptionsFragment()
+        if (isVerified()) {
+            homeListener.showBatchOptionsFragment()
+        }
     }
 
     fun onDaySelected(view: View) {
@@ -115,6 +119,7 @@ class AddBatchFragment : BaseFragment() {
             } else {
                 view.setTextColor(resources.getColor(com.autohub.skln.R.color.white))
             }
+            counter++
         } else {
             view.background = resources.getDrawable(R.drawable.bg_round_black, null)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -122,6 +127,7 @@ class AddBatchFragment : BaseFragment() {
             } else {
                 view.setTextColor(resources.getColor(R.color.black))
             }
+            counter--
         }
     }
 
@@ -163,6 +169,36 @@ class AddBatchFragment : BaseFragment() {
 
                 }
                 .show()
+
+    }
+
+    private fun isVerified(): Boolean {
+        if (mBinding.batchName.text.isEmpty()) {
+            showSnackError("Please add name of batch.")
+            return false
+        } else if (mBinding.startTime.text.isEmpty()) {
+            showSnackError("Please select Start Time.")
+            return false
+
+        } else if (mBinding.endTime.text.isEmpty()) {
+            showSnackError("Please select End Time.")
+            return false
+
+        } else if (mBinding.selectClass.text.isEmpty()) {
+            showSnackError("Please select Class.")
+            return false
+
+        } else if (mBinding.selectSubject.text.isEmpty()) {
+            showSnackError("Please select Subject.")
+            return false
+
+        } else if (counter == 0) {
+            showSnackError("Please select day(s).")
+            return false
+        } else {
+            return true
+
+        }
 
     }
 

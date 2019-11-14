@@ -59,13 +59,13 @@ class EditProfileActivity : BaseActivity() {
 
     }
 
-    val selectedClass = ArrayList<String>()
-    val selectedExp = ArrayList<String>()
-    val selectedQualification = ArrayList<String>()
-    val selectedQualificationAreas = ArrayList<String>()
-    val selectedTargetBoard = ArrayList<String>()
-    val selectedSub = ArrayList<String>()
-    val selectedOccupation = ArrayList<String>()
+    private val selectedClass = ArrayList<String>()
+    private val selectedExp = ArrayList<String>()
+    private val selectedQualification = ArrayList<String>()
+    private val selectedQualificationAreas = ArrayList<String>()
+    private val selectedTargetBoard = ArrayList<String>()
+    private val selectedSub = ArrayList<String>()
+    private val selectedOccupation = ArrayList<String>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,7 +96,7 @@ class EditProfileActivity : BaseActivity() {
         items.add(AppConstants.SUBJECT_MATHS)
         items.add(AppConstants.SUBJECT_ENGLISH)
 
-        showMultiSelectionDialog(items, mBinding!!.subjectToTaught, getString(R.string.subject_to_taught), selectedSub)
+        showMultiSelectionDialog(items, mBinding.subjectToTaught, getString(R.string.subject_to_taught), selectedSub)
 
 
     }
@@ -119,28 +119,28 @@ class EditProfileActivity : BaseActivity() {
         items.add("Class " + AppConstants.CLASS_12 + CommonUtils.getClassSuffix(AppConstants.CLASS_12.toInt()))
         val namesArr = items.toTypedArray()
 
-        showMultiSelectionDialog(items, mBinding!!.classToTeach, getString(R.string.class_to_teach), selectedClass)
+        showMultiSelectionDialog(items, mBinding.classToTeach, getString(R.string.class_to_teach), selectedClass)
     }
 
     fun onSelectOccupation() {
-        var items = getResources().getStringArray(R.array.occupation_arrays).toList()
+        val items = getResources().getStringArray(R.array.occupation_arrays).toList()
 
-        showSingleSelectionDialog(items, mBinding!!.selectOccupation, getString(R.string.select_ocupation), selectedOccupation)
+        showSingleSelectionDialog(items, mBinding.selectOccupation, getString(R.string.select_ocupation), selectedOccupation)
 
     }
 
     fun onSelectExperience() {
 
-        var items = getResources().getStringArray(R.array.experience_arrays).toList()
-        showSingleSelectionDialog(items, mBinding!!.teachingExperience, getString(R.string.select_treaching_epereience), selectedExp)
+        val items = getResources().getStringArray(R.array.experience_arrays).toList()
+        showSingleSelectionDialog(items, mBinding.teachingExperience, getString(R.string.select_treaching_epereience), selectedExp)
         //showExperience()
     }
 
     fun onSelectQualification() {
         selectedQualificationAreas.clear()
         mBinding.areaOfQualification.text = ""
-        var items = getResources().getStringArray(R.array.qualification_arrays).toList()
-        showSingleSelectionDialog(items, mBinding!!.qualification, getString(R.string.select_qualification), selectedQualification)
+        val items = getResources().getStringArray(R.array.qualification_arrays).toList()
+        showSingleSelectionDialog(items, mBinding.qualification, getString(R.string.select_qualification), selectedQualification)
     }
 
     fun onSelectQualificationArea() {
@@ -157,7 +157,7 @@ class EditProfileActivity : BaseActivity() {
 
             }
 
-            showMultiSelectionDialog(items, mBinding!!.areaOfQualification, getString(R.string.select_area_of_qualification), selectedQualificationAreas)
+            showMultiSelectionDialog(items, mBinding.areaOfQualification, getString(R.string.select_area_of_qualification), selectedQualificationAreas)
 
         } else {
             showSnackError("Please select your qualification first.")
@@ -174,7 +174,7 @@ class EditProfileActivity : BaseActivity() {
         items.add(AppConstants.BOARD_STATE)
 
 
-        showMultiSelectionDialog(items, mBinding!!.targetedBoard, getString(R.string.select_targeted_board), selectedTargetBoard)
+        showMultiSelectionDialog(items, mBinding.targetedBoard, getString(R.string.select_targeted_board), selectedTargetBoard)
 //        showTargetBoard()
     }
 
@@ -219,7 +219,7 @@ class EditProfileActivity : BaseActivity() {
 
     }
 
-    fun showSingleSelectionDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>) {
+    private fun showSingleSelectionDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>) {
         val namesArr = items.toTypedArray()
         var indexSelected = -1
         if (selectedItems.size > 0) {
@@ -249,7 +249,7 @@ class EditProfileActivity : BaseActivity() {
                     testview.text = namesArr[selectedPosition]
                     selectedItems.clear()
                     selectedItems.add(namesArr[selectedPosition])
-                    /*  mBinding!!.grade.text = namesArr[selectedPosition]
+                    /*  mBinding.grade.text = namesArr[selectedPosition]
                       user!!.studentClass = (selectedPosition + 1).toString()*/
                 }
                 .show()
@@ -310,7 +310,7 @@ class EditProfileActivity : BaseActivity() {
                               selectedOccupation[i] + ","
                           }
                       }
-                      mBinding!!.selectOccupation.text = selectedSubString
+                      mBinding.selectOccupation.text = selectedSubString
 
                   }
                   .show()
@@ -401,7 +401,7 @@ class EditProfileActivity : BaseActivity() {
     }
 
     private fun isVerified(): Boolean {
-        if (mBinding!!.classToTeach.text.isEmpty()) {
+        if (mBinding.classToTeach.text.isEmpty()) {
             showSnackError("Please select classes you teach.")
             return false
         } else if (subject_to_taught.text.isEmpty()) {
