@@ -14,8 +14,15 @@
     </dist:module>
 
     <application>
-        <activity android:name=".ui.dashboard.DashboardActivity" />
-        <activity android:name=".ui.dashboard.profile.EditProfileActivity" />
+        <activity android:name=".ui.dashboard.DashboardActivity"
+
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            />
+        <activity android:name=".ui.dashboard.profile.EditProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            />
     </application>
 
 </manifest>
