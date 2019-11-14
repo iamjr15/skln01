@@ -11,7 +11,7 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-       // FirebaseApp.initializeApp(this);
+        FirebaseApp.initializeApp(this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Montserrat-Regular.otf")
                 .setFontAttrId(R.attr.fontPath)
