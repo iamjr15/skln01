@@ -12,25 +12,17 @@ import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
 import com.netzwelt.tutormodule.R
 import com.netzwelt.tutormodule.ui.dashboard.home.HomeBaseFragment
-import com.netzwelt.tutormodule.ui.dashboard.listner.HomeListner
+import com.netzwelt.tutormodule.ui.dashboard.listner.HomeListener
 import com.netzwelt.tutormodule.ui.dashboard.profile.ProfileFragment
 import com.netzwelt.tutormodule.ui.dashboard.requests.ClassRequestBaseFragment
 import com.netzwelt.tutormodule.ui.dashboard.schedule.ScheduleFragment
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import java.util.*
 
-class DashboardActivity : BaseActivity(), HomeListner {
-    override fun pendingRequestSelect() {
-        mViewPager!!.setCurrentItem(2)
-
-    }
-
-    override fun managerSelected() {
-        homeBaseFragment.showManagerFragment()
-    }
+class DashboardActivity : BaseActivity(), HomeListener {
 
     private val mTabs = ArrayList<TextView>()
-    private var mViewPager: ViewPager? = null
+    private lateinit var mViewPager: ViewPager
     private lateinit var homeBaseFragment: HomeBaseFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,8 +35,8 @@ class DashboardActivity : BaseActivity(), HomeListner {
         val sectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
         mViewPager = findViewById(R.id.container)
-        mViewPager!!.adapter = sectionsPagerAdapter
-        mViewPager!!.offscreenPageLimit = 4
+        mViewPager.adapter = sectionsPagerAdapter
+        mViewPager.offscreenPageLimit = 4
 
 
         tab_item_home.setOnClickListener {
@@ -53,11 +45,11 @@ class DashboardActivity : BaseActivity(), HomeListner {
             }
             setStatusBarColor(R.drawable.white_header)
 
-            mViewPager!!.currentItem = 0
+            mViewPager.currentItem = 0
         }
 
 
-        mViewPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(i: Int, v: Float, i1: Int) {
 
             }
@@ -89,7 +81,7 @@ class DashboardActivity : BaseActivity(), HomeListner {
 
 
         for (tab in mTabs) {
-            tab.setOnClickListener { mViewPager!!.currentItem = mTabs.indexOf(tab) }
+            tab.setOnClickListener { mViewPager.currentItem = mTabs.indexOf(tab) }
         }
 
     }
@@ -127,5 +119,21 @@ class DashboardActivity : BaseActivity(), HomeListner {
         }
     }
 
+    override fun showBatchOptionsFragment() {
+        homeBaseFragment.showBatchOptionsFragment()
+    }
+
+    override fun showAddBatchFragment(showAddBatch : Boolean) {
+        homeBaseFragment.showAddBatchFragment(showAddBatch)
+    }
+
+    override fun pendingRequestSelect() {
+        mViewPager.currentItem = 2
+
+    }
+
+    override fun managerSelected() {
+        homeBaseFragment.showManagerFragment()
+    }
 
 }

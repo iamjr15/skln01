@@ -1,5 +1,6 @@
 package com.netzwelt.tutormodule.ui.manageClasses
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +9,12 @@ import androidx.fragment.app.Fragment
 import com.autohub.skln.fragment.BaseFragment
 import com.netzwelt.tutormodule.R
 import com.netzwelt.tutormodule.databinding.FragmentTutorBatchOptionsBinding
+import com.netzwelt.tutormodule.ui.dashboard.listner.HomeListener
 
 
 class BatchOptionsFragment : BaseFragment() {
     private lateinit var mBinding: FragmentTutorBatchOptionsBinding
+    private lateinit var homeListener: HomeListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_tutor_batch_options, container, false)
@@ -22,6 +25,11 @@ class BatchOptionsFragment : BaseFragment() {
         mBinding.callback = this
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        homeListener = context as HomeListener
+    }
+
     fun openAttendanceScreen() {
     }
 
@@ -30,20 +38,10 @@ class BatchOptionsFragment : BaseFragment() {
     }
 
     fun openEditScheduleScreen() {
-        val bundle = Bundle()
-        bundle.putBoolean("showAddBatch", false)
-        val addBatchFragment = AddBatchFragment()
-        addBatchFragment.arguments = bundle
-        openFragment(addBatchFragment)
+        homeListener.showAddBatchFragment(false)
 
     }
 
-    private fun openFragment(fragment: Fragment) {
-        val fragmentTransaction = fragmentManager!!.beginTransaction()
-        fragmentTransaction.replace(R.id.batchOptionsContainer, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-    }
 
     companion object {
         fun newInstance(): BatchOptionsFragment = BatchOptionsFragment()

@@ -11,14 +11,14 @@
     </data>
 
     <ScrollView
+        android:id="@+id/addBatchContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/addBatchContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical">
 
@@ -292,158 +292,148 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/select_class" />
 
-            <TextView
-                android:id="@+id/mon"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/daysLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/bg_round_black"
-                android:fontFamily="@font/montserrat_semi_bold"
-                android:onClick="@{(view) -> callback.onDaySelected(view)}"
-                android:padding="10dp"
-                android:text="@string/mon"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toStartOf="@+id/tue"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_select_day" />
-
-            <TextView
-                android:id="@+id/tue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_round_black"
-                android:fontFamily="@font/montserrat_semi_bold"
-                android:onClick="@{(view) ->  callback.onDaySelected(view)}"
-                android:paddingLeft="12dp"
-                android:paddingTop="10dp"
-                android:paddingRight="12dp"
-                android:paddingBottom="10dp"
-                android:text="@string/tue"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toStartOf="@+id/wed"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/mon"
-                app:layout_constraintTop_toBottomOf="@+id/text_select_day" />
-
-            <TextView
-                android:id="@+id/wed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_round_black"
-                android:fontFamily="@font/montserrat_semi_bold"
-                android:onClick="@{(view) ->  callback.onDaySelected(view)}"
-                android:padding="10dp"
-                android:text="@string/wed"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toStartOf="@+id/thu"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tue"
-                app:layout_constraintTop_toBottomOf="@+id/text_select_day" />
-
-            <TextView
-                android:id="@+id/thu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_round_black"
-                android:fontFamily="@font/montserrat_semi_bold"
-                android:onClick="@{(view) ->  callback.onDaySelected(view)}"
-                android:padding="10dp"
-                android:text="@string/thu"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toStartOf="@+id/fri"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/wed"
-                app:layout_constraintTop_toBottomOf="@+id/text_select_day" />
-
-            <TextView
-                android:id="@+id/fri"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_round_black"
-                android:fontFamily="@font/montserrat_semi_bold"
-                android:onClick="@{(view) ->  callback.onDaySelected(view)}"
-                android:paddingLeft="12dp"
-                android:paddingTop="10dp"
-                android:paddingRight="12dp"
-                android:paddingBottom="10dp"
-                android:text="@string/fri"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toStartOf="@+id/sat"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/thu"
-                app:layout_constraintTop_toBottomOf="@+id/text_select_day" />
-
-            <TextView
-                android:id="@+id/sat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_round_black"
-                android:fontFamily="@font/montserrat_semi_bold"
-                android:onClick="@{(view) ->  callback.onDaySelected(view)}"
-                android:paddingLeft="12dp"
-                android:paddingTop="10dp"
-                android:paddingRight="12dp"
-                android:paddingBottom="10dp"
-                android:text="@string/sat"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toStartOf="@+id/sun"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/fri"
-                app:layout_constraintTop_toBottomOf="@+id/text_select_day" />
-
-            <TextView
-                android:id="@+id/sun"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/bg_round_black"
-                android:fontFamily="@font/montserrat_semi_bold"
-                android:onClick="@{(view) -> callback.onDaySelected(view)}"
+                android:gravity="center"
+                android:orientation="vertical"
                 android:padding="10dp"
-                android:text="@string/sun"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/sat"
-                app:layout_constraintTop_toBottomOf="@+id/text_select_day" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_select_day">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/mon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_round_black"
+                        android:fontFamily="@font/montserrat_semi_bold"
+                        android:onClick="@{(view) -> callback.onDaySelected(view)}"
+                        android:padding="10dp"
+                        android:text="@string/mon"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_round_black"
+                        android:fontFamily="@font/montserrat_semi_bold"
+                        android:onClick="@{(view) ->  callback.onDaySelected(view)}"
+                        android:paddingLeft="12dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="12dp"
+                        android:paddingBottom="10dp"
+                        android:text="@string/tue"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/wed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_round_black"
+                        android:fontFamily="@font/montserrat_semi_bold"
+                        android:onClick="@{(view) ->  callback.onDaySelected(view)}"
+                        android:padding="10dp"
+                        android:text="@string/wed"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/thu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_round_black"
+                        android:fontFamily="@font/montserrat_semi_bold"
+                        android:onClick="@{(view) ->  callback.onDaySelected(view)}"
+                        android:padding="10dp"
+                        android:text="@string/thu"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/fri"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_round_black"
+                        android:fontFamily="@font/montserrat_semi_bold"
+                        android:onClick="@{(view) ->  callback.onDaySelected(view)}"
+                        android:paddingLeft="12dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="12dp"
+                        android:paddingBottom="10dp"
+                        android:text="@string/fri"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/sat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_round_black"
+                        android:fontFamily="@font/montserrat_semi_bold"
+                        android:onClick="@{(view) ->  callback.onDaySelected(view)}"
+                        android:paddingLeft="12dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="12dp"
+                        android:paddingBottom="10dp"
+                        android:text="@string/sat"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/sun"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_round_black"
+                        android:fontFamily="@font/montserrat_semi_bold"
+                        android:onClick="@{(view) -> callback.onDaySelected(view)}"
+                        android:padding="10dp"
+                        android:text="@string/sun"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/done"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="16dp"
+                android:layout_margin="32dp"
                 android:background="@drawable/selector_green"
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:gravity="center"
@@ -455,7 +445,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/thu" />
+                app:layout_constraintTop_toBottomOf="@+id/daysLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
