@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.netzwelt.tutormodule.R
 import com.netzwelt.tutormodule.ui.dashboard.classmanager.ClassManagerFragment
+import com.netzwelt.tutormodule.ui.dashboard.classmanager.StudentsListFragment
 import com.netzwelt.tutormodule.ui.dashboard.listner.HomeListener
 import com.netzwelt.tutormodule.ui.manageClasses.AddBatchFragment
 import com.netzwelt.tutormodule.ui.manageClasses.BatchOptionsFragment
@@ -67,5 +68,12 @@ class HomeBaseFragment : Fragment() {
         childFragmentManager
                 .beginTransaction()
                 .replace(R.id.homecontainer, batchOptionsFragment).commit()
+    }
+
+    fun showStudentsListFragment() {
+        val studentsListFragment = StudentsListFragment()
+        childFragmentManager
+                .beginTransaction()
+                .replace(R.id.homecontainer, studentsListFragment).commit()
     }
 }

@@ -127,6 +127,11 @@ class DashboardActivity : BaseActivity(), HomeListener {
         homeBaseFragment.showAddBatchFragment(showAddBatch)
     }
 
+    override fun showStudentsListFragment() {
+        homeBaseFragment.showStudentsListFragment()
+    }
+
+
     override fun pendingRequestSelect() {
         mViewPager.currentItem = 2
 
