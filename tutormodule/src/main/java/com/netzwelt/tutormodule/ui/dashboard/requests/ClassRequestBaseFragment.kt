@@ -19,7 +19,7 @@ class ClassRequestBaseFragment : Fragment() {
         return view
     }
 
-    fun showRequestFragmentClass() {
+    private fun showRequestFragmentClass() {
         fragmentRequests = RequestsFragment()
         childFragmentManager
                 .beginTransaction()

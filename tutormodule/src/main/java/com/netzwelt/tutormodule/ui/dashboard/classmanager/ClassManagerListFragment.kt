@@ -12,6 +12,7 @@ import com.netzwelt.tutormodule.R
 /**
  * A simple [Fragment] subclass.
  */
+
 class ClassManagerListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

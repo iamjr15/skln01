@@ -321,5 +321,6 @@
     <string name="title_studentmodule">Student</string>
     <string name="loginsignupfeature">LoginSignup</string>
     <string name="manage_classesheader">manage classes</string>
+    <string name="done">Done</string>
 
 </resources>
