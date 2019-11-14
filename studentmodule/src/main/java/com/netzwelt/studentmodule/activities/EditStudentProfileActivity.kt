@@ -39,7 +39,6 @@ class EditStudentProfileActivity : BaseActivity() {
 
     private var user: User? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_edit_student_profile)

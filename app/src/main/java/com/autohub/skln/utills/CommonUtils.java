@@ -79,7 +79,7 @@ public class CommonUtils {
         return function.apply(set);
     }
 
-    interface Function<T> {
+    public  interface Function<T> {
         boolean apply(T data);
     }
 

@@ -3,6 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="callback"
+            type="com.netzwelt.tutormodule.ui.dashboard.profile.EditProfileActivity" />
+
+        <variable
+            name="userViewModel"
+            type="com.autohub.skln.models.UserViewModel" />
+    </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -42,10 +53,14 @@
                                 android:id="@+id/backimage"
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
+
+
                                 android:layout_gravity="center_vertical"
-                                android:src="@drawable/backarrow"
                                 android:tint="@color/black"
-                                android:padding="8dp"/>
+                                android:padding="8dp"
+                                android:layout_margin="16dp"
+                                android:onClick="@{() -> callback.onBackClick()}"
+                                android:src="@drawable/backarrow" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -84,12 +99,15 @@
                                 android:src="@drawable/ic_circle_white" />
 
                             <androidx.appcompat.widget.AppCompatImageView
+
                                 android:layout_width="wrap_content"
+
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentBottom="true"
                                 android:layout_marginEnd="4dp"
                                 android:layout_marginBottom="4dp"
+                                android:onClick="@{() -> callback.onAddPicture()}"
                                 android:src="@drawable/ic_imageedit" />
                         </RelativeLayout>
                     </LinearLayout>
@@ -126,11 +144,15 @@
                     android:background="@drawable/bg_round_transparent"
                     android:drawableEnd="@drawable/arrow_right"
                     android:fontFamily="@font/montserrat_light"
+                    android:onClick="@{() -> callback.onClassToTeach()}"
                     android:paddingStart="8dp"
                     android:paddingTop="16dp"
                     android:paddingEnd="8dp"
                     android:paddingBottom="16dp"
+
+                    android:text="@{userViewModel.getClassesWithAffix()}"
                     android:textColor="@color/black"
+
                     android:textSize="14sp"
                     tools:text="4th,5th,6th" />
 
@@ -154,12 +176,16 @@
                     android:clickable="true"
                     android:drawableEnd="@drawable/arrow_right"
                     android:focusable="true"
+                    android:onClick="@{() -> callback.onSubjectTaughtClick()}"
+
                     android:fontFamily="@font/montserrat_light"
                     android:paddingStart="8dp"
                     android:paddingTop="16dp"
                     android:paddingEnd="8dp"
                     android:paddingBottom="16dp"
+                    android:text="@{userViewModel.getSubjectOrHobbiesToTeach()}"
                     android:textColor="@color/black"
+
                     android:textSize="14sp"
                     tools:text="Maths, Science, Computer Science" />
 
@@ -184,12 +210,16 @@
                     android:drawableEnd="@drawable/arrow_right"
                     android:focusable="true"
                     android:fontFamily="@font/montserrat_light"
+                    android:onClick="@{() -> callback.onSelectOccupation()}"
                     android:paddingStart="8dp"
                     android:paddingTop="16dp"
+
                     android:paddingEnd="8dp"
                     android:paddingBottom="16dp"
+                    android:text="@{userViewModel.getOccupation()}"
                     android:textColor="@color/black"
                     android:textSize="14sp"
+
                     tools:text="Full-time tutor" />
 
                 <TextView
@@ -216,7 +246,10 @@
                     android:paddingStart="8dp"
                     android:paddingTop="16dp"
                     android:paddingEnd="8dp"
+                    android:onClick="@{() -> callback.onSelectExperience()}"
+
                     android:paddingBottom="16dp"
+                    android:text="@{userViewModel.getTeachingExp()}"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     tools:text="2-3 years" />
@@ -246,7 +279,11 @@
                     android:paddingTop="16dp"
                     android:paddingEnd="8dp"
                     android:paddingBottom="16dp"
+                    android:text="@{userViewModel.getQualification()}"
                     android:textColor="@color/black"
+                    android:onClick="@{() -> callback.onSelectQualification()}"
+
+
                     android:textSize="14sp"
                     tools:text="Post-graduate" />
 
@@ -275,6 +312,10 @@
                     android:paddingTop="16dp"
                     android:paddingEnd="8dp"
                     android:paddingBottom="16dp"
+                    android:onClick="@{() -> callback.onSelectQualificationArea()}"
+
+
+                    android:text="@{userViewModel.getAreaQualification()}"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     tools:text="P.hD" />
@@ -303,7 +344,12 @@
                     android:paddingStart="8dp"
                     android:paddingTop="16dp"
                     android:paddingEnd="8dp"
+                    android:onClick="@{() -> callback.onSelectTargetBoard()}"
+
+
                     android:paddingBottom="16dp"
+
+                    android:text="@{userViewModel.getBoard()}"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     tools:text="CBSE" />
@@ -330,9 +376,11 @@
                     android:maxLength="240"
                     android:minHeight="144dp"
                     android:paddingStart="8dp"
+
                     android:paddingTop="16dp"
                     android:paddingEnd="8dp"
                     android:paddingBottom="16dp"
+                    android:text="@{userViewModel.getBioData()}"
                     android:textSize="14sp" />
 
                 <TextView

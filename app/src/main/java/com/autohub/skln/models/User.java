@@ -42,8 +42,6 @@ public class User implements Parcelable, AppConstants {
         FAVORITE_CLASSES.put(SUBJECT_ECONOMICS, R.drawable.rating);
 
 
-
-
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_SCIENCE,
                 new AcadmicsData(R.color.science, SUBJECT_SCIENCE, R.drawable.microscope));
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_ENGLISH,
@@ -94,7 +92,7 @@ public class User implements Parcelable, AppConstants {
     public String firstName;
     public String lastName;
     public String classesToTeach;
-    public String subjectsToTeach;
+    public String subjectsToTeach = "";
     public String hobbiesToTeach;
     public String occupation;
     public String experience;
@@ -119,8 +117,8 @@ public class User implements Parcelable, AppConstants {
     public String paymentDuration;
     public String city;
     public double distance = 0.0;
-    public float latitude= 0.0f;
-    public float longitude= 0.0f;
+    public float latitude = 0.0f;
+    public float longitude = 0.0f;
 
     public User() {
     }
