@@ -39,14 +39,6 @@ class DashboardActivity : BaseActivity(), HomeListener {
         mViewPager.offscreenPageLimit = 4
 
 
-        tab_item_home.setOnClickListener {
-            if (homeBaseFragment.homeFragment == null) {
-                homeBaseFragment.showHomefragment()
-            }
-            setStatusBarColor(R.drawable.white_header)
-
-            mViewPager.currentItem = 0
-        }
 
 
         mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -82,6 +74,15 @@ class DashboardActivity : BaseActivity(), HomeListener {
 
         for (tab in mTabs) {
             tab.setOnClickListener { mViewPager.currentItem = mTabs.indexOf(tab) }
+        }
+
+        tab_item_home.setOnClickListener {
+            if (homeBaseFragment.homeFragment == null) {
+                homeBaseFragment.showHomefragment()
+            }
+            setStatusBarColor(R.drawable.white_header)
+
+            mViewPager.currentItem = 0
         }
 
     }
