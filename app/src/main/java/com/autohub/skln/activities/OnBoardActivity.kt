@@ -52,8 +52,8 @@ class OnBoardActivity : BaseActivity() {
     }
 
     fun onLogin() {
-        // loadAndLaunchModule(LOGIN__FEATURE, getString(R.string.loginsignupfeature))
-        loadAndLaunchModule("com.autohub.tutormodule.ui.dashboard.DashboardActivity", "tutormodule")
+        loadAndLaunchModule(LOGIN__FEATURE, getString(R.string.loginsignupfeature))
+        //loadAndLaunchModule("com.autohub.tutormodule.ui.dashboard.DashboardActivity", "tutormodule")
 
     }
 

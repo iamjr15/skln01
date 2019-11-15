@@ -98,11 +98,19 @@ public interface AppConstants {
     String KEY_LATITUDE = "latitude";
     String KEY_LONGITUDE = "longitude";
 
+    String KEY_LOCATION = "location";
+    String KEY_PERSONALINFO = "personInfo";
+    String KEY_ACADEMICINFO = "academicInfo";
+
     // firestore db keys - student
     String KEY_STDT_CLASS = "studentClass";
     String KEY_STDT_FAVORITE_CLASSES = "favoriteClasses";
     String KEY_STDT_LEAST_FAV_CLASSES = "leastFavoriteClasses";
     String KEY_STDT_HOBBIES = "hobbiesToPursue";
+
+
+    String KEY_SELECTED_CLASS = "selectedClass";
+
 
     // bundel keys
     String KEY_USERMAP = "usermap";

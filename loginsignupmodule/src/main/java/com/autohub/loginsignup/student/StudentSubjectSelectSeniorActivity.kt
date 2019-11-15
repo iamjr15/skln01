@@ -162,22 +162,33 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
         else
             user[KEY_STDT_LEAST_FAV_CLASSES] = stringBuilder.toString()
 
-        firebaseStore.collection(getString(R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).set(user, SetOptions.merge())
-                .addOnSuccessListener {
-                    hideLoading()
-                    val i: Intent
-                    if (mFavoriteOrLeast) {
-                        i = Intent(this@StudentSubjectSelectSeniorActivity, StudentSubjectSelectSeniorActivity::class.java)
-                        i.putExtra("favorite_or_least", false)
-                    } else {
-                        i = Intent(this@StudentSubjectSelectSeniorActivity, StudentHobbySelect::class.java)
-                    }
-                    startActivity(i)
-                }
-                .addOnFailureListener { e ->
-                    hideLoading()
-                    showSnackError(e.message)
-                }
+
+
+                        firebaseStore.collection(getString(R.string.db_root_students)).document(getAppPreferenceHelper().getuserID()).set(
+                                mapOf(
+                                        KEY_ACADEMICINFO to user
+                                )
+                                , SetOptions.merge()
+                        )
+                                .addOnSuccessListener {
+                                    hideLoading()
+                                    val i: Intent
+                                    if (mFavoriteOrLeast) {
+                                        i = Intent(this@StudentSubjectSelectSeniorActivity, StudentSubjectSelectSeniorActivity::class.java)
+                                        i.putExtra("favorite_or_least", false)
+                                    } else {
+                                        i = Intent(this@StudentSubjectSelectSeniorActivity, StudentHobbySelect::class.java)
+                                    }
+                                    startActivity(i)
+                                }
+                                .addOnFailureListener { e ->
+                                    hideLoading()
+                                    showSnackError(e.message)
+                                }
+
+
+
+
     }
 
 

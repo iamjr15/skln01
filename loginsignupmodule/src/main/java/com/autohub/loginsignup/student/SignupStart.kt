@@ -121,8 +121,11 @@ class SignupStart : BaseActivity() {
         userMap[KEY_SEX] = if (mBinding!!.radioMale.isChecked) MALE else FEMALE
         userMap[KEY_PASSWORD] = getEncryptedPassword()
         userMap[KEY_CITY] = mCity!!
-        userMap[KEY_LATITUDE] = mLocation!!.latitude
         userMap[KEY_LONGITUDE] = mLocation!!.longitude
+        userMap[KEY_LATITUDE] = mLocation!!.latitude
+
+
+//        userMap[KEY_LONGITUDE] = mLocation!!.longitude
         val extras = Bundle()
         extras.putSerializable(KEY_USERMAP, userMap)
         ActivityUtils.launchActivity(this@SignupStart, NumberVerificationActivity::class.java, extras)

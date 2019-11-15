@@ -12,15 +12,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.autohub.skln.BaseActivity
-import com.autohub.loginsignup.student.fragments.StudentSubjectSelectFragmnet
-import com.autohub.loginsignup.listners.ClassSelectionListner
-import com.autohub.loginsignup.student.models.SubjectsData
-import com.autohub.skln.utills.AppConstants.*
-import com.google.firebase.firestore.SetOptions
 import com.autohub.loginsignup.R
 import com.autohub.loginsignup.databinding.ActivityStudentSubjectSelectBinding
+import com.autohub.loginsignup.listners.ClassSelectionListner
+import com.autohub.loginsignup.student.fragments.StudentSubjectSelectFragmnet
+import com.autohub.loginsignup.student.models.SubjectsData
 import com.autohub.loginsignup.utility.Utilities
+import com.autohub.skln.BaseActivity
+import com.autohub.skln.utills.AppConstants.*
+import com.google.firebase.firestore.SetOptions
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -160,7 +160,12 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         else
             user[KEY_STDT_LEAST_FAV_CLASSES] = stringBuilder.toString()
 
-        firebaseStore.collection(getString(R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).set(user, SetOptions.merge())
+        firebaseStore.collection(getString(R.string.db_root_students)).document(getAppPreferenceHelper().getuserID()).set(
+                mapOf(
+                        KEY_ACADEMICINFO to user
+                )
+
+                , SetOptions.merge())
                 .addOnSuccessListener {
                     hideLoading()
                     val i: Intent
@@ -176,6 +181,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
                     hideLoading()
                     showSnackError(e.message)
                 }
+
     }
 
     inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<StudentSubjectSelectFragmnet>) :

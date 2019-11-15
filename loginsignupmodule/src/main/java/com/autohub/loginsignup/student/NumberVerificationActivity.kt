@@ -20,6 +20,7 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.SetOptions
 import com.hbb20.CountryCodePicker
 import java.util.*
@@ -130,6 +131,10 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
                     if (task.isSuccessful) {
                         hideLoading()
                         userMap!![KEY_PHONE_NUMBER] = mBinding!!.codePicker.fullNumberWithPlus
+
+
+
+
                         showLoading()
                         linkWithCredentials()
 
@@ -153,12 +158,14 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
     * Link user email and password with firebase userID
     * */
     private fun linkWithCredentials() {
+
         val credential = EmailAuthProvider.getCredential(userMap!![KEY_EMAIL]!!.toString(),
                 userMap!![KEY_PASSWORD]!!.toString())
         firebaseAuth.currentUser!!.linkWithCredential(credential)
                 .addOnCompleteListener(this@NumberVerificationActivity) { task ->
                     hideLoading()
                     if (task.isSuccessful) {
+
                         saveUserData()
                     } else {
                         showSnackError(task.exception!!.message)
@@ -172,8 +179,24 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
     * */
     private fun saveUserData() {
 
-        firebaseStore.collection(getString(R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).set(userMap!!, SetOptions.merge())
+        val personalInfoHashMap = HashMap<String, Any>()
+
+        userMap!![KEY_LOCATION] = GeoPoint((userMap!![KEY_LATITUDE].toString()).toDouble(), (userMap!![KEY_LONGITUDE].toString()).toDouble())
+        //  userMap!![KEY_USER_ID] = firebaseAuth.currentUser!!.uid
+        personalInfoHashMap[KEY_PERSONALINFO] = userMap!!
+
+
+        firebaseStore.collection(getString(R.string.db_root_students)).document()
+                .set(
+                        mapOf(
+                                KEY_USER_ID to firebaseAuth.currentUser!!.uid,
+                                KEY_PERSONALINFO to userMap!!
+                        )
+
+
+                        , SetOptions.merge())
                 .addOnSuccessListener {
+
                     hideLoading()
                     appPreferenceHelper.setUserPhoneNumber(mBinding!!.codePicker.fullNumberWithPlus)
                     ActivityUtils.launchActivity(this@NumberVerificationActivity,

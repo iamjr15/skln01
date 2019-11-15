@@ -173,17 +173,19 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
         val user1 = HashMap<String, Any>()
         user1[KEY_PHONE_NUMBER] = appPreferenceHelper.userPhone
 
-        firebaseStore.collection(getString(R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).set(user, SetOptions.merge())
+
+        firebaseStore.collection(getString(R.string.db_root_students)).document(getAppPreferenceHelper().getuserID()).set(
+                mapOf(
+                        KEY_ACADEMICINFO to user
+                )
+                , SetOptions.merge())
                 .addOnSuccessListener {
-                    firebaseStore.collection(getString(R.string.db_root_all_users)).document(firebaseAuth.currentUser!!.uid).set(user1, SetOptions.merge())
+                    firebaseStore.collection(getString(R.string.db_root_all_users)).document().set(user1, SetOptions.merge())
+
+
                             .addOnSuccessListener {
                                 hideLoading()
                                 appPreferenceHelper.setSignupComplete(true)
-                                /*     val i = Intent(this@StudentHobbySelect, com.autohub.studentmodule.StudentHomeActivity::class.java)
-                                     i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                     startActivity(i)
-                                     finish()*/
-
                                 loadAndLaunchModule(LoginActivity.STUDENT_FEATURE, "studentmodule")
 
                             }
@@ -196,6 +198,8 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
                     hideLoading()
                     showSnackError(e.message)
                 }
+
+
     }
 
     inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<HobbiesFragment>) :
