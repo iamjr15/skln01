@@ -15,10 +15,10 @@ import com.autohub.skln.models.User
 import com.autohub.skln.models.UserViewModel
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GlideApp
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.google.firebase.storage.FirebaseStorage
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.ActivityTutorFullProfileBinding
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.firebase.storage.FirebaseStorage
 
 /**
  * Created by Vt Netzwelt
@@ -55,7 +55,7 @@ class TutorFullProfileActivity : BaseActivity() {
         if (intent.extras != null) {
             val bundle = intent.extras
             val user = bundle!!.getParcelable<User>(AppConstants.KEY_DATA)
-            mUserViewModel = UserViewModel(user)
+            mUserViewModel = UserViewModel(user!!)
         }
     }
 

@@ -108,8 +108,6 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         // 2
         override fun getItem(position: Int): Fragment {
             return fragmentsList[position]
-
-
         }
 
         override fun getPageWidth(position: Int): Float {
@@ -135,19 +133,29 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
 
         val user = HashMap<String, Any>()
         val uid = firebaseAuth.currentUser!!.uid
-        user[KEY_STDT_CLASS] = selectedClass
+        user[KEY_SELECTED_CLASS] = selectedClass
         user[KEY_USER_ID] = uid
 
-        firebaseStore.collection(getString(R.string.db_root_students)).document(uid).set(user, SetOptions.merge())
-                .addOnSuccessListener {
-                    hideLoading()
-                    val i = Intent(this@StudentClassSelect, StudentHey::class.java)
-                    i.putExtra("is_senior", isSeniorClass)
-                    startActivity(i)
-                }
-                .addOnFailureListener { e ->
-                    hideLoading()
-                    showSnackError(e.message)
+        firebaseStore.collection(getString(R.string.db_root_students)).whereEqualTo(KEY_USER_ID, firebaseAuth.currentUser!!.uid)
+                .get().addOnSuccessListener {
+                    it.forEach {
+                        getAppPreferenceHelper().setUserId(it.id)
+
+                        firebaseStore.collection(getString(R.string.db_root_students)).document(it.id).set(mapOf(
+                                KEY_USER_ID to uid,
+                                KEY_ACADEMICINFO to mapOf(KEY_SELECTED_CLASS to selectedClass)
+                        ), SetOptions.merge())
+                                .addOnSuccessListener {
+                                    hideLoading()
+                                    val i = Intent(this@StudentClassSelect, StudentHey::class.java)
+                                    i.putExtra("is_senior", isSeniorClass)
+                                    startActivity(i)
+                                }
+                                .addOnFailureListener { e ->
+                                    hideLoading()
+                                    showSnackError(e.message)
+                                }
+                    }
                 }
     }
 }

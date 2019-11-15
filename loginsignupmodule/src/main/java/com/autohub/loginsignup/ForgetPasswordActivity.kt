@@ -1,12 +1,13 @@
 package com.autohub.loginsignup
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.autohub.loginsignup.databinding.ActivityForgetPasswordBinding
+import com.autohub.skln.BaseActivity
 import com.autohub.skln.utills.AppConstants
+import com.google.firebase.auth.FirebaseAuth
 
-class ForgetPasswordActivity : AppCompatActivity() {
+class ForgetPasswordActivity : BaseActivity() {
     private var mBinding: ActivityForgetPasswordBinding? = null
     private val mAccountType = AppConstants.TYPE_STUDENT
 
@@ -15,24 +16,20 @@ class ForgetPasswordActivity : AppCompatActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_forget_password)
         mBinding!!.callback = this
 
-
     }
 
     fun onForgotPassword() {
-
+        FirebaseAuth.getInstance().sendPasswordResetEmail("user@example.com")
+                .addOnCompleteListener {
+                    if (it.isSuccessful()) {
+                        showSnackError("EMAIL SEND")
+                    }
+                }
 
     }
 
 }
 
 
-/*FirebaseAuth.getInstance().sendPasswordResetEmail("user@example.com")
-    .addOnCompleteListener(new OnCompleteListener<Void>() {
-        @Override
-        public void onComplete(@NonNull Task<Void> task) {
-            if (task.isSuccessful()) {
-                Log.d(TAG, "Email sent.");
-            }
-        }
-    });*/
+/**/
 

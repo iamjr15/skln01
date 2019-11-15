@@ -21,5 +21,11 @@ public interface PreferencesHelper {
 
     void setSignupComplete(boolean isSignUpComplete);
 
+    String getuserID();
+
+    void setUserId(String userID);
+
+
+
 //    String getTutorName();
 }

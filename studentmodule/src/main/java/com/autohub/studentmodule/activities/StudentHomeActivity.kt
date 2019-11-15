@@ -12,12 +12,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
-import com.autohub.studentmodule.listners.HomeListners
 import com.autohub.skln.models.RequestViewModel
 import com.autohub.skln.models.User
 import com.autohub.skln.utills.AppConstants
-import com.autohub.studentmodule.fragments.*
 import com.autohub.studentmodule.R
+import com.autohub.studentmodule.fragments.*
+import com.autohub.studentmodule.listners.HomeListners
 import kotlinx.android.synthetic.main.activity_student_home.*
 import java.util.*
 
@@ -80,11 +80,11 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
                 }
                 for (i in mTabs.indices) {
                     if (position == i) {
-                        mTabs[i].setTextColor(ContextCompat.getColor(this@StudentHomeActivity,R.color.black))
+                        mTabs[i].setTextColor(ContextCompat.getColor(this@StudentHomeActivity, R.color.black))
                         setTextViewDrawableColor(mTabs[i], R.color.black)
                     } else {
 
-                        mTabs[i].setTextColor(ContextCompat.getColor(this@StudentHomeActivity,R.color.light_grey))
+                        mTabs[i].setTextColor(ContextCompat.getColor(this@StudentHomeActivity, R.color.light_grey))
 
                         setTextViewDrawableColor(mTabs[i], R.color.light_grey)
                     }

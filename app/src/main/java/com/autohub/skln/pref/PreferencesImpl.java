@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 
 /**
- *Modified by Vt Netzwelt
+ * Modified by Vt Netzwelt
  */
 public class PreferencesImpl implements PreferencesHelper {
 
@@ -14,6 +14,7 @@ public class PreferencesImpl implements PreferencesHelper {
     private static final String PREF_KEY_USER_PHONE = "PREF_KEY_USER_PHONE";
     //    private static final String PREF_KEY_TUTOR_NAME = "PREF_KEY_USER_FNAME";
     private static final String PREF_KEY_TUTOR_CATEGORY = "PREF_KEY_TUTOR_CATEGORY";
+    private static final String PREF_KEY_USER_ID = "PREF_KEY_USER_ID";
     private static final String PREF_KEY_STUDENT_SIGNUP_COMPLETE = "PREF_KEY_STUDENT_SIGNUP_COMPLETE";
 
     public PreferencesImpl(Context context, String prefFileName) {
@@ -39,6 +40,17 @@ public class PreferencesImpl implements PreferencesHelper {
     public void setSignupComplete(boolean isSignUpComplete) {
         mPrefs.edit().putBoolean(PREF_KEY_STUDENT_SIGNUP_COMPLETE, isSignUpComplete).apply();
 
+
+    }
+
+    @Override
+    public String getuserID() {
+        return mPrefs.getString(PREF_KEY_USER_ID, "");
+    }
+
+    @Override
+    public void setUserId(String userID) {
+        mPrefs.edit().putString(PREF_KEY_USER_ID, userID).apply();
 
     }
 

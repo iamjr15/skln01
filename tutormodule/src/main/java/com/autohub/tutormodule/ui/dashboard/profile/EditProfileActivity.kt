@@ -336,7 +336,7 @@ class EditProfileActivity : BaseActivity() {
         firebaseStore.collection(getString(R.string.db_root_tutors)).document("j9MtRdT5L0g62QiQ7z514z0hQz52"/*firebaseAuth.currentUser!!.uid*/).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val user = documentSnapshot.toObject(User::class.java)
-                    mUserViewModel!!.setUser(user)
+                    mUserViewModel!!.user = user!!
                 }
                 .addOnFailureListener { e -> showSnackError(e.message) }
     }
@@ -373,7 +373,7 @@ class EditProfileActivity : BaseActivity() {
         user[AppConstants.KEY_BIODATA] = bio
 
         FirebaseFirestore.getInstance().collection(getString(R.string.db_root_tutors)).document(FirebaseAuth.getInstance().currentUser!!.uid).set(user, SetOptions.merge())
-                .addOnSuccessListener { mUserViewModel!!.setBioData(bio) }
+                .addOnSuccessListener { mUserViewModel!!.bioData = bio }
                 .addOnFailureListener { }
     }
 

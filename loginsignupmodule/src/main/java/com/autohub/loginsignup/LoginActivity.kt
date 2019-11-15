@@ -102,13 +102,13 @@ class LoginActivity : BaseActivity() {
     private fun validateUserCredentials() {
 
         val credential = EmailAuthProvider.getCredential(mBinding!!.edtemail.text.toString().trim(),
-                encrypt(mBinding!!.edtPassword.text.toString().trim()))
+                /*encrypt(*/mBinding!!.edtPassword.text.toString().trim()/*)*/)
 
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener {
                     hideLoading()
                     if (it.isSuccessful) {
-                        moveNext()
+                        saveUserIdLocally()
                     } else {
                         showSnackError(it.exception.toString())
                     }
@@ -117,8 +117,6 @@ class LoginActivity : BaseActivity() {
                     hideLoading()
 
                 }
-
-
     }
 
     private fun updatePasswordVisibility(editText: AppCompatEditText) {
@@ -135,6 +133,8 @@ class LoginActivity : BaseActivity() {
 
 
     private fun moveNext() {
+
+
         if (mBinding!!.radiostudent.isChecked) {
             Toast.makeText(this, "Student Verified!", Toast.LENGTH_SHORT).show()
             appPreferenceHelper.setSignupComplete(true)
@@ -146,6 +146,18 @@ class LoginActivity : BaseActivity() {
         }
 
     }
+
+    private fun saveUserIdLocally() {
+        firebaseStore.collection(getString(R.string.db_root_students)).whereEqualTo(AppConstants.KEY_USER_ID, firebaseAuth.currentUser!!.uid)
+                .get().addOnSuccessListener {
+                    it.forEach {
+                        getAppPreferenceHelper().setUserId(it.id)
+                        moveNext()
+                    }
+                }
+
+    }
+
     /*
         * Load the Student/Tutor Module
         * */

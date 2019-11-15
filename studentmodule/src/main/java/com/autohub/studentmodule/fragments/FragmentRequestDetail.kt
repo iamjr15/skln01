@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.Request
@@ -15,11 +14,11 @@ import com.autohub.skln.models.User
 import com.autohub.skln.models.UserViewModel
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GlideApp
+import com.autohub.studentmodule.R
+import com.autohub.studentmodule.databinding.FragmentRequestDetailBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
-import com.autohub.studentmodule.R
-import com.autohub.studentmodule.databinding.FragmentRequestDetailBinding
 import java.util.*
 
 /**
@@ -115,7 +114,7 @@ class FragmentRequestDetail : BaseFragment() {
                 .addOnSuccessListener { documentSnapshot ->
                     val student = documentSnapshot.toObject(User::class.java)
                     if (mRequestViewModel!!.userType.equals("tutor", ignoreCase = true)) {
-                        mBinding!!.userViewModel = UserViewModel(student)
+                        mBinding!!.userViewModel = UserViewModel(student!!)
                     }
                     mStudent = student
                     loadPicture()
@@ -130,9 +129,9 @@ class FragmentRequestDetail : BaseFragment() {
                     hideLoading()
                     val tutor = documentSnapshot.toObject(User::class.java)
                     if (mRequestViewModel!!.userType.equals("student", ignoreCase = true)) {
-                        mBinding!!.userViewModel = UserViewModel(tutor)
+                        mBinding!!.userViewModel = UserViewModel(tutor!!)
                     }
-                    mBinding!!.tutorViewModel = UserViewModel(tutor)
+                    mBinding!!.tutorViewModel = UserViewModel(tutor!!)
                     mTutor = tutor
                     loadPicture()
                     mBinding!!.rate.text = "fees : $${tutor!!.rate} / ${tutor.paymentDuration}"
