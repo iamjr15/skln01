@@ -6,7 +6,7 @@
 
         <variable
             name="callback"
-            type="com.netzwelt.loginsignup.student.fragments.StudentSubjectSelectSeniorFragment" />
+            type="com.autohub.loginsignup.student.fragments.StudentSubjectSelectSeniorFragment" />
 
 
     </data>
@@ -17,7 +17,7 @@
 
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        tools:context="com.netzwelt.loginsignup.student.fragments.StudentSubjectSelectSeniorFragment">
+        tools:context="com.autohub.loginsignup.com.autohub.loginsignup.student.fragments.StudentSubjectSelectSeniorFragment">
 
         <LinearLayout
             android:layout_width="200dp"

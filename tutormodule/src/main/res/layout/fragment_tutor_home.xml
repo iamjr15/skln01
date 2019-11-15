@@ -7,7 +7,7 @@
 
         <variable
             name="callback"
-            type="com.netzwelt.tutormodule.ui.dashboard.home.HomeFragment" />
+            type="com.autohub.tutormodule.ui.dashboard.home.HomeFragment" />
 
     </data>
 

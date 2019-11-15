@@ -96,7 +96,7 @@ public class User implements Parcelable, AppConstants {
     public String hobbiesToTeach;
     public String occupation;
     public String experience;
-    public String qualification;
+    public String qualification = "";
     public String areaQualification;
     public String board;
     public String bioData;

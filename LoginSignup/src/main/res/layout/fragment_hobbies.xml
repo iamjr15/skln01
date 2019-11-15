@@ -6,7 +6,7 @@
 
         <variable
             name="callback"
-            type="com.netzwelt.loginsignup.student.fragments.HobbiesFragment" />
+            type="com.autohub.loginsignup.student.fragments.HobbiesFragment" />
 
     </data>
 
@@ -15,7 +15,7 @@
 
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        tools:context="com.netzwelt.loginsignup.student.fragments.HobbiesFragment">
+        tools:context="com.autohub.loginsignup.com.autohub.loginsignup.student.fragments.HobbiesFragment">
 
         <LinearLayout
             android:layout_width="200dp"

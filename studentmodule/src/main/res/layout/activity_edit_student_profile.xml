@@ -7,7 +7,7 @@
 
         <variable
             name="callback"
-            type="com.netzwelt.studentmodule.activities.EditStudentProfileActivity" />
+            type="com.autohub.studentmodule.activities.EditStudentProfileActivity" />
 
     </data>
 
@@ -516,7 +516,7 @@
 
             <variable
                 name="callback"
-                type="com.netzwelt.studentmodule.activities.EditStudentProfileActivity" />
+                type="com.autohub.studentmodule.activities.EditStudentProfileActivity" />
 
         </data>
 

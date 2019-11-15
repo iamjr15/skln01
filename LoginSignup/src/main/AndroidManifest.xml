@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.netzwelt.loginsignup">
+    package="com.autohub.loginsignup">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -10,19 +10,19 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <dist:module
+    <dist:modulec
         dist:instant="false"
         dist:onDemand="true"
-        dist:title="@string/title_loginsignup">
+        dist:title="loginsignup_module">
         <dist:delivery>
             <dist:on-demand />
         </dist:delivery>
 
         <dist:fusing dist:include="true" />
-    </dist:module>
+    </dist:modulec>
 
     <application tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ForgetPasswordActivity"></activity>
+        <activity android:name="ForgetPasswordActivity"></activity>
         <activity
             android:name=".TutororStudentSelection"
             android:screenOrientation="portrait"

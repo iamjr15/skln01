@@ -6,7 +6,7 @@
 
         <variable
             name="callback"
-            type="com.netzwelt.loginsignup.TutororStudentSelection" />
+            type="com.autohub.loginsignup.TutororStudentSelection" />
     </data>
 
 
@@ -15,7 +15,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".TutororStudentSelection">
+        tools:context="com.autohub.loginsignup.TutororStudentSelection">
 
         <TextView
             android:id="@+id/tvSignup"

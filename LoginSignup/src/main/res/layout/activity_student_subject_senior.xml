@@ -6,7 +6,7 @@
 
         <variable
             name="callback"
-            type="com.netzwelt.loginsignup.student.StudentSubjectSelectSeniorActivity" />
+            type="com.autohub.loginsignup.student.StudentSubjectSelectSeniorActivity" />
 
     </data>
 

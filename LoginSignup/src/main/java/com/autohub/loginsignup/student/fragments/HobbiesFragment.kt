@@ -1,0 +1,108 @@
+package com.autohub.loginsignup.student.fragments
+
+
+import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import com.autohub.loginsignup.R
+import com.autohub.loginsignup.databinding.FragmentHobbiesBinding
+import com.autohub.loginsignup.listners.ClassSelectionListner
+import com.autohub.skln.fragment.BaseFragment
+import com.autohub.skln.models.HobbiesData
+
+/**
+ * Created by Vt Netzwelt
+ */
+class HobbiesFragment : BaseFragment() {
+    private var mBinding: FragmentHobbiesBinding? = null
+    private lateinit var datalist: ArrayList<HobbiesData>
+    private lateinit var classSelectionListner: ClassSelectionListner
+    private var position: Int = 0
+
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+
+        datalist = arguments?.getParcelableArrayList<HobbiesData>("data") as ArrayList<HobbiesData>
+        position = arguments?.getInt("position", 0)!!
+        return inflater.inflate(R.layout.fragment_hobbies, container, false)
+    }
+
+    override fun onAttach(context: Context) {
+
+        classSelectionListner = context as ClassSelectionListner
+        super.onAttach(context)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mBinding = FragmentHobbiesBinding.bind(view)
+        mBinding!!.callback = this
+
+        setUi()
+    }
+
+    private fun setUi() {
+        mBinding!!.img.setImageResource(datalist[0].icon)
+        mBinding!!.txt.text = "${datalist[0].hobbyName}. "
+        val unwrappedDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.selectclass_bg)
+        val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
+        DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(requireContext(), datalist[0].color) /* it.color*/)
+        mBinding!!.rr.background = wrappedDrawable
+        mBinding!!.greenfirst.visibility = if (datalist[0].selected) View.VISIBLE else View.GONE
+        mBinding!!.whitefirst.visibility = if (datalist[0].selected) View.GONE else View.VISIBLE
+
+
+        mBinding!!.imgsecond.setImageResource(datalist[1].icon)
+        mBinding!!.txtsecond.text = "${datalist[1].hobbyName}. "
+        val unwrappedDrawablesecond = ContextCompat.getDrawable(requireContext(), R.drawable.selectclass_bg)
+        val wrappedDrawablesecond = DrawableCompat.wrap(unwrappedDrawablesecond!!)
+        DrawableCompat.setTint(wrappedDrawablesecond, ContextCompat.getColor(requireContext(), datalist[1].color) /*it.color*/)
+        mBinding!!.rr2.background = wrappedDrawablesecond
+
+        mBinding!!.greensecond.visibility = if (datalist[1].selected) View.VISIBLE else View.GONE
+        mBinding!!.whitesecond.visibility = if (datalist[1].selected) View.GONE else View.VISIBLE
+
+    }
+
+    fun onSelectFirst() {
+        classSelectionListner.selectedClass(position = position,
+                isSecondSelected = false, selectedClass = datalist[0].hobbyName!!)
+    }
+
+    fun onSelectSecond() {
+        classSelectionListner.selectedClass(position = position,
+                isSecondSelected = true, selectedClass = datalist[1].hobbyName!!)
+    }
+
+    fun updateFragment(selected: Boolean, isSecond: Boolean) {
+
+        if (isSecond) {
+            datalist[1].selected = selected
+
+        } else {
+            datalist[0].selected = selected
+
+        }
+        setUi()
+
+    }
+
+
+    companion object {
+        fun newInstance(position: Int, arrayList: ArrayList<HobbiesData>): HobbiesFragment {
+            val fragmentFirst = HobbiesFragment()
+            val args = Bundle()
+            args.putParcelableArrayList("data", arrayList)
+            args.putInt("position", position)
+            fragmentFirst.arguments = args
+            return fragmentFirst
+        }
+    }
+
+}

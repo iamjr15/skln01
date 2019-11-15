@@ -5,7 +5,7 @@
 
         <variable
             name="calback"
-            type="com.netzwelt.studentmodule.fragments.StudentProfileFragment" />
+            type="com.autohub.studentmodule.fragments.StudentProfileFragment" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="com.netzwelt.tutormodule">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.autohub.tutormodule">
 
     <dist:module
         dist:instant="false"
@@ -13,16 +14,16 @@
         <dist:fusing dist:include="true" />
     </dist:module>
 
-    <application>
-        <activity android:name=".ui.dashboard.DashboardActivity"
+    <application tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".ui.dashboard.DashboardActivity"
 
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
-        <activity android:name=".ui.dashboard.profile.EditProfileActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.dashboard.profile.EditProfileActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

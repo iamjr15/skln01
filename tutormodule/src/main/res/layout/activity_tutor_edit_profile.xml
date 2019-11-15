@@ -7,7 +7,7 @@
 
         <variable
             name="callback"
-            type="com.netzwelt.tutormodule.ui.dashboard.profile.EditProfileActivity" />
+            type="com.autohub.tutormodule.ui.dashboard.profile.EditProfileActivity" />
 
         <variable
             name="userViewModel"

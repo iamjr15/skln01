@@ -6,7 +6,7 @@
 
         <variable
             name="callback"
-            type="com.netzwelt.loginsignup.TutorSignupActivity" />
+            type="com.autohub.loginsignup.TutorSignupActivity" />
     </data>
 
     <RelativeLayout

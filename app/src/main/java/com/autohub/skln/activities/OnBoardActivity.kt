@@ -88,11 +88,11 @@ class OnBoardActivity : BaseActivity() {
 
 
     companion object {
-        private const val LOGIN_SIGNUP_FEATURE = "com.netzwelt.loginsignup.TutororStudentSelection"
-        private const val LOGIN__FEATURE = "com.netzwelt.loginsignup.LoginActivity"
+        private const val LOGIN_SIGNUP_FEATURE = "com.autohub.loginsignup.TutororStudentSelection"
+        private const val LOGIN__FEATURE = "com.autohub.loginsignup.LoginActivity"
 
-        private const val STUDENTHOMEACTIVITY_PATH = "com.netzwelt.studentmodule.activities.StudentHomeActivity"
-        private const val STUDENTCLASSACTIVITY_PATH = "com.netzwelt.loginsignup.student.StudentClassSelect"
+        private const val STUDENTHOMEACTIVITY_PATH = "com.autohub.studentmodule.activities.StudentHomeActivity"
+        private const val STUDENTCLASSACTIVITY_PATH = "com.autohub.loginsignup.student.StudentClassSelect"
     }
 
 }

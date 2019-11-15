@@ -7,7 +7,7 @@
 
         <variable
             name="callback"
-            type="com.netzwelt.tutormodule.ui.manageClasses.BatchOptionsFragment" />
+            type="com.autohub.tutormodule.ui.manageClasses.BatchOptionsFragment" />
 
     </data>
 

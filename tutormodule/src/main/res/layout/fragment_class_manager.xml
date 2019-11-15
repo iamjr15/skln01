@@ -6,7 +6,7 @@
 
         <variable
             name="callback"
-            type="com.netzwelt.tutormodule.ui.dashboard.classmanager.ClassManagerFragment" />
+            type="com.autohub.tutormodule.ui.dashboard.classmanager.ClassManagerFragment" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

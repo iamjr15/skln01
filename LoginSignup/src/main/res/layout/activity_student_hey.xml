@@ -6,7 +6,7 @@
 
         <variable
             name="callback"
-            type="com.netzwelt.loginsignup.student.StudentHey" />
+            type="com.autohub.loginsignup.student.StudentHey" />
     </data>
 
     <LinearLayout
@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        tools:context="com.netzwelt.loginsignup.student.StudentHey">
+        tools:context="com.autohub.loginsignup.com.autohub.loginsignup.student.StudentHey">
 
         <LinearLayout
             android:layout_width="match_parent"

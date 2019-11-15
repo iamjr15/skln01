@@ -11,7 +11,7 @@
 
         <variable
             name="callback"
-            type="com.netzwelt.studentmodule.activities.TutorFullProfileActivity" />
+            type="com.autohub.studentmodule.activities.TutorFullProfileActivity" />
     </data>
 
 
