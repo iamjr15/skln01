@@ -18,6 +18,6 @@
     <string name="hide">hide</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="loginsignupfeature">LoginSignup</string>
+    <string name="loginsignupfeature">loginsignupmodule</string>
     <string name="title_tutormodule">tutor</string>
 </resources>

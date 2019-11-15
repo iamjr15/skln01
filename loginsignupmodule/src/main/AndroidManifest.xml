@@ -13,7 +13,7 @@
     <dist:modulec
         dist:instant="false"
         dist:onDemand="true"
-        dist:title="loginsignup_module">
+        dist:title="loginsignupmodule">
         <dist:delivery>
             <dist:on-demand />
         </dist:delivery>
