@@ -38,6 +38,8 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.firebase.storage.FirebaseStorage
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.*
 
 /**
@@ -203,9 +205,12 @@ class ExploreTutorsFragment : BaseFragment() {
 
     private fun getTutors(exploreFilter: ExploreFilter) {
         firebaseStore.collection(getString(R.string.db_root_tutors)).get().addOnCompleteListener { task ->
+
             if (task.isSuccessful) {
                 tutorsList = ArrayList()
                 for (document in task.result!!) {
+                   Log.e("document",document.toString())
+
                     val user = document.toObject(User::class.java)
                     if (checkFilterfoData(exploreFilter, user)) {
                         if (userLatLang != null) {

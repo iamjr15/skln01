@@ -17,7 +17,7 @@ import com.autohub.skln.models.RequestViewModel
 import com.autohub.skln.models.User
 import com.autohub.skln.utills.AppConstants
 import com.autohub.studentmodule.R
-import com.autohub.studentmodule.databinding.FragmentRequestsBinding
+import com.autohub.studentmodule.databinding.FragmentStudentRequestsBinding
 
 import java.util.ArrayList
 
@@ -55,12 +55,12 @@ class FragmentRequests : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_requests, container, false)
+        return inflater.inflate(R.layout.fragment_student_requests, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentRequestsBinding.bind(view)
+        val binding = FragmentStudentRequestsBinding.bind(view)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.setEmptyView(binding.rrempty)
         mAdapter = RequestAdapter(requireContext(), mItemClickListener)

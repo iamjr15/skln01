@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.autohub.tutormodule.R
-import com.autohub.tutormodule.databinding.ItemRequestBinding
+import com.autohub.tutormodule.databinding.ItemTutorRequestBinding
 
 class RequestsAdaptor(var context: Context)
     : RecyclerView.Adapter<RequestsAdaptor.Holder>() {
@@ -14,10 +14,10 @@ class RequestsAdaptor(var context: Context)
     private var userList: List<String> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val itemRequestbinding: ItemRequestBinding =
+        val itemRequestbinding: ItemTutorRequestBinding =
                 DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.item_request, parent, false
+                        R.layout.item_tutor_request, parent, false
                 )
 
         return Holder(itemRequestbinding)
@@ -37,7 +37,7 @@ class RequestsAdaptor(var context: Context)
         notifyDataSetChanged()
     }
 
-    inner class Holder(itemRequestbinding: ItemRequestBinding) :
+    inner class Holder(itemRequestbinding: ItemTutorRequestBinding) :
             RecyclerView.ViewHolder(itemRequestbinding.root) {
         fun bind() {
         }

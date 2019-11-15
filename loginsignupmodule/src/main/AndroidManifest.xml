@@ -10,16 +10,12 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <dist:modulec
+    <dist:module
         dist:instant="false"
         dist:onDemand="true"
-        dist:title="loginsignupmodule">
-        <dist:delivery>
-            <dist:on-demand />
-        </dist:delivery>
-
+        dist:title="@string/loginsignupfeature">
         <dist:fusing dist:include="true" />
-    </dist:modulec>
+    </dist:module>
 
     <application tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="ForgetPasswordActivity"></activity>
