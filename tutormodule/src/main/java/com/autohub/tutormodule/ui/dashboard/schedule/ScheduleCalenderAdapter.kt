@@ -14,7 +14,7 @@ class ScheduleCalenderAdapter(private val list: List<String>) :
     var selectedPosition = -1
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, int: Int): ViewHolder {
-        val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_calendar_view, viewGroup, false)
+        val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_tutor_calendar_view, viewGroup, false)
         return ViewHolder(v)
     }
 

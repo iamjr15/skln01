@@ -19,5 +19,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="loginsignupfeature">loginsignupmodule</string>
+    <string name="title_studentmodule">Student</string>
     <string name="title_tutormodule">tutor</string>
 </resources>

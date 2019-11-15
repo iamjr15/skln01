@@ -31,7 +31,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         val bundle = Bundle()
         bundle.putParcelable(AppConstants.KEY_DATA, requestViewModel)
         fragmentClassRequests.showRequestDetailFragment(bundle)
-        setStatusBarColor(R.drawable.bg_purple_blue)
+        setStatusBarColor(com.autohub.skln.R.drawable.bg_purple_blue)
     }
 
 
@@ -170,7 +170,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
             if (resultCode == Activity.RESULT_OK && data != null) {
                 val bundle = data.extras
                 explorebaseFragment.showRequestDetailFragment(bundle!!)
-                setStatusBarColor(R.drawable.bg_purple_blue)
+                setStatusBarColor(com.autohub.skln.R.drawable.bg_purple_blue)
             }
         }
 

@@ -46,9 +46,9 @@ class AcadmicsAdaptor(var context: Context, var mItemClickListener: ItemClickLis
                 img.setImageResource(it.icon)
                 txt.text = it.classname
 
-                val unwrappedDrawable = ContextCompat.getDrawable(context, R.drawable.acadmic_rowbg_drawable)
+                val unwrappedDrawable = ContextCompat.getDrawable(context, com.autohub.skln.R.drawable.acadmic_rowbg_drawable)
                 val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-                DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(context,it.color))
+                DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(context, it.color))
                 rr.background = wrappedDrawable
             }
         }
