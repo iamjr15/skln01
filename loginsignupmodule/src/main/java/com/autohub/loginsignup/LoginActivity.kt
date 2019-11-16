@@ -155,7 +155,6 @@ class LoginActivity : BaseActivity() {
                         moveNext()
                     }
                 }
-
     }
 
     /*
