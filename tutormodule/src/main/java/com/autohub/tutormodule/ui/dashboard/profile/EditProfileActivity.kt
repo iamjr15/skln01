@@ -15,8 +15,11 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.CropActivity
+import com.autohub.skln.models.SubjectsData
 import com.autohub.skln.models.User
 import com.autohub.skln.models.UserViewModel
+import com.autohub.skln.models.tutor.TutorData
+import com.autohub.skln.models.tutor.TutorGradesSubjects
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.GlideApp
@@ -41,6 +44,8 @@ class EditProfileActivity : BaseActivity() {
     private val MAX_SIZE = 240
     private var mUserViewModel: UserViewModel? = null
     private var mStorageReference: StorageReference? = null
+    private var tutorData: TutorData? = null
+    private var subjectsText: String = ""
 
     private val mWatcherWrapper = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -77,7 +82,70 @@ class EditProfileActivity : BaseActivity() {
         mBinding.bio.addTextChangedListener(mWatcherWrapper)
         // setupProfile()
         //  setUpUserInfo()
+        setUpTutorInfo()
+    }
 
+
+    private fun setUpTutorInfo() {
+        showLoading()
+        firebaseStore.collection(getString(R.string.db_root_tutors)).document("AA4J2oiNUcHc08zIKE7h").get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val tutor = documentSnapshot.toObject(TutorData::class.java)
+                    this.tutorData = tutor
+                    mBinding.classToTeach.text = ""
+                    mBinding.subjectToTaught.text = ""
+                    mBinding.selectOccupation.text = tutor?.qualification?.currentOccupation
+                    mBinding.teachingExperience.text = tutor?.qualification?.experience
+                    mBinding.qualification.text = tutor?.qualification?.qualification
+                    mBinding.areaOfQualification.text = tutor?.qualification?.qualificationArea
+                    mBinding.targetedBoard.text = tutor?.qualification?.targetBoard
+                    mBinding.bio.setText(tutor?.personInfo?.biodata)
+
+                    GlideApp.with(this)
+                            .load(tutor?.personInfo?.accountPicture)
+                            .placeholder(com.autohub.skln.R.drawable.default_pic)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
+                            .into(mBinding.profilePicture)
+
+                    getTutorGrades()
+
+                }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
+    }
+
+    private fun getTutorGrades() {
+        firebaseStore.collection(getString(R.string.db_root_tutor_subjects)).whereEqualTo("teacherId", tutorData?.id).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val tutorSubjects = documentSnapshot.toObjects(TutorGradesSubjects::class.java)
+                    getTutorSubjects(tutorSubjects)
+                }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
+    }
+
+    private fun getTutorSubjects(tutorSubjects: List<TutorGradesSubjects>) {
+        for (element in tutorSubjects) {
+            firebaseStore.collection(getString(R.string.db_root_subjects)).whereEqualTo("id", element.subjectId).get()
+                    .addOnSuccessListener { documentSnapshot ->
+                        hideLoading()
+                        val subjects = documentSnapshot.toObjects(SubjectsData::class.java)
+                        for (j in 0 until subjects.size) {
+                            subjectsText += subjects[j].name
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        hideLoading()
+                        showSnackError(e.message)
+                    }
+        }
+
+        mBinding.subjectToTaught.text = subjectsText
     }
 
     fun onSubjectTaughtClick() {

@@ -37,6 +37,9 @@
 
 
     <string name="db_root_tutors">tutors</string>
+    <string name="db_root_tutor_subjects">tutorSubjects</string>
+    <string name="db_root_subjects">subjects</string>
+    <string name="db_root_grades">grades</string>
     <string name="db_root_all_users">AllUsers</string>
     <string name="db_root_students">students</string>
     <string name="db_root_requests">requests</string>
