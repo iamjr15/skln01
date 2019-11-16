@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.CropActivity
+import com.autohub.skln.models.GradesData
 import com.autohub.skln.models.SubjectsData
 import com.autohub.skln.models.User
 import com.autohub.skln.models.UserViewModel
@@ -45,7 +46,8 @@ class EditProfileActivity : BaseActivity() {
     private var mUserViewModel: UserViewModel? = null
     private var mStorageReference: StorageReference? = null
     private var tutorData: TutorData? = null
-    private var subjectsText: String = ""
+    private var subjectsList = ArrayList<String>()
+    private var gradesList = ArrayList<String>()
 
     private val mWatcherWrapper = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -108,8 +110,8 @@ class EditProfileActivity : BaseActivity() {
                             .skipMemoryCache(true)
                             .into(mBinding.profilePicture)
 
+                    getTutorSubjects()
                     getTutorGrades()
-
                 }
                 .addOnFailureListener { e ->
                     hideLoading()
@@ -117,11 +119,11 @@ class EditProfileActivity : BaseActivity() {
                 }
     }
 
-    private fun getTutorGrades() {
+    private fun getTutorSubjects() {
         firebaseStore.collection(getString(R.string.db_root_tutor_subjects)).whereEqualTo("teacherId", tutorData?.id).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val tutorSubjects = documentSnapshot.toObjects(TutorGradesSubjects::class.java)
-                    getTutorSubjects(tutorSubjects)
+                    getTutorSubjectsToTeach(tutorSubjects)
                 }
                 .addOnFailureListener { e ->
                     hideLoading()
@@ -129,15 +131,17 @@ class EditProfileActivity : BaseActivity() {
                 }
     }
 
-    private fun getTutorSubjects(tutorSubjects: List<TutorGradesSubjects>) {
+    private fun getTutorSubjectsToTeach(tutorSubjects: List<TutorGradesSubjects>) {
         for (element in tutorSubjects) {
             firebaseStore.collection(getString(R.string.db_root_subjects)).whereEqualTo("id", element.subjectId).get()
                     .addOnSuccessListener { documentSnapshot ->
                         hideLoading()
                         val subjects = documentSnapshot.toObjects(SubjectsData::class.java)
                         for (j in 0 until subjects.size) {
-                            subjectsText += subjects[j].name
+                            subjectsList.add(subjects[j].name!!)
                         }
+                        mBinding.subjectToTaught.text = subjectsList.joinToString(",")
+
                     }
                     .addOnFailureListener { e ->
                         hideLoading()
@@ -145,7 +149,39 @@ class EditProfileActivity : BaseActivity() {
                     }
         }
 
-        mBinding.subjectToTaught.text = subjectsText
+    }
+
+
+    private fun getTutorGrades() {
+        firebaseStore.collection(getString(R.string.db_root_tutor_gardes)).whereEqualTo("teacherId", tutorData?.id).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val tutorSubjects = documentSnapshot.toObjects(TutorGradesSubjects::class.java)
+                    getTutorSubjectsToTeach(tutorSubjects)
+                }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
+    }
+
+    private fun getTutorGradesToTeach(tutorSubjects: List<TutorGradesSubjects>) {
+        for (element in tutorSubjects) {
+            firebaseStore.collection(getString(R.string.db_root_grades)).whereEqualTo("id", element.gradeId).get()
+                    .addOnSuccessListener { documentSnapshot ->
+                        hideLoading()
+                        val subjects = documentSnapshot.toObjects(GradesData::class.java)
+                        for (j in 0 until subjects.size) {
+                            gradesList.add(subjects[j].name!!)
+                        }
+                        mBinding.classToTeach.text = gradesList.joinToString(",")
+
+                    }
+                    .addOnFailureListener { e ->
+                        hideLoading()
+                        showSnackError(e.message)
+                    }
+        }
+
     }
 
     fun onSubjectTaughtClick() {
