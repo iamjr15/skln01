@@ -155,8 +155,8 @@ class EditProfileActivity : BaseActivity() {
     private fun getTutorGrades() {
         firebaseStore.collection(getString(R.string.db_root_tutor_gardes)).whereEqualTo("teacherId", tutorData?.id).get()
                 .addOnSuccessListener { documentSnapshot ->
-                    val tutorSubjects = documentSnapshot.toObjects(TutorGradesSubjects::class.java)
-                    getTutorSubjectsToTeach(tutorSubjects)
+                    val tutorGrades = documentSnapshot.toObjects(TutorGradesSubjects::class.java)
+                    getTutorGradesToTeach(tutorGrades)
                 }
                 .addOnFailureListener { e ->
                     hideLoading()
@@ -164,16 +164,16 @@ class EditProfileActivity : BaseActivity() {
                 }
     }
 
-    private fun getTutorGradesToTeach(tutorSubjects: List<TutorGradesSubjects>) {
-        for (element in tutorSubjects) {
+    private fun getTutorGradesToTeach(tutorGrades: List<TutorGradesSubjects>) {
+        for (element in tutorGrades) {
             firebaseStore.collection(getString(R.string.db_root_grades)).whereEqualTo("id", element.gradeId).get()
                     .addOnSuccessListener { documentSnapshot ->
                         hideLoading()
-                        val subjects = documentSnapshot.toObjects(GradesData::class.java)
-                        for (j in 0 until subjects.size) {
-                            gradesList.add(subjects[j].name!!)
+                        val grades = documentSnapshot.toObjects(GradesData::class.java)
+                        for (j in 0 until grades.size) {
+                            gradesList.add("Class" + grades[j].grade!!)
                         }
-                        mBinding.classToTeach.text = gradesList.joinToString(",")
+                        mBinding.classToTeach.text = gradesList.joinToString(", ")
 
                     }
                     .addOnFailureListener { e ->
