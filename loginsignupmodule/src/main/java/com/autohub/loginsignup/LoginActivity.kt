@@ -2,9 +2,12 @@ package com.autohub.loginsignup
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
 import android.text.method.PasswordTransformationMethod
 import android.view.View
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.databinding.DataBindingUtil
@@ -17,6 +20,7 @@ import com.autohub.skln.utills.AppConstants
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthProvider
 
 /**
@@ -26,6 +30,7 @@ class LoginActivity : BaseActivity() {
     private var mBinding: ActivityLoginBinding? = null
     private val mAccountType = AppConstants.TYPE_STUDENT
     private lateinit var manager: SplitInstallManager
+    private lateinit var credential: AuthCredential
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,8 +75,19 @@ class LoginActivity : BaseActivity() {
             Toast.makeText(this, "Tutor Verified!", Toast.LENGTH_SHORT).show()
             loadAndLaunchModule(TUTOR_FEATURE, "tutormodule")
         }
+        val email: Editable
+        if(mBinding!!.radiostudent.isChecked)
+        {
+             email = mBinding!!.edtemail.text!!
 
-        val email = mBinding!!.edtemail.text
+        }
+        else
+        {
+             email = mBinding!!.edtloginid.text!!
+
+        }
+
+
         if (email == null) {
             mBinding!!.edtemail.error = resources.getString(R.string.enter_email)
             mBinding!!.edtemail.requestFocus()
@@ -101,8 +117,17 @@ class LoginActivity : BaseActivity() {
 
     private fun validateUserCredentials() {
 
-        val credential = EmailAuthProvider.getCredential(mBinding!!.edtemail.text.toString().trim(),
-                /*encrypt(*/mBinding!!.edtPassword.text.toString().trim()/*)*/)
+          if(mBinding!!.radiostudent.isChecked)
+          {
+               credential = EmailAuthProvider.getCredential(mBinding!!.edtemail.text.toString().trim(),
+                      /*encrypt(*/mBinding!!.edtPassword.text.toString().trim()/*)*/)
+          }
+        else
+          {
+               credential = EmailAuthProvider.getCredential(mBinding!!.edtloginid.text.toString().trim(),
+                      /*encrypt(*/mBinding!!.edtPassword.text.toString().trim()/*)*/)
+          }
+
 
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener {

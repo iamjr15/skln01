@@ -3,7 +3,8 @@ package com.autohub.tutormodule.data.modal
 import android.os.Parcel
 import android.os.Parcelable
 
-data class TutorAcademicInfo(var belongToInstitute : String? = null,
+
+data class TutorAcademicInfo(var belongToInstitute : Boolean? = false,
                              var  classType : String? = null,
                              var  instituteNeme : String? = null,
                              var  numberOfStudents : String? = null,
@@ -11,7 +12,7 @@ data class TutorAcademicInfo(var belongToInstitute : String? = null,
                              var  selectedCategory : String? = null,
                              var  teachingMethod : String? = null) : Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -21,7 +22,7 @@ data class TutorAcademicInfo(var belongToInstitute : String? = null,
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(belongToInstitute)
+        parcel.writeValue(belongToInstitute)
         parcel.writeString(classType)
         parcel.writeString(instituteNeme)
         parcel.writeString(numberOfStudents)
@@ -43,5 +44,4 @@ data class TutorAcademicInfo(var belongToInstitute : String? = null,
             return arrayOfNulls(size)
         }
     }
-
 }

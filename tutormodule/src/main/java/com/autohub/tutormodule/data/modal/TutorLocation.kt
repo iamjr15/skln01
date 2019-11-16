@@ -2,17 +2,17 @@ package com.autohub.tutormodule.data.modal
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.firebase.firestore.GeoPoint
 
 data class TutorLocation(var geohash: String? = null,
-                         var geopoint: String? = null) : Parcelable {
+                         var geopoint: GeoPoint? = null) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
-            parcel.readString()) {
+            TODO("geopoint")) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(geohash)
-        parcel.writeString(geopoint)
     }
 
     override fun describeContents(): Int {
