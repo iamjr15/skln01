@@ -1,4 +1,4 @@
-package com.autohub.tutormodule.data.modal
+package com.autohub.skln.models.tutormodels
 
 import android.os.Parcel
 import android.os.Parcelable

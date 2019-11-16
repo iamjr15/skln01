@@ -13,13 +13,13 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.models.RequestViewModel
+import com.autohub.skln.models.TutorSubjectsModel
 import com.autohub.skln.models.UserModel
 import com.autohub.skln.utills.AppConstants
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.fragments.*
 import com.autohub.studentmodule.listners.HomeListners
 import kotlinx.android.synthetic.main.activity_student_home.*
-import java.util.*
 
 /**
  * Created by Vt Netzwelt
@@ -37,7 +37,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
     override fun onAcadmicsSelect(user: UserModel, classname: String) {
         mViewPager!!.currentItem = 2
-       // explorebaseFragment.exploreTutorsFragment?.updateExploreData(user, classname)
+        // explorebaseFragment.exploreTutorsFragment?.updateExploreData(user, classname)
 
     }
 
@@ -118,6 +118,9 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
             mViewPager!!.currentItem = 3
         }
+
+        fetchTutorSubjects()
+        fetchTutorGrades()
     }
 
     private fun setTextViewDrawableColor(textView: TextView, color: Int) {
@@ -175,6 +178,38 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         }
 
     }
+
+
+    fun fetchTutorSubjects() {
+        var tutorsList: ArrayList<TutorSubjectsModel> = ArrayList<TutorSubjectsModel>()
+
+
+        firebaseStore.collection("tutorGrades").get().addOnCompleteListener {
+
+            if (it.isSuccessful) {
+                for (document in it.result!!) {
+                    val user = document.toObject(TutorSubjectsModel::class.java)
+                    tutorsList.add(user)
+                }
+            }
+        }
+    }
+
+    fun fetchTutorGrades() {
+        var tutorsList: ArrayList<TutorSubjectsModel> = ArrayList<TutorSubjectsModel>()
+
+
+        firebaseStore.collection("tutorSubjects").get().addOnCompleteListener {
+
+            if (it.isSuccessful) {
+                for (document in it.result!!) {
+                    val user = document.toObject(TutorSubjectsModel::class.java)
+                    tutorsList.add(user)
+                }
+            }
+        }
+    }
+
 
     companion object {
         const val TUROR_REQUEST = 1001

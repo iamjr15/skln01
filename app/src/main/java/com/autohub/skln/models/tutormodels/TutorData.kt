@@ -1,16 +1,16 @@
-package com.autohub.tutormodule.data.modal
+package com.autohub.skln.models.tutormodels
 
 import android.os.Parcel
 import android.os.Parcelable
 
 
-data class TutorData(var academicInfo: TutorAcademicInfo? = null,
-                     var id: String? = null,
-                     var location: TutorLocation? = null,
-                     var otpPassword: TutorOtpPassword? = null,
-                     var packageInfo: TutorPackageInfo? = null,
-                     var personInfo: TutorPersonalInfo? = null,
-                     var qualification: TutorQualification? = null) : Parcelable {
+data class TutorData(var academicInfo: TutorAcademicInfo? = TutorAcademicInfo(),
+                     var id: String? = "",
+                     var location: TutorLocation? = TutorLocation(),
+                     var otpPassword: TutorOtpPassword? = TutorOtpPassword(),
+                     var packageInfo: TutorPackageInfo? = TutorPackageInfo(),
+                     var personInfo: TutorPersonalInfo? = TutorPersonalInfo(),
+                     var qualification: TutorQualification? = TutorQualification()) : Parcelable {
 
     constructor(parcel: Parcel) : this(
             parcel.readParcelable(TutorAcademicInfo::class.java.classLoader),

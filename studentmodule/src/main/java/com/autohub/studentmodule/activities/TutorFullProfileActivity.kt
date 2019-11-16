@@ -12,7 +12,7 @@ import com.autohub.skln.BaseActivity
 import com.autohub.skln.models.Request
 import com.autohub.skln.models.RequestViewModel
 import com.autohub.skln.models.User
-import com.autohub.skln.models.UserViewModelold
+import com.autohub.skln.models.tutormodels.UserViewModelold
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R

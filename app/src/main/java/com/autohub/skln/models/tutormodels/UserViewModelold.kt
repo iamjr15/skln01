@@ -1,8 +1,9 @@
-package com.autohub.skln.models
+package com.autohub.skln.models.tutormodels
 
 import android.text.TextUtils
 
 import androidx.databinding.BaseObservable
+import com.autohub.skln.models.User
 
 import com.autohub.skln.utills.CommonUtils
 

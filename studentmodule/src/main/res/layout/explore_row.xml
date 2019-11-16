@@ -7,7 +7,7 @@
 
         <variable
             name="user"
-            type="com.autohub.skln.models.User" />
+            type="com.autohub.skln.models.tutormodels.TutorData" />
 
         <variable
             name="itemClickListener"

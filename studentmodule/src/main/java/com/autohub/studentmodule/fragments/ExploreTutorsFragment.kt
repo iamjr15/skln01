@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.skln.models.User
+import com.autohub.skln.models.tutormodels.TutorData
 import com.autohub.skln.utills.AppConstants.*
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.GlideApp
@@ -38,8 +39,6 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.firebase.storage.FirebaseStorage
-import org.json.JSONArray
-import org.json.JSONObject
 import java.util.*
 
 /**
@@ -48,7 +47,7 @@ import java.util.*
 class ExploreTutorsFragment : BaseFragment() {
 
 
-    private var tutorsList = ArrayList<User>()
+    private var tutorsList = ArrayList<TutorData>()
     private var mBinding: ExploreTutorFragmentBinding? = null
     private var mCurrentLocation: Location? = null
     private var mGpsUtils: GpsUtils? = null
@@ -76,10 +75,10 @@ class ExploreTutorsFragment : BaseFragment() {
         getTutors(exploreFilter)
     }
 
-    private val tutorsClickListener = ItemClickListener<User> {
+    private val tutorsClickListener = ItemClickListener<TutorData> {
 
 
-        startFullProfileActivityForResult(it)
+        //  startFullProfileActivityForResult(it)
 
     }
 
@@ -209,22 +208,12 @@ class ExploreTutorsFragment : BaseFragment() {
             if (task.isSuccessful) {
                 tutorsList = ArrayList()
                 for (document in task.result!!) {
-                   Log.e("document",document.toString())
+                    Log.e("document", document.toString())
 
-                    val user = document.toObject(User::class.java)
-                    if (checkFilterfoData(exploreFilter, user)) {
-                        if (userLatLang != null) {
-                            user.distance = String.format("%.2f", CommonUtils.distance(userLatLang!!.latitude, userLatLang!!.longitude,
-                                    user.latitude.toDouble(), user.longitude.toDouble())).replace(",", ".").toDouble()
-
-                        } else if (mCurrentLocation != null) {
-                            user.distance = String.format("%.2f", CommonUtils.distance(mCurrentLocation!!.latitude, mCurrentLocation!!.longitude,
-                                    user.latitude.toDouble(), user.longitude.toDouble())).replace(",", ".").toDouble()
-                        }
-                        tutorsList.add(user)
-                    }
-                    Log.d(">>>Explore", "Data Is " + user.firstName + " , " + user.gender)
+                    val user = document.toObject(TutorData::class.java)
+                    tutorsList.add(user)
                 }
+                exploreAdaptor!!.setData(tutorsList, mCurrentLocation)
 
                 if (tutorsList.size > 0) {
                     mBinding!!.rrempty.visibility = View.GONE
@@ -234,10 +223,32 @@ class ExploreTutorsFragment : BaseFragment() {
 
                 }
 
-                if (mCurrentLocation != null) {
-                    val newList = tutorsList.sortedBy { it.distance }
-                    exploreAdaptor!!.setData(newList, mCurrentLocation)
-                } else exploreAdaptor!!.setData(tutorsList, mCurrentLocation)
+                /*if (checkFilterfoData(exploreFilter, user)) {
+                    if (userLatLang != null) {
+                        user.distance = String.format("%.2f", CommonUtils.distance(userLatLang!!.latitude, userLatLang!!.longitude,
+                                user.latitude.toDouble(), user.longitude.toDouble())).replace(",", ".").toDouble()
+
+                    } else if (mCurrentLocation != null) {
+                        user.distance = String.format("%.2f", CommonUtils.distance(mCurrentLocation!!.latitude, mCurrentLocation!!.longitude,
+                                user.latitude.toDouble(), user.longitude.toDouble())).replace(",", ".").toDouble()
+                    }
+                    tutorsList.add(user)
+                }
+                Log.d(">>>Explore", "Data Is " + user.firstName + " , " + user.gender)
+            }
+
+            if (tutorsList.size > 0) {
+                mBinding!!.rrempty.visibility = View.GONE
+
+            } else {
+                mBinding!!.rrempty.visibility = View.VISIBLE
+
+            }
+
+            if (mCurrentLocation != null) {
+                val newList = tutorsList.sortedBy { it.distance }
+                exploreAdaptor!!.setData(newList, mCurrentLocation)
+            } else exploreAdaptor!!.setData(tutorsList, mCurrentLocation)*/
             } else {
                 Log.d(">>>Explore", "Error getting documents: ", task.exception)
             }

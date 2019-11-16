@@ -1,10 +1,10 @@
-package com.autohub.tutormodule.data.modal
+package com.autohub.skln.models.tutormodels
 
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.firebase.firestore.GeoPoint
 
-data class TutorLocation(var geohash: String? = null,
+data class TutorLocation(var geohash: String? = "",
                          var geopoint: GeoPoint? = null) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
