@@ -185,7 +185,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
 
                             .addOnSuccessListener {
                                 hideLoading()
-                                appPreferenceHelper.setSignupComplete(true)
+                                appPreferenceHelper.setStudentSignupComplete(true)
                                 loadAndLaunchModule(LoginActivity.STUDENT_FEATURE, "studentmodule")
 
                             }

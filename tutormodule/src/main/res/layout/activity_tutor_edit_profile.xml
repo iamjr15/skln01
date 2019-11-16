@@ -149,10 +149,8 @@
                     android:paddingTop="16dp"
                     android:paddingEnd="8dp"
                     android:paddingBottom="16dp"
-
                     android:text="@{userViewModel.getClassesWithAffix()}"
                     android:textColor="@color/black"
-
                     android:textSize="14sp"
                     tools:text="4th,5th,6th" />
 

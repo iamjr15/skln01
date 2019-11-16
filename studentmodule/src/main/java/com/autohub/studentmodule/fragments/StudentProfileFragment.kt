@@ -44,7 +44,7 @@ class StudentProfileFragment : BaseFragment() {
         setupProfile()
         mBinding!!.logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            appPreferenceHelper.setSignupComplete(false)
+            appPreferenceHelper.setStudentSignupComplete(false)
 
             ActivityUtils.launchActivity(requireContext(), OnBoardActivity::class.java)
             requireActivity().finishAffinity()
