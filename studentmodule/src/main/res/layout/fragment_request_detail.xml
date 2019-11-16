@@ -11,11 +11,11 @@
 
         <variable
             name="userViewModel"
-            type="com.autohub.skln.models.UserViewModel" />
+            type="com.autohub.skln.models.UserViewModelold" />
 
         <variable
             name="tutorViewModel"
-            type="com.autohub.skln.models.UserViewModel" />
+            type="com.autohub.skln.models.UserViewModelold" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

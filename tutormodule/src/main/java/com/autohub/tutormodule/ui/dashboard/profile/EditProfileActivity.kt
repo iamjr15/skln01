@@ -16,7 +16,7 @@ import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.CropActivity
 import com.autohub.skln.models.User
-import com.autohub.skln.models.UserViewModel
+import com.autohub.skln.models.UserViewModelold
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.GlideApp
@@ -39,7 +39,7 @@ class EditProfileActivity : BaseActivity() {
 
     private lateinit var mBinding: ActivityTutorEditProfileBinding
     private val MAX_SIZE = 240
-    private var mUserViewModel: UserViewModel? = null
+    private var mUserViewModel: UserViewModelold? = null
     private var mStorageReference: StorageReference? = null
 
     private val mWatcherWrapper = object : TextWatcher {
@@ -72,7 +72,7 @@ class EditProfileActivity : BaseActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_tutor_edit_profile)
         mBinding.callback = this
         mStorageReference = FirebaseStorage.getInstance().reference
-        mUserViewModel = UserViewModel(User())
+        mUserViewModel = UserViewModelold(User())
         mBinding.userViewModel = mUserViewModel
         mBinding.bio.addTextChangedListener(mWatcherWrapper)
         // setupProfile()

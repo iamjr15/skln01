@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.models.RequestViewModel
-import com.autohub.skln.models.User
+import com.autohub.skln.models.UserModel
 import com.autohub.skln.utills.AppConstants
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.fragments.*
@@ -35,9 +35,9 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     }
 
 
-    override fun onAcadmicsSelect(user: User, classname: String) {
+    override fun onAcadmicsSelect(user: UserModel, classname: String) {
         mViewPager!!.currentItem = 2
-        explorebaseFragment.exploreTutorsFragment?.updateExploreData(user, classname)
+       // explorebaseFragment.exploreTutorsFragment?.updateExploreData(user, classname)
 
     }
 

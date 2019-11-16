@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.autohub.skln.models.UserViewModel" />
+            type="com.autohub.skln.models.UserViewModelold" />
 
         <variable
             name="callback"

@@ -12,7 +12,7 @@ import com.autohub.skln.BaseActivity
 import com.autohub.skln.models.Request
 import com.autohub.skln.models.RequestViewModel
 import com.autohub.skln.models.User
-import com.autohub.skln.models.UserViewModel
+import com.autohub.skln.models.UserViewModelold
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
@@ -27,7 +27,7 @@ import com.google.firebase.storage.FirebaseStorage
 class TutorFullProfileActivity : BaseActivity() {
 
     private var mBinding: ActivityTutorFullProfileBinding? = null
-    private var mUserViewModel: UserViewModel? = null
+    private var mUserViewModel: UserViewModelold? = null
     private var mCurrentUser: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +55,7 @@ class TutorFullProfileActivity : BaseActivity() {
         if (intent.extras != null) {
             val bundle = intent.extras
             val user = bundle!!.getParcelable<User>(AppConstants.KEY_DATA)
-            mUserViewModel = UserViewModel(user!!)
+            mUserViewModel = UserViewModelold(user!!)
         }
     }
 

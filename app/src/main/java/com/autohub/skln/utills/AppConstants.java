@@ -107,6 +107,7 @@ public interface AppConstants {
     String KEY_STDT_FAVORITE_CLASSES = "favoriteClasses";
     String KEY_STDT_LEAST_FAV_CLASSES = "leastFavoriteClasses";
     String KEY_STDT_HOBBIES = "hobbiesToPursue";
+    String KEY_ACCOUNT_PICTURE = "accountPicture";
 
 
     String KEY_SELECTED_CLASS = "selectedClass";

@@ -28,12 +28,12 @@ class ExploreBaseFragment : Fragment() {
 
     fun showExploreFragment() {
 
-        exploreTutorsFragment = ExploreTutorsFragment()
+        /*  exploreTutorsFragment = ExploreTutorsFragment()
 
 
-        childFragmentManager
-                .beginTransaction()
-                .replace(R.id.explorecontainer, exploreTutorsFragment!!).commit()
+          childFragmentManager
+                  .beginTransaction()
+                  .replace(R.id.explorecontainer, exploreTutorsFragment!!).commit()*/
     }
 
     fun showRequestDetailFragment(bundle: Bundle) {

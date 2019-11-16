@@ -11,7 +11,7 @@ import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.Request
 import com.autohub.skln.models.RequestViewModel
 import com.autohub.skln.models.User
-import com.autohub.skln.models.UserViewModel
+import com.autohub.skln.models.UserViewModelold
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
@@ -114,7 +114,7 @@ class FragmentRequestDetail : BaseFragment() {
                 .addOnSuccessListener { documentSnapshot ->
                     val student = documentSnapshot.toObject(User::class.java)
                     if (mRequestViewModel!!.userType.equals("tutor", ignoreCase = true)) {
-                        mBinding!!.userViewModel = UserViewModel(student!!)
+                        mBinding!!.userViewModel = UserViewModelold(student!!)
                     }
                     mStudent = student
                     loadPicture()
@@ -129,9 +129,9 @@ class FragmentRequestDetail : BaseFragment() {
                     hideLoading()
                     val tutor = documentSnapshot.toObject(User::class.java)
                     if (mRequestViewModel!!.userType.equals("student", ignoreCase = true)) {
-                        mBinding!!.userViewModel = UserViewModel(tutor!!)
+                        mBinding!!.userViewModel = UserViewModelold(tutor!!)
                     }
-                    mBinding!!.tutorViewModel = UserViewModel(tutor!!)
+                    mBinding!!.tutorViewModel = UserViewModelold(tutor!!)
                     mTutor = tutor
                     loadPicture()
                     mBinding!!.rate.text = "fees : $${tutor!!.rate} / ${tutor.paymentDuration}"

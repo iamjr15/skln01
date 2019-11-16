@@ -11,7 +11,7 @@
 
         <variable
             name="userViewModel"
-            type="com.autohub.skln.models.UserViewModel" />
+            type="com.autohub.skln.models.UserViewModelold" />
     </data>
 
     <ScrollView
