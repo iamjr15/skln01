@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.batchRequests.BatchRequestData
-import com.autohub.skln.models.tutor.TutorData
+import com.autohub.skln.models.tutormodels.TutorData
 import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentRequestsListBinding
