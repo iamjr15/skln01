@@ -16,7 +16,7 @@ data class TutorPackageInfo(var frequency: String? = null,
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            TODO("paymentOptions")) {
+            parcel.readArrayList(null) as ArrayList<String>?) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -25,6 +25,7 @@ data class TutorPackageInfo(var frequency: String? = null,
         parcel.writeString(price)
         parcel.writeString(rateOption)
         parcel.writeString(studentCapacity)
+        parcel.writeList(paymentOptions as List<*>?)
     }
 
     override fun describeContents(): Int {

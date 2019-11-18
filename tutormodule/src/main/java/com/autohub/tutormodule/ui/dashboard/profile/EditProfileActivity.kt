@@ -43,7 +43,6 @@ class EditProfileActivity : BaseActivity() {
 
     private lateinit var mBinding: ActivityTutorEditProfileBinding
     private val MAX_SIZE = 240
-    private var mUserViewModel: UserViewModel? = null
     private var mStorageReference: StorageReference? = null
     private var tutorData: TutorData? = null
     private var subjectsList = ArrayList<String>()
@@ -79,44 +78,38 @@ class EditProfileActivity : BaseActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_tutor_edit_profile)
         mBinding.callback = this
         mStorageReference = FirebaseStorage.getInstance().reference
-        mUserViewModel = UserViewModel(User())
-        mBinding.userViewModel = mUserViewModel
         mBinding.bio.addTextChangedListener(mWatcherWrapper)
-        // setupProfile()
-        //  setUpUserInfo()
-        setUpTutorInfo()
+
+        if (intent.hasExtra("tutorData")) {
+            setUpTutorInfo()
+        }
     }
 
 
     private fun setUpTutorInfo() {
         showLoading()
-        firebaseStore.collection(getString(R.string.db_root_tutors)).document("AA4J2oiNUcHc08zIKE7h").get()
-                .addOnSuccessListener { documentSnapshot ->
-                    val tutor = documentSnapshot.toObject(TutorData::class.java)
-                    this.tutorData = tutor
-                    mBinding.classToTeach.text = ""
-                    mBinding.subjectToTaught.text = ""
-                    mBinding.selectOccupation.text = tutor?.qualification?.currentOccupation
-                    mBinding.teachingExperience.text = tutor?.qualification?.experience
-                    mBinding.qualification.text = tutor?.qualification?.qualification
-                    mBinding.areaOfQualification.text = tutor?.qualification?.qualificationArea
-                    mBinding.targetedBoard.text = tutor?.qualification?.targetBoard
-                    mBinding.bio.setText(tutor?.personInfo?.biodata)
 
-                    GlideApp.with(this)
-                            .load(tutor?.personInfo?.accountPicture)
-                            .placeholder(com.autohub.skln.R.drawable.default_pic)
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .skipMemoryCache(true)
-                            .into(mBinding.profilePicture)
+        val tutor = intent.getParcelableExtra<TutorData>("tutorData")
 
-                    getTutorSubjects()
-                    getTutorGrades()
-                }
-                .addOnFailureListener { e ->
-                    hideLoading()
-                    showSnackError(e.message)
-                }
+        this.tutorData = tutor
+        mBinding.selectOccupation.text = tutor?.qualification?.currentOccupation
+        mBinding.teachingExperience.text = tutor?.qualification?.experience
+        mBinding.qualification.text = tutor?.qualification?.qualification
+        mBinding.areaOfQualification.text = tutor?.qualification?.qualificationArea
+        mBinding.targetedBoard.text = tutor?.qualification?.targetBoard
+        mBinding.bio.setText(tutor?.personInfo?.biodata)
+
+
+        GlideApp.with(this)
+                .load(tutor?.personInfo?.accountPicture)
+                .placeholder(com.autohub.skln.R.drawable.default_pic)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(mBinding.profilePicture)
+
+        getTutorSubjects()
+        getTutorGrades()
+
     }
 
     private fun getTutorSubjects() {
@@ -171,7 +164,7 @@ class EditProfileActivity : BaseActivity() {
                         hideLoading()
                         val grades = documentSnapshot.toObjects(GradesData::class.java)
                         for (j in 0 until grades.size) {
-                            gradesList.add("Class" + grades[j].grade!!)
+                            gradesList.add("Class " + grades[j].grade!!)
                         }
                         mBinding.classToTeach.text = gradesList.joinToString(", ")
 
@@ -242,7 +235,7 @@ class EditProfileActivity : BaseActivity() {
     fun onSelectQualification() {
         selectedQualificationAreas.clear()
         mBinding.areaOfQualification.text = ""
-        val items = getResources().getStringArray(R.array.qualification_arrays).toList()
+        val items = resources.getStringArray(R.array.qualification_arrays).toList()
         showSingleSelectionDialog(items, mBinding.qualification, getString(R.string.select_qualification), selectedQualification)
     }
 
@@ -440,7 +433,7 @@ class EditProfileActivity : BaseActivity() {
         firebaseStore.collection(getString(R.string.db_root_tutors)).document("j9MtRdT5L0g62QiQ7z514z0hQz52"/*firebaseAuth.currentUser!!.uid*/).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val user = documentSnapshot.toObject(User::class.java)
-                    mUserViewModel!!.user = user!!
+//                    mUserViewModel!!.user = user!!
                 }
                 .addOnFailureListener { e -> showSnackError(e.message) }
     }
@@ -477,7 +470,9 @@ class EditProfileActivity : BaseActivity() {
         user[AppConstants.KEY_BIODATA] = bio
 
         FirebaseFirestore.getInstance().collection(getString(R.string.db_root_tutors)).document(FirebaseAuth.getInstance().currentUser!!.uid).set(user, SetOptions.merge())
-                .addOnSuccessListener { mUserViewModel!!.bioData = bio }
+                .addOnSuccessListener {
+//                    mUserViewModel!!.bioData = bio
+                }
                 .addOnFailureListener { }
     }
 

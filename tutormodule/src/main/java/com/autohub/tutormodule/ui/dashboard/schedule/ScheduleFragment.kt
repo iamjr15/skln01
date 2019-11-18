@@ -58,8 +58,6 @@ class ScheduleFragment : BaseFragment() {
             }
         })
 
-
-
         mBinding.schedulerecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         adaptor = ScheduleAdaptor(requireContext())
         mBinding.schedulerecycleview.adapter = adaptor

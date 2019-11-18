@@ -2,17 +2,20 @@ package com.autohub.skln.models.tutor
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.google.firebase.firestore.GeoPoint
 
 data class TutorLocation(var geohash: String? = null,
-                         var geopoint: GeoPoint? = null) : Parcelable {
+                         var latitude: Double? = 0.0,
+                         var longitude: Double? = 0.0) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
-            TODO("geopoint")) {
+            parcel.readValue(Double::class.java.classLoader) as? Double,
+            parcel.readValue(Double::class.java.classLoader) as? Double) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(geohash)
+        parcel.writeValue(latitude)
+        parcel.writeValue(longitude)
     }
 
     override fun describeContents(): Int {
@@ -28,4 +31,5 @@ data class TutorLocation(var geohash: String? = null,
             return arrayOfNulls(size)
         }
     }
+
 }
