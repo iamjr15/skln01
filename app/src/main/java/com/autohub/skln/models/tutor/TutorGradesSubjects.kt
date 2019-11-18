@@ -3,10 +3,10 @@ package com.autohub.skln.models.tutor
 import android.os.Parcel
 import android.os.Parcelable
 
-data class TutorGradesSubjects(var id: String? = null,
-                               var gradeId: String? = null,
-                               var teacherId: String? = null,
-                               var subjectId: String? = null) : Parcelable {
+data class TutorGradesSubjects(var id: String? = "",
+                               var gradeId: String? = "",
+                               var teacherId: String? = "",
+                               var subjectId: String? = "") : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),

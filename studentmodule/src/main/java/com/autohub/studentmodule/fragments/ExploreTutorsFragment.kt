@@ -20,7 +20,7 @@ import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.skln.models.TutorGrades
 import com.autohub.skln.models.TutorSubjectsModel
 import com.autohub.skln.models.UserModel
-import com.autohub.skln.models.tutormodels.TutorData
+import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.AppConstants.*
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.GlideApp

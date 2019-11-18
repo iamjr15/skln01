@@ -3,7 +3,7 @@ package com.autohub.skln.models.tutor
 import android.os.Parcel
 import android.os.Parcelable
 
-data class TutorLocation(var geohash: String? = null,
+data class TutorLocation(var geohash: String? = "",
                          var latitude: Double? = 0.0,
                          var longitude: Double? = 0.0) : Parcelable {
     constructor(parcel: Parcel) : this(

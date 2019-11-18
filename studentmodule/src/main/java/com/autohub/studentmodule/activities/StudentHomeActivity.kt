@@ -12,9 +12,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
-import com.autohub.skln.models.GradesData
-import com.autohub.skln.models.SubjectsData
+
 import com.autohub.skln.models.UserModel
+import com.autohub.skln.models.batchRequests.GradeData
+import com.autohub.skln.models.batchRequests.SubjectData
 import com.autohub.skln.utills.AppConstants
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.fragments.*
@@ -29,8 +30,8 @@ import kotlinx.android.synthetic.main.activity_student_home.*
 class StudentHomeActivity : BaseActivity(), HomeListners {
 
 
-    lateinit var subjectDataList: ArrayList<SubjectsData>
-    lateinit var gradesDataList: ArrayList<GradesData>
+    lateinit var subjectDataList: ArrayList<SubjectData>
+    lateinit var gradesDataList: ArrayList<GradeData>
     var user: UserModel? = null
 
     override fun onClassRequestSelectListner(requestViewModel: BatchRequestViewModel) {
@@ -160,7 +161,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
             if (it.isSuccessful) {
                 for (document in it.result!!) {
-                    val user = document.toObject(SubjectsData::class.java)
+                    val user = document.toObject(SubjectData::class.java)
                     subjectDataList.add(user)
                 }
 
@@ -169,7 +170,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
                     if (it.isSuccessful) {
                         for (document in it.result!!) {
-                            val user = document.toObject(GradesData::class.java)
+                            val user = document.toObject(GradeData::class.java)
                             gradesDataList.add(user)
                             getUserInfo()
                         }

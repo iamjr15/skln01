@@ -4,11 +4,11 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.util.*
 
-data class TutorPackageInfo(var frequency: String? = null,
-                            var occurances: String? = null,
-                            var price: String? = null,
-                            var rateOption: String? = null,
-                            var studentCapacity: String? = null,
+data class TutorPackageInfo(var frequency: String? = "",
+                            var occurances: String? = "",
+                            var price: String? = "",
+                            var rateOption: String? = "",
+                            var studentCapacity: String? = "",
                             var paymentOptions: ArrayList<String>? = null) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
