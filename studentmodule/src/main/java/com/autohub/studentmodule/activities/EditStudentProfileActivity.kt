@@ -65,12 +65,12 @@ class EditStudentProfileActivity : BaseActivity() {
 
     fun showHobby() {
         val items = ArrayList<String>()
-        items.add(AppConstants.HOBBY_DANCE)
-        items.add(AppConstants.HOBBY_DRUM)
-        items.add(AppConstants.HOBBY_GUITAR)
-        items.add(AppConstants.HOBBY_KEYBOARD)
-        items.add(AppConstants.HOBBY_MARTIAL)
-        items.add(AppConstants.HOBBY_PAINT)
+        items.add(HOBBY_DANCE)
+        items.add(HOBBY_DRUM)
+        items.add(HOBBY_GUITAR)
+        items.add(HOBBY_KEYBOARD)
+        items.add(HOBBY_MARTIAL)
+        items.add(HOBBY_PAINT)
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
         var selectedItems: List<String> = ArrayList()
@@ -139,18 +139,18 @@ class EditStudentProfileActivity : BaseActivity() {
 
     fun showSub(isLeastFav: Boolean) {
         val items = ArrayList<String>()
-        items.add(AppConstants.SUBJECT_SCIENCE)
-        items.add(AppConstants.SUBJECT_COMPUTER_SCIENCE)
-        items.add(AppConstants.SUBJECT_ACCOUNTANCY)
-        items.add(AppConstants.SUBJECT_BIOLOGY)
-        items.add(AppConstants.SUBJECT_BUSINESS)
-        items.add(AppConstants.SUBJECT_SOCIAL_STUDIES)
-        items.add(AppConstants.SUBJECT_CHEMISTRY)
-        items.add(AppConstants.SUBJECT_ECONOMICS)
-        items.add(AppConstants.SUBJECT_LANGUAGES)
-        items.add(AppConstants.SUBJECT_PHYSICS)
-        items.add(AppConstants.SUBJECT_MATHS)
-        items.add(AppConstants.SUBJECT_ENGLISH)
+        items.add(SUBJECT_SCIENCE)
+        items.add(SUBJECT_COMPUTER_SCIENCE)
+        items.add(SUBJECT_ACCOUNTANCY)
+        items.add(SUBJECT_BIOLOGY)
+        items.add(SUBJECT_BUSINESS)
+        items.add(SUBJECT_SOCIAL_STUDIES)
+        items.add(SUBJECT_CHEMISTRY)
+        items.add(SUBJECT_ECONOMICS)
+        items.add(SUBJECT_LANGUAGES)
+        items.add(SUBJECT_PHYSICS)
+        items.add(SUBJECT_MATHS)
+        items.add(SUBJECT_ENGLISH)
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
         var selectedItems: List<String> = ArrayList()
@@ -220,7 +220,6 @@ class EditStudentProfileActivity : BaseActivity() {
 
     private fun setUpUserInfo() {
 
-
         val path = "student/"
 
         val ref = FirebaseStorage.getInstance().reference.child(path +
@@ -261,6 +260,16 @@ class EditStudentProfileActivity : BaseActivity() {
     }
 
     fun makeSaveRequest() {
+
+        if (mBinding!!.password.text != null || !mBinding!!.password.text.isEmpty()) {
+            firebaseAuth.currentUser!!.updatePassword(mBinding!!.password.text.toString()).addOnCompleteListener {
+                Toast.makeText(this,
+                        "Password changes.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+
         if (isVerified()) {
 
             firebaseStore.collection("grades").whereEqualTo("grade", user!!.academicInfo!!.selectedClass).get().addOnSuccessListener {

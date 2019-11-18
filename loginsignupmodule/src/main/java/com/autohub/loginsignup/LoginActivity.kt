@@ -33,7 +33,6 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         manager = SplitInstallManagerFactory.create(this)
         mBinding!!.callback = this
@@ -45,7 +44,6 @@ class LoginActivity : BaseActivity() {
                 updateUi(false)
             }
         }
-
     }
 
 
@@ -70,10 +68,11 @@ class LoginActivity : BaseActivity() {
 
     fun forgotPassword() {
         ActivityUtils.launchActivity(this, ForgetPasswordActivity::class.java)
-
     }
 
     fun login() {
+
+
         if (!mBinding!!.radiostudent.isChecked) {
             Toast.makeText(this, "Tutor Verified!", Toast.LENGTH_SHORT).show()
             loadAndLaunchModule(TUTOR_FEATURE, "tutormodule")
