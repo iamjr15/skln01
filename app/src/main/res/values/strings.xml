@@ -1,5 +1,6 @@
 <resources>
     <string name="db_root_students">students</string>
+    <string name="db_root_tutors">tutors</string>
 
     <string name="app_name">SKLN</string>
     <string name="login">login</string>

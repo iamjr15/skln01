@@ -73,6 +73,7 @@ class LoginActivity : BaseActivity() {
     fun login() {
 
 
+
         val email: Editable
         if (mBinding!!.radiostudent.isChecked) {
             email = mBinding!!.edtemail.text!!
@@ -166,13 +167,24 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun saveUserIdLocally() {
-        firebaseStore.collection(getString(R.string.db_root_students)).whereEqualTo(AppConstants.KEY_USER_ID, firebaseAuth.currentUser!!.uid)
-                .get().addOnSuccessListener {
-                    it.forEach {
-                        appPreferenceHelper.setUserId(it.id)
-                        moveNext()
+        if (mBinding!!.radiostudent.isChecked) {
+            firebaseStore.collection(getString(R.string.db_root_students)).whereEqualTo(AppConstants.KEY_USER_ID, firebaseAuth.currentUser!!.uid)
+                    .get().addOnSuccessListener {
+                        it.forEach {
+                            appPreferenceHelper.setUserId(it.id)
+                            moveNext()
+                        }
                     }
-                }
+        } else {
+            firebaseStore.collection(getString(R.string.db_root_tutors)).whereEqualTo(AppConstants.KEY_USER_ID, "bcb80939-4a94-447d-a1c2-6f0c42431a2c")
+                    .get().addOnSuccessListener {
+                        it.forEach {
+                            appPreferenceHelper.setUserId(it.id)
+                            moveNext()
+                        }
+                    }
+        }
+
     }
 
     /*
