@@ -47,7 +47,7 @@
                     android:textSize="24sp"
                     tools:text="John D."
                     android:singleLine="true"
-                    android:ellipsize="end"/>
+                    android:ellipsize="end" />
 
             </RelativeLayout>
 
