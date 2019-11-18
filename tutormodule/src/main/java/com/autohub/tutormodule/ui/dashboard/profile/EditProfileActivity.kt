@@ -18,8 +18,8 @@ import com.autohub.skln.CropActivity
 import com.autohub.skln.models.GradesData
 import com.autohub.skln.models.SubjectsData
 import com.autohub.skln.models.User
-import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.models.tutor.TutorGradesSubjects
+import com.autohub.skln.models.tutormodels.TutorData
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.GlideApp
@@ -91,16 +91,16 @@ class EditProfileActivity : BaseActivity() {
         val tutor = intent.getParcelableExtra<TutorData>("tutorData")
 
         this.tutorData = tutor
-        mBinding.selectOccupation.text = tutor.qualification.currentOccupation
-        mBinding.teachingExperience.text = tutor.qualification.experience
-        mBinding.qualification.text = tutor.qualification.qualification
-        mBinding.areaOfQualification.text = tutor.qualification.qualificationArea
-        mBinding.targetedBoard.text = tutor.qualification.targetBoard
-        mBinding.bio.setText(tutor.personInfo.biodata)
+        mBinding.selectOccupation.text = tutor.qualification!!.currentOccupation
+        mBinding.teachingExperience.text = tutor.qualification!!.experience
+        mBinding.qualification.text = tutor.qualification!!.qualification
+        mBinding.areaOfQualification.text = tutor.qualification!!.qualificationArea
+        mBinding.targetedBoard.text = tutor.qualification!!.targetBoard
+        mBinding.bio.setText(tutor.personInfo!!.biodata)
 
 
         GlideApp.with(this)
-                .load(tutor.personInfo.accountPicture)
+                .load(tutor.personInfo!!.accountPicture)
                 .placeholder(com.autohub.skln.R.drawable.default_pic)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
@@ -112,7 +112,7 @@ class EditProfileActivity : BaseActivity() {
     }
 
     private fun getTutorSubjects() {
-        firebaseStore.collection(getString(R.string.db_root_tutor_subjects)).whereEqualTo("teacherId", tutorData.id).get()
+        firebaseStore.collection(getString(R.string.db_root_tutor_subjects)).whereEqualTo("teacherId", tutorData?.id).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val tutorSubjects = documentSnapshot.toObjects(TutorGradesSubjects::class.java)
                     getTutorSubjectsToTeach(tutorSubjects)
@@ -145,7 +145,7 @@ class EditProfileActivity : BaseActivity() {
 
 
     private fun getTutorGrades() {
-        firebaseStore.collection(getString(R.string.db_root_tutor_gardes)).whereEqualTo("teacherId", tutorData.id).get()
+        firebaseStore.collection(getString(R.string.db_root_tutor_gardes)).whereEqualTo("teacherId", tutorData?.id).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val tutorGrades = documentSnapshot.toObjects(TutorGradesSubjects::class.java)
                     getTutorGradesToTeach(tutorGrades)

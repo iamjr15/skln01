@@ -3,6 +3,8 @@ package com.autohub.skln.models.tutormodels
 import android.os.Parcel
 import android.os.Parcelable
 import android.text.TextUtils
+import com.autohub.skln.models.tutor.TutorLocation
+import com.autohub.skln.models.tutor.TutorPackageInfo
 import com.autohub.skln.utills.CommonUtils
 
 
