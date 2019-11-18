@@ -73,10 +73,6 @@ class LoginActivity : BaseActivity() {
     fun login() {
 
 
-        if (!mBinding!!.radiostudent.isChecked) {
-            Toast.makeText(this, "Tutor Verified!", Toast.LENGTH_SHORT).show()
-            loadAndLaunchModule(TUTOR_FEATURE, "tutormodule")
-        }
         val email: Editable
         if (mBinding!!.radiostudent.isChecked) {
             email = mBinding!!.edtemail.text!!
