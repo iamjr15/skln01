@@ -4,6 +4,7 @@
     <string name="db_root_tutors">tutors</string>
     <string name="db_root_students">students</string>
     <string name="db_root_requests">requests</string>
+    <string name="db_root_batchRequests">batchRequests</string>
 
 
     <string name="login">login</string>

@@ -9,14 +9,15 @@ import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
-import com.autohub.skln.models.Request
-import com.autohub.skln.models.RequestViewModel
-import com.autohub.skln.models.User
-import com.autohub.skln.models.UserViewModel
+import com.autohub.skln.models.UserModel
+import com.autohub.skln.models.tutormodels.TutorData
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.ActivityTutorFullProfileBinding
+import com.autohub.studentmodule.models.BatchRequestViewModel
+import com.autohub.studentmodule.models.BatchrequestModel
+import com.autohub.studentmodule.models.TutorViewModel
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.storage.FirebaseStorage
 
@@ -27,8 +28,8 @@ import com.google.firebase.storage.FirebaseStorage
 class TutorFullProfileActivity : BaseActivity() {
 
     private var mBinding: ActivityTutorFullProfileBinding? = null
-    private var mUserViewModel: UserViewModel? = null
-    private var mCurrentUser: User? = null
+    private var mUserViewModel: TutorViewModel? = null
+    private var mCurrentUser: UserModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,34 +55,37 @@ class TutorFullProfileActivity : BaseActivity() {
     private fun getIntentData() {
         if (intent.extras != null) {
             val bundle = intent.extras
-            val user = bundle!!.getParcelable<User>(AppConstants.KEY_DATA)
-            mUserViewModel = UserViewModel(user!!)
+            val user = bundle!!.getParcelable<TutorData>(AppConstants.KEY_DATA)
+            mUserViewModel = TutorViewModel(user!!)
         }
     }
 
 
     private fun getCurrentUser() {
         firebaseStore.collection(getString(com.autohub.skln.R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).get()
-                .addOnSuccessListener { documentSnapshot -> mCurrentUser = documentSnapshot.toObject(User::class.java) }
+                .addOnSuccessListener { documentSnapshot -> mCurrentUser = documentSnapshot.toObject(UserModel::class.java) }
                 .addOnFailureListener { e -> showSnackError(e.message) }
     }
 
     private fun setUpView() {
-        addSubjectRadioButtons(mUserViewModel!!.user.subjectsToTeach.split(","))
-        mUserViewModel!!.user.classType?.split(",")?.let { addClassTypeRadioButtons(it) }
+        addSubjectRadioButtons(mUserViewModel!!.user.subjectsToTeach!!.split(","))
+        mUserViewModel!!.user.academicInfo!!.classType?.split(",")?.let { addClassTypeRadioButtons(it) }
 
         mBinding!!.txtdistence.text = mUserViewModel!!.user.distance.toString()
 
-
-        if (mUserViewModel!!.user.pictureUrl != null) {
-            val pathReference1 = FirebaseStorage.getInstance().reference.child(mUserViewModel!!.user.pictureUrl)
-            GlideApp.with(this)
-                    .load(pathReference1)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(com.autohub.skln.R.drawable.default_pic)
-                    .fallback(com.autohub.skln.R.drawable.default_pic)
-                    .into(mBinding!!.profilePicture)
+        try {
+            if (mUserViewModel!!.user.personInfo!!.accountPicture != null) {
+                val pathReference1 = FirebaseStorage.getInstance().reference.child(mUserViewModel!!.user.personInfo!!.accountPicture!!)
+                GlideApp.with(this)
+                        .load(pathReference1)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(com.autohub.skln.R.drawable.default_pic)
+                        .fallback(com.autohub.skln.R.drawable.default_pic)
+                        .into(mBinding!!.profilePicture)
+            }
+        } catch (e: Exception) {
         }
+
 
     }
 
@@ -89,19 +93,63 @@ class TutorFullProfileActivity : BaseActivity() {
         showLoading()
         val studentId = firebaseAuth.currentUser!!.uid
         val tutorId = mUserViewModel!!.userId
-        val request = Request(studentId, tutorId, subject, mUserViewModel!!.firstName, mCurrentUser!!.firstName, mCurrentUser!!.studentClass, classtype)///* mUserViewModel!!.classType*/
-        val dbRoot = getString(R.string.db_root_requests)
-        firebaseStore.collection(dbRoot).add(request).addOnSuccessListener { documentReference ->
+        val gradeId = mCurrentUser!!.academicInfo!!.selectedClass
+        var grade = ""
+        var subjectId = ""
+        firebaseStore.collection("grades")
+                .whereEqualTo("id", gradeId).get().addOnSuccessListener {
+
+                    it.forEach {
+                        grade = "class_${it.getString("grade")!!} "
+
+                    }
+
+                    firebaseStore.collection("subjects")
+                            .whereEqualTo("name", subject).get().addOnSuccessListener {
+
+                                it.forEach {
+                                    subjectId = "${it.getString("id")!!} "
+
+                                }
+
+
+                                var batchRequest = BatchrequestModel(id = "", status = "pending",
+                                        teacher = BatchrequestModel.Teacher(tutorId, mUserViewModel!!.fullName),
+                                        student = BatchrequestModel.Student(studentId, mCurrentUser!!.personInfo!!.firstName!! + " " +
+                                                mCurrentUser!!.personInfo!!.lastName!!),
+                                        grade = BatchrequestModel.Grade(id = gradeId
+
+                                                , name = grade),
+                                        subject = BatchrequestModel.Subject(id = subjectId,
+                                                name = subject)
+                                )
+
+
+                                makeBatchRequest(batchRequest)
+                            }
+                }
+                .addOnFailureListener { e -> showSnackError(e.message) }
+
+
+    }
+
+    private fun makeBatchRequest(batchRequest: BatchrequestModel) {
+
+
+        /*       val request = Request(batchRequest.student!!.id,
+                       batchRequest.teacher!!.id, batchRequest., mUserViewModel!!.firstName, mCurrentUser!!.personInfo!!.firstName,
+                       mCurrentUser!!.academicInfo!!.selectedClass, classtype)*////* mUserViewModel!!.classType*/
+        val dbRoot = getString(R.string.db_root_batchRequests)
+        firebaseStore.collection(dbRoot).add(batchRequest).addOnSuccessListener { documentReference ->
             Log.d(">>>>Request", "DocumentSnapshot added with ID: " + documentReference.id)
             hideLoading()
             val intent = Intent()
             val bundle = Bundle()
-            bundle.putParcelable(AppConstants.KEY_DATA, RequestViewModel(request, "Student", documentReference.id))
+            bundle.putParcelable(AppConstants.KEY_DATA, BatchRequestViewModel(batchRequest, "Student", documentReference.id))
             intent.putExtra(AppConstants.KEY_DATA, bundle)
             intent.putExtras(bundle)
             setResult(Activity.RESULT_OK, intent)
             finish()
-
         }.addOnFailureListener { hideLoading() }
     }
 
@@ -128,7 +176,7 @@ class TutorFullProfileActivity : BaseActivity() {
             val rdbtn = RadioButton(this)
             rdbtn.id = View.generateViewId()
             //rdbtn.text = "Radio " + rdbtn.id
-            rdbtn.text = mUserViewModel!!.user.classType
+            rdbtn.text = mUserViewModel!!.user.academicInfo!!.classType
             mBinding!!.classtyperadio.addView(rdbtn)
         }
 

@@ -7,17 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import com.autohub.skln.activities.OnBoardActivity
 import com.autohub.skln.fragment.BaseFragment
+import com.autohub.skln.models.UserModel
 import com.autohub.skln.utills.ActivityUtils
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.GlideApp
+import com.autohub.studentmodule.R
 import com.autohub.studentmodule.activities.EditStudentProfileActivity
+import com.autohub.studentmodule.databinding.FragmentStudentProfileBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.autohub.studentmodule.R
-import com.autohub.studentmodule.databinding.FragmentStudentProfileBinding
 
 /**
  * Created by Vt Netzwelt
@@ -72,16 +73,23 @@ class StudentProfileFragment : BaseFragment() {
         }
         firebaseStore.collection(root).document(firebaseAuth.currentUser!!.uid).get()
                 .addOnSuccessListener { documentSnapshot ->
-                    val firstName = documentSnapshot.getString(AppConstants.KEY_FIRST_NAME)
-                    val lastName = documentSnapshot.getString(AppConstants.KEY_LAST_NAME)
-                    if (!TextUtils.isEmpty(lastName)) {
-                        mBinding!!.name.text = String.format("%s %s.", firstName,
-                                lastName!!.substring(0, 1))
+                    var user: UserModel = documentSnapshot.toObject(UserModel::class.java)!!
+
+
+
+                    if (!TextUtils.isEmpty(user.personInfo?.lastName)) {
+                        mBinding!!.name.text = String.format("%s %s.", user.personInfo?.firstName,
+                                user.personInfo?.lastName!!.substring(0, 1))
                     }
 
-                    val studentClass = documentSnapshot.getString(AppConstants.KEY_STDT_CLASS)
+                    val studentClass = user.academicInfo!!.selectedClass
+                    firebaseStore.collection("grades").whereEqualTo("id", studentClass).get().addOnSuccessListener {
 
-                    mBinding!!.grade.text = "grade ${studentClass}${CommonUtils.getClassSuffix(studentClass!!.toInt())} "
+                        it.forEach {
+                            mBinding!!.grade.text = "grade ${it.getString("grade")!!}${CommonUtils.getClassSuffix(it.getString("grade")!!.toInt())} "
+                        }
+                    }
+
 
                 }
                 .addOnFailureListener { e -> showSnackError(e.message) }
@@ -92,11 +100,6 @@ class StudentProfileFragment : BaseFragment() {
 
         ActivityUtils.launchActivity(requireContext(), EditStudentProfileActivity::class.java)
 
-        /*if (mProfileType.equals("student", ignoreCase = true)) {
-            ActivityUtils.launchFragment(requireContext(), com.autohub.skln.student.EditProfileFragment::class.java.name)
-            return
-        }
-        ActivityUtils.launchFragment(requireContext(), EditProfileFragment::class.java.name)*/
     }
 
     fun onEditPersonalDetailClick() {

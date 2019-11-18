@@ -12,14 +12,15 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
-import com.autohub.skln.models.RequestViewModel
-import com.autohub.skln.models.User
+import com.autohub.skln.models.GradesData
+import com.autohub.skln.models.SubjectsData
+import com.autohub.skln.models.UserModel
 import com.autohub.skln.utills.AppConstants
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.fragments.*
 import com.autohub.studentmodule.listners.HomeListners
+import com.autohub.studentmodule.models.BatchRequestViewModel
 import kotlinx.android.synthetic.main.activity_student_home.*
-import java.util.*
 
 /**
  * Created by Vt Netzwelt
@@ -27,7 +28,12 @@ import java.util.*
 
 class StudentHomeActivity : BaseActivity(), HomeListners {
 
-    override fun onClassRequestSelectListner(requestViewModel: RequestViewModel) {
+
+    lateinit var subjectDataList: ArrayList<SubjectsData>
+    lateinit var gradesDataList: ArrayList<GradesData>
+    var user: UserModel? = null
+
+    override fun onClassRequestSelectListner(requestViewModel: BatchRequestViewModel) {
         val bundle = Bundle()
         bundle.putParcelable(AppConstants.KEY_DATA, requestViewModel)
         fragmentClassRequests.showRequestDetailFragment(bundle)
@@ -35,9 +41,16 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     }
 
 
-    override fun onAcadmicsSelect(user: User, classname: String) {
+    override fun onAcadmicsSelect(user: UserModel, subjectName: String) {
+
+        if (explorebaseFragment.exploreTutorsFragment == null) {
+            explorebaseFragment.showExploreFragment(subjectName)
+
+        } else {
+            explorebaseFragment.exploreTutorsFragment?.updateExploreData(user, subjectName)
+
+        }
         mViewPager!!.currentItem = 2
-        explorebaseFragment.exploreTutorsFragment?.updateExploreData(user, classname)
 
     }
 
@@ -51,12 +64,13 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_home)
         setStatusBarColor(R.drawable.white_header)
+        showLoading()
+        getAppData()
         mTabs.add(tab_item_home)
         mTabs.add(tab_item_toolbox)
         mTabs.add(tab_item_explore)
         mTabs.add(tab_item_cls_request)
         mTabs.add(tab_item_profile)
-
         val sectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
         mViewPager = findViewById(R.id.container)
@@ -64,7 +78,6 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         mViewPager!!.offscreenPageLimit = 4
         mViewPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(i: Int, v: Float, i1: Int) {
-
             }
 
             override fun onPageSelected(position: Int) {
@@ -118,6 +131,55 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
             mViewPager!!.currentItem = 3
         }
+
+    }
+
+    private fun updateExploreViews() {
+        explorebaseFragment.showExploreFragment()
+
+    }
+
+
+    private fun getUserInfo() {
+        firebaseStore.collection(getString(R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    user = documentSnapshot.toObject(UserModel::class.java)!!
+                    user = user
+                    user!!.id = documentSnapshot.id
+
+                    hideLoading()
+
+                }
+                .addOnFailureListener { e -> showSnackError(e.message) }
+    }
+
+
+    private fun getAppData() {
+        gradesDataList = ArrayList()
+        subjectDataList = ArrayList()
+        firebaseStore.collection("subjects").get().addOnCompleteListener {
+
+            if (it.isSuccessful) {
+                for (document in it.result!!) {
+                    val user = document.toObject(SubjectsData::class.java)
+                    subjectDataList.add(user)
+                }
+
+
+                firebaseStore.collection("grades").get().addOnCompleteListener {
+
+                    if (it.isSuccessful) {
+                        for (document in it.result!!) {
+                            val user = document.toObject(GradesData::class.java)
+                            gradesDataList.add(user)
+                            getUserInfo()
+                        }
+                    }
+                }
+            }
+        }
+
+
     }
 
     private fun setTextViewDrawableColor(textView: TextView, color: Int) {
@@ -175,6 +237,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         }
 
     }
+
 
     companion object {
         const val TUROR_REQUEST = 1001

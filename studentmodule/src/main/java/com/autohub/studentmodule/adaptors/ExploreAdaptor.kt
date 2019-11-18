@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.autohub.skln.listeners.ItemClickListener
-import com.autohub.skln.models.User
+import com.autohub.skln.models.tutormodels.TutorData
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.RoundedCornersTransformation
 import com.autohub.studentmodule.R
@@ -24,10 +24,10 @@ import com.google.firebase.storage.FirebaseStorage
  * Created by Vt Netzwelt
  */
 
-class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickListener<User>)
+class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickListener<TutorData>)
     : RecyclerView.Adapter<ExploreAdaptor.Holder>() {
 
-    private var userList: List<User> = ArrayList()
+    private var userList: List<TutorData> = ArrayList()
     private var mCurrentLocation: Location? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -49,14 +49,18 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
             with(holder.exploreRowBinding)
             {
 
-                if (mCurrentLocation != null) txtdistance.text = "${it.distance} Km"
+                txtdistance.text = "${it.distance} Km"
 
                 user = it
-                tutorname.text = """${it.firstName} ${it.lastName}"""
-                txtclassprice.text = """${it.rate} / ${it.noOfClasses} PER ${it.paymentDuration}"""
+                tutorname.text = """${it.personInfo!!.firstName} ${it.personInfo!!.lastName}"""
+
+                // $price/for 3 class per Month
+
+                txtclassprice.text = """$ ${it.packageInfo!!.price} / ${it.packageInfo!!.occurances} CLASSES / PER ${it.packageInfo!!.rateOption}"""
 
 
-                val splitarray = it.classesToTeach.split(",")
+                txtgrades.text = "pending"
+                val splitarray = it.classToTeach!!.split(",")
                 if (splitarray.isNotEmpty()) {
                     val stringBuilder = StringBuilder(splitarray.size)
                     for (i in splitarray.indices) {
@@ -71,17 +75,16 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
 
 
                 } else {
-                    txtgrades.text = it.classesToTeach
+                    txtgrades.text = it.classToTeach
 
                 }
 
 
+                txtclasstype.text = it.qualification!!.classType
+                txtsubjects.text = it.subjectsToTeach!!.replace(",", " | ")
 
-                txtclasstype.text = it.classType
-                txtsubjects.text = it.subjectsToTeach.replace(",", " | ")
-
-                if (!TextUtils.isEmpty(it.pictureUrl)) {
-                    val pathReference1 = FirebaseStorage.getInstance().reference.child(it.pictureUrl)
+                if (!TextUtils.isEmpty(it.personInfo!!.accountPicture)) {
+                    val pathReference1 = FirebaseStorage.getInstance().reference.child(it.personInfo!!.accountPicture!!)
                     val options = RequestOptions()
                     options.transforms(MultiTransformation(CenterCrop(), RoundedCornersTransformation(context, CommonUtils.convertDpToPixel(6f, context).toInt(), 0)))
                     options.placeholder(R.drawable.dummyexploreimage)
@@ -98,7 +101,7 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
         return userList.size
     }
 
-    fun setData(userList: List<User>, mCurrentLocation: Location?) {
+    fun setData(userList: List<TutorData>, mCurrentLocation: Location?) {
         this.userList = userList
         this.mCurrentLocation = mCurrentLocation
         notifyDataSetChanged()

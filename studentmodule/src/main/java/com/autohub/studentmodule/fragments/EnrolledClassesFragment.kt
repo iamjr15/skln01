@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.autohub.skln.listeners.ItemClickListener
-import com.autohub.studentmodule.adaptors.EnrolledClassesAdaptor
 import com.autohub.studentmodule.R
+import com.autohub.studentmodule.adaptors.EnrolledClassesAdaptor
 import com.autohub.studentmodule.databinding.FragmentEnrolledClassesBinding
 
 /**
@@ -38,5 +38,6 @@ class EnrolledClassesFragment : Fragment() {
 
 
     }
+
 
 }

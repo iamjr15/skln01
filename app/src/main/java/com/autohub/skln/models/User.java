@@ -39,7 +39,7 @@ public class User implements Parcelable, AppConstants {
         FAVORITE_CLASSES.put(SUBJECT_CHEMISTRY, R.drawable.test_tube);
         FAVORITE_CLASSES.put(SUBJECT_BUSINESS, R.drawable.rupee);
         FAVORITE_CLASSES.put(SUBJECT_ACCOUNTANCY, R.drawable.accounting);
-        FAVORITE_CLASSES.put(SUBJECT_ECONOMICS, R.drawable.rating);
+        FAVORITE_CLASSES.put(SUBJECT_ECONOMICS, com.autohub.skln.R.drawable.rating);
 
 
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_SCIENCE,
@@ -75,7 +75,7 @@ public class User implements Parcelable, AppConstants {
         ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_ACCOUNTANCY,
                 new AcadmicsData(R.color.account, SUBJECT_ACCOUNTANCY, R.drawable.accounting));
         ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_ECONOMICS,
-                new AcadmicsData(R.color.economics, SUBJECT_ECONOMICS, R.drawable.rating));
+                new AcadmicsData(R.color.economics, SUBJECT_ECONOMICS, com.autohub.skln.R.drawable.rating));
 
 
         HOBBIES_DATA_HASH_MAP.put(HOBBY_DANCE, new HobbiesData(R.color.dance, HOBBY_DANCE, R.drawable.dancing, false));

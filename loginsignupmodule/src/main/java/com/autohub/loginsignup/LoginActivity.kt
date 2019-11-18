@@ -175,7 +175,7 @@ class LoginActivity : BaseActivity() {
         firebaseStore.collection(getString(R.string.db_root_students)).whereEqualTo(AppConstants.KEY_USER_ID, firebaseAuth.currentUser!!.uid)
                 .get().addOnSuccessListener {
                     it.forEach {
-                        getAppPreferenceHelper().setUserId(it.id)
+                        appPreferenceHelper.setUserId(it.id)
                         moveNext()
                     }
                 }

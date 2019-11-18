@@ -12,21 +12,21 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.CropActivity
-import com.autohub.skln.models.User
+import com.autohub.skln.models.UserModel
 import com.autohub.skln.utills.ActivityUtils
 import com.autohub.skln.utills.AppConstants
+import com.autohub.skln.utills.AppConstants.*
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.GlideApp
+import com.autohub.studentmodule.R
+import com.autohub.studentmodule.databinding.ActivityEditStudentProfileBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
-import com.autohub.studentmodule.R
-import com.autohub.studentmodule.databinding.ActivityEditStudentProfileBinding
 import com.vansuita.pickimage.bundle.PickSetup
 import com.vansuita.pickimage.dialog.PickImageDialog
 import java.io.*
-
 import java.util.*
 
 
@@ -37,7 +37,7 @@ import java.util.*
 class EditStudentProfileActivity : BaseActivity() {
     private var mBinding: ActivityEditStudentProfileBinding? = null
 
-    private var user: User? = null
+    private var user: UserModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,8 +74,8 @@ class EditStudentProfileActivity : BaseActivity() {
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
         var selectedItems: List<String> = ArrayList()
-        if (user!!.hobbiesToPursue != null && user!!.hobbiesToPursue.isNotEmpty()) {
-            selectedItems = listOf(*user!!.hobbiesToPursue.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+        if (user!!.academicInfo!!.hobbiesToPursue != null && user!!.academicInfo!!.hobbiesToPursue!!.isNotEmpty()) {
+            selectedItems = listOf(*user!!.academicInfo!!.hobbiesToPursue!!.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
         }
         val selectedHobbies = ArrayList<String>()
         for (i in selectedItems.indices) {
@@ -106,7 +106,7 @@ class EditStudentProfileActivity : BaseActivity() {
                         }
                     }
                     mBinding!!.favHobby.text = selectedHobbyString
-                    user!!.hobbiesToPursue = selectedHobbyString
+                    user!!.academicInfo!!.hobbiesToPursue = selectedHobbyString
                     // Do something useful withe the position of the selected radio button
                 }
                 .show()
@@ -117,7 +117,7 @@ class EditStudentProfileActivity : BaseActivity() {
         var indexSelected = -1
         for (i in 0..11) {
             namesArr[i] = (i + 1).toString() + CommonUtils.getClassSuffix(i + 1) + " Grade"
-            if (user!!.studentClass.equals((i + 1).toString(), ignoreCase = true)) {
+            if (user!!.academicInfo!!.selectedClass.equals((i + 1).toString(), ignoreCase = true)) {
                 indexSelected = i
             }
         }
@@ -132,7 +132,7 @@ class EditStudentProfileActivity : BaseActivity() {
                         selectedPosition = 0
                     }
                     mBinding!!.grade.text = namesArr[selectedPosition]
-                    user!!.studentClass = (selectedPosition + 1).toString()
+                    user!!.academicInfo!!.selectedClass = (selectedPosition + 1).toString()
                 }
                 .show()
     }
@@ -154,16 +154,17 @@ class EditStudentProfileActivity : BaseActivity() {
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
         var selectedItems: List<String> = ArrayList()
-        if (user!!.favoriteClasses != null && user!!.leastFavoriteClasses.isNotEmpty() && !isLeastFav) {
+        if (user!!.academicInfo!!.favoriteClasses != null && user!!.academicInfo!!.leastFavoriteClasses!!.isNotEmpty() && !isLeastFav) {
             //            if (!isLeastFav) {
-            selectedItems = listOf(*user!!.favoriteClasses.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+            selectedItems = listOf(*user!!.academicInfo!!.favoriteClasses!!
+                    .split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
             //            } else {
 
             //            }
         }
-        if (user!!.leastFavoriteClasses != null && user!!.leastFavoriteClasses.isNotEmpty() && isLeastFav) {
+        if (user!!.academicInfo!!.leastFavoriteClasses != null && user!!.academicInfo!!.leastFavoriteClasses!!.isNotEmpty() && isLeastFav) {
             //            if (!isLeastFav) {
-            selectedItems = listOf(*user!!.leastFavoriteClasses.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+            selectedItems = listOf(*user!!.academicInfo!!.leastFavoriteClasses!!.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
             //            } else {
 
             //            }
@@ -207,10 +208,10 @@ class EditStudentProfileActivity : BaseActivity() {
                         }
                     }
                     if (isLeastFav) {
-                        user!!.leastFavoriteClasses = selectedSubString
+                        user!!.academicInfo!!.leastFavoriteClasses = selectedSubString
                         mBinding!!.leastFavuSubj.text = selectedSubString
                     } else {
-                        user!!.favoriteClasses = selectedSubString
+                        user!!.academicInfo!!.favoriteClasses = selectedSubString
                         mBinding!!.favoriteSubj.text = selectedSubString
                     }
                 }
@@ -231,72 +232,102 @@ class EditStudentProfileActivity : BaseActivity() {
                 .skipMemoryCache(true)
                 .into(mBinding!!.profilePicture)
 
-
-
-
         firebaseStore.collection(getString(com.autohub.skln.R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).get()
                 .addOnSuccessListener { documentSnapshot ->
-                    val user = documentSnapshot.toObject(User::class.java)
+                    val user = documentSnapshot.toObject(UserModel::class.java)
                     this.user = user
                     user!!.id = documentSnapshot.id
-                    mBinding!!.edtFirstName.setText(user.firstName)
-                    mBinding!!.etPhoneNumber.setText(user.phoneNumber)
-                    mBinding!!.favHobby.text = user.hobbiesToPursue
-                    mBinding!!.favoriteSubj.text = user.favoriteClasses
-                    mBinding!!.leastFavuSubj.text = user.leastFavoriteClasses
-                    mBinding!!.grade.text = CommonUtils.getGrade(Integer.parseInt(user.studentClass.trim { it <= ' ' }))
+                    mBinding!!.edtFirstName.setText(user.personInfo!!.firstName)
+                    mBinding!!.etPhoneNumber.setText(user.personInfo!!.phoneNumber)
+                    mBinding!!.favHobby.text = user.academicInfo!!.hobbiesToPursue
+                    mBinding!!.favoriteSubj.text = user.academicInfo!!.favoriteClasses
+                    mBinding!!.leastFavuSubj.text = user.academicInfo!!.leastFavoriteClasses
+                    firebaseStore.collection("grades").whereEqualTo("id", user.academicInfo!!.selectedClass!!).get().addOnSuccessListener {
+
+                        it.forEach {
+                            mBinding!!.grade.text = "grade ${it.getString("grade")!!}${CommonUtils.getClassSuffix(it.getString("grade")!!.toInt())} "
+                            mBinding!!.grade.text = CommonUtils.getGrade(Integer.parseInt(it.getString("grade")!!.trim { it <= ' ' }))
+                            this.user!!.academicInfo!!.selectedClass = it.getString("grade")
+                        }
+                    }
+
                     mBinding!!.codePicker.isClickable = false
                     mBinding!!.codePicker.isFocusable = false
                     mBinding!!.codePicker.isEnabled = false
                     mBinding!!.codePicker.registerCarrierNumberEditText(mBinding!!.etPhoneNumber)
-                    mBinding!!.codePicker.fullNumber = user.phoneNumber
+                    mBinding!!.codePicker.fullNumber = user.personInfo!!.phoneNumber
                 }
                 .addOnFailureListener { e -> showSnackError(e.message) }
     }
 
     fun makeSaveRequest() {
         if (isVerified()) {
-            showLoading()
-            val user = HashMap<String, Any>()
-            if (mBinding!!.edtFirstName.text.toString().split(" ").size > 1) {
-                user[AppConstants.KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[0]
 
-                user[AppConstants.KEY_LAST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[1]
+            firebaseStore.collection("grades").whereEqualTo("grade", user!!.academicInfo!!.selectedClass).get().addOnSuccessListener {
 
-            } else {
-                user[AppConstants.KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString()
+                it.forEach {
 
+                    saveData(it.getString("id")!!)
+                }
             }
+
+        }
+
+
+    }
+
+    fun saveData(selectedGradeId: String) {
+        showLoading()
+        val userpersonalinfo = HashMap<String, Any>()
+        if (mBinding!!.edtFirstName.text.toString().split(" ").size > 1) {
+            userpersonalinfo[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[0]
+            userpersonalinfo[KEY_LAST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[1]
+        } else {
+            userpersonalinfo[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString()
+        }
 /*
 * Need to create seprate module for Phone number and password editing.
 * And also need to link this changed values with old firebase User Id
 *
 * */
-            // user.put(AppConstants.KEY_PASSWORD, encryptedPassword())
-            // user[AppConstants.KEY_PHONE_NUMBER] = mBinding!!.codePicker.fullNumberWithPlus
-            user[AppConstants.KEY_STDT_LEAST_FAV_CLASSES] = mBinding!!.leastFavuSubj.text.toString()
-            user[AppConstants.KEY_STDT_FAVORITE_CLASSES] = mBinding!!.favoriteSubj.text.toString()
-            user[AppConstants.KEY_STDT_CLASS] = this.user!!.studentClass.trim { it <= ' ' }
-            user[AppConstants.KEY_STDT_HOBBIES] = mBinding!!.favHobby.text.toString()
-            val dbRoot = getString(com.autohub.skln.R.string.db_root_students)
-            firebaseStore.collection(dbRoot).document(firebaseAuth
-                    .currentUser!!.uid).set(user, SetOptions.merge())
-                    .addOnSuccessListener {
-                        hideLoading()
-                        Toast.makeText(this,
-                                "Profile Updated.", Toast.LENGTH_SHORT).show()
+        // user.put(AppConstants.KEY_PASSWORD, encryptedPassword())
+        // user[AppConstants.KEY_PHONE_NUMBER] = mBinding!!.codePicker.fullNumberWithPlus
 
-                        ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
-                        finishAffinity()
+        val useracadmicinfo = HashMap<String, Any>()
 
-                    }
-                    .addOnFailureListener { e ->
-                        hideLoading()
-                        showSnackError(e.message)
-                    }
-        }
+        useracadmicinfo[KEY_STDT_LEAST_FAV_CLASSES] = mBinding!!.leastFavuSubj.text.toString()
+        useracadmicinfo[KEY_STDT_FAVORITE_CLASSES] = mBinding!!.favoriteSubj.text.toString()
+        useracadmicinfo[KEY_SELECTED_CLASS] = selectedGradeId
+        useracadmicinfo[KEY_STDT_HOBBIES] = mBinding!!.favHobby.text.toString()
+        val dbRoot = getString(com.autohub.skln.R.string.db_root_students)
+
+
+
+
+
+        firebaseStore.collection(dbRoot).document(firebaseAuth
+                .currentUser!!.uid).set(
+                mapOf(
+                        KEY_PERSONALINFO to userpersonalinfo,
+                        KEY_ACADEMICINFO to useracadmicinfo
+                )
+                , SetOptions.merge())
+                .addOnSuccessListener {
+                    hideLoading()
+                    Toast.makeText(this,
+                            "Profile Updated.", Toast.LENGTH_SHORT).show()
+
+                    ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
+                    finishAffinity()
+
+                }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
 
     }
+
 
     private fun isVerified(): Boolean {
         val password = mBinding!!.password.text
@@ -305,12 +336,12 @@ class EditStudentProfileActivity : BaseActivity() {
             showSnackError(resources.getString(R.string.enter_name))
             mBinding!!.edtFirstName.requestFocus()
             return false
-        } else if (password == null || password.isEmpty()) {
+        } /*else if (password == null || password.isEmpty()) {
             showSnackError(resources.getString(R.string.enter_password))
             mBinding!!.password.requestFocus()
             return false
 
-        } else if (!mBinding!!.codePicker.isValidFullNumber) {
+        }*/ else if (!mBinding!!.codePicker.isValidFullNumber) {
             showSnackError(resources.getString(R.string.enter_valid_number))
             return false
 
@@ -407,7 +438,16 @@ class EditStudentProfileActivity : BaseActivity() {
               root = getString(R.string.db_root_students)
           }*/
 
-        firebaseStore.collection(root).document(FirebaseAuth.getInstance().currentUser!!.uid).set(user, SetOptions.merge())
+
+        /*accountPicture*/
+
+
+        firebaseStore.collection(root).document(FirebaseAuth.getInstance().currentUser!!.uid).set(
+
+                mapOf(
+                        KEY_PERSONALINFO to mapOf(KEY_ACCOUNT_PICTURE to pathString)
+                )
+                , SetOptions.merge())
                 .addOnSuccessListener { }
                 .addOnFailureListener { }
     }

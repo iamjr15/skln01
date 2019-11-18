@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.autohub.skln.fragment.BaseFragment
-import com.autohub.skln.models.User
+import com.autohub.skln.models.UserModel
 import com.autohub.skln.utills.AppConstants
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.FragmentClassRequestsBinding
@@ -40,7 +40,7 @@ class FragmentClassRequests : BaseFragment() {
         }
         firebaseStore.collection(root).document(firebaseAuth.currentUser!!.uid).get()
                 .addOnSuccessListener { documentSnapshot ->
-                    val user = documentSnapshot.toObject(User::class.java)
+                    val user = documentSnapshot.toObject(UserModel::class.java)
                     val adapter = ViewPagerAdapter(childFragmentManager)
                     adapter.addData(getFragmentClassRequests("Latest", user), "Latest")
                     adapter.addData(getFragmentClassRequests("All", user), "All")
@@ -50,7 +50,7 @@ class FragmentClassRequests : BaseFragment() {
                 .addOnFailureListener { e -> showSnackError(e.message) }
     }
 
-    private fun getFragmentClassRequests(type: String, user: User?): FragmentRequests {
+    private fun getFragmentClassRequests(type: String, user: UserModel?): FragmentRequests {
         val latestRequests = FragmentRequests()
         val bundle = Bundle()
         bundle.putString(AppConstants.KEY_TYPE, type)

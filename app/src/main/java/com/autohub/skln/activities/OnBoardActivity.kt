@@ -25,6 +25,8 @@ class OnBoardActivity : BaseActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_on_board)
         mBinding!!.callback = this
         checkPrefrences()
+
+
     }
 
 

@@ -9,20 +9,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.autohub.skln.listeners.ItemClickListener;
-import com.autohub.skln.models.RequestViewModel;
 import com.autohub.studentmodule.databinding.ItemRequestBinding;
+import com.autohub.studentmodule.models.BatchRequestViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * Created by Vt Netzwelt
  */
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.Holder> {
-    private final List<RequestViewModel> mData = new ArrayList<>();
+    private final List<BatchRequestViewModel> mData = new ArrayList<>();
     private final LayoutInflater mLayoutInflater;
-    private ItemClickListener<RequestViewModel> mItemClickListener;
+    private ItemClickListener<BatchRequestViewModel> mItemClickListener;
     private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -31,7 +30,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.Holder> 
         }
     };
 
-    public RequestAdapter(Context context, ItemClickListener<RequestViewModel> itemClickListener) {
+    public RequestAdapter(Context context, ItemClickListener<BatchRequestViewModel> itemClickListener) {
         mLayoutInflater = LayoutInflater.from(context);
         mItemClickListener = itemClickListener;
     }
@@ -44,7 +43,11 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.Holder> 
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        holder.mBinding.setModel(mData.get(position));
+
+        BatchRequestViewModel data = mData.get(position);
+        data.getBatchRequestModel().getGrade().setName(data.getBatchRequestModel().getGrade().getName().replace("class_", ""));
+
+        holder.mBinding.setModel(data);
         holder.mBinding.ll.setOnClickListener(mOnClickListener);
         holder.mBinding.ll.setTag(position);
     }
@@ -54,7 +57,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.Holder> 
         return mData.size();
     }
 
-    public void setData(List<RequestViewModel> data) {
+    public void setData(List<BatchRequestViewModel> data) {
         mData.clear();
         mData.addAll(data);
         notifyDataSetChanged();

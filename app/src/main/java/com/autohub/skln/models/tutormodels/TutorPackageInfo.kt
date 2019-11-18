@@ -2,7 +2,7 @@ package com.autohub.skln.models.tutor
 
 import android.os.Parcel
 import android.os.Parcelable
-import java.util.ArrayList
+import java.util.*
 
 data class TutorPackageInfo(var frequency: String? = null,
                             var occurances: String? = null,
@@ -16,8 +16,7 @@ data class TutorPackageInfo(var frequency: String? = null,
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readArrayList(null) as ArrayList<String>?) {
-    }
+            parcel.readArrayList(null) as ArrayList<String>?)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(frequency)

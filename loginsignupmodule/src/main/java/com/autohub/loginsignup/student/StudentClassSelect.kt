@@ -14,6 +14,7 @@ import com.autohub.loginsignup.student.fragments.StudentClassFragment
 import com.autohub.loginsignup.student.models.Classdata
 import com.autohub.loginsignup.utility.Utilities
 import com.autohub.skln.BaseActivity
+import com.autohub.skln.models.AcadmicsData
 import com.autohub.skln.utills.AppConstants.*
 import com.google.firebase.firestore.SetOptions
 import java.util.*
@@ -41,10 +42,18 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
     private var fragmentsList: ArrayList<StudentClassFragment> = ArrayList()
     private var selectedClass: String = ""
 
+    private val classesmap = HashMap<String, AcadmicsData>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_student_class_select)
         mBinding!!.callback = this
+
+//        Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 1.0f, 2.0f)
+        Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 20.0f, 40.0f)
+
+
+        getGrades()
         insertClassData()
 
         val countList: ArrayList<String> = ArrayList()
@@ -59,9 +68,11 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         mBinding!!.viewpager.adapter = pagerAdapter
         mBinding!!.viewpager.offscreenPageLimit = 5
         mBinding!!.wormDotsIndicator.setViewPager(mBinding!!.viewpager)
-//        Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 1.0f, 2.0f)
-        Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 20.0f, 40.0f)
 
+
+    }
+
+    private fun getGrades() {
 
     }
 
@@ -82,6 +93,8 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
     }
 
     private fun insertClassData() {
+
+
         classdatalist.add(Classdata(R.color.black, R.drawable.one, false, CLASS_1))
         classdatalist.add(Classdata(R.color.two, R.drawable.two, false, CLASS_2))
         classdatalist.add(Classdata(R.color.three, R.drawable.three, false, CLASS_3))
@@ -96,11 +109,14 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         classdatalist.add(Classdata(R.color.tweleve, R.drawable.tweleve, false, CLASS_12))
     }
 
-/*
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }*/
+    /*
+        override fun attachBaseContext(newBase: Context) {
+            super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+        }*/
+    fun fetchTutorGrades() {
 
+
+    }
 
     inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<StudentClassFragment>) :
             FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -129,21 +145,32 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
 
         showLoading()
 
+        firebaseStore.collection("grades").whereEqualTo("grade", selectedClass).get().addOnSuccessListener {
+
+            it.forEach {
+                updatedataOnFirebase(it.getString("id")!!)
+            }
+        }
+
+
+    }
+
+    fun updatedataOnFirebase(selectedclassId: String) {
+
         val isSeniorClass = selectedClass.equals(CLASS_11, ignoreCase = true) || selectedClass.equals(CLASS_12, ignoreCase = true)
 
         val user = HashMap<String, Any>()
         val uid = firebaseAuth.currentUser!!.uid
-        user[KEY_SELECTED_CLASS] = selectedClass
+        user[KEY_SELECTED_CLASS] = selectedclassId
         user[KEY_USER_ID] = uid
-
         firebaseStore.collection(getString(R.string.db_root_students)).whereEqualTo(KEY_USER_ID, firebaseAuth.currentUser!!.uid)
                 .get().addOnSuccessListener {
                     it.forEach {
-                        getAppPreferenceHelper().setUserId(it.id)
+                        appPreferenceHelper.setUserId(it.id)
 
                         firebaseStore.collection(getString(R.string.db_root_students)).document(it.id).set(mapOf(
                                 KEY_USER_ID to uid,
-                                KEY_ACADEMICINFO to mapOf(KEY_SELECTED_CLASS to selectedClass)
+                                KEY_ACADEMICINFO to mapOf(KEY_SELECTED_CLASS to selectedclassId)
                         ), SetOptions.merge())
                                 .addOnSuccessListener {
                                     hideLoading()
@@ -157,5 +184,7 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
                                 }
                     }
                 }
+
     }
+
 }

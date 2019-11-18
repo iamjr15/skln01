@@ -1,18 +1,18 @@
-package com.autohub.skln.models.tutor
+package com.autohub.skln.models.tutormodels
 
 import android.os.Parcel
 import android.os.Parcelable
 
-data class TutorQualification(var belongToInstitute: Boolean? = null,
-                              var classType: String? = null,
-                              var currentOccupation: String? = null,
-                              var experience: String? = null,
-                              var instituteNeme: String? = null,
-                              var numberOfStudents: String? = null,
-                              var qualification: String? = null,
-                              var qualificationArea: String? = null,
-                              var roleInInstitute: String? = null,
-                              var targetBoard: String? = null) : Parcelable {
+data class TutorQualification(var belongToInstitute: Boolean? = false,
+                              var classType: String? = "",
+                              var currentOccupation: String? = "",
+                              var experience: String? = "",
+                              var instituteNeme: String? = "",
+                              var numberOfStudents: String? = "",
+                              var qualification: String? = "",
+                              var qualificationArea: String? = "",
+                              var roleInInstitute: String? = "",
+                              var targetBoard: String? = "") : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
             parcel.readString(),

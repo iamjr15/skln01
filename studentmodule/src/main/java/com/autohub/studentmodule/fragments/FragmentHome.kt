@@ -11,17 +11,18 @@ import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.skln.models.AcadmicsData
 import com.autohub.skln.models.HobbiesData
-import com.autohub.skln.models.User
+import com.autohub.skln.models.UserModel
 import com.autohub.skln.utills.ActivityUtils
 import com.autohub.skln.utills.GlideApp
+import com.autohub.studentmodule.R
 import com.autohub.studentmodule.activities.AddClassActivity
+import com.autohub.studentmodule.activities.StudentHomeActivity
 import com.autohub.studentmodule.adaptors.AcadmicsAdaptor
 import com.autohub.studentmodule.adaptors.HobbiesAdaptor
+import com.autohub.studentmodule.databinding.FragmentStudentHomeBinding
 import com.autohub.studentmodule.listners.HomeListners
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.storage.FirebaseStorage
-import com.autohub.studentmodule.R
-import com.autohub.studentmodule.databinding.FragmentStudentHomeBinding
 
 /**
  * Created by Vt Netzwelt
@@ -31,7 +32,7 @@ class FragmentHome : BaseFragment() {
     private var acadmicsAdaptor: AcadmicsAdaptor? = null
     private var hobbiesAdaptor: HobbiesAdaptor? = null
     private lateinit var homeListner: HomeListners
-    private lateinit var user: User
+    private lateinit var user: UserModel
     private val acadmicClickListener = ItemClickListener<AcadmicsData> {
         homeListner.onAcadmicsSelect(user, it.classname)
     }
@@ -84,10 +85,13 @@ class FragmentHome : BaseFragment() {
     private fun setUpUserInfo() {
         firebaseStore.collection(getString(R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).get()
                 .addOnSuccessListener { documentSnapshot ->
-                    user = documentSnapshot.toObject(User::class.java)!!
+                    user = documentSnapshot.toObject(UserModel::class.java)!!
+
+                    (context as StudentHomeActivity).user = user
+
                     user.id = documentSnapshot.id
                     //                        User user = User.prepareUser(documentSnapshot);
-                    mBinding!!.heyUser.text = String.format("Hey, \n%s.", user.firstName)
+                    mBinding!!.heyUser.text = String.format("Hey, \n%s.", user.personInfo!!.firstName)
                     setSubjects(user)
                     setHobbies(user)
                     //                        mUserViewModel.setUser(user);
@@ -95,12 +99,12 @@ class FragmentHome : BaseFragment() {
                 .addOnFailureListener { e -> showSnackError(e.message) }
     }
 
-    private fun setSubjects(user: User) {
-        acadmicsAdaptor!!.setData(user.acadmics)
+    private fun setSubjects(user: UserModel) {
+        acadmicsAdaptor!!.setData(user.getAcadmics())
 
     }
 
-    private fun setHobbies(user: User) {
-        hobbiesAdaptor!!.setData(user.hobbies)
+    private fun setHobbies(user: UserModel) {
+        hobbiesAdaptor!!.setData(user.getHobbies())
     }
 }
