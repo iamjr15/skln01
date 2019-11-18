@@ -6,8 +6,6 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.method.PasswordTransformationMethod
 import android.view.View
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.databinding.DataBindingUtil
@@ -162,11 +160,12 @@ class LoginActivity : BaseActivity() {
 
         if (mBinding!!.radiostudent.isChecked) {
             Toast.makeText(this, "Student Verified!", Toast.LENGTH_SHORT).show()
-            appPreferenceHelper.setSignupComplete(true)
             loadAndLaunchModule(STUDENT_FEATURE, "studentmodule")
+            appPreferenceHelper.setStudentSignupComplete(true)
         } else {
             Toast.makeText(this, "Tutor Verified!", Toast.LENGTH_SHORT).show()
             loadAndLaunchModule(TUTOR_FEATURE, "tutormodule")
+            appPreferenceHelper.tutorSignUpComplete = true
 
         }
 
@@ -176,7 +175,7 @@ class LoginActivity : BaseActivity() {
         firebaseStore.collection(getString(R.string.db_root_students)).whereEqualTo(AppConstants.KEY_USER_ID, firebaseAuth.currentUser!!.uid)
                 .get().addOnSuccessListener {
                     it.forEach {
-                        getAppPreferenceHelper().setUserId(it.id)
+                        appPreferenceHelper.setUserId(it.id)
                         moveNext()
                     }
                 }

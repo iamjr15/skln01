@@ -9,13 +9,13 @@ import android.view.ViewGroup
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.Request
-import com.autohub.skln.models.RequestViewModel
-import com.autohub.skln.models.User
-import com.autohub.skln.models.tutormodels.UserViewModelold
+import com.autohub.skln.models.tutormodels.TutorData
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.FragmentRequestDetailBinding
+import com.autohub.studentmodule.models.BatchRequestViewModel
+import com.autohub.studentmodule.models.TutorViewModel
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
@@ -26,15 +26,14 @@ import java.util.*
  */
 
 class FragmentRequestDetail : BaseFragment() {
-    private var mRequestViewModel: RequestViewModel? = null
+    private var batchRequestViewModel: BatchRequestViewModel? = null
     private var mBinding: FragmentRequestDetailBinding? = null
-    private var mStudent: User? = null
-    private var mTutor: User? = null
+    private var mTutor: TutorData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (requireActivity() as BaseActivity).setStatusBarColor(R.drawable.purple_header)
-        mRequestViewModel = arguments!!.getParcelable(AppConstants.KEY_DATA)
+        batchRequestViewModel = arguments!!.getParcelable(AppConstants.KEY_DATA)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -44,21 +43,20 @@ class FragmentRequestDetail : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding = FragmentRequestDetailBinding.bind(view)
-        mBinding!!.requestViewModel = mRequestViewModel
+        mBinding!!.requestViewModel = batchRequestViewModel
         mBinding!!.deleteRequest.setOnClickListener {
             var status = Request.STATUS.DELETED.value
-            if (mRequestViewModel!!.userType.equals("student", ignoreCase = true)) {
+            if (batchRequestViewModel!!.mUserType.equals("student", ignoreCase = true)) {
                 status = Request.STATUS.CANCELED.value
             }
             changeStatus(status)
         }
-        fetchStudent()
         fetchTutor()
 
         setUpUi()
         mBinding!!.contactStd.setOnClickListener { opDialer() }
         mBinding!!.addBatch.setOnClickListener { openMap() }
-        if (mRequestViewModel!!.request.requestStatus == Request.STATUS.PENDING.value) {
+        if (batchRequestViewModel!!.batchRequestModel!!.status == Request.STATUS.PENDING.value) {
             mBinding!!.contactStd.isEnabled = false
         }
 
@@ -66,8 +64,9 @@ class FragmentRequestDetail : BaseFragment() {
 
     private fun openMap() {
         val uri =
-                Uri.parse("geo:<${mTutor?.latitude}>,<${mTutor?.longitude}>?q=<${mTutor?.latitude}>," +
-                        "<${mTutor?.longitude}>(${mTutor?.firstName}  + ${mTutor?.lastName} )")
+                Uri.parse("geo:<${mTutor!!.location!!.latitude}>,<${mTutor!!.location!!.longitude}>?q=<${mTutor?.location!!
+                        .latitude}>," +
+                        "<${mTutor?.location!!.longitude}>(${mTutor?.personInfo!!.firstName}  + ${mTutor?.personInfo!!.lastName} )")
 
 
         val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -84,7 +83,7 @@ class FragmentRequestDetail : BaseFragment() {
             mBinding.contactStd.setText(R.string.contact_student);
             mBinding.addBatch.setText(R.string.add_to_batch);
         } else {*/
-        mBinding!!.deleteRequest.isEnabled = !mRequestViewModel!!.request.requestStatus.equals(Request.STATUS.CANCELED.value, ignoreCase = true)
+        mBinding!!.deleteRequest.isEnabled = !batchRequestViewModel!!.batchRequestModel!!.status.equals(Request.STATUS.CANCELED.value, ignoreCase = true)
         mBinding!!.deleteRequest.setText(R.string.cancel_request)
         mBinding!!.messageLabel.setText(R.string.request_message_student)
         mBinding!!.requestLogo.setImageResource(R.drawable.ic_request_tick)
@@ -95,20 +94,26 @@ class FragmentRequestDetail : BaseFragment() {
     }
 
     private fun loadPicture() {
-        if (mStudent == null || mTutor == null) return
-        val path = mTutor!!.pictureUrl
+        if (mTutor == null) return
+        val path = mTutor!!.personInfo!!.accountPicture
         /* if (mRequestViewModel.getUserType().equalsIgnoreCase("tutor")) {
             path = mStudent.pictureUrl;
         }*/
-        val pathReference1 = FirebaseStorage.getInstance().reference.child(path)
-        GlideApp.with(requireContext())
-                .load(pathReference1)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .fallback(com.autohub.skln.R.drawable.default_pic)
-                .into(mBinding!!.profilePicture)
+
+        try {
+            val pathReference1 = FirebaseStorage.getInstance().reference.child(path!!)
+            GlideApp.with(requireContext())
+                    .load(pathReference1)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .fallback(com.autohub.skln.R.drawable.default_pic)
+                    .into(mBinding!!.profilePicture)
+        } catch (e: Exception) {
+        }
+
+
     }
 
-    private fun fetchStudent() {
+/*    private fun fetchStudent() {
         val root = getString(R.string.db_root_students)
         firebaseStore.collection(root).document(mRequestViewModel!!.request.studentId).get()
                 .addOnSuccessListener { documentSnapshot ->
@@ -120,45 +125,54 @@ class FragmentRequestDetail : BaseFragment() {
                     loadPicture()
                 }
                 .addOnFailureListener { e -> showSnackError(e.message) }
-    }
+    }*/
 
     private fun fetchTutor() {
+        // get Document id from tutor id first
         val root = getString(R.string.db_root_tutors)
-        firebaseStore.collection(root).document(mRequestViewModel!!.request.tutorId).get()
-                .addOnSuccessListener { documentSnapshot ->
-                    hideLoading()
-                    val tutor = documentSnapshot.toObject(User::class.java)
-                    if (mRequestViewModel!!.userType.equals("student", ignoreCase = true)) {
-                        mBinding!!.userViewModel = UserViewModelold(tutor!!)
+
+        firebaseStore.collection(root).whereEqualTo(AppConstants.KEY_USER_ID, batchRequestViewModel!!.batchRequestModel!!.teacher!!.id)
+                .get().addOnSuccessListener {
+                    it.forEach {
+
+                        firebaseStore.collection(root).document(it.id).get()
+                                .addOnSuccessListener { documentSnapshot ->
+                                    hideLoading()
+                                    val tutor = documentSnapshot.toObject(TutorData::class.java)
+                                    /* if (mRequestViewModel!!.userType.equals("student", ignoreCase = true)) {
+                                         mBinding!!.userViewModel = TutorViewModel(tutor!!)
+                                     }*/
+                                    mBinding!!.tutorViewModel = TutorViewModel(tutor!!)
+                                    mTutor = tutor
+                                    loadPicture()
+                                    mBinding!!.rate.text = "fees : $${tutor.packageInfo!!.price} / ${tutor.packageInfo!!.frequency}"
+                                }
+                                .addOnFailureListener { e ->
+                                    hideLoading()
+                                    showSnackError(e.message)
+                                }
                     }
-                    mBinding!!.tutorViewModel = UserViewModelold(tutor!!)
-                    mTutor = tutor
-                    loadPicture()
-                    mBinding!!.rate.text = "fees : $${tutor!!.rate} / ${tutor.paymentDuration}"
-                }
-                .addOnFailureListener { e ->
-                    hideLoading()
-                    showSnackError(e.message)
+
+
                 }
     }
+
 
     private fun changeStatus(requestStatus: String) {
         showLoading()
         val map = HashMap<String, String>()
-        map["requestStatus"] = requestStatus
-        val dbRoot = getString(R.string.db_root_requests)
-        firebaseStore.collection(dbRoot).document(mRequestViewModel!!.requestId).set(map, SetOptions.merge()).addOnSuccessListener {
+        map["status"] = requestStatus
+        val dbRoot = getString(R.string.db_root_batchRequests)
+        firebaseStore.collection(dbRoot).document(batchRequestViewModel!!.mRequestId!!).set(map, SetOptions.merge()).addOnSuccessListener {
             hideLoading()
-            mRequestViewModel!!.request.requestStatus = requestStatus
+            // mRequestViewModel!!.request.requestStatus = requestStatus
             setUpUi()
         }.addOnFailureListener { hideLoading() }
     }
 
     private fun opDialer() {
-        var number = "tel:" + mStudent!!.phoneNumber
-        if (mRequestViewModel!!.userType.equals("student", ignoreCase = true)) {
-            number = "tel:" + mTutor!!.phoneNumber
-        }
+        var number = "tel:" + mTutor!!.personInfo!!.phone
+
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse(number)
         startActivity(intent)

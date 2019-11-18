@@ -17,7 +17,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.listeners.ItemClickListener
-import com.autohub.skln.models.User
+import com.autohub.skln.models.TutorGrades
+import com.autohub.skln.models.TutorSubjectsModel
+import com.autohub.skln.models.UserModel
 import com.autohub.skln.models.tutormodels.TutorData
 import com.autohub.skln.utills.AppConstants.*
 import com.autohub.skln.utills.CommonUtils
@@ -38,8 +40,10 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Vt Netzwelt
@@ -55,30 +59,26 @@ class ExploreTutorsFragment : BaseFragment() {
     private lateinit var exploreFilter: ExploreFilter
     private var userLatLang: Location? = null
     var grades = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
+    var tutorsGradeList: ArrayList<TutorGrades> = ArrayList()
+    var tutorsSubjectList: ArrayList<TutorSubjectsModel> = ArrayList()
 
-    fun updateExploreData(user: User, subjectName: String) {
-
-        val location = Location(LocationManager.GPS_PROVIDER)
-        location.latitude = user.latitude.toDouble()
-        location.longitude = user.longitude.toDouble()
-
-        userLatLang = location
-
-        LocationProvider.getInstance().getAddressFromLocation(requireContext(), location) { address ->
-            Log.d(">>>>LocationAddress", "Address is :$address")
-            mBinding!!.textlocation.text = address
+    fun updateExploreData(user: UserModel, subjectName: String) {
+        val studentClass = user.academicInfo!!.selectedClass
+        firebaseStore.collection("grades").whereEqualTo("id", studentClass).get().addOnSuccessListener {
+            it.forEach {
+                mBinding!!.txtgrade.setText("grade ${it.getString("grade")!!}")
+                exploreFilter = ExploreFilter(it.getString("grade")!!, subjectName, user.personInfo!!.latitude!!, user.personInfo!!.longitude!!, filterType = ACADMIC_SELECTION_FILTER)
+                getTutors(exploreFilter)
+            }
         }
 
 
-        mBinding!!.txtgrade.setText("grade ${user.studentClass}")
-        exploreFilter = ExploreFilter(user.studentClass, subjectName, user.latitude, user.longitude, filterType = ACADMIC_SELECTION_FILTER)
-        getTutors(exploreFilter)
     }
 
     private val tutorsClickListener = ItemClickListener<TutorData> {
 
 
-        //  startFullProfileActivityForResult(it)
+        startFullProfileActivityForResult(it)
 
     }
 
@@ -89,7 +89,7 @@ class ExploreTutorsFragment : BaseFragment() {
     }
 
 
-    private fun startFullProfileActivityForResult(user: User) {
+    private fun startFullProfileActivityForResult(user: TutorData) {
         val intent = Intent(context, TutorFullProfileActivity::class.java)
         val bundle = Bundle()
         bundle.putParcelable(KEY_DATA, user)
@@ -103,7 +103,7 @@ class ExploreTutorsFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         mGpsUtils = GpsUtils(requireActivity())
 
-
+        fetchTutorSubjects()
         if (checkGooglePlayServices() && isLocationPermissionGranted) {
             Log.d(">>>>Location", "Oncreate")
             LocationProvider.getInstance().start(requireContext(), mLocationListener)
@@ -167,8 +167,10 @@ class ExploreTutorsFragment : BaseFragment() {
         mBinding!!.spinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 mBinding!!.txtgrade.setText("grade ${grades[position]}")
-                exploreFilter = ExploreFilter(grades[position], "", 0.toFloat(), 0.toFloat(), filterType = GREAD_SELECTION_FILTER)
-                getTutors(exploreFilter)
+                exploreFilter = ExploreFilter(grades[position], "", 0.0, 0.0, filterType = GREAD_SELECTION_FILTER)
+                if (tutorsSubjectList.isNotEmpty()) {
+                    getTutors(exploreFilter)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -180,9 +182,11 @@ class ExploreTutorsFragment : BaseFragment() {
             mBinding!!.spinner!!.performClick()
 
         }
-        exploreFilter = ExploreFilter("all", "", 0.toFloat(), 0.toFloat(), filterType = ALL_SELECTION_FILTER)
+
+
+
         setupProfile()
-        getTutors(exploreFilter)
+
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -207,13 +211,69 @@ class ExploreTutorsFragment : BaseFragment() {
 
             if (task.isSuccessful) {
                 tutorsList = ArrayList()
+                /*
+                * Fetch All TUtors List
+                * */
                 for (document in task.result!!) {
                     Log.e("document", document.toString())
-
                     val user = document.toObject(TutorData::class.java)
-                    tutorsList.add(user)
+                    val geopoints = ((document.data.get("location") as HashMap<*, *>).get("geopoint")) as GeoPoint
+                    user.location!!.latitude = geopoints.latitude
+                    user.location!!.longitude = geopoints.longitude
+
+
+                    var subjects: StringBuilder = StringBuilder()
+                    var grades: StringBuilder = StringBuilder()
+                    /*
+                    * Add tutors Subjects
+                    * */
+                    for (i in tutorsSubjectList) {
+                        if (i.teacherId.equals(user.id)) {
+                            subjects.append("," + (context as StudentHomeActivity).subjectDataList
+                                    .get((context as StudentHomeActivity).subjectDataList.map { it.id }.indexOf(i.subjectId)).name)
+                        }
+                    }
+                    /*
+                     * Add tutors Grades
+                     * */
+                    for (i in tutorsGradeList) {
+                        if (i.teacherId.equals(user.id)) {
+                            grades.append("," + (context as StudentHomeActivity).gradesDataList
+                                    .get((context as StudentHomeActivity).gradesDataList.map { it.id }.indexOf(i.gradeId)).grade)
+                        }
+                    }
+
+
+
+                    user.subjectsToTeach = subjects.toString().removeRange(0..0)
+                    user.classToTeach = grades.toString().removeRange(0..0)
+
+
+                    /*
+                    * Add Distance from Student Location
+                    * */
+                    var studentdata = (context as StudentHomeActivity).user
+
+                    if (studentdata != null) {
+                        user.distance = String.format("%.2f", CommonUtils.distance(studentdata.personInfo!!.latitude!!,
+                                studentdata.personInfo!!.longitude!!,
+                                user.location!!.latitude!!, user.location!!.longitude!!))
+                                .replace(",", ".").toDouble()
+
+                    }
+
+                    /*
+                    * Filter Tutors data
+                    * */
+                    if (checkFilterfoData(exploreFilter, user)) {
+                        tutorsList.add(user)
+                    }
                 }
-                exploreAdaptor!!.setData(tutorsList, mCurrentLocation)
+
+                val newList = tutorsList.sortedBy { it.distance }
+
+
+                exploreAdaptor!!.setData(newList, mCurrentLocation)
 
                 if (tutorsList.size > 0) {
                     mBinding!!.rrempty.visibility = View.GONE
@@ -223,56 +283,27 @@ class ExploreTutorsFragment : BaseFragment() {
 
                 }
 
-                /*if (checkFilterfoData(exploreFilter, user)) {
-                    if (userLatLang != null) {
-                        user.distance = String.format("%.2f", CommonUtils.distance(userLatLang!!.latitude, userLatLang!!.longitude,
-                                user.latitude.toDouble(), user.longitude.toDouble())).replace(",", ".").toDouble()
-
-                    } else if (mCurrentLocation != null) {
-                        user.distance = String.format("%.2f", CommonUtils.distance(mCurrentLocation!!.latitude, mCurrentLocation!!.longitude,
-                                user.latitude.toDouble(), user.longitude.toDouble())).replace(",", ".").toDouble()
-                    }
-                    tutorsList.add(user)
-                }
-                Log.d(">>>Explore", "Data Is " + user.firstName + " , " + user.gender)
-            }
-
-            if (tutorsList.size > 0) {
-                mBinding!!.rrempty.visibility = View.GONE
-
-            } else {
-                mBinding!!.rrempty.visibility = View.VISIBLE
-
-            }
-
-            if (mCurrentLocation != null) {
-                val newList = tutorsList.sortedBy { it.distance }
-                exploreAdaptor!!.setData(newList, mCurrentLocation)
-            } else exploreAdaptor!!.setData(tutorsList, mCurrentLocation)*/
             } else {
                 Log.d(">>>Explore", "Error getting documents: ", task.exception)
             }
         }.addOnFailureListener { e -> Log.e(">>>Explore", "Error getting documents: ", e) }
     }
 
-    private fun checkFilterfoData(exploreFilter: ExploreFilter, tutorData: User): Boolean {
+    private fun checkFilterfoData(exploreFilter: ExploreFilter, tutorData: TutorData): Boolean {
 
         if (exploreFilter.filterType == ALL_SELECTION_FILTER) {
             return true
         } else if (exploreFilter.filterType == ACADMIC_SELECTION_FILTER) {
             /*
-            * Showing tutors with in 5km range of student and with student class and subjects
+            * Showing tutors with in 50km range of student and with student class and subjects
             * */
-            if (tutorData.classesToTeach.split(",").contains(exploreFilter.studentClass) &&
-                    tutorData.subjectsToTeach.contains(exploreFilter.subjectName)
-                    && CommonUtils.distance(tutorData.latitude.toDouble(),
-                            tutorData.longitude.toDouble(),
-                            exploreFilter.latitude.toDouble(),
-                            exploreFilter.longitude.toDouble()) < 5) {
+            if (tutorData.classToTeach!!.split(",").contains(exploreFilter.studentClass) &&
+                    tutorData.subjectsToTeach!!.contains(exploreFilter.subjectName, true)
+                    && tutorData.distance!! < 50) {
                 return true
             }
         } else {
-            if (tutorData.classesToTeach.split(",").contains(exploreFilter.studentClass)) {
+            if (tutorData.classToTeach!!.split(",").contains(exploreFilter.studentClass)) {
                 return true
             }
         }
@@ -313,6 +344,69 @@ class ExploreTutorsFragment : BaseFragment() {
 
     companion object {
         const val AUTOCOMPLETE_REQUEST_CODE = 1
+    }
+
+    fun fetchTutorSubjects() {
+        tutorsGradeList = ArrayList()
+
+
+        firebaseStore.collection("tutorGrades").get().addOnCompleteListener {
+
+            if (it.isSuccessful) {
+                for (document in it.result!!) {
+                    val user = document.toObject(TutorGrades::class.java)
+                    tutorsGradeList.add(user)
+
+                }
+                fetchTutorGrades()
+
+            }
+        }
+    }
+
+    fun fetchTutorGrades() {
+        tutorsSubjectList = ArrayList()
+        firebaseStore.collection("tutorSubjects").get().addOnCompleteListener {
+
+            if (it.isSuccessful) {
+                for (document in it.result!!) {
+                    val user = document.toObject(TutorSubjectsModel::class.java)
+                    tutorsSubjectList.add(user)
+                }
+
+                showExploreTutors()
+
+            }
+        }
+    }
+
+
+    fun showExploreTutors() {
+
+        var user = (context as StudentHomeActivity).user!!
+
+        val location = Location(LocationManager.GPS_PROVIDER)
+        location.latitude = user.personInfo!!.latitude!!
+        location.longitude = user.personInfo!!.longitude!!
+
+        userLatLang = location
+
+        LocationProvider.getInstance().getAddressFromLocation(requireContext(), location) { address ->
+            Log.d(">>>>LocationAddress", "Address is :$address")
+            mBinding!!.textlocation.text = address
+        }
+
+        if (this.arguments != null) {
+
+            updateExploreData(user, this.arguments!!.getString("data_key", ""))
+
+        } else {
+            exploreFilter = ExploreFilter("all", "", 0.0, 0.0, filterType = ALL_SELECTION_FILTER)
+            getTutors(exploreFilter)
+
+        }
+
+
     }
 
 

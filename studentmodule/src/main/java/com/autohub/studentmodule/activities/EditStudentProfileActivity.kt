@@ -232,9 +232,6 @@ class EditStudentProfileActivity : BaseActivity() {
                 .skipMemoryCache(true)
                 .into(mBinding!!.profilePicture)
 
-
-
-
         firebaseStore.collection(getString(com.autohub.skln.R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val user = documentSnapshot.toObject(UserModel::class.java)
@@ -245,7 +242,15 @@ class EditStudentProfileActivity : BaseActivity() {
                     mBinding!!.favHobby.text = user.academicInfo!!.hobbiesToPursue
                     mBinding!!.favoriteSubj.text = user.academicInfo!!.favoriteClasses
                     mBinding!!.leastFavuSubj.text = user.academicInfo!!.leastFavoriteClasses
-                    mBinding!!.grade.text = CommonUtils.getGrade(Integer.parseInt(user.academicInfo!!.selectedClass!!.trim { it <= ' ' }))
+                    firebaseStore.collection("grades").whereEqualTo("id", user.academicInfo!!.selectedClass!!).get().addOnSuccessListener {
+
+                        it.forEach {
+                            mBinding!!.grade.text = "grade ${it.getString("grade")!!}${CommonUtils.getClassSuffix(it.getString("grade")!!.toInt())} "
+                            mBinding!!.grade.text = CommonUtils.getGrade(Integer.parseInt(it.getString("grade")!!.trim { it <= ' ' }))
+                            this.user!!.academicInfo!!.selectedClass = it.getString("grade")
+                        }
+                    }
+
                     mBinding!!.codePicker.isClickable = false
                     mBinding!!.codePicker.isFocusable = false
                     mBinding!!.codePicker.isEnabled = false
@@ -257,54 +262,72 @@ class EditStudentProfileActivity : BaseActivity() {
 
     fun makeSaveRequest() {
         if (isVerified()) {
-            showLoading()
-            val userpersonalinfo = HashMap<String, Any>()
-            if (mBinding!!.edtFirstName.text.toString().split(" ").size > 1) {
-                userpersonalinfo[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[0]
 
-                userpersonalinfo[KEY_LAST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[1]
+            firebaseStore.collection("grades").whereEqualTo("grade", user!!.academicInfo!!.selectedClass).get().addOnSuccessListener {
 
-            } else {
-                userpersonalinfo[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString()
+                it.forEach {
+
+                    saveData(it.getString("id")!!)
+                }
             }
+
+        }
+
+
+    }
+
+    fun saveData(selectedGradeId: String) {
+        showLoading()
+        val userpersonalinfo = HashMap<String, Any>()
+        if (mBinding!!.edtFirstName.text.toString().split(" ").size > 1) {
+            userpersonalinfo[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[0]
+            userpersonalinfo[KEY_LAST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[1]
+        } else {
+            userpersonalinfo[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString()
+        }
 /*
 * Need to create seprate module for Phone number and password editing.
 * And also need to link this changed values with old firebase User Id
 *
 * */
-            // user.put(AppConstants.KEY_PASSWORD, encryptedPassword())
-            // user[AppConstants.KEY_PHONE_NUMBER] = mBinding!!.codePicker.fullNumberWithPlus
+        // user.put(AppConstants.KEY_PASSWORD, encryptedPassword())
+        // user[AppConstants.KEY_PHONE_NUMBER] = mBinding!!.codePicker.fullNumberWithPlus
 
-            val useracadmicinfo = HashMap<String, Any>()
+        val useracadmicinfo = HashMap<String, Any>()
 
-            useracadmicinfo[KEY_STDT_LEAST_FAV_CLASSES] = mBinding!!.leastFavuSubj.text.toString()
-            useracadmicinfo[KEY_STDT_FAVORITE_CLASSES] = mBinding!!.favoriteSubj.text.toString()
-            useracadmicinfo[KEY_SELECTED_CLASS] = this.user!!.academicInfo!!.selectedClass!!.trim { it <= ' ' }
-            useracadmicinfo[KEY_STDT_HOBBIES] = mBinding!!.favHobby.text.toString()
-            val dbRoot = getString(com.autohub.skln.R.string.db_root_students)
-            firebaseStore.collection(dbRoot).document(firebaseAuth
-                    .currentUser!!.uid).set(
-                    mapOf(
-                            KEY_PERSONALINFO to userpersonalinfo,
-                            KEY_ACADEMICINFO to useracadmicinfo
-                    )
-                    , SetOptions.merge())
-                    .addOnSuccessListener {
-                        hideLoading()
-                        Toast.makeText(this,
-                                "Profile Updated.", Toast.LENGTH_SHORT).show()
+        useracadmicinfo[KEY_STDT_LEAST_FAV_CLASSES] = mBinding!!.leastFavuSubj.text.toString()
+        useracadmicinfo[KEY_STDT_FAVORITE_CLASSES] = mBinding!!.favoriteSubj.text.toString()
+        useracadmicinfo[KEY_SELECTED_CLASS] = selectedGradeId
+        useracadmicinfo[KEY_STDT_HOBBIES] = mBinding!!.favHobby.text.toString()
+        val dbRoot = getString(com.autohub.skln.R.string.db_root_students)
 
-                        ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
-                        finishAffinity()
 
-                    }
-                    .addOnFailureListener { e ->
-                        hideLoading()
-                        showSnackError(e.message)
-                    }
-        }
+
+
+
+        firebaseStore.collection(dbRoot).document(firebaseAuth
+                .currentUser!!.uid).set(
+                mapOf(
+                        KEY_PERSONALINFO to userpersonalinfo,
+                        KEY_ACADEMICINFO to useracadmicinfo
+                )
+                , SetOptions.merge())
+                .addOnSuccessListener {
+                    hideLoading()
+                    Toast.makeText(this,
+                            "Profile Updated.", Toast.LENGTH_SHORT).show()
+
+                    ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
+                    finishAffinity()
+
+                }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
 
     }
+
 
     private fun isVerified(): Boolean {
         val password = mBinding!!.password.text

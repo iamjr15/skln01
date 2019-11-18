@@ -1,7 +1,7 @@
 package com.autohub.studentmodule.listners
 
-import com.autohub.skln.models.RequestViewModel
 import com.autohub.skln.models.UserModel
+import com.autohub.studentmodule.models.BatchRequestViewModel
 
 /**
  * Created by Vt Netzwelt
@@ -9,5 +9,5 @@ import com.autohub.skln.models.UserModel
 interface HomeListners {
 
     fun onAcadmicsSelect(user: UserModel, classname: String)
-    fun onClassRequestSelectListner(requestViewModel: RequestViewModel)
+    fun onClassRequestSelectListner(requestViewModel: BatchRequestViewModel)
 }

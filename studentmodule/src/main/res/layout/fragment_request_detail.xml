@@ -7,15 +7,15 @@
 
         <variable
             name="requestViewModel"
-            type="com.autohub.skln.models.RequestViewModel" />
+            type="com.autohub.studentmodule.models.BatchRequestViewModel" />
 
-        <variable
-            name="userViewModel"
-            type="com.autohub.skln.models.tutormodels.UserViewModelold" />
+        <!-- <variable
+             name="userViewModel"
+             type="com.autohub.studentmodule.models.TutorViewModel" />-->
 
         <variable
             name="tutorViewModel"
-            type="com.autohub.skln.models.tutormodels.UserViewModelold" />
+            type="com.autohub.studentmodule.models.TutorViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -94,7 +94,7 @@
                             android:id="@+id/name"
                             style="@style/bodystye"
                             android:layout_margin="8dp"
-                            android:text="@{userViewModel.fullName}"
+                            android:text="@{tutorViewModel.fullName}"
                             android:textAllCaps="true"
                             android:textSize="13sp"
                             tools:text="Muhammad Imran" />
@@ -120,7 +120,7 @@
                             android:layout_margin="8dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="@{requestViewModel.subject}"
+                            android:text="@{requestViewModel.batchRequestModel.subject.name}"
                             tools:text="Physics" />
 
                         <View

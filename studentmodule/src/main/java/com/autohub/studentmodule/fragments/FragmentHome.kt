@@ -16,6 +16,7 @@ import com.autohub.skln.utills.ActivityUtils
 import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.activities.AddClassActivity
+import com.autohub.studentmodule.activities.StudentHomeActivity
 import com.autohub.studentmodule.adaptors.AcadmicsAdaptor
 import com.autohub.studentmodule.adaptors.HobbiesAdaptor
 import com.autohub.studentmodule.databinding.FragmentStudentHomeBinding
@@ -85,6 +86,9 @@ class FragmentHome : BaseFragment() {
         firebaseStore.collection(getString(R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).get()
                 .addOnSuccessListener { documentSnapshot ->
                     user = documentSnapshot.toObject(UserModel::class.java)!!
+
+                    (context as StudentHomeActivity).user = user
+
                     user.id = documentSnapshot.id
                     //                        User user = User.prepareUser(documentSnapshot);
                     mBinding!!.heyUser.text = String.format("Hey, \n%s.", user.personInfo!!.firstName)

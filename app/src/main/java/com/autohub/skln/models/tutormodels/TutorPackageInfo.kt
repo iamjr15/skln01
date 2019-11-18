@@ -2,22 +2,19 @@ package com.autohub.skln.models.tutormodels
 
 import android.os.Parcel
 import android.os.Parcelable
-import java.util.ArrayList
 
 data class TutorPackageInfo(var frequency: String? = null,
                             var occurances: String? = null,
                             var price: String? = null,
                             var rateOption: String? = null,
-                            var studentCapacity: String? = null,
-                            var paymentOptions: ArrayList<String>? = null) : Parcelable {
+                            var studentCapacity: String? = null/*,
+                            var paymentOptions: ArrayList<String>? = null*/) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readString(),
-            TODO("paymentOptions")) {
-    }
+            parcel.readString())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(frequency)

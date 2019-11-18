@@ -174,7 +174,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
         user1[KEY_PHONE_NUMBER] = appPreferenceHelper.userPhone
 
 
-        firebaseStore.collection(getString(R.string.db_root_students)).document(getAppPreferenceHelper().getuserID()).set(
+        firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).set(
                 mapOf(
                         KEY_ACADEMICINFO to user
                 )
@@ -185,7 +185,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
 
                             .addOnSuccessListener {
                                 hideLoading()
-                                appPreferenceHelper.setSignupComplete(true)
+                                appPreferenceHelper.setStudentSignupComplete(true)
                                 loadAndLaunchModule(LoginActivity.STUDENT_FEATURE, "studentmodule")
 
                             }

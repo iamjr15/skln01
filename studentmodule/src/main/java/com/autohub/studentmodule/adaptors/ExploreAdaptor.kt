@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.autohub.skln.listeners.ItemClickListener
-import com.autohub.skln.models.User
 import com.autohub.skln.models.tutormodels.TutorData
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.RoundedCornersTransformation
@@ -50,15 +49,18 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
             with(holder.exploreRowBinding)
             {
 
-               // if (mCurrentLocation != null) txtdistance.text = "${it.distance} Km"
+                txtdistance.text = "${it.distance} Km"
 
                 user = it
                 tutorname.text = """${it.personInfo!!.firstName} ${it.personInfo!!.lastName}"""
-                txtclassprice.text = """${it.packageInfo!!.price} /*/ ${it.packageInfo!!.studentCapacity}*/ PER ${it.packageInfo!!.rateOption}"""
+
+                // $price/for 3 class per Month
+
+                txtclassprice.text = """$ ${it.packageInfo!!.price} / ${it.packageInfo!!.occurances} CLASSES / PER ${it.packageInfo!!.rateOption}"""
 
 
                 txtgrades.text = "pending"
-              /*  val splitarray = it.classesToTeach.split(",")
+                val splitarray = it.classToTeach!!.split(",")
                 if (splitarray.isNotEmpty()) {
                     val stringBuilder = StringBuilder(splitarray.size)
                     for (i in splitarray.indices) {
@@ -73,15 +75,13 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
 
 
                 } else {
-                    txtgrades.text = it.classesToTeach
+                    txtgrades.text = it.classToTeach
 
-                }*/
-
+                }
 
 
                 txtclasstype.text = it.qualification!!.classType
-//                txtsubjects.text = it.subjectsToTeach.replace(",", " | ")
-                txtsubjects.text = "pending"
+                txtsubjects.text = it.subjectsToTeach!!.replace(",", " | ")
 
                 if (!TextUtils.isEmpty(it.personInfo!!.accountPicture)) {
                     val pathReference1 = FirebaseStorage.getInstance().reference.child(it.personInfo!!.accountPicture!!)

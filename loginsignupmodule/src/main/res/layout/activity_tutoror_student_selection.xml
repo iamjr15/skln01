@@ -11,10 +11,10 @@
 
 
     <RelativeLayout
-        android:background="@android:color/white"
-
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         tools:context="com.autohub.loginsignup.TutororStudentSelection">
 
         <TextView
@@ -37,9 +37,8 @@
             android:textSize="45sp" />
 
         <Button
-            android:onClick="@{()->callback.onTutorClick()}"
-
             android:id="@+id/btnTutor"
+
             style="@style/tutors_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,15 +46,15 @@
             android:layout_marginStart="26dp"
             android:layout_marginEnd="26dp"
             android:background="@drawable/border_circular_rect"
+            android:onClick="@{()->callback.onTutorClick()}"
             android:paddingTop="23dp"
             android:paddingBottom="23dp"
             android:text="@string/tutor_institutes"
             android:textSize="29sp" />
 
         <Button
-            android:onClick="@{()->callback.onStudentClick()}"
-
             android:id="@+id/btnStudent"
+
             style="@style/students_p"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,6 +64,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="26dp"
             android:background="@drawable/border_circular_rect"
+            android:onClick="@{()->callback.onStudentClick()}"
             android:paddingTop="23dp"
             android:paddingBottom="23dp"
             android:text="@string/student_p"

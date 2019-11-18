@@ -25,13 +25,23 @@ class OnBoardActivity : BaseActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_on_board)
         mBinding!!.callback = this
         checkPrefrences()
+
+
     }
 
 
     private fun checkPrefrences() {
         if (firebaseAuth.currentUser != null) {
-            if (appPreferenceHelper.signUpComplete) {
+            if (appPreferenceHelper.studentSignUpComplete) {
                 Intent().setClassName(BuildConfig.APPLICATION_ID, STUDENTHOMEACTIVITY_PATH)
+                        .also {
+
+                            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(it)
+                            finish()
+                        }
+            } else if (appPreferenceHelper.tutorSignUpComplete) {
+                Intent().setClassName(BuildConfig.APPLICATION_ID, TUTOR_HOME_ACTIVITY_PATH)
                         .also {
 
                             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -94,6 +104,9 @@ class OnBoardActivity : BaseActivity() {
 
         private const val STUDENTHOMEACTIVITY_PATH = "com.autohub.studentmodule.activities.StudentHomeActivity"
         private const val STUDENTCLASSACTIVITY_PATH = "com.autohub.loginsignup.student.StudentClassSelect"
+
+        private const val TUTOR_HOME_ACTIVITY_PATH = "com.autohub.tutormodule.ui.dashboard.DashboardActivity"
+
     }
 
 }

@@ -6,7 +6,7 @@
 
         <variable
             name="model"
-            type="com.autohub.skln.models.RequestViewModel" />
+            type="com.autohub.studentmodule.models.BatchRequestViewModel" />
     </data>
 
     <LinearLayout
@@ -32,7 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@{model.name}"
+                android:text="@{model.batchRequestModel.teacher.name}"
                 tools:text="Imran" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -43,7 +43,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
 
-                android:text="@{model.studentClass}"
+                android:text="@{model.batchRequestModel.grade.name}"
                 tools:text="XI" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@{model.subject}"
+                android:text="@{model.batchRequestModel.subject.name}"
                 tools:text="Physics" />
 
             <androidx.appcompat.widget.AppCompatImageView

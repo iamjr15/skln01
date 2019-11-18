@@ -16,6 +16,7 @@ public class PreferencesImpl implements PreferencesHelper {
     private static final String PREF_KEY_TUTOR_CATEGORY = "PREF_KEY_TUTOR_CATEGORY";
     private static final String PREF_KEY_USER_ID = "PREF_KEY_USER_ID";
     private static final String PREF_KEY_STUDENT_SIGNUP_COMPLETE = "PREF_KEY_STUDENT_SIGNUP_COMPLETE";
+    private static final String PREF_KEY_TUTOR_SIGNUP_COMPLETE = "PREF_KEY_TUTOR_SIGNUP_COMPLETE";
 
     public PreferencesImpl(Context context, String prefFileName) {
         mPrefs = context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE);
@@ -32,15 +33,25 @@ public class PreferencesImpl implements PreferencesHelper {
     }
 
     @Override
-    public Boolean getSignUpComplete() {
+    public Boolean getStudentSignUpComplete() {
         return mPrefs.getBoolean(PREF_KEY_STUDENT_SIGNUP_COMPLETE, false);
     }
 
     @Override
-    public void setSignupComplete(boolean isSignUpComplete) {
+    public void setStudentSignupComplete(boolean isSignUpComplete) {
         mPrefs.edit().putBoolean(PREF_KEY_STUDENT_SIGNUP_COMPLETE, isSignUpComplete).apply();
 
 
+    }
+
+    @Override
+    public Boolean getTutorSignUpComplete() {
+        return mPrefs.getBoolean(PREF_KEY_TUTOR_SIGNUP_COMPLETE, false);
+    }
+
+    @Override
+    public void setTutorSignUpComplete(boolean isSignUpComplete) {
+        mPrefs.edit().putBoolean(PREF_KEY_TUTOR_SIGNUP_COMPLETE, isSignUpComplete).apply();
     }
 
     @Override

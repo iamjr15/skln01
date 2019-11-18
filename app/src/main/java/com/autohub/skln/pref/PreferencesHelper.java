@@ -17,9 +17,13 @@ public interface PreferencesHelper {
 
     String getTutorCategory();
 
-    Boolean getSignUpComplete();
+    Boolean getStudentSignUpComplete();
 
-    void setSignupComplete(boolean isSignUpComplete);
+    void setStudentSignupComplete(boolean isSignUpComplete);
+
+    Boolean getTutorSignUpComplete();
+
+    void setTutorSignUpComplete(boolean isSignUpComplete);
 
     String getuserID();
 

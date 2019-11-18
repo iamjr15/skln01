@@ -7,19 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-
-import com.autohub.studentmodule.adaptors.RequestAdapter
 import com.autohub.skln.fragment.BaseFragment
-import com.autohub.studentmodule.listners.HomeListners
 import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.skln.models.Request
-import com.autohub.skln.models.RequestViewModel
-import com.autohub.skln.models.User
+import com.autohub.skln.models.UserModel
 import com.autohub.skln.utills.AppConstants
 import com.autohub.studentmodule.R
+import com.autohub.studentmodule.adaptors.RequestAdapter
 import com.autohub.studentmodule.databinding.FragmentStudentRequestsBinding
-
-import java.util.ArrayList
+import com.autohub.studentmodule.listners.HomeListners
+import com.autohub.studentmodule.models.BatchRequestViewModel
+import com.autohub.studentmodule.models.BatchrequestModel
+import java.util.*
 
 
 /**
@@ -29,14 +28,13 @@ import java.util.ArrayList
 class FragmentRequests : BaseFragment() {
     private var mType: String? = null
     private var mUserType: String? = null
-    private var mUser: User? = null
+    private var mUser: UserModel? = null
     private var mAdapter: RequestAdapter? = null
     private lateinit var homeListner: HomeListners
 
-    private val mItemClickListener = ItemClickListener<RequestViewModel> { requestViewModel ->
-        if(!requestViewModel.request.requestStatus.equals(Request.STATUS.CANCELED.value))
-        {
-            homeListner.onClassRequestSelectListner(requestViewModel)
+    private val mItemClickListener = ItemClickListener<BatchRequestViewModel> { requestViewModel ->
+        if (!requestViewModel.batchRequestModel!!.status.equals(Request.STATUS.CANCELED.value)) {
+            homeListner.onClassRequestSelectListner(requestViewModel = requestViewModel)
 
         }
     }
@@ -73,20 +71,20 @@ class FragmentRequests : BaseFragment() {
             Log.e(">>>>Nulll", (mUser == null).toString() + "")
             return
         }
-        val dbRoot = getString(R.string.db_root_requests)
-        var query = firebaseStore.collection(dbRoot).whereEqualTo("studentId", mUser!!.id)
-        if (mUserType!!.equals("Tutor", ignoreCase = true)) {
+        val dbRoot = getString(R.string.db_root_batchRequests)
+        var query = firebaseStore.collection(dbRoot).whereEqualTo("student.id", mUser!!.id)
+        /*if (mUserType!!.equals("Tutor", ignoreCase = true)) {
             query = firebaseStore.collection(dbRoot).whereEqualTo("tutorId", mUser!!.id)
-        }
-        if (mType!!.equals("Latest", ignoreCase = true)) {
+        }*/
+        /*if (mType!!.equals("Latest", ignoreCase = true)) {
             query = query.whereEqualTo("requestStatus", Request.STATUS.PENDING.value)
-        }
+        }*/
         query.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val requests = ArrayList<RequestViewModel>()
+                val requests = ArrayList<BatchRequestViewModel>()
                 for (document in task.result!!) {
-                    val request = document.toObject(Request::class.java)
-                    requests.add(RequestViewModel(request, mUserType, document.id))
+                    val request = document.toObject(BatchrequestModel::class.java)
+                    requests.add(BatchRequestViewModel(request, mUserType, document.id))
                     Log.d(">>>Explore", "Data Is " + request.subject)
                 }
                 mAdapter!!.setData(requests)

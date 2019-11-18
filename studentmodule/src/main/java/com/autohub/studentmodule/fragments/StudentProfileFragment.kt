@@ -45,7 +45,7 @@ class StudentProfileFragment : BaseFragment() {
         setupProfile()
         mBinding!!.logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            appPreferenceHelper.setSignupComplete(false)
+            appPreferenceHelper.setStudentSignupComplete(false)
 
             ActivityUtils.launchActivity(requireContext(), OnBoardActivity::class.java)
             requireActivity().finishAffinity()
@@ -83,8 +83,13 @@ class StudentProfileFragment : BaseFragment() {
                     }
 
                     val studentClass = user.academicInfo!!.selectedClass
+                    firebaseStore.collection("grades").whereEqualTo("id", studentClass).get().addOnSuccessListener {
 
-                    mBinding!!.grade.text = "grade ${studentClass}${CommonUtils.getClassSuffix(studentClass!!.toInt())} "
+                        it.forEach {
+                            mBinding!!.grade.text = "grade ${it.getString("grade")!!}${CommonUtils.getClassSuffix(it.getString("grade")!!.toInt())} "
+                        }
+                    }
+
 
                 }
                 .addOnFailureListener { e -> showSnackError(e.message) }

@@ -2,6 +2,8 @@ package com.autohub.skln.models.tutormodels
 
 import android.os.Parcel
 import android.os.Parcelable
+import android.text.TextUtils
+import com.autohub.skln.utills.CommonUtils
 
 
 data class TutorData(var academicInfo: TutorAcademicInfo? = TutorAcademicInfo(),
@@ -10,8 +12,11 @@ data class TutorData(var academicInfo: TutorAcademicInfo? = TutorAcademicInfo(),
                      var otpPassword: TutorOtpPassword? = TutorOtpPassword(),
                      var packageInfo: TutorPackageInfo? = TutorPackageInfo(),
                      var personInfo: TutorPersonalInfo? = TutorPersonalInfo(),
-                     var qualification: TutorQualification? = TutorQualification()) : Parcelable {
-
+                     var qualification: TutorQualification? = TutorQualification(),
+                     var classToTeach: String? = "",
+                     var subjectsToTeach: String? = "",
+                     var distance: Double? = 0.0
+) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readParcelable(TutorAcademicInfo::class.java.classLoader),
             parcel.readString(),
@@ -19,8 +24,10 @@ data class TutorData(var academicInfo: TutorAcademicInfo? = TutorAcademicInfo(),
             parcel.readParcelable(TutorOtpPassword::class.java.classLoader),
             parcel.readParcelable(TutorPackageInfo::class.java.classLoader),
             parcel.readParcelable(TutorPersonalInfo::class.java.classLoader),
-            parcel.readParcelable(TutorQualification::class.java.classLoader)) {
-    }
+            parcel.readParcelable(TutorQualification::class.java.classLoader),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readValue(Double::class.java.classLoader) as? Double)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(academicInfo, flags)
@@ -30,6 +37,9 @@ data class TutorData(var academicInfo: TutorAcademicInfo? = TutorAcademicInfo(),
         parcel.writeParcelable(packageInfo, flags)
         parcel.writeParcelable(personInfo, flags)
         parcel.writeParcelable(qualification, flags)
+        parcel.writeString(classToTeach)
+        parcel.writeString(subjectsToTeach)
+        parcel.writeValue(distance)
     }
 
     override fun describeContents(): Int {
@@ -46,4 +56,15 @@ data class TutorData(var academicInfo: TutorAcademicInfo? = TutorAcademicInfo(),
         }
     }
 
+
+    fun getClassesWithAffix(): String {
+        if (TextUtils.isEmpty(classToTeach)) return ""
+        val builder = StringBuilder()
+        val classes = classToTeach!!.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+        for (clazz in classes) {
+            var value = clazz.trim({ it <= ' ' })
+            builder.append(value).append(CommonUtils.getClassSuffix(Integer.parseInt(value))).append(", ")
+        }
+        return builder.substring(0, builder.length - 2)
+    }
 }

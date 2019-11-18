@@ -3,7 +3,6 @@ package com.autohub.tutormodule.ui.dashboard
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -12,7 +11,6 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
 import com.autohub.tutormodule.R
-import com.autohub.skln.models.tutormodels.TutorData
 import com.autohub.tutormodule.ui.dashboard.home.HomeBaseFragment
 import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
 import com.autohub.tutormodule.ui.dashboard.profile.ProfileFragment
@@ -35,7 +33,6 @@ class DashboardActivity : BaseActivity(), HomeListener {
         mTabs.add(tab_item_request)
         mTabs.add(tab_item_profile)
         val sectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
-        fetchUserData()
         mViewPager = findViewById(R.id.container)
         mViewPager.adapter = sectionsPagerAdapter
         mViewPager.offscreenPageLimit = 3
@@ -144,15 +141,5 @@ class DashboardActivity : BaseActivity(), HomeListener {
         homeBaseFragment.showManagerFragment()
     }
 
-
-    fun fetchUserData() {
-
-        firebaseStore.collection(getString(R.string.db_root_tutors)).document("AA4J2oiNUcHc08zIKE7h").get()
-                .addOnSuccessListener { documentSnapshot ->
-                    val tutor: TutorData = documentSnapshot.toObject(TutorData::class.java)!!
-                    Log.e("Aaaaaaaaaa", tutor.toString())
-                }
-                .addOnFailureListener { e -> showSnackError(e.message) }
-    }
 
 }
