@@ -52,7 +52,7 @@ class RequestsListFragment : BaseFragment(), Listener {
     }
 
     private fun fetchData(status: String) {
-        firebaseStore.collection(getString(R.string.db_root_tutors)).document("AA4J2oiNUcHc08zIKE7h")
+        firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID())
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
                     val tutorData = documentSnapshot.toObject(TutorData::class.java)!!
