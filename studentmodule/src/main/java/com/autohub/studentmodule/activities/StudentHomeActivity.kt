@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
+
 import com.autohub.skln.models.UserModel
 import com.autohub.skln.models.batchRequests.GradeData
 import com.autohub.skln.models.batchRequests.SubjectData
@@ -141,12 +142,11 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
 
     private fun getUserInfo() {
-        firebaseStore.collection(getString(R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).get()
+        firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     user = documentSnapshot.toObject(UserModel::class.java)!!
                     user = user
                     user!!.id = documentSnapshot.id
-
                     hideLoading()
 
                 }

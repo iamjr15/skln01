@@ -35,14 +35,12 @@ class FragmentRequests : BaseFragment() {
     private val mItemClickListener = ItemClickListener<BatchRequestViewModel> { requestViewModel ->
         if (!requestViewModel.batchRequestModel!!.status.equals(Request.STATUS.CANCELED.value)) {
             homeListner.onClassRequestSelectListner(requestViewModel = requestViewModel)
-
         }
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         homeListner = context as HomeListners
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,12 +71,10 @@ class FragmentRequests : BaseFragment() {
         }
         val dbRoot = getString(R.string.db_root_batchRequests)
         var query = firebaseStore.collection(dbRoot).whereEqualTo("student.id", mUser!!.id)
-        /*if (mUserType!!.equals("Tutor", ignoreCase = true)) {
-            query = firebaseStore.collection(dbRoot).whereEqualTo("tutorId", mUser!!.id)
-        }*/
-        /*if (mType!!.equals("Latest", ignoreCase = true)) {
-            query = query.whereEqualTo("requestStatus", Request.STATUS.PENDING.value)
-        }*/
+
+        if (mType!!.equals("Latest", ignoreCase = true)) {
+            query = query.whereEqualTo("status", Request.STATUS.PENDING.value)
+        }
         query.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val requests = ArrayList<BatchRequestViewModel>()

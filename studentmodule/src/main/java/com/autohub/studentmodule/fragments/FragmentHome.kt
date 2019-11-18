@@ -83,7 +83,7 @@ class FragmentHome : BaseFragment() {
     }
 
     private fun setUpUserInfo() {
-        firebaseStore.collection(getString(R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).get()
+        firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     user = documentSnapshot.toObject(UserModel::class.java)!!
 

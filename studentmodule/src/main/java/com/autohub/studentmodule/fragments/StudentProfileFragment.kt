@@ -71,7 +71,7 @@ class StudentProfileFragment : BaseFragment() {
         if (mProfileType.equals("student", ignoreCase = true)) {
             root = getString(R.string.db_root_students)
         }
-        firebaseStore.collection(root).document(firebaseAuth.currentUser!!.uid).get()
+        firebaseStore.collection(root).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     var user: UserModel = documentSnapshot.toObject(UserModel::class.java)!!
 

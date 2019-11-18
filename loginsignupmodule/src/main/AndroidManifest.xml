@@ -18,7 +18,10 @@
     </dist:module>
 
     <application tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="ForgetPasswordActivity"></activity>
+        <activity
+            android:name="ForgetPasswordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".TutororStudentSelection"
             android:screenOrientation="portrait"

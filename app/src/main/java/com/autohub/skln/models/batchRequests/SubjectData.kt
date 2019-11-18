@@ -3,11 +3,11 @@ package com.autohub.skln.models.batchRequests
 import android.os.Parcel
 import android.os.Parcelable
 
-data class SubjectData(var color: String? = null,
-                       var id: String? = null,
-                       var image: String? = null,
-                       var name: String? = null,
-                       var order: String? = null) : Parcelable {
+data class SubjectData(var color: String? = "",
+                       var id: String? = "",
+                       var image: String? = "",
+                       var name: String? = "",
+                       var order: String? = "") : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),

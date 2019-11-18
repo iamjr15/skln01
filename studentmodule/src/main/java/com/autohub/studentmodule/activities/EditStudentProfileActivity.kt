@@ -232,7 +232,7 @@ class EditStudentProfileActivity : BaseActivity() {
                 .skipMemoryCache(true)
                 .into(mBinding!!.profilePicture)
 
-        firebaseStore.collection(getString(com.autohub.skln.R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).get()
+        firebaseStore.collection(getString(com.autohub.skln.R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val user = documentSnapshot.toObject(UserModel::class.java)
                     this.user = user

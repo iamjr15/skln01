@@ -68,20 +68,22 @@ class LoginActivity : BaseActivity() {
 
     }
 
+    fun forgotPassword() {
+        ActivityUtils.launchActivity(this, ForgetPasswordActivity::class.java)
+
+    }
+
     fun login() {
         if (!mBinding!!.radiostudent.isChecked) {
             Toast.makeText(this, "Tutor Verified!", Toast.LENGTH_SHORT).show()
             loadAndLaunchModule(TUTOR_FEATURE, "tutormodule")
         }
         val email: Editable
-        if(mBinding!!.radiostudent.isChecked)
-        {
-             email = mBinding!!.edtemail.text!!
+        if (mBinding!!.radiostudent.isChecked) {
+            email = mBinding!!.edtemail.text!!
 
-        }
-        else
-        {
-             email = mBinding!!.edtloginid.text!!
+        } else {
+            email = mBinding!!.edtloginid.text!!
 
         }
 
@@ -115,16 +117,13 @@ class LoginActivity : BaseActivity() {
 
     private fun validateUserCredentials() {
 
-          if(mBinding!!.radiostudent.isChecked)
-          {
-               credential = EmailAuthProvider.getCredential(mBinding!!.edtemail.text.toString().trim(),
-                      /*encrypt(*/mBinding!!.edtPassword.text.toString().trim()/*)*/)
-          }
-        else
-          {
-               credential = EmailAuthProvider.getCredential(mBinding!!.edtloginid.text.toString().trim(),
-                      /*encrypt(*/mBinding!!.edtPassword.text.toString().trim()/*)*/)
-          }
+        if (mBinding!!.radiostudent.isChecked) {
+            credential = EmailAuthProvider.getCredential(mBinding!!.edtemail.text.toString().trim(),
+                    /*encrypt(*/mBinding!!.edtPassword.text.toString().trim()/*)*/)
+        } else {
+            credential = EmailAuthProvider.getCredential(mBinding!!.edtloginid.text.toString().trim(),
+                    /*encrypt(*/mBinding!!.edtPassword.text.toString().trim()/*)*/)
+        }
 
 
         firebaseAuth.signInWithCredential(credential)

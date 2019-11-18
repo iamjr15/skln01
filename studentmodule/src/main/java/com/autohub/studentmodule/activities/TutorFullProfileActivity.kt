@@ -62,7 +62,7 @@ class TutorFullProfileActivity : BaseActivity() {
 
 
     private fun getCurrentUser() {
-        firebaseStore.collection(getString(com.autohub.skln.R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).get()
+        firebaseStore.collection(getString(com.autohub.skln.R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot -> mCurrentUser = documentSnapshot.toObject(UserModel::class.java) }
                 .addOnFailureListener { e -> showSnackError(e.message) }
     }
