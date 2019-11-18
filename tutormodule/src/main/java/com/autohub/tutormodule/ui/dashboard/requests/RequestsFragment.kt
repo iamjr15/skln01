@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.User
+import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentRequestsBinding
 import java.util.*
@@ -35,12 +36,10 @@ class RequestsFragment : BaseFragment() {
 
     private fun getFragmentClassRequests(type: String, user: User?): Fragment {
         val latestRequests = RequestsListFragment()
-        /*val bundle = Bundle()
+        val bundle = Bundle()
         bundle.putString(AppConstants.KEY_TYPE, type)
         bundle.putParcelable(AppConstants.KEY_DATA, user)
-
-        bundle.putString("_user_type", mType)
-        latestRequests.arguments = bundle*/
+        latestRequests.arguments = bundle
         return latestRequests
     }
 

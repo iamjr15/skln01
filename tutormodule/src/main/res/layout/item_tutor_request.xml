@@ -4,15 +4,12 @@
 
     <data>
 
-        <variable
-            name="model"
-            type="com.autohub.skln.models.RequestViewModel" />
+
     </data>
 
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         android:orientation="vertical"
@@ -32,17 +29,20 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@{model.name}"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:textSize="13sp"
                 tools:text="Imran" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/class_name"
                 style="@style/ryan_kils"
-                android:layout_width="40dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_semi_bold"
                 android:gravity="center"
-                android:text="@{model.studentClass}"
+                android:textSize="13sp"
                 tools:text="XI" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -51,8 +51,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/montserrat_semi_bold"
                 android:gravity="center"
-                android:text="@{model.subject}"
+                android:textSize="13sp"
                 tools:text="Physics" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -60,7 +61,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:contentDescription="@string/content_description"
                 android:focusable="true"
                 android:padding="12dp"
                 android:src="@drawable/arrow_right" />
