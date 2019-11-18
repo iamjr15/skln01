@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.autohub.skln.fragment.BaseFragment
+import com.autohub.skln.models.batchRequests.BatchRequestData
+import com.autohub.skln.models.tutormodels.TutorData
+import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentRequestsListBinding
 
@@ -32,6 +35,49 @@ class RequestsListFragment : BaseFragment() {
         binding.recyclerView.setEmptyView(binding.rrempty)
         mAdapter = RequestsAdaptor(requireContext())
         binding.recyclerView.adapter = mAdapter
+
+        if (!arguments?.isEmpty!!) {
+            if (arguments?.getString(AppConstants.KEY_TYPE) == "Latest") {
+                fetchData(AppConstants.STATUS_PENDING)
+            } else {
+                fetchData("")
+            }
+        }
+    }
+
+    private fun fetchData(status: String) {
+        firebaseStore.collection(getString(R.string.db_root_tutors)).document("AA4J2oiNUcHc08zIKE7h")
+                .get()
+                .addOnSuccessListener { documentSnapshot ->
+                    hideLoading()
+                    val tutorData = documentSnapshot.toObject(TutorData::class.java)!!
+
+                    fetchDetails(tutorData.id, status)
+
+                }
+                .addOnFailureListener { e ->
+                    showSnackError(e.message)
+                }
+
+    }
+
+    private fun fetchDetails(id: String?, status: String) {
+        firebaseStore.collection(getString(R.string.db_root_batch_requests)).whereEqualTo("teacher.id", id).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val batchRequestData = documentSnapshot.toObjects(BatchRequestData::class.java)
+                    if (status == AppConstants.STATUS_PENDING
+                    ) {
+
+                        mAdapter.setData(batchRequestData.filter {
+                            it.status.equals(AppConstants.STATUS_PENDING)
+                        })
+                    } else {
+                        mAdapter.setData(batchRequestData)
+                    }
+                }
+                .addOnFailureListener { e ->
+                    showSnackError(e.message)
+                }
     }
 
 }

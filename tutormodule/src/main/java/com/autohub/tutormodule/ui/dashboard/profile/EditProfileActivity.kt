@@ -15,11 +15,11 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.CropActivity
-import com.autohub.skln.models.GradesData
-import com.autohub.skln.models.SubjectsData
+import com.autohub.skln.models.batchRequests.GradeData
+import com.autohub.skln.models.batchRequests.SubjectData
 import com.autohub.skln.models.User
+import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.models.tutor.TutorGradesSubjects
-import com.autohub.skln.models.tutormodels.TutorData
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.GlideApp
@@ -44,8 +44,12 @@ class EditProfileActivity : BaseActivity() {
     private val MAX_SIZE = 240
     private var mStorageReference: StorageReference? = null
     private var tutorData: TutorData? = null
-    private var subjectsList = ArrayList<String>()
-    private var gradesList = ArrayList<String>()
+
+    private var selectedSubjectsList = ArrayList<String>()
+    private var subjectsList = ArrayList<SubjectData>()
+
+    private var selectedGradesList = ArrayList<String>()
+    private var gradesList = ArrayList<GradeData>()
 
     private val mWatcherWrapper = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -79,7 +83,7 @@ class EditProfileActivity : BaseActivity() {
         mStorageReference = FirebaseStorage.getInstance().reference
         mBinding.bio.addTextChangedListener(mWatcherWrapper)
 
-        if (intent.hasExtra("tutorData")) {
+        if (intent.hasExtra(getString(R.string.containsTutorData))) {
             setUpTutorInfo()
         }
     }
@@ -88,19 +92,19 @@ class EditProfileActivity : BaseActivity() {
     private fun setUpTutorInfo() {
         showLoading()
 
-        val tutor = intent.getParcelableExtra<TutorData>("tutorData")
+        val tutor = intent.getParcelableExtra<TutorData>(getString(R.string.containsTutorData))
 
         this.tutorData = tutor
-        mBinding.selectOccupation.text = tutor.qualification!!.currentOccupation
-        mBinding.teachingExperience.text = tutor.qualification!!.experience
-        mBinding.qualification.text = tutor.qualification!!.qualification
-        mBinding.areaOfQualification.text = tutor.qualification!!.qualificationArea
-        mBinding.targetedBoard.text = tutor.qualification!!.targetBoard
-        mBinding.bio.setText(tutor.personInfo!!.biodata)
+        mBinding.selectOccupation.text = tutor?.qualification?.currentOccupation
+        mBinding.teachingExperience.text = tutor?.qualification?.experience
+        mBinding.qualification.text = tutor?.qualification?.qualification
+        mBinding.areaOfQualification.text = tutor?.qualification?.qualificationArea
+        mBinding.targetedBoard.text = tutor?.qualification?.targetBoard
+        mBinding.bio.setText(tutor?.personInfo?.biodata)
 
 
         GlideApp.with(this)
-                .load(tutor.personInfo!!.accountPicture)
+                .load(tutor?.personInfo?.accountPicture)
                 .placeholder(com.autohub.skln.R.drawable.default_pic)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
@@ -124,22 +128,26 @@ class EditProfileActivity : BaseActivity() {
     }
 
     private fun getTutorSubjectsToTeach(tutorSubjects: List<TutorGradesSubjects>) {
-        for (element in tutorSubjects) {
-            firebaseStore.collection(getString(R.string.db_root_subjects)).whereEqualTo("id", element.subjectId).get()
-                    .addOnSuccessListener { documentSnapshot ->
-                        hideLoading()
-                        val subjects = documentSnapshot.toObjects(SubjectsData::class.java)
-                        for (j in 0 until subjects.size) {
-                            subjectsList.add(subjects[j].name!!)
+        firebaseStore.collection(getString(R.string.db_root_subjects)).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    hideLoading()
+                    val subjects = documentSnapshot.toObjects(SubjectData::class.java)
+                    subjectsList = subjects as ArrayList<SubjectData>
+                    for (i in tutorSubjects.indices) {
+                        for (j in 0 until subjectsList.size) {
+                            if (subjectsList[j].id.equals(tutorSubjects[i].subjectId)) {
+                                selectedSubjectsList.add(subjectsList[j].name!!)
+                            }
                         }
-                        mBinding.subjectToTaught.text = subjectsList.joinToString(",")
+                    }
+                    mBinding.subjectToTaught.text = selectedSubjectsList.joinToString(",")
 
-                    }
-                    .addOnFailureListener { e ->
-                        hideLoading()
-                        showSnackError(e.message)
-                    }
-        }
+                }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
+
 
     }
 
@@ -147,6 +155,7 @@ class EditProfileActivity : BaseActivity() {
     private fun getTutorGrades() {
         firebaseStore.collection(getString(R.string.db_root_tutor_gardes)).whereEqualTo("teacherId", tutorData?.id).get()
                 .addOnSuccessListener { documentSnapshot ->
+                    hideLoading()
                     val tutorGrades = documentSnapshot.toObjects(TutorGradesSubjects::class.java)
                     getTutorGradesToTeach(tutorGrades)
                 }
@@ -157,22 +166,25 @@ class EditProfileActivity : BaseActivity() {
     }
 
     private fun getTutorGradesToTeach(tutorGrades: List<TutorGradesSubjects>) {
-        for (element in tutorGrades) {
-            firebaseStore.collection(getString(R.string.db_root_grades)).whereEqualTo("id", element.gradeId).get()
-                    .addOnSuccessListener { documentSnapshot ->
-                        hideLoading()
-                        val grades = documentSnapshot.toObjects(GradesData::class.java)
-                        for (j in 0 until grades.size) {
-                            gradesList.add("Class " + grades[j].grade!!)
+        firebaseStore.collection(getString(R.string.db_root_grades)).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    hideLoading()
+                    val grades = documentSnapshot.toObjects(GradeData::class.java)
+                    gradesList = grades as ArrayList<GradeData>
+                    for (i in tutorGrades.indices) {
+                        for (j in 0 until gradesList.size) {
+                            if (gradesList[j].id.equals(tutorGrades[i].gradeId)) {
+                                selectedGradesList.add(gradesList[j].name!!)
+                            }
                         }
-                        mBinding.classToTeach.text = gradesList.joinToString(", ")
+                    }
+                    mBinding.classToTeach.text = selectedGradesList.joinToString(", ")
+                }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
 
-                    }
-                    .addOnFailureListener { e ->
-                        hideLoading()
-                        showSnackError(e.message)
-                    }
-        }
 
     }
 

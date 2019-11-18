@@ -29,7 +29,7 @@ class ProfileFragment : BaseFragment() {
         mBinding.editProfile.setOnClickListener {
             val intent = Intent(activity, EditProfileActivity::class.java)
             if (tutorData != null) {
-                intent.putExtra("tutorData", tutorData)
+                intent.putExtra(getString(R.string.containsTutorData), tutorData)
             }
             startActivity(intent)
         }

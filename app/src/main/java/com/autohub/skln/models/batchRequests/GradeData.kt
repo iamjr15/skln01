@@ -1,13 +1,13 @@
-package com.autohub.skln.models
+package com.autohub.skln.models.batchRequests
 
 import android.os.Parcel
 import android.os.Parcelable
 
-data class GradesData(var grade: String? = null,
-                      var color: String? = null,
-                      var id: String? = null,
-                      var image: String? = null,
-                      var name: String? = null) : Parcelable {
+data class GradeData(var grade: String? = null,
+                     var color: String? = null,
+                     var id: String? = null,
+                     var image: String? = null,
+                     var name: String? = null) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
@@ -27,12 +27,12 @@ data class GradesData(var grade: String? = null,
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<GradesData> {
-        override fun createFromParcel(parcel: Parcel): GradesData {
-            return GradesData(parcel)
+    companion object CREATOR : Parcelable.Creator<GradeData> {
+        override fun createFromParcel(parcel: Parcel): GradeData {
+            return GradeData(parcel)
         }
 
-        override fun newArray(size: Int): Array<GradesData?> {
+        override fun newArray(size: Int): Array<GradeData?> {
             return arrayOfNulls(size)
         }
     }

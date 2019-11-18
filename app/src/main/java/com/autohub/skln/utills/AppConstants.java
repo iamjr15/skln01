@@ -116,4 +116,6 @@ public interface AppConstants {
     // bundel keys
     String KEY_USERMAP = "usermap";
 
+    String STATUS_PENDING = "pending";
+
 }

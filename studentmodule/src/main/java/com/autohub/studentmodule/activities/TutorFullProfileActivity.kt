@@ -91,8 +91,6 @@ class TutorFullProfileActivity : BaseActivity() {
 
     private fun makeRequest(subject: String, classtype: String) {
         showLoading()
-
-
         val studentId = firebaseAuth.currentUser!!.uid
         val tutorId = mUserViewModel!!.userId
         val gradeId = mCurrentUser!!.academicInfo!!.selectedClass
