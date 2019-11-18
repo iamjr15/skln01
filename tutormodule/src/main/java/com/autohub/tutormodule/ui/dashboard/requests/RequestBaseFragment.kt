@@ -8,7 +8,7 @@ import com.autohub.skln.fragment.BaseFragment
 import com.autohub.tutormodule.R
 
 
-class ClassRequestBaseFragment : BaseFragment() {
+class RequestBaseFragment : BaseFragment() {
     internal var view: View? = null
     var fragmentRequests: RequestsFragment? = null
 
@@ -19,13 +19,19 @@ class ClassRequestBaseFragment : BaseFragment() {
         return view
     }
 
-    private fun showRequestFragmentClass() {
+    public fun showRequestFragmentClass() {
         fragmentRequests = RequestsFragment()
         childFragmentManager
                 .beginTransaction()
                 .replace(R.id.requestcontainer, fragmentRequests!!).commit()
     }
 
+    fun showPendingRequestScreen() {
+        fragmentRequests = null
+        childFragmentManager
+                .beginTransaction()
+                .replace(R.id.requestcontainer, PendingRequestFragment()).commit()
+    }
 
     fun showRequestDetailFragment(bundle: Bundle) {
         /*fragmentClassRequests = null

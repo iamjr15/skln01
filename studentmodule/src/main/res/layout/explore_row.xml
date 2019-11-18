@@ -49,9 +49,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
+                    android:baselineAligned="false"
                     android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:baselineAligned="false">
+                    android:weightSum="2">
 
                     <RelativeLayout
                         android:layout_width="0dp"
@@ -136,9 +136,9 @@
 
                     android:layout_below="@+id/ll"
                     android:layout_alignParentBottom="true"
+                    android:baselineAligned="false"
                     android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:baselineAligned="false">
+                    android:weightSum="2">
 
                     <RelativeLayout
                         android:layout_width="0dp"
