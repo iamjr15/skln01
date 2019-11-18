@@ -21,7 +21,7 @@ class StudentHey : BaseActivity() {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_student_hey)
         mBinding!!.callback = this
-        firebaseStore.collection(getString(R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).get()
+        firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val firstName = documentSnapshot.getString(KEY_FIRST_NAME)
                     if (firstName != null) {

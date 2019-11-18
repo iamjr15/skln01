@@ -141,12 +141,11 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
 
     private fun getUserInfo() {
-        firebaseStore.collection(getString(R.string.db_root_students)).document(firebaseAuth.currentUser!!.uid).get()
+        firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     user = documentSnapshot.toObject(UserModel::class.java)!!
                     user = user
                     user!!.id = documentSnapshot.id
-
                     hideLoading()
 
                 }

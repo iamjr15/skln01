@@ -19,9 +19,9 @@ class ForgetPasswordActivity : BaseActivity() {
     }
 
     fun onForgotPassword() {
-        FirebaseAuth.getInstance().sendPasswordResetEmail("user@example.com")
+        FirebaseAuth.getInstance().sendPasswordResetEmail("netzwelt.prithipal@gmail.com")
                 .addOnCompleteListener {
-                    if (it.isSuccessful()) {
+                    if (it.isSuccessful) {
                         showSnackError("EMAIL SEND")
                     }
                 }
