@@ -2,7 +2,7 @@ package com.autohub.studentmodule.models
 
 import android.text.TextUtils
 import androidx.databinding.BaseObservable
-import com.autohub.skln.models.tutormodels.TutorData
+import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.CommonUtils
 
 class TutorViewModel(private var mUser: TutorData) : BaseObservable() {

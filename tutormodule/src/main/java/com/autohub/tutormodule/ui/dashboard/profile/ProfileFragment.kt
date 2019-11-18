@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.autohub.skln.fragment.BaseFragment
-import com.autohub.skln.models.tutormodels.TutorData
+import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.GlideApp
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorProfileBinding

@@ -12,18 +12,20 @@ import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.ui.dashboard.home.HomeBaseFragment
+import com.autohub.tutormodule.ui.dashboard.listner.ClassRequestListener
 import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
 import com.autohub.tutormodule.ui.dashboard.profile.ProfileFragment
-import com.autohub.tutormodule.ui.dashboard.requests.ClassRequestBaseFragment
+import com.autohub.tutormodule.ui.dashboard.requests.RequestBaseFragment
 import com.autohub.tutormodule.ui.dashboard.schedule.ScheduleFragment
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import java.util.*
 
-class DashboardActivity : BaseActivity(), HomeListener {
+class DashboardActivity : BaseActivity(), HomeListener ,ClassRequestListener{
 
     private val mTabs = ArrayList<TextView>()
     private lateinit var mViewPager: ViewPager
     private lateinit var homeBaseFragment: HomeBaseFragment
+    private lateinit var requestBaseFragment: RequestBaseFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +86,15 @@ class DashboardActivity : BaseActivity(), HomeListener {
             mViewPager.currentItem = 0
         }
 
+        tab_item_request.setOnClickListener {
+            if (requestBaseFragment.fragmentRequests == null) {
+                requestBaseFragment.showRequestFragmentClass()
+            }
+            setStatusBarColor(R.drawable.white_header)
+
+            mViewPager.currentItem = 2
+        }
+
     }
 
     private fun setTextViewDrawableColor(textView: TextView, color: Int) {
@@ -101,12 +112,11 @@ class DashboardActivity : BaseActivity(), HomeListener {
                 0 -> {
                     homeBaseFragment = HomeBaseFragment()
                     return homeBaseFragment
-
-
                 }
                 1 -> return ScheduleFragment()
                 2 -> {
-                    return ClassRequestBaseFragment()
+                    requestBaseFragment = RequestBaseFragment()
+                    return requestBaseFragment
                 }
                 else -> {
                     return ProfileFragment()
@@ -139,6 +149,10 @@ class DashboardActivity : BaseActivity(), HomeListener {
 
     override fun managerSelected() {
         homeBaseFragment.showManagerFragment()
+    }
+
+    override fun showPendingRequestScreen() {
+        requestBaseFragment.showPendingRequestScreen()
     }
 
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.autohub.skln.listeners.ItemClickListener
-import com.autohub.skln.models.tutormodels.TutorData
+import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.RoundedCornersTransformation
 import com.autohub.studentmodule.R

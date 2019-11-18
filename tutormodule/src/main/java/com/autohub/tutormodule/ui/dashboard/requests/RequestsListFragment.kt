@@ -1,6 +1,7 @@
 package com.autohub.tutormodule.ui.dashboard.requests
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,18 +10,18 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.batchRequests.BatchRequestData
-import com.autohub.skln.models.tutormodels.TutorData
+import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentRequestsListBinding
+import com.autohub.tutormodule.ui.dashboard.listner.ClassRequestListener
 
 /**
  * A simple [Fragment] subclass.
  */
-class RequestsListFragment : BaseFragment() {
-
+class RequestsListFragment : BaseFragment(), Listener {
     private lateinit var mAdapter: RequestsAdaptor
-
+    private lateinit var listener: ClassRequestListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -28,12 +29,17 @@ class RequestsListFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_requests_list, container, false)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as ClassRequestListener
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentRequestsListBinding.bind(view)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.setEmptyView(binding.rrempty)
-        mAdapter = RequestsAdaptor(requireContext())
+        binding.recyclerView.setEmptyView(binding.emptyView)
+        mAdapter = RequestsAdaptor(requireContext(), this)
         binding.recyclerView.adapter = mAdapter
 
         if (!arguments?.isEmpty!!) {
@@ -49,9 +55,7 @@ class RequestsListFragment : BaseFragment() {
         firebaseStore.collection(getString(R.string.db_root_tutors)).document("AA4J2oiNUcHc08zIKE7h")
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
-                    hideLoading()
                     val tutorData = documentSnapshot.toObject(TutorData::class.java)!!
-
                     fetchDetails(tutorData.id, status)
 
                 }
@@ -67,7 +71,6 @@ class RequestsListFragment : BaseFragment() {
                     val batchRequestData = documentSnapshot.toObjects(BatchRequestData::class.java)
                     if (status == AppConstants.STATUS_PENDING
                     ) {
-
                         mAdapter.setData(batchRequestData.filter {
                             it.status.equals(AppConstants.STATUS_PENDING)
                         })
@@ -80,4 +83,7 @@ class RequestsListFragment : BaseFragment() {
                 }
     }
 
+    override fun showPendingRequestFragment() {
+        listener.showPendingRequestScreen()
+    }
 }

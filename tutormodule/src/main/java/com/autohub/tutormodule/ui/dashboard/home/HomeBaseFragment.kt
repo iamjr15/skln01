@@ -15,6 +15,7 @@ import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
 import com.autohub.tutormodule.ui.manageClasses.AddBatchFragment
 import com.autohub.tutormodule.ui.manageClasses.BatchOptionsFragment
 
+
 /**
  * A simple [Fragment] subclass.
  */
@@ -53,7 +54,7 @@ class HomeBaseFragment : BaseFragment() {
     }
 
 
-    fun showAddBatchFragment(showAddBatch : Boolean) {
+    fun showAddBatchFragment(showAddBatch: Boolean) {
         val bundle = Bundle()
         bundle.putBoolean("showAddBatch", showAddBatch)
         val addBatchFragment = AddBatchFragment()
@@ -77,4 +78,5 @@ class HomeBaseFragment : BaseFragment() {
                 .beginTransaction()
                 .replace(R.id.homecontainer, studentsListFragment).commit()
     }
+
 }

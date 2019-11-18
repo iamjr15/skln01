@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.Request
-import com.autohub.skln.models.tutormodels.TutorData
+import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R

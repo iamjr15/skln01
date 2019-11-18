@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
+        android:id="@+id/request_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:orientation="vertical"
-       >
+        android:orientation="vertical">
 
         <com.autohub.skln.widgets.EmptyViewRecyclerView
             android:id="@+id/recycler_view"
@@ -18,7 +18,7 @@
 
 
         <RelativeLayout
-            android:id="@+id/rrempty"
+            android:id="@+id/empty_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
