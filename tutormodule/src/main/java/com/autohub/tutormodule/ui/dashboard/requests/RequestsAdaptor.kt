@@ -18,7 +18,6 @@ class RequestsAdaptor(var context: Context, val listener: Listener)
 
     private var requestsList: List<BatchRequestData> = ArrayList()
     lateinit var itemRequestBinding: ItemTutorRequestBinding
-    lateinit var documentId: String
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         itemRequestBinding = DataBindingUtil.inflate(
@@ -40,7 +39,7 @@ class RequestsAdaptor(var context: Context, val listener: Listener)
         }
 
         holder.itemView.setOnClickListener {
-            listener.showPendingRequestFragment(requestsList[position].student?.id!!,documentId)
+            listener.showPendingRequestFragment(requestsList[position].student?.id!!, requestsList[position].documentId!!)
         }
     }
 
@@ -48,9 +47,8 @@ class RequestsAdaptor(var context: Context, val listener: Listener)
         return requestsList.size
     }
 
-    fun setData(requestsList: List<BatchRequestData>, documentId: String) {
+    fun setData(requestsList: List<BatchRequestData>) {
         this.requestsList = requestsList
-        this.documentId = documentId
         notifyDataSetChanged()
     }
 

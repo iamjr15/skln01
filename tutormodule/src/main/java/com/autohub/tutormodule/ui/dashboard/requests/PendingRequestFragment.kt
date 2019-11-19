@@ -17,6 +17,8 @@ import com.autohub.skln.utills.GlideApp
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentPendingRequestBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.firebase.firestore.SetOptions
+
 
 /**
  * A simple [Fragment] subclass.
@@ -28,6 +30,7 @@ class PendingRequestFragment : BaseFragment() {
     private lateinit var tutorData: TutorData
     private val selectedBatch = ArrayList<String>()
     private val batchNames = ArrayList<String>()
+    private lateinit var selectedBatchId: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -55,36 +58,68 @@ class PendingRequestFragment : BaseFragment() {
     }
 
     private fun deleteRequest() {
+        showLoading()
         firebaseStore.collection(getString(R.string.db_root_batch_requests)).document(arguments?.getString("documentId")!!)
                 .update("status", "rejected")
                 .addOnSuccessListener {
                     Log.d(" ", "DocumentSnapshot successfully updated!")
                 }
-                .addOnFailureListener { e -> Log.d("Error updating document", e.toString()) }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
     }
 
     private fun acceptRequest() {
+        showLoading()
         firebaseStore.collection(getString(R.string.db_root_batch_requests)).document(arguments?.getString("documentId")!!)
                 .update("status", "accepted")
                 .addOnSuccessListener {
                     Log.d(" ", "DocumentSnapshot successfully updated!")
-                }
-                .addOnFailureListener { e -> Log.d("Error updating document", e.toString()) }
-    }
-
-    private fun fetchBatches() {
-        firebaseStore.collection(getString(R.string.db_root_batches)).whereEqualTo("teacher.id", tutorData.id).get()
-                .addOnSuccessListener { documentSnapshot ->
-                    val batches = documentSnapshot.toObjects(BatchRequestModel::class.java)
-                    for (i in 0 until batches.size) {
-                        batchNames.add(batches[i].title!!)
-                    }
-
+                    fetchBatches(true)
                 }
                 .addOnFailureListener { e ->
                     hideLoading()
                     showSnackError(e.message)
                 }
+    }
+
+    private fun fetchBatches(enrollStudent: Boolean) {
+        firebaseStore.collection(getString(R.string.db_root_batches)).whereEqualTo("teacher.id", tutorData.id).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val batches = documentSnapshot.toObjects(BatchRequestModel::class.java)
+                    for (i in 0 until batches.size) {
+                        batches[i].documentId = documentSnapshot.documents[i].id
+                        batchNames.add(batches[i].title!!)
+                    }
+
+                    if (enrollStudent) {
+                        enrollStudentToBatch(batches)
+                    }
+                }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
+    }
+
+    private fun enrollStudentToBatch(batches: MutableList<BatchRequestModel>) {
+        val student: HashMap<String, String> = HashMap()
+        student["studentsEnrolled"] = arguments?.getString("studentId")!!
+        student["studentsEnrolled.name"] = "Test"
+
+        firebaseStore.collection(getString(R.string.db_root_batches) ).
+                document("dIRGpBbG3ciL4eM6lx8m")
+                .set(student, SetOptions.merge())
+                .addOnSuccessListener { documentSnapshot ->
+                    hideLoading()
+                    Log.d("Aaaa", "success");
+                }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
+
     }
 
     private fun fetchStudentData() {
@@ -111,7 +146,7 @@ class PendingRequestFragment : BaseFragment() {
                 .addOnSuccessListener { documentSnapshot ->
                     hideLoading()
                     tutorData = documentSnapshot.toObject(TutorData::class.java)!!
-                    fetchBatches()
+                    fetchBatches(false)
                     fillData()
                 }
                 .addOnFailureListener { e ->
@@ -136,7 +171,7 @@ class PendingRequestFragment : BaseFragment() {
     }
 
 
-    private fun showSingleSelectionDialog(items: List<String>, textView: TextView, title: String, selectedItems: ArrayList<String>) {
+    private fun showSingleSelectionDialog(items: ArrayList<String>, textView: TextView, title: String, selectedItems: ArrayList<String>) {
         val namesArr = items.toTypedArray()
         var indexSelected = -1
         if (selectedItems.size > 0) {
@@ -166,7 +201,6 @@ class PendingRequestFragment : BaseFragment() {
                     textView.text = "Added to " + namesArr[selectedPosition]
                     selectedItems.clear()
                     selectedItems.add(namesArr[selectedPosition])
-
                 }
                 .show()
     }

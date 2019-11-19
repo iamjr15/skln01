@@ -69,14 +69,17 @@ class RequestsListFragment : BaseFragment(), Listener {
         firebaseStore.collection(getString(R.string.db_root_batch_requests)).whereEqualTo("teacher.id", id).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val batchRequestData = documentSnapshot.toObjects(BatchRequestData::class.java)
+                    for (i in 0 until documentSnapshot.size()){
+                        batchRequestData[i].documentId= documentSnapshot.documents[i].id
+                    }
                     if (status == AppConstants.STATUS_PENDING
                     ) {
 
                         mAdapter.setData(batchRequestData.filter {
                             it.status.equals(AppConstants.STATUS_PENDING)
-                        }, documentId)
+                        })
                     } else {
-                        mAdapter.setData(batchRequestData,documentId)
+                        mAdapter.setData(batchRequestData)
                     }
                 }
                 .addOnFailureListener { e ->
