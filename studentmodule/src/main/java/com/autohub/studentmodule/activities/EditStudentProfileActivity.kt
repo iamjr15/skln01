@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.CropActivity
 import com.autohub.skln.models.UserModel
+import com.autohub.skln.models.batchRequests.SubjectData
 import com.autohub.skln.utills.ActivityUtils
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.AppConstants.*
@@ -28,6 +29,7 @@ import com.vansuita.pickimage.bundle.PickSetup
 import com.vansuita.pickimage.dialog.PickImageDialog
 import java.io.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -35,6 +37,14 @@ import java.util.*
  */
 
 class EditStudentProfileActivity : BaseActivity() {
+    lateinit var subjectDataList: ArrayList<SubjectData>
+    private var favleastsubjectsDataList: ArrayList<SubjectData> = ArrayList()
+
+    private var favtselectedId = ""
+    private var leastselectedId = ""
+    private var selectedGrade = ""
+    private var isSeniorSelected = true
+
     private var mBinding: ActivityEditStudentProfileBinding? = null
 
     private var user: UserModel? = null
@@ -43,8 +53,27 @@ class EditStudentProfileActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_edit_student_profile)
         mBinding!!.callback = this
+        fetchSubjects()
 
-        setUpUserInfo()
+    }
+
+    private fun fetchSubjects() {
+        subjectDataList = arrayListOf()
+        firebaseStore.collection("subjects").get().addOnCompleteListener {
+
+            if (it.isSuccessful) {
+                for (document in it.result!!) {
+                    val user = document.toObject(SubjectData::class.java)
+                    subjectDataList.add(user)
+                }
+            }
+            setleastFavSubjects(true)
+            setUpUserInfo()
+
+
+        }.addOnFailureListener {
+            showSnackError(it.message)
+        }
     }
 
     fun onBackClick() {
@@ -132,45 +161,45 @@ class EditStudentProfileActivity : BaseActivity() {
                         selectedPosition = 0
                     }
                     mBinding!!.grade.text = namesArr[selectedPosition]
-                    user!!.academicInfo!!.selectedClass = (selectedPosition + 1).toString()
+                    var grade = (selectedPosition + 1).toString()
+                    user!!.academicInfo!!.selectedClass = grade
+                    val isSeniorClass = grade.equals(CLASS_11, ignoreCase = true) || grade.equals(CLASS_12, ignoreCase = true)
+                    if (isSeniorSelected.compareTo(isSeniorClass) != 0) {
+                        favtselectedId = ""
+                        leastselectedId = ""
+                        mBinding!!.leastFavuSubj.text = ""
+                        mBinding!!.favoriteSubj.text = ""
+                        setleastFavSubjects(isSeniorClass)
+                    }
+
                 }
                 .show()
     }
 
     fun showSub(isLeastFav: Boolean) {
         val items = ArrayList<String>()
-        items.add(SUBJECT_SCIENCE)
-        items.add(SUBJECT_COMPUTER_SCIENCE)
-        items.add(SUBJECT_ACCOUNTANCY)
-        items.add(SUBJECT_BIOLOGY)
-        items.add(SUBJECT_BUSINESS)
-        items.add(SUBJECT_SOCIAL_STUDIES)
-        items.add(SUBJECT_CHEMISTRY)
-        items.add(SUBJECT_ECONOMICS)
-        items.add(SUBJECT_LANGUAGES)
-        items.add(SUBJECT_PHYSICS)
-        items.add(SUBJECT_MATHS)
-        items.add(SUBJECT_ENGLISH)
+        for (i in favleastsubjectsDataList) {
+            items.add(i.name!!)
+        }
+
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
-        var selectedItems: List<String> = ArrayList()
+        var selectedItems: MutableList<String> = ArrayList()
         if (user!!.academicInfo!!.favoriteClasses != null && user!!.academicInfo!!.leastFavoriteClasses!!.isNotEmpty() && !isLeastFav) {
-            //            if (!isLeastFav) {
-            selectedItems = listOf(*user!!.academicInfo!!.favoriteClasses!!
-                    .split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
-            //            } else {
+            for (favtdata in favleastsubjectsDataList) {
+                if (favtdata.isFavSelected!!) {
+                    favtdata.name?.let { selectedItems.add(it) }
+                }
+            }
 
-            //            }
         }
         if (user!!.academicInfo!!.leastFavoriteClasses != null && user!!.academicInfo!!.leastFavoriteClasses!!.isNotEmpty() && isLeastFav) {
-            //            if (!isLeastFav) {
-            selectedItems = listOf(*user!!.academicInfo!!.leastFavoriteClasses!!.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
-            //            } else {
-
-            //            }
+            for (leastfav in favleastsubjectsDataList) {
+                if (leastfav.isleastelected!!) {
+                    leastfav.name?.let { selectedItems.add(it) }
+                }
+            }
         }
-
-
         val selectedSub = ArrayList<String>()
 
         for (i in selectedItems.indices) {
@@ -192,6 +221,7 @@ class EditStudentProfileActivity : BaseActivity() {
                 ) { _, i, b ->
                     if (b) {
                         selectedSub.add(items[i])
+
                     } else {
                         selectedSub.remove(items[i])
                     }
@@ -208,14 +238,72 @@ class EditStudentProfileActivity : BaseActivity() {
                         }
                     }
                     if (isLeastFav) {
-                        user!!.academicInfo!!.leastFavoriteClasses = selectedSubString
-                        mBinding!!.leastFavuSubj.text = selectedSubString
+
+                        for (i in favleastsubjectsDataList.indices) {
+                            favleastsubjectsDataList[i].isleastelected = false
+                        }
+                        var leastsujectsbuilder = StringBuilder()
+                        var leastsujectsidsbuilder = StringBuilder()
+
+                        for (i in selectedSub) {
+                            var idsList = favleastsubjectsDataList.map { it.name }
+                            val index = idsList.indexOf(i.trim())
+                            favleastsubjectsDataList[index].isleastelected = true
+                            leastsujectsbuilder.append(", " + favleastsubjectsDataList[index].name)
+                            leastsujectsidsbuilder.append("," + favleastsubjectsDataList[index].id)
+                        }
+                        leastselectedId = leastsujectsidsbuilder.toString().removeRange(0..0)
+                        mBinding!!.leastFavuSubj.text = leastsujectsbuilder.toString().removeRange(0..0)
+
+
+                        /*  user!!.academicInfo!!.leastFavoriteClasses = selectedSubString
+                          mBinding!!.leastFavuSubj.text = selectedSubString*/
                     } else {
-                        user!!.academicInfo!!.favoriteClasses = selectedSubString
-                        mBinding!!.favoriteSubj.text = selectedSubString
+                        for (i in favleastsubjectsDataList.indices) {
+                            favleastsubjectsDataList[i].isFavSelected = false
+                        }
+                        var favsujectsbuilder = StringBuilder()
+                        var favsujectsidsbuilder = StringBuilder()
+                        for (i in selectedSub) {
+                            var idsList = favleastsubjectsDataList.map { it.name }
+                            val index = idsList.indexOf(i.trim())
+                            favleastsubjectsDataList[index].isFavSelected = true
+                            favsujectsbuilder.append(", " + favleastsubjectsDataList[index].name)
+                            favsujectsidsbuilder.append("," + favleastsubjectsDataList[index].id)
+                        }
+                        favtselectedId = favsujectsidsbuilder.toString().removeRange(0..0)
+                        mBinding!!.favoriteSubj.text = favsujectsbuilder.toString().removeRange(0..0)
                     }
                 }
                 .show()
+    }
+
+    fun setleastFavSubjects(seniorClass: Boolean) {
+        isSeniorSelected = seniorClass
+        favleastsubjectsDataList.clear()
+        val items = ArrayList<String>()
+        items.add(SUBJECT_ENGLISH)
+        items.add(SUBJECT_MATHS)
+        items.add(SUBJECT_COMPUTER_SCIENCE)
+        if (seniorClass) {
+            items.add(SUBJECT_ACCOUNTANCY)
+            items.add(SUBJECT_BIOLOGY)
+            items.add(SUBJECT_BUSINESS)
+            items.add(SUBJECT_CHEMISTRY)
+            items.add(SUBJECT_ECONOMICS)
+            items.add(SUBJECT_PHYSICS)
+        } else {
+            items.add(SUBJECT_SOCIAL_STUDIES)
+            items.add(SUBJECT_LANGUAGES)
+            items.add(SUBJECT_SCIENCE)
+        }
+
+        for (i in subjectDataList.indices) {
+            if (items.contains(subjectDataList[i].name)) {
+                favleastsubjectsDataList.add(subjectDataList[i])
+            }
+        }
+
     }
 
     private fun setUpUserInfo() {
@@ -239,14 +327,46 @@ class EditStudentProfileActivity : BaseActivity() {
                     mBinding!!.edtFirstName.setText(user.personInfo!!.firstName)
                     mBinding!!.etPhoneNumber.setText(user.personInfo!!.phoneNumber)
                     mBinding!!.favHobby.text = user.academicInfo!!.hobbiesToPursue
-                    mBinding!!.favoriteSubj.text = user.academicInfo!!.favoriteClasses
-                    mBinding!!.leastFavuSubj.text = user.academicInfo!!.leastFavoriteClasses
+
+                    var favsujectsbuilder = StringBuilder()
+                    var favsujectsidsbuilder = StringBuilder()
+
+                    var favsub = user.academicInfo!!.favoriteClasses!!.split(",")
+                    for (i in favsub) {
+                        var idsList = favleastsubjectsDataList.map { it.id }
+                        val index = idsList.indexOf(i.trim())
+                        favleastsubjectsDataList[index].isFavSelected = true
+                        favsujectsbuilder.append(", " + favleastsubjectsDataList[index].name)
+                        favsujectsidsbuilder.append("," + favleastsubjectsDataList[index].id)
+                    }
+
+                    favtselectedId = favsujectsidsbuilder.toString().removeRange(0..0)
+                    mBinding!!.favoriteSubj.text = favsujectsbuilder.toString().removeRange(0..0)
+
+                    var leastsujectsbuilder = StringBuilder()
+                    var leastsujectsidsbuilder = StringBuilder()
+
+                    var leastsub = user.academicInfo!!.leastFavoriteClasses!!.split(",")
+                    for (i in leastsub) {
+                        var idsList = favleastsubjectsDataList.map { it.id }
+                        val index = idsList.indexOf(i.trim())
+                        favleastsubjectsDataList[index].isleastelected = true
+                        leastsujectsbuilder.append(", " + favleastsubjectsDataList[index].name)
+                        leastsujectsidsbuilder.append("," + favleastsubjectsDataList[index].id)
+                    }
+                    leastselectedId = leastsujectsidsbuilder.toString().removeRange(0..0)
+                    mBinding!!.leastFavuSubj.text = leastsujectsbuilder.toString().removeRange(0..0)
+
+
                     firebaseStore.collection("grades").whereEqualTo("id", user.academicInfo!!.selectedClass!!).get().addOnSuccessListener {
 
                         it.forEach {
                             mBinding!!.grade.text = "grade ${it.getString("grade")!!}${CommonUtils.getClassSuffix(it.getString("grade")!!.toInt())} "
                             mBinding!!.grade.text = CommonUtils.getGrade(Integer.parseInt(it.getString("grade")!!.trim { it <= ' ' }))
                             this.user!!.academicInfo!!.selectedClass = it.getString("grade")
+                            val isSeniorClass = it.getString("grade")!!.equals(CLASS_11, ignoreCase = true) || it.getString("grade")!!.equals(CLASS_12, ignoreCase = true)
+                            if (isSeniorSelected.compareTo(isSeniorClass) != 0) setleastFavSubjects(isSeniorClass)
+
                         }
                     }
 
@@ -261,28 +381,22 @@ class EditStudentProfileActivity : BaseActivity() {
 
     fun makeSaveRequest() {
 
-        if (mBinding!!.password.text != null || !mBinding!!.password.text.isEmpty()) {
-            firebaseAuth.currentUser!!.updatePassword(mBinding!!.password.text.toString()).addOnCompleteListener {
-                Toast.makeText(this,
-                        "Password changes.", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-
-
         if (isVerified()) {
 
+            if (!mBinding!!.password.text.toString().equals("")) {
+                firebaseAuth.currentUser!!.updatePassword(mBinding!!.password.text.toString()).addOnCompleteListener {
+                    Toast.makeText(this,
+                            "Password changes.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
             firebaseStore.collection("grades").whereEqualTo("grade", user!!.academicInfo!!.selectedClass).get().addOnSuccessListener {
-
                 it.forEach {
-
                     saveData(it.getString("id")!!)
                 }
             }
 
         }
-
-
     }
 
     fun saveData(selectedGradeId: String) {
@@ -303,9 +417,13 @@ class EditStudentProfileActivity : BaseActivity() {
         // user[AppConstants.KEY_PHONE_NUMBER] = mBinding!!.codePicker.fullNumberWithPlus
 
         val useracadmicinfo = HashMap<String, Any>()
+        useracadmicinfo[KEY_STDT_LEAST_FAV_CLASSES] = leastselectedId
 
-        useracadmicinfo[KEY_STDT_LEAST_FAV_CLASSES] = mBinding!!.leastFavuSubj.text.toString()
-        useracadmicinfo[KEY_STDT_FAVORITE_CLASSES] = mBinding!!.favoriteSubj.text.toString()
+        println("==================== MAKE SAVE REQUEST fav" + favtselectedId)
+        println("==================== MAKE SAVE REQUEST least" + leastselectedId)
+
+
+        useracadmicinfo[KEY_STDT_FAVORITE_CLASSES] = favtselectedId
         useracadmicinfo[KEY_SELECTED_CLASS] = selectedGradeId
         useracadmicinfo[KEY_STDT_HOBBIES] = mBinding!!.favHobby.text.toString()
         val dbRoot = getString(com.autohub.skln.R.string.db_root_students)
@@ -314,8 +432,7 @@ class EditStudentProfileActivity : BaseActivity() {
 
 
 
-        firebaseStore.collection(dbRoot).document(firebaseAuth
-                .currentUser!!.uid).set(
+        firebaseStore.collection(dbRoot).document(appPreferenceHelper.getuserID()).set(
                 mapOf(
                         KEY_PERSONALINFO to userpersonalinfo,
                         KEY_ACADEMICINFO to useracadmicinfo
@@ -339,7 +456,6 @@ class EditStudentProfileActivity : BaseActivity() {
 
 
     private fun isVerified(): Boolean {
-        val password = mBinding!!.password.text
         if (mBinding!!.edtFirstName.text.isEmpty() || mBinding!!.edtFirstName.text.toString().length < 2) {
 
             showSnackError(resources.getString(R.string.enter_name))

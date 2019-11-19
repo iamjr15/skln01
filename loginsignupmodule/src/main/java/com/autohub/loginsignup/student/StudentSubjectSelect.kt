@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.autohub.SubjectsModel
 import com.autohub.loginsignup.R
 import com.autohub.loginsignup.databinding.ActivityStudentSubjectSelectBinding
 import com.autohub.loginsignup.listners.ClassSelectionListner
@@ -30,6 +31,7 @@ import kotlin.collections.ArrayList
 class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
     private var selectedSubjects: ArrayList<String> = ArrayList()
+    lateinit var subjectDataList: ArrayList<SubjectsModel>
 
 
     override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: String) {
@@ -71,7 +73,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
 
     private var mBinding: ActivityStudentSubjectSelectBinding? = null
-    private var subjectsDataList: ArrayList<SubjectsData> = ArrayList()
+    private var subjectsDataMap: HashMap<String, SubjectsData> = HashMap()
     private var fragmentsList: ArrayList<StudentSubjectSelectFragmnet> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,8 +81,73 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_student_subject_select)
         mBinding!!.callback = this
         selectedSubjects = ArrayList()
-        insertSubjectData()
+        fetchSubjects()
 
+
+    }
+
+    private fun fetchSubjects() {
+        var listData: ArrayList<SubjectsModel> = arrayListOf()
+        firebaseStore.collection("subjects").get().addOnCompleteListener {
+
+            if (it.isSuccessful) {
+                for (document in it.result!!) {
+                    val user = document.toObject(SubjectsModel::class.java)
+                    listData.add(user)
+                }
+            }
+            insertSubjectData(listData)
+
+        }.addOnFailureListener {
+            showSnackError(it.message)
+        }
+    }
+
+
+    private fun getFragments(countList: ArrayList<String>) {
+
+
+        for (position in countList.indices) {
+
+            when (position) {
+                0 -> fragmentsList.add(StudentSubjectSelectFragmnet.newInstance(position, ArrayList(subjectDataList.subList(0, 2))))
+                1 -> fragmentsList.add(StudentSubjectSelectFragmnet.newInstance(position, ArrayList(subjectDataList.subList(2, 4))))
+                else -> fragmentsList.add(StudentSubjectSelectFragmnet.newInstance(position, ArrayList(subjectDataList.subList(4, 6))))
+            }
+        }
+    }
+
+    private fun insertSubjectData(listData: ArrayList<SubjectsModel>) {
+
+        subjectDataList = ArrayList()
+
+        subjectsDataMap[SUBJECT_SCIENCE] = SubjectsData(R.color.science, com.autohub.skln.R.drawable.microscope, false, SUBJECT_SCIENCE)
+        subjectsDataMap[SUBJECT_ENGLISH] = SubjectsData(R.color.english, com.autohub.skln.R.drawable.noun, false, SUBJECT_ENGLISH)
+        subjectsDataMap[SUBJECT_MATHS] = SubjectsData(R.color.math, com.autohub.skln.R.drawable.geometry, false, SUBJECT_MATHS)
+        subjectsDataMap[SUBJECT_SOCIAL_STUDIES] = SubjectsData(R.color.socialstudies, com.autohub.skln.R.drawable.strike, false, SUBJECT_SOCIAL_STUDIES)
+        subjectsDataMap[SUBJECT_LANGUAGES] = SubjectsData(R.color.language, com.autohub.skln.R.drawable.language, false, SUBJECT_LANGUAGES)
+        subjectsDataMap[SUBJECT_COMPUTER_SCIENCE] = SubjectsData(R.color.computerscience, com.autohub.skln.R.drawable.informatic, false, SUBJECT_COMPUTER_SCIENCE)
+
+
+        for (i in listData.indices) {
+
+            if (subjectsDataMap.containsKey(listData[i].name)) {
+                val data = subjectsDataMap[listData[i].name]
+                listData[i].bloccolor = data!!.color
+                listData[i].icon = data.icon
+                listData[i].selected = data.selected
+
+                subjectDataList.add(listData[i])
+            }
+
+
+        }
+        showView()
+
+    }
+
+
+    fun showView() {
         val countList: ArrayList<String> = ArrayList()
         countList.add("1")
         countList.add("2")
@@ -111,30 +178,9 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         mBinding!!.viewpager.offscreenPageLimit = 2
         mBinding!!.wormDotsIndicator.setViewPager(mBinding!!.viewpager)
 
+
     }
 
-
-    private fun getFragments(countList: ArrayList<String>) {
-
-
-        for (position in countList.indices) {
-
-            when (position) {
-                0 -> fragmentsList.add(StudentSubjectSelectFragmnet.newInstance(position, ArrayList(subjectsDataList.subList(0, 2))))
-                1 -> fragmentsList.add(StudentSubjectSelectFragmnet.newInstance(position, ArrayList(subjectsDataList.subList(2, 4))))
-                else -> fragmentsList.add(StudentSubjectSelectFragmnet.newInstance(position, ArrayList(subjectsDataList.subList(4, 6))))
-            }
-        }
-    }
-
-    private fun insertSubjectData() {
-        subjectsDataList.add(SubjectsData(R.color.science, com.autohub.skln.R.drawable.microscope, false, SUBJECT_SCIENCE))
-        subjectsDataList.add(SubjectsData(R.color.english, com.autohub.skln.R.drawable.noun, false, SUBJECT_ENGLISH))
-        subjectsDataList.add(SubjectsData(R.color.math, com.autohub.skln.R.drawable.geometry, false, SUBJECT_MATHS))
-        subjectsDataList.add(SubjectsData(R.color.socialstudies, com.autohub.skln.R.drawable.strike, false, SUBJECT_SOCIAL_STUDIES))
-        subjectsDataList.add(SubjectsData(R.color.language, com.autohub.skln.R.drawable.language, false, SUBJECT_LANGUAGES))
-        subjectsDataList.add(SubjectsData(R.color.computerscience, com.autohub.skln.R.drawable.informatic, false, SUBJECT_COMPUTER_SCIENCE))
-    }
 
     fun onNextClick() {
         val stringBuilder = StringBuilder()
@@ -154,13 +200,21 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
         showLoading()
 
+
+        /*
+        *catagory
+        * id
+        * studentId
+        * subjectid
+        *
+        * */
         val user = HashMap<String, Any>()
         if (mFavoriteOrLeast)
             user[KEY_STDT_FAVORITE_CLASSES] = stringBuilder.toString()
         else
             user[KEY_STDT_LEAST_FAV_CLASSES] = stringBuilder.toString()
 
-        firebaseStore.collection(getString(R.string.db_root_students)).document(getAppPreferenceHelper().getuserID()).set(
+        firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).set(
                 mapOf(
                         KEY_ACADEMICINFO to user
                 )
@@ -181,7 +235,6 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
                     hideLoading()
                     showSnackError(e.message)
                 }
-
     }
 
     inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<StudentSubjectSelectFragmnet>) :

@@ -5,7 +5,10 @@ import android.os.Parcelable
 /**
  * Created by Vt Netzwelt
  */
-data class SubjectsData(var color: Int, var icon: Int, var selected: Boolean, var subjectName: String?) : Parcelable {
+data class SubjectsData(var color: Int, var icon: Int, var selected: Boolean, var subjectName: String?
+
+
+) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readInt(),
             parcel.readInt(),

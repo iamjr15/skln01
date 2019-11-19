@@ -7,12 +7,16 @@ data class SubjectData(var color: String? = "",
                        var id: String? = "",
                        var image: String? = "",
                        var name: String? = "",
+                       var isFavSelected: Boolean? = false,
+                       var isleastelected: Boolean? = false,
                        var order: String? = "") : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+            parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
             parcel.readString())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -20,6 +24,8 @@ data class SubjectData(var color: String? = "",
         parcel.writeString(id)
         parcel.writeString(image)
         parcel.writeString(name)
+        parcel.writeValue(isFavSelected)
+        parcel.writeValue(isleastelected)
         parcel.writeString(order)
     }
 

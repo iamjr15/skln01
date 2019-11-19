@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
-
 import com.autohub.skln.models.UserModel
 import com.autohub.skln.models.batchRequests.GradeData
 import com.autohub.skln.models.batchRequests.SubjectData
@@ -21,7 +20,10 @@ import com.autohub.studentmodule.R
 import com.autohub.studentmodule.fragments.*
 import com.autohub.studentmodule.listners.HomeListners
 import com.autohub.studentmodule.models.BatchRequestViewModel
+import com.google.firebase.firestore.GeoPoint
 import kotlinx.android.synthetic.main.activity_student_home.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Vt Netzwelt
@@ -145,6 +147,9 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     user = documentSnapshot.toObject(UserModel::class.java)!!
+                    val geopoints = ((documentSnapshot.data!!.get("personInfo") as HashMap<*, *>).get("location")) as GeoPoint
+                    user!!.personInfo!!.latitude = geopoints.latitude
+                    user!!.personInfo!!.longitude = geopoints.longitude
                     user = user
                     user!!.id = documentSnapshot.id
                     hideLoading()
