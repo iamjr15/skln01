@@ -37,8 +37,7 @@ class ProfileFragment : BaseFragment() {
 
     private fun fetchTutorData() {
         showLoading()
-        firebaseStore.collection(getString(R.string.db_root_tutors)).
-                document(appPreferenceHelper.getuserID()).get()
+        firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     hideLoading()
                     tutorData = documentSnapshot.toObject(TutorData::class.java)!!

@@ -7,6 +7,7 @@ import com.autohub.loginsignup.R
 import com.autohub.loginsignup.databinding.ActivityStudentHeyBinding
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.utills.AppConstants.KEY_FIRST_NAME
+import java.util.*
 
 /**
  * Created by Vt Netzwelt
@@ -23,7 +24,7 @@ class StudentHey : BaseActivity() {
         mBinding!!.callback = this
         firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
-                    val firstName = documentSnapshot.getString(KEY_FIRST_NAME)
+                    val firstName = ((documentSnapshot.data!!.get("personInfo") as HashMap<*, *>).get(KEY_FIRST_NAME)) as String
                     if (firstName != null) {
                         mBinding!!.studentName!!.text = firstName
                     }
@@ -44,7 +45,7 @@ class StudentHey : BaseActivity() {
         startActivity(i)
     }
 
-   /* override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }*/
+    /* override fun attachBaseContext(newBase: Context) {
+         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+     }*/
 }

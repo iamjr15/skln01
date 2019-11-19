@@ -4,7 +4,7 @@
     <string name="db_root_all_users">AllUsers</string>
     <string name="db_root_students">students</string>
     <string name="db_root_tutors">tutors</string>
-    
+
     <string name="app_name">SKLN</string>
     <string name="login">login</string>
     <string name="sign_up">signup</string>

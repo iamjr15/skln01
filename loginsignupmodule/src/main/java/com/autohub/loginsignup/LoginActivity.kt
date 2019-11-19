@@ -33,7 +33,6 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         manager = SplitInstallManagerFactory.create(this)
         mBinding!!.callback = this
@@ -45,7 +44,6 @@ class LoginActivity : BaseActivity() {
                 updateUi(false)
             }
         }
-
     }
 
 
@@ -74,6 +72,8 @@ class LoginActivity : BaseActivity() {
     }
 
     fun login() {
+
+
 
         val email: Editable
         if (mBinding!!.radiostudent.isChecked) {

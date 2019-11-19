@@ -215,6 +215,10 @@ class ExploreTutorsFragment : BaseFragment() {
                 * Fetch All TUtors List
                 * */
                 for (document in task.result!!) {
+                    if (document.data["tutorsCount"] != null) {
+                        continue
+                    }
+
                     Log.e("document", document.toString())
                     val user = document.toObject(TutorData::class.java)
                     val geopoints = ((document.data.get("location") as HashMap<*, *>).get("geopoint")) as GeoPoint
@@ -268,6 +272,7 @@ class ExploreTutorsFragment : BaseFragment() {
                     if (checkFilterfoData(exploreFilter, user)) {
                         tutorsList.add(user)
                     }
+
                 }
 
                 val newList = tutorsList.sortedBy { it.distance }
