@@ -74,7 +74,7 @@ class FragmentHome : BaseFragment() {
         /* val ref = FirebaseStorage.getInstance().reference.child("student/" +
                  firebaseAuth.currentUser!!.uid + ".jpg")*/
 
-        if (user.personInfo!!.accountPicture != null) {
+        if (user.personInfo!!.accountPicture != null && !user.personInfo!!.accountPicture.equals("")) {
 
             val ref = FirebaseStorage.getInstance().reference.child(user.personInfo!!.accountPicture!!)
             GlideApp.with(this)

@@ -115,7 +115,7 @@ class ExploreTutorsFragment : BaseFragment() {
                   firebaseAuth.currentUser!!.uid + ".jpg")*/
         var user = (context as StudentHomeActivity).user!!
 
-        if (user.personInfo!!.accountPicture != null) {
+        if (user.personInfo!!.accountPicture != null && !user.personInfo!!.accountPicture.equals("")) {
 
             val ref = FirebaseStorage.getInstance().reference.child(user.personInfo!!.accountPicture!!)
             GlideApp.with(this)

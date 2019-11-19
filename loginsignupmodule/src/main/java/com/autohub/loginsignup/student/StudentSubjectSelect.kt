@@ -177,7 +177,6 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
     fun onNextClick() {
 
-
         showLoading()
 
         var batch: WriteBatch = firebaseStore.batch()
