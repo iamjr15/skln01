@@ -2,10 +2,9 @@ package com.autohub.skln.models.tutor
 
 import android.os.Parcel
 import android.os.Parcelable
-import java.util.*
 
 data class TutorQualification(var belongToInstitute: Boolean? = false,
-                              var classType: ArrayList<String>? = arrayListOf(),
+                              var classType: ArrayList<String>? = ArrayList(),
                               var currentOccupation: String? = "",
                               var experience: String? = "",
                               var instituteNeme: String? = "",
@@ -16,7 +15,7 @@ data class TutorQualification(var belongToInstitute: Boolean? = false,
                               var targetBoard: String? = "") : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-            TODO("classType"),
+            parcel.readArrayList(null) as ArrayList<String>?,
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -28,6 +27,7 @@ data class TutorQualification(var belongToInstitute: Boolean? = false,
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(belongToInstitute)
+        parcel.writeList(classType as List<*>?)
         parcel.writeString(currentOccupation)
         parcel.writeString(experience)
         parcel.writeString(instituteNeme)

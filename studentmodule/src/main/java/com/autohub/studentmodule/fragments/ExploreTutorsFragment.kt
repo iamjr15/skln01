@@ -111,15 +111,21 @@ class ExploreTutorsFragment : BaseFragment() {
     }
 
     private fun setupProfile() {
-        val ref = FirebaseStorage.getInstance().reference.child("student/" +
-                firebaseAuth.currentUser!!.uid + ".jpg")
-        GlideApp.with(this)
-                .load(ref)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                .skipMemoryCache(true)
-                .placeholder(com.autohub.skln.R.drawable.default_pic)
+        /*  val ref = FirebaseStorage.getInstance().reference.child("student/" +
+                  firebaseAuth.currentUser!!.uid + ".jpg")*/
+        var user = (context as StudentHomeActivity).user!!
 
-                .into(mBinding!!.profilePicture)
+        if (user.personInfo!!.accountPicture != null) {
+
+            val ref = FirebaseStorage.getInstance().reference.child(user.personInfo!!.accountPicture!!)
+            GlideApp.with(this)
+                    .load(ref)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                    .skipMemoryCache(true)
+                    .placeholder(com.autohub.skln.R.drawable.default_pic)
+                    .into(mBinding!!.profilePicture)
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

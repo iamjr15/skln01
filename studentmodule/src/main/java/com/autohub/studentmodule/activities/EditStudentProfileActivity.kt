@@ -22,7 +22,6 @@ import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.ActivityEditStudentProfileBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.vansuita.pickimage.bundle.PickSetup
@@ -306,27 +305,37 @@ class EditStudentProfileActivity : BaseActivity() {
 
     }
 
+
+    fun setUserProfileImage(user: UserModel) {
+        if (user.personInfo!!.accountPicture != null) {
+
+            val ref = FirebaseStorage.getInstance().reference.child(user.personInfo!!.accountPicture!!)
+            GlideApp.with(this)
+                    .load(ref)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                    .skipMemoryCache(true)
+                    .placeholder(com.autohub.skln.R.drawable.default_pic)
+                    .into(mBinding!!.profilePicture)
+        }
+
+    }
+
+
     private fun setUpUserInfo() {
 
-        val path = "student/"
-
-        val ref = FirebaseStorage.getInstance().reference.child(path +
-                firebaseAuth.currentUser!!.uid + ".jpg")
-        GlideApp.with(this)
-                .load(ref)
-                .placeholder(com.autohub.skln.R.drawable.default_pic)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .into(mBinding!!.profilePicture)
 
         firebaseStore.collection(getString(com.autohub.skln.R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val user = documentSnapshot.toObject(UserModel::class.java)
                     this.user = user
                     user!!.id = documentSnapshot.id
+
+
                     mBinding!!.edtFirstName.setText(user.personInfo!!.firstName)
                     mBinding!!.etPhoneNumber.setText(user.personInfo!!.phoneNumber)
                     mBinding!!.favHobby.text = user.academicInfo!!.hobbiesToPursue
+
+                    setUserProfileImage(user)
 
                     var favsujectsbuilder = StringBuilder()
                     var favsujectsidsbuilder = StringBuilder()
@@ -533,6 +542,9 @@ class EditStudentProfileActivity : BaseActivity() {
             /* if (mProfileType.equals("student", ignoreCase = true)) {
                  path = "student/"
              }*/
+
+            /* val ref = FirebaseStorage.getInstance().reference.child("tutor/" +
+                firebaseAuth.currentUser!!.uid + ".jpg")*/
             val pathString = path + firebaseAuth.currentUser!!.uid + ".jpg"
             val picRef = FirebaseStorage.getInstance().reference.child(pathString)
             val uploadTask = picRef.putBytes(bytes)
@@ -555,8 +567,7 @@ class EditStudentProfileActivity : BaseActivity() {
     }
 
     private fun saveUserPhoneOnFirestore(pathString: String) {
-        val user = HashMap<String, Any>()
-        user[AppConstants.KEY_PROFILE_PICTURE] = pathString
+
 
         val root = getString(R.string.db_root_students)
         /*  if (mProfileType.equals("student", ignoreCase = true)) {
@@ -567,8 +578,7 @@ class EditStudentProfileActivity : BaseActivity() {
         /*accountPicture*/
 
 
-        firebaseStore.collection(root).document(FirebaseAuth.getInstance().currentUser!!.uid).set(
-
+        firebaseStore.collection(root).document(appPreferenceHelper.getuserID()).set(
                 mapOf(
                         KEY_PERSONALINFO to mapOf(KEY_ACCOUNT_PICTURE to pathString)
                 )

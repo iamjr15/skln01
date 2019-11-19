@@ -54,18 +54,10 @@ class StudentProfileFragment : BaseFragment() {
     }
 
     private fun setupProfile() {
-        var path = "tutor/"
-        if (mProfileType.equals("student", ignoreCase = true)) {
-            path = "student/"
-        }
-        val ref = FirebaseStorage.getInstance().reference.child(path +
-                firebaseAuth.currentUser!!.uid + ".jpg")
-        GlideApp.with(this)
-                .load(ref)
-                .placeholder(com.autohub.skln.R.drawable.default_pic)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                .skipMemoryCache(true)
-                .into(mBinding!!.profilePicture)
+
+        /*val ref = FirebaseStorage.getInstance().reference.child(path +
+                firebaseAuth.currentUser!!.uid + ".jpg")*/
+
 
         var root = getString(R.string.db_root_tutors)
         if (mProfileType.equals("student", ignoreCase = true)) {
@@ -74,6 +66,16 @@ class StudentProfileFragment : BaseFragment() {
         firebaseStore.collection(root).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     var user: UserModel = documentSnapshot.toObject(UserModel::class.java)!!
+                    if (user.personInfo!!.accountPicture != null) {
+
+                        val ref = FirebaseStorage.getInstance().reference.child(user.personInfo!!.accountPicture!!)
+                        GlideApp.with(this)
+                                .load(ref)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                                .skipMemoryCache(true)
+                                .placeholder(com.autohub.skln.R.drawable.default_pic)
+                                .into(mBinding!!.profilePicture)
+                    }
 
 
 

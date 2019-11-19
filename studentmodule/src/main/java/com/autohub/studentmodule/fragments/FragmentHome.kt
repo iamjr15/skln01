@@ -63,7 +63,6 @@ class FragmentHome : BaseFragment() {
         mBinding!!.hobbiesrecycleview.adapter = hobbiesAdaptor
 
         setUpUserInfo()
-        setupProfile()
         mBinding!!.rrGotoclass.setOnClickListener {
             ActivityUtils.launchActivity(requireContext(),
                     AddClassActivity::class.java)
@@ -72,14 +71,20 @@ class FragmentHome : BaseFragment() {
     }
 
     private fun setupProfile() {
-        val ref = FirebaseStorage.getInstance().reference.child("student/" +
-                firebaseAuth.currentUser!!.uid + ".jpg")
-        GlideApp.with(this)
-                .load(ref)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                .skipMemoryCache(true)
-                .placeholder(com.autohub.skln.R.drawable.default_pic)
-                .into(mBinding!!.profilePicture)
+        /* val ref = FirebaseStorage.getInstance().reference.child("student/" +
+                 firebaseAuth.currentUser!!.uid + ".jpg")*/
+
+        if (user.personInfo!!.accountPicture != null) {
+
+            val ref = FirebaseStorage.getInstance().reference.child(user.personInfo!!.accountPicture!!)
+            GlideApp.with(this)
+                    .load(ref)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                    .skipMemoryCache(true)
+                    .placeholder(com.autohub.skln.R.drawable.default_pic)
+                    .into(mBinding!!.profilePicture)
+        }
+
     }
 
     private fun setUpUserInfo() {
@@ -94,6 +99,9 @@ class FragmentHome : BaseFragment() {
                     mBinding!!.heyUser.text = String.format("Hey, \n%s.", user.personInfo!!.firstName)
                     setSubjects(user)
                     setHobbies(user)
+
+                    setupProfile()
+
                     //                        mUserViewModel.setUser(user);
                 }
                 .addOnFailureListener { e -> showSnackError(e.message) }
