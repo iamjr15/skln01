@@ -103,10 +103,17 @@ public interface AppConstants {
     String KEY_ACADEMICINFO = "academicInfo";
 
     // firestore db keys - student
-    String KEY_STDT_CLASS = "studentClass";
+  /*  String KEY_STDT_CLASS = "studentClass";
     String KEY_STDT_FAVORITE_CLASSES = "favoriteClasses";
     String KEY_STDT_LEAST_FAV_CLASSES = "leastFavoriteClasses";
     String KEY_STDT_HOBBIES = "hobbiesToPursue";
+    String KEY_ACCOUNT_PICTURE = "accountPicture";*/
+
+
+    String KEY_STDT_CLASS = "studentClass";
+    String KEY_STDT_FAVORITE_CLASSES = "favoriteSubjects";
+    String KEY_STDT_LEAST_FAV_CLASSES = "leastFavoriteSubjects";
+    String KEY_STDT_HOBBIES = "hobbies";
     String KEY_ACCOUNT_PICTURE = "accountPicture";
 
 
