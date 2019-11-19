@@ -80,7 +80,7 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
                 }
 
 
-                txtclasstype.text = it.qualification!!.classType
+                txtclasstype.text = it.qualification!!.classType?.joinToString(",")
                 txtsubjects.text = it.subjectsToTeach!!.replace(",", " | ")
 
                 if (!TextUtils.isEmpty(it.personInfo!!.accountPicture)) {

@@ -1,7 +1,7 @@
 package com.autohub.studentmodule.listners
 
 import com.autohub.skln.models.UserModel
-import com.autohub.studentmodule.models.BatchRequestViewModel
+import com.autohub.skln.models.batches.BatchRequestViewModel
 
 /**
  * Created by Vt Netzwelt

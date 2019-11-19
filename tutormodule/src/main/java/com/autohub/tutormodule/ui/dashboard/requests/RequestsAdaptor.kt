@@ -13,7 +13,7 @@ import com.autohub.tutormodule.databinding.ItemTutorRequestBinding
 import com.autohub.tutormodule.ui.utils.AppUtils
 
 
-class RequestsAdaptor(var context: Context,val listener :Listener)
+class RequestsAdaptor(var context: Context, val listener: Listener)
     : RecyclerView.Adapter<RequestsAdaptor.Holder>() {
 
     private var requestsList: List<BatchRequestData> = ArrayList()
@@ -39,7 +39,7 @@ class RequestsAdaptor(var context: Context,val listener :Listener)
         }
 
         holder.itemView.setOnClickListener {
-            listener.showPendingRequestFragment()
+            listener.showPendingRequestFragment(requestsList[position].student?.id!!)
         }
     }
 
@@ -57,10 +57,8 @@ class RequestsAdaptor(var context: Context,val listener :Listener)
         fun bind() {
         }
     }
-
-
 }
 
-interface Listener{
-    fun showPendingRequestFragment()
+interface Listener {
+    fun showPendingRequestFragment(studentId: String)
 }

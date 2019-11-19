@@ -15,8 +15,8 @@ import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.ActivityTutorFullProfileBinding
-import com.autohub.studentmodule.models.BatchRequestViewModel
-import com.autohub.studentmodule.models.BatchrequestModel
+import com.autohub.skln.models.batches.BatchRequestViewModel
+import com.autohub.skln.models.batches.BatchRequestModel
 import com.autohub.studentmodule.models.TutorViewModel
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.storage.FirebaseStorage
@@ -113,14 +113,14 @@ class TutorFullProfileActivity : BaseActivity() {
                                 }
 
 
-                                var batchRequest = BatchrequestModel(id = "", status = "pending",
-                                        teacher = BatchrequestModel.Teacher(tutorId, mUserViewModel!!.fullName),
-                                        student = BatchrequestModel.Student(studentId, mCurrentUser!!.personInfo!!.firstName!! + " " +
+                                var batchRequest = BatchRequestModel(id = "", status = "pending",
+                                        teacher = BatchRequestModel.Teacher(tutorId, mUserViewModel!!.fullName),
+                                        student = BatchRequestModel.Student(studentId, mCurrentUser!!.personInfo!!.firstName!! + " " +
                                                 mCurrentUser!!.personInfo!!.lastName!!),
-                                        grade = BatchrequestModel.Grade(id = gradeId
+                                        grade = BatchRequestModel.Grade(id = gradeId
 
                                                 , name = grade),
-                                        subject = BatchrequestModel.Subject(id = subjectId,
+                                        subject = BatchRequestModel.Subject(id = subjectId,
                                                 name = subject)
                                 )
 
@@ -133,7 +133,7 @@ class TutorFullProfileActivity : BaseActivity() {
 
     }
 
-    private fun makeBatchRequest(batchRequest: BatchrequestModel) {
+    private fun makeBatchRequest(batchRequest: BatchRequestModel) {
 
 
         /*       val request = Request(batchRequest.student!!.id,

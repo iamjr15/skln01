@@ -1,16 +1,16 @@
-package com.autohub.studentmodule.models
+package com.autohub.skln.models.batches
 
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.databinding.BaseObservable
 
-data class BatchRequestViewModel(var batchRequestModel: BatchrequestModel? = BatchrequestModel(),
+data class BatchRequestViewModel(var batchRequestModel: BatchRequestModel? = BatchRequestModel(),
 
                                  val mUserType: String? = "",
 
                                  val mRequestId: String? = "") : BaseObservable(), Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readParcelable(BatchrequestModel::class.java.classLoader),
+            parcel.readParcelable(BatchRequestModel::class.java.classLoader),
             parcel.readString(),
             parcel.readString())
 

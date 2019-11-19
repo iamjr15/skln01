@@ -177,7 +177,7 @@ class LoginActivity : BaseActivity() {
                         }
                     }
         }else{
-            firebaseStore.collection(getString(R.string.db_root_tutors)).whereEqualTo(AppConstants.KEY_USER_ID, "bcb80939-4a94-447d-a1c2-6f0c42431a2c")
+            firebaseStore.collection(getString(R.string.db_root_tutors)).whereEqualTo(AppConstants.KEY_USER_ID, "1fdc24cf-ee65-40f3-843f-c9b62225f620")
                     .get().addOnSuccessListener {
                         it.forEach {
                             appPreferenceHelper.setUserId(it.id)

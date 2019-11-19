@@ -1,14 +1,18 @@
-package com.autohub.studentmodule.models
+package com.autohub.skln.models.batches
 
 import android.os.Parcel
 import android.os.Parcelable
 
-data class BatchrequestModel(var id: String? = "", var status: String? = "", var grade: Grade? = Grade()
+data class BatchRequestModel(var id: String? = "",
+                             var status: String? = "",
+                             var title : String?= "",
+                             var grade: Grade? = Grade()
                              , var student: Student? = Student(),
                              var teacher: Teacher? = Teacher(), var subject: Subject? = Subject()) : Parcelable {
 
 
     constructor(parcel: Parcel) : this(
+            parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readParcelable(Grade::class.java.classLoader),
@@ -123,6 +127,7 @@ data class BatchrequestModel(var id: String? = "", var status: String? = "", var
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
         parcel.writeString(status)
+        parcel.writeString(title)
         parcel.writeParcelable(grade, flags)
         parcel.writeParcelable(student, flags)
         parcel.writeParcelable(teacher, flags)
@@ -133,12 +138,12 @@ data class BatchrequestModel(var id: String? = "", var status: String? = "", var
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<BatchrequestModel> {
-        override fun createFromParcel(parcel: Parcel): BatchrequestModel {
-            return BatchrequestModel(parcel)
+    companion object CREATOR : Parcelable.Creator<BatchRequestModel> {
+        override fun createFromParcel(parcel: Parcel): BatchRequestModel {
+            return BatchRequestModel(parcel)
         }
 
-        override fun newArray(size: Int): Array<BatchrequestModel?> {
+        override fun newArray(size: Int): Array<BatchRequestModel?> {
             return arrayOfNulls(size)
         }
     }
