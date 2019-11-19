@@ -19,17 +19,18 @@ class RequestBaseFragment : BaseFragment() {
         return view
     }
 
-    public fun showRequestFragmentClass() {
+    fun showRequestFragmentClass() {
         fragmentRequests = RequestsFragment()
         childFragmentManager
                 .beginTransaction()
                 .replace(R.id.requestcontainer, fragmentRequests!!).commit()
     }
 
-    fun showPendingRequestScreen(studentId: String) {
+    fun showPendingRequestScreen(studentId: String, documentId: String) {
         fragmentRequests = null
         val bundle = Bundle()
         bundle.putString("studentId", studentId)
+        bundle.putString("documentId", documentId)
         val pendingRequestFragment = PendingRequestFragment()
         pendingRequestFragment.arguments = bundle
         childFragmentManager

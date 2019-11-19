@@ -2,6 +2,7 @@ package com.autohub.tutormodule.ui.dashboard.requests
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,6 +44,32 @@ class PendingRequestFragment : BaseFragment() {
         mBinding.addBatch.setOnClickListener {
             showSingleSelectionDialog(batchNames, mBinding.addBatch, getString(R.string.select_batch), selectedBatch)
         }
+
+        mBinding.acceptRequest.setOnClickListener {
+            acceptRequest()
+        }
+
+        mBinding.deleteRequest.setOnClickListener {
+            deleteRequest()
+        }
+    }
+
+    private fun deleteRequest() {
+        firebaseStore.collection(getString(R.string.db_root_batch_requests)).document(arguments?.getString("documentId")!!)
+                .update("status", "rejected")
+                .addOnSuccessListener {
+                    Log.d(" ", "DocumentSnapshot successfully updated!")
+                }
+                .addOnFailureListener { e -> Log.d("Error updating document", e.toString()) }
+    }
+
+    private fun acceptRequest() {
+        firebaseStore.collection(getString(R.string.db_root_batch_requests)).document(arguments?.getString("documentId")!!)
+                .update("status", "accepted")
+                .addOnSuccessListener {
+                    Log.d(" ", "DocumentSnapshot successfully updated!")
+                }
+                .addOnFailureListener { e -> Log.d("Error updating document", e.toString()) }
     }
 
     private fun fetchBatches() {
@@ -64,8 +91,14 @@ class PendingRequestFragment : BaseFragment() {
         showLoading()
         firebaseStore.collection(getString(R.string.db_root_students)).whereEqualTo("id", arguments?.getString("studentId")).get()
                 .addOnSuccessListener { documentSnapshot ->
-                    studentData = documentSnapshot.toObjects(UserModel::class.java)[0]
-                    fetchTutorData()
+                    val data = documentSnapshot.toObjects(UserModel::class.java)
+                    if (data.size > 0) {
+                        studentData = data[0]
+                        fetchTutorData()
+                    } else {
+                        hideLoading()
+                    }
+
                 }
                 .addOnFailureListener { e ->
                     hideLoading()

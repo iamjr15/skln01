@@ -56,7 +56,7 @@ class RequestsListFragment : BaseFragment(), Listener {
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
                     val tutorData = documentSnapshot.toObject(TutorData::class.java)!!
-                    fetchDetails(tutorData.id, status)
+                    fetchDetails(tutorData.id, status,documentSnapshot.id)
 
                 }
                 .addOnFailureListener { e ->
@@ -65,17 +65,18 @@ class RequestsListFragment : BaseFragment(), Listener {
 
     }
 
-    private fun fetchDetails(id: String?, status: String) {
+    private fun fetchDetails(id: String?, status: String, documentId: String) {
         firebaseStore.collection(getString(R.string.db_root_batch_requests)).whereEqualTo("teacher.id", id).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val batchRequestData = documentSnapshot.toObjects(BatchRequestData::class.java)
                     if (status == AppConstants.STATUS_PENDING
                     ) {
+
                         mAdapter.setData(batchRequestData.filter {
                             it.status.equals(AppConstants.STATUS_PENDING)
-                        })
+                        }, documentId)
                     } else {
-                        mAdapter.setData(batchRequestData)
+                        mAdapter.setData(batchRequestData,documentId)
                     }
                 }
                 .addOnFailureListener { e ->
@@ -83,7 +84,7 @@ class RequestsListFragment : BaseFragment(), Listener {
                 }
     }
 
-    override fun showPendingRequestFragment(studentId : String) {
-        listener.showPendingRequestScreen(studentId)
+    override fun showPendingRequestFragment(studentId: String, documentId: String) {
+        listener.showPendingRequestScreen(studentId,documentId)
     }
 }

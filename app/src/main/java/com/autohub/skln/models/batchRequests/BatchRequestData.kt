@@ -3,13 +3,15 @@ package com.autohub.skln.models.batchRequests
 import android.os.Parcel
 import android.os.Parcelable
 
-class BatchRequestData(var id: String? = null,
+class BatchRequestData(var documentId: String? = null,
+                       var id: String? = null,
                        var status: String? = null,
                        var grade: GradeData? = null,
                        var student: StudentData? = null,
                        var subject: SubjectData? = null,
                        var teacher: TeacherData? = null) : Parcelable {
     constructor(parcel: Parcel) : this(
+            parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readParcelable(GradeData::class.java.classLoader),
@@ -19,6 +21,7 @@ class BatchRequestData(var id: String? = null,
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(documentId)
         parcel.writeString(id)
         parcel.writeString(status)
         parcel.writeParcelable(grade, flags)
