@@ -6,11 +6,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.autohub.SubjectsModel
 import com.autohub.loginsignup.LoginActivity
 import com.autohub.loginsignup.R
 import com.autohub.loginsignup.databinding.ActivityStudentHobbySelectBinding
 import com.autohub.loginsignup.listners.ClassSelectionListner
 import com.autohub.loginsignup.student.fragments.HobbiesFragment
+import com.autohub.loginsignup.student.models.SubjectsData
 import com.autohub.loginsignup.utility.Utilities
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.BuildConfig
@@ -62,6 +64,47 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
         }
     }
 
+
+    private fun fetchobbies() {
+        var listData: ArrayList<SubjectsModel> = arrayListOf()
+        firebaseStore.collection("subjects").whereEqualTo("grades.hobbies", true).get().addOnCompleteListener {
+
+            if (it.isSuccessful) {
+                for (document in it.result!!) {
+                    val user = document.toObject(SubjectsModel::class.java)
+                    listData.add(user)
+                }
+            }
+            insertHobbiesData2(listData)
+
+        }.addOnFailureListener {
+            showSnackError(it.message)
+        }
+    }
+
+
+    private fun insertHobbiesData2(listData: ArrayList<SubjectsModel>) {
+        var hobbiesDataMap: HashMap<String, SubjectsData> = HashMap()
+
+        hobbiesDataMap[HOBBY_GUITAR] = SubjectsData(R.color.guitar, com.autohub.skln.R.drawable.guitar, false, HOBBY_GUITAR)
+        hobbiesDataMap[HOBBY_KEYBOARD] = SubjectsData(R.color.keyboard, com.autohub.skln.R.drawable.piano, false, HOBBY_KEYBOARD)
+        hobbiesDataMap[HOBBY_MARTIAL] = SubjectsData(R.color.materialarts, com.autohub.skln.R.drawable.attack, false, HOBBY_MARTIAL)
+        hobbiesDataMap[HOBBY_MARTIAL] = SubjectsData(R.color.dance, com.autohub.skln.R.drawable.dancing, false, HOBBY_DANCE)
+        hobbiesDataMap[HOBBY_PAINT] = SubjectsData(R.color.painting, com.autohub.skln.R.drawable.brush, false, HOBBY_PAINT)
+        hobbiesDataMap[HOBBY_DRUM] = SubjectsData(R.color.drum, com.autohub.skln.R.drawable.drum, false, HOBBY_DRUM)
+
+        for (i in listData.indices) {
+
+            if (hobbiesDataMap.containsKey(listData[i].name)) {
+                val data = hobbiesDataMap[listData[i].name]
+                listData[i].bloccolor = data!!.color
+                listData[i].icon = data.icon
+                listData[i].selected = data.selected
+
+                //subjectDataList.add(listData[i])
+            }
+        }
+    }
 
     private var selectedHobbies: ArrayList<String> = ArrayList()
     private var mBinding: ActivityStudentHobbySelectBinding? = null

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -103,8 +104,8 @@ class EditStudentProfileActivity : BaseActivity() {
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
         var selectedItems: List<String> = ArrayList()
-        if (user!!.academicInfo!!.hobbiesToPursue != null && user!!.academicInfo!!.hobbiesToPursue!!.isNotEmpty()) {
-            selectedItems = listOf(*user!!.academicInfo!!.hobbiesToPursue!!.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+        if (user!!.academicInfo!!.hobbies != null && user!!.academicInfo!!.hobbies!!.isNotEmpty()) {
+            selectedItems = listOf(*user!!.academicInfo!!.hobbies!!.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
         }
         val selectedHobbies = ArrayList<String>()
         for (i in selectedItems.indices) {
@@ -135,7 +136,7 @@ class EditStudentProfileActivity : BaseActivity() {
                         }
                     }
                     mBinding!!.favHobby.text = selectedHobbyString
-                    user!!.academicInfo!!.hobbiesToPursue = selectedHobbyString
+                    user!!.academicInfo!!.hobbies = selectedHobbyString
                     // Do something useful withe the position of the selected radio button
                 }
                 .show()
@@ -185,7 +186,7 @@ class EditStudentProfileActivity : BaseActivity() {
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
         var selectedItems: MutableList<String> = ArrayList()
-        if (user!!.academicInfo!!.favoriteClasses != null && user!!.academicInfo!!.leastFavoriteClasses!!.isNotEmpty() && !isLeastFav) {
+        if (user!!.academicInfo!!.favoriteSubjects != null && user!!.academicInfo!!.leastFavoriteSubjects!!.isNotEmpty() && !isLeastFav) {
             for (favtdata in favleastsubjectsDataList) {
                 if (favtdata.isFavSelected!!) {
                     favtdata.name?.let { selectedItems.add(it) }
@@ -193,7 +194,7 @@ class EditStudentProfileActivity : BaseActivity() {
             }
 
         }
-        if (user!!.academicInfo!!.leastFavoriteClasses != null && user!!.academicInfo!!.leastFavoriteClasses!!.isNotEmpty() && isLeastFav) {
+        if (user!!.academicInfo!!.leastFavoriteSubjects != null && user!!.academicInfo!!.leastFavoriteSubjects!!.isNotEmpty() && isLeastFav) {
             for (leastfav in favleastsubjectsDataList) {
                 if (leastfav.isleastelected!!) {
                     leastfav.name?.let { selectedItems.add(it) }
@@ -282,20 +283,20 @@ class EditStudentProfileActivity : BaseActivity() {
         isSeniorSelected = seniorClass
         favleastsubjectsDataList.clear()
         val items = ArrayList<String>()
-        items.add(SUBJECT_ENGLISH)
-        items.add(SUBJECT_MATHS)
-        items.add(SUBJECT_COMPUTER_SCIENCE)
+        items.add(SUBJECT_ENGLISH)//
+        items.add(SUBJECT_MATHS)//
+        items.add(SUBJECT_COMPUTER_SCIENCE)//
         if (seniorClass) {
-            items.add(SUBJECT_ACCOUNTANCY)
-            items.add(SUBJECT_BIOLOGY)
-            items.add(SUBJECT_BUSINESS)
-            items.add(SUBJECT_CHEMISTRY)
-            items.add(SUBJECT_ECONOMICS)
-            items.add(SUBJECT_PHYSICS)
+            items.add(SUBJECT_ACCOUNTANCY)//
+            items.add(SUBJECT_BIOLOGY)//
+            items.add(SUBJECT_BUSINESS)//
+            items.add(SUBJECT_CHEMISTRY)//
+            items.add(SUBJECT_ECONOMICS)//
+            items.add(SUBJECT_PHYSICS)//
         } else {
-            items.add(SUBJECT_SOCIAL_STUDIES)
-            items.add(SUBJECT_LANGUAGES)
-            items.add(SUBJECT_SCIENCE)
+            items.add(SUBJECT_SOCIAL_STUDIES)//
+            items.add(SUBJECT_LANGUAGES)//
+            items.add(SUBJECT_SCIENCE)//
         }
 
         for (i in subjectDataList.indices) {
@@ -334,14 +335,14 @@ class EditStudentProfileActivity : BaseActivity() {
 
                     mBinding!!.edtFirstName.setText(user.personInfo!!.firstName)
                     mBinding!!.etPhoneNumber.setText(user.personInfo!!.phoneNumber)
-                    mBinding!!.favHobby.text = user.academicInfo!!.hobbiesToPursue
+                    mBinding!!.favHobby.text = user.academicInfo!!.hobbies
 
                     setUserProfileImage(user)
 
                     var favsujectsbuilder = StringBuilder()
                     var favsujectsidsbuilder = StringBuilder()
 
-                    var favsub = user.academicInfo!!.favoriteClasses!!.split(",")
+                    var favsub = user.academicInfo!!.favoriteSubjects!!.split(",")
                     for (i in favsub) {
                         var idsList = favleastsubjectsDataList.map { it.id }
                         val index = idsList.indexOf(i.trim())
@@ -356,7 +357,7 @@ class EditStudentProfileActivity : BaseActivity() {
                     var leastsujectsbuilder = StringBuilder()
                     var leastsujectsidsbuilder = StringBuilder()
 
-                    var leastsub = user.academicInfo!!.leastFavoriteClasses!!.split(",")
+                    var leastsub = user.academicInfo!!.leastFavoriteSubjects!!.split(",")
                     for (i in leastsub) {
                         var idsList = favleastsubjectsDataList.map { it.id }
                         val index = idsList.indexOf(i.trim())
@@ -400,21 +401,43 @@ class EditStudentProfileActivity : BaseActivity() {
                 }
             }
 
+            saveDatainFireBase()
+
+        }
+    }
+
+    fun saveDatainFireBase() {
+        showLoading()
+
+        deleteOldSubject()
+        Handler().postDelayed({
+            createBatchesForSubject(favtselectedId.split(","), true)
+            createBatchesForSubject(leastselectedId.split(","), false)
+
             firebaseStore.collection("grades").whereEqualTo("grade", user!!.academicInfo!!.selectedClass).get().addOnSuccessListener {
                 it.forEach {
                     saveData(it.getString("id")!!)
                 }
             }
+        }, 1000)
 
-        }
+
+    }
+
+    private fun deleteOldSubject() {
+        firebaseStore.collection("studentSubjects")
+                .whereEqualTo("studentId", firebaseAuth.currentUser!!.uid).get()
+                .addOnSuccessListener {
+                    it.forEach {
+                        firebaseStore.collection("studentSubjects").document(it.id).delete()
+                    }
+                }
+                .addOnFailureListener { e ->
+
+                }
     }
 
     fun saveData(selectedGradeId: String) {
-        showLoading()
-
-
-        // createBatchesForFavtSubject(favtselectedId.split(","), true)
-
 
         val userpersonalinfo = HashMap<String, Any>()
         if (mBinding!!.edtFirstName.text.toString().split(" ").size > 1) {
@@ -434,8 +457,7 @@ class EditStudentProfileActivity : BaseActivity() {
         val useracadmicinfo = HashMap<String, Any>()
         useracadmicinfo[KEY_STDT_LEAST_FAV_CLASSES] = leastselectedId
 
-        println("==================== MAKE SAVE REQUEST fav" + favtselectedId)
-        println("==================== MAKE SAVE REQUEST least" + leastselectedId)
+
 
 
         useracadmicinfo[KEY_STDT_FAVORITE_CLASSES] = favtselectedId
@@ -469,7 +491,8 @@ class EditStudentProfileActivity : BaseActivity() {
 
     }
 
-    private fun createBatchesForFavtSubject(selectedSubjects: List<String>, mFavoriteOrLeast: Boolean) {
+
+    private fun createBatchesForSubject(selectedSubjects: List<String>, mFavoriteOrLeast: Boolean) {
         var batch: WriteBatch = firebaseStore.batch()
         for (i in selectedSubjects) {
             var map: HashMap<String, String> = HashMap()
@@ -479,7 +502,6 @@ class EditStudentProfileActivity : BaseActivity() {
             else
                 map["category"] = "leastfavorite"
 
-            map["category"] = "leastfavorite"
             map["id"] = ""
             map["studentId"] = firebaseAuth.currentUser!!.uid
             map["subjectId"] = i

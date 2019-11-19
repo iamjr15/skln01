@@ -188,7 +188,6 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
             else
                 map["category"] = "leastfavorite"
 
-            map["category"] = "leastfavorite"
             map["id"] = ""
             map["studentId"] = firebaseAuth.currentUser!!.uid
             map["subjectId"] = i
