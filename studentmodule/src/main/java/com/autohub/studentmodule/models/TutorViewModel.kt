@@ -84,7 +84,7 @@ class TutorViewModel(private var mUser: TutorData) : BaseObservable() {
                 , "pending")
 
     val costPerDuration: String
-        get() = "$ " + mUser.packageInfo!!.price + "/ " + mUser.packageInfo!!.frequency + " classes " + "pending"
+        get() = "$ " + mUser.packageInfo!!.price + "/ " + mUser.packageInfo!!.occurances + " classes " + mUser.packageInfo!!.rateOption
 
     val city: String
         get() = CommonUtils.getString("pen")
