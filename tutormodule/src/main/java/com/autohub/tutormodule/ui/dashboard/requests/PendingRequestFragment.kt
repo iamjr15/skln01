@@ -12,8 +12,10 @@ import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.UserModel
 import com.autohub.skln.models.batches.BatchRequestModel
 import com.autohub.skln.models.tutor.TutorData
+import com.autohub.skln.utills.GlideApp
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentPendingRequestBinding
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 /**
  * A simple [Fragment] subclass.
@@ -91,6 +93,13 @@ class PendingRequestFragment : BaseFragment() {
         mBinding.classType.text = tutorData.qualification?.classType?.joinToString(", ")
         mBinding.fees.text = "FEES : \$" + tutorData.packageInfo?.price + " / MONTH"
         mBinding.paymentMethod.text = "PAYMENT METHOD : " + tutorData.packageInfo?.paymentType
+
+        GlideApp.with(this)
+                .load(studentData.personInfo!!.accountPicture)
+                .placeholder(com.autohub.skln.R.drawable.default_pic)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(mBinding.profilePicture)
     }
 
 

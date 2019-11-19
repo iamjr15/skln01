@@ -46,8 +46,8 @@ class ProfileFragment : BaseFragment() {
                     tutorData!!.location!!.latitude = geoPoint.latitude
                     tutorData!!.location!!.longitude = geoPoint.longitude
 
-                    mBinding.name.text = tutorData!!.personInfo!!.firstName + " " +
-                            tutorData!!.personInfo!!.lastName!!.get(0) + "."
+                    mBinding.name.text = tutorData?.personInfo?.firstName + " " +
+                            tutorData?.personInfo?.lastName?.get(0) + "."
 
                     mBinding.type.text = tutorData?.qualification?.classType?.joinToString(",")
 
