@@ -151,8 +151,8 @@ class DashboardActivity : BaseActivity(), HomeListener ,ClassRequestListener{
         homeBaseFragment.showManagerFragment()
     }
 
-    override fun showPendingRequestScreen() {
-        requestBaseFragment.showPendingRequestScreen()
+    override fun showPendingRequestScreen(studentId : String) {
+        requestBaseFragment.showPendingRequestScreen(studentId)
     }
 
 

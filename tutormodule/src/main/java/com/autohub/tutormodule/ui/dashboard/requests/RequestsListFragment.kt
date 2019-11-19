@@ -83,7 +83,7 @@ class RequestsListFragment : BaseFragment(), Listener {
                 }
     }
 
-    override fun showPendingRequestFragment() {
-        listener.showPendingRequestScreen()
+    override fun showPendingRequestFragment(studentId : String) {
+        listener.showPendingRequestScreen(studentId)
     }
 }

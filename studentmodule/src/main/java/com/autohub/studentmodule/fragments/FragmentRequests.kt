@@ -16,8 +16,8 @@ import com.autohub.studentmodule.R
 import com.autohub.studentmodule.adaptors.RequestAdapter
 import com.autohub.studentmodule.databinding.FragmentStudentRequestsBinding
 import com.autohub.studentmodule.listners.HomeListners
-import com.autohub.studentmodule.models.BatchRequestViewModel
-import com.autohub.studentmodule.models.BatchrequestModel
+import com.autohub.skln.models.batches.BatchRequestViewModel
+import com.autohub.skln.models.batches.BatchRequestModel
 import java.util.*
 
 
@@ -79,7 +79,7 @@ class FragmentRequests : BaseFragment() {
             if (task.isSuccessful) {
                 val requests = ArrayList<BatchRequestViewModel>()
                 for (document in task.result!!) {
-                    val request = document.toObject(BatchrequestModel::class.java)
+                    val request = document.toObject(BatchRequestModel::class.java)
                     requests.add(BatchRequestViewModel(request, mUserType, document.id))
                     Log.d(">>>Explore", "Data Is " + request.subject)
                 }

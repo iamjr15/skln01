@@ -19,6 +19,7 @@ import com.autohub.skln.utills.AppConstants
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.fragments.*
 import com.autohub.studentmodule.listners.HomeListners
+import com.autohub.skln.models.batches.BatchRequestViewModel
 import com.autohub.studentmodule.models.BatchRequestViewModel
 import com.google.firebase.firestore.GeoPoint
 import kotlinx.android.synthetic.main.activity_student_home.*

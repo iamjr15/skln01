@@ -9,8 +9,10 @@ data class TutorPackageInfo(var frequency: String? = "",
                             var price: String? = "",
                             var rateOption: String? = "",
                             var studentCapacity: String? = "",
+                            var paymentType: String? = "",
                             var paymentOptions: ArrayList<String>? = null) : Parcelable {
     constructor(parcel: Parcel) : this(
+            parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -24,6 +26,7 @@ data class TutorPackageInfo(var frequency: String? = "",
         parcel.writeString(price)
         parcel.writeString(rateOption)
         parcel.writeString(studentCapacity)
+        parcel.writeString(paymentType)
         parcel.writeList(paymentOptions as List<*>?)
     }
 

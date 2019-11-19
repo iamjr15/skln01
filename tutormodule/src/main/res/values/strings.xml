@@ -39,6 +39,7 @@
     <string name="db_root_tutors">tutors</string>
     <string name="db_root_tutor_subjects">tutorSubjects</string>
     <string name="db_root_tutor_gardes">tutorGrades</string>
+    <string name="db_root_batches">batches</string>
 
     <string name="db_root_batch_requests">batchRequests</string>
 
@@ -331,5 +332,6 @@
     <string name="done">Done</string>
     <string name="no_student_found">No student found !</string>
     <string name="containsTutorData">tutorData</string>
+    <string name="select_batch">Select Batch</string>
 
 </resources>
