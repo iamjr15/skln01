@@ -30,7 +30,26 @@ class TutorViewModel(private var mUser: TutorData) : BaseObservable() {
         get() = CommonUtils.getString(mUser.classToTeach)
 
     val classType: String
-        get() = CommonUtils.getString(mUser.academicInfo!!.classType)
+        get() {
+
+            if (mUser.qualification!!.classType!!.size > 0) {
+                var list = mUser.qualification!!.classType!!
+                var classtypebuilder = StringBuilder()
+                for (i in list) {
+                    classtypebuilder.append("/" + i)
+                }
+
+                return classtypebuilder.toString().removeRange(0..0)
+            }
+            return ""
+
+
+        }
+
+    /*{
+
+            CommonUtils.getString(mUser.academicInfo!!.classType)
+        }*/
 
     val classFrequency: String
         get() = CommonUtils.getString(mUser.packageInfo!!.frequency)

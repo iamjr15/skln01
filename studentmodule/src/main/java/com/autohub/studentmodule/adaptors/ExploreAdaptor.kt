@@ -79,8 +79,18 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
 
                 }
 
+                if (it.qualification!!.classType!!.size > 0) {
+                    var list = it.qualification!!.classType!!
+                    var classtypebuilder = StringBuilder()
+                    for (i in list) {
+                        classtypebuilder.append("/" + i)
+                    }
 
-                txtclasstype.text = it.qualification!!.classType?.joinToString(",")
+                    txtclasstype.text = classtypebuilder.toString().removeRange(0..0)
+                }
+
+
+
                 txtsubjects.text = it.subjectsToTeach!!.replace(",", " | ")
 
                 if (!TextUtils.isEmpty(it.personInfo!!.accountPicture)) {

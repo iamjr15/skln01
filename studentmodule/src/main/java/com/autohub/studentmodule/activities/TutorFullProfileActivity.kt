@@ -10,16 +10,17 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.models.UserModel
+import com.autohub.skln.models.batches.BatchRequestModel
+import com.autohub.skln.models.batches.BatchRequestViewModel
 import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.ActivityTutorFullProfileBinding
-import com.autohub.skln.models.batches.BatchRequestViewModel
-import com.autohub.skln.models.batches.BatchRequestModel
 import com.autohub.studentmodule.models.TutorViewModel
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.storage.FirebaseStorage
+import java.util.*
 
 /**
  * Created by Vt Netzwelt
@@ -69,7 +70,10 @@ class TutorFullProfileActivity : BaseActivity() {
 
     private fun setUpView() {
         addSubjectRadioButtons(mUserViewModel!!.user.subjectsToTeach!!.split(","))
-        mUserViewModel!!.user.academicInfo!!.classType?.split(",")?.let { addClassTypeRadioButtons(it) }
+//        mUserViewModel!!.user.academicInfo!!.classType?.split(",")?.let { }
+
+        addClassTypeRadioButtons(mUserViewModel!!.user.academicInfo!!.classType)
+
 
         mBinding!!.txtdistence.text = mUserViewModel!!.user.distance.toString()
 
@@ -171,13 +175,13 @@ class TutorFullProfileActivity : BaseActivity() {
         }
     }
 
-    private fun addClassTypeRadioButtons(classtype: List<String>) {
-        if (classtype.isEmpty()) {
-            val rdbtn = RadioButton(this)
-            rdbtn.id = View.generateViewId()
-            //rdbtn.text = "Radio " + rdbtn.id
-            rdbtn.text = mUserViewModel!!.user.academicInfo!!.classType
-            mBinding!!.classtyperadio.addView(rdbtn)
+    private fun addClassTypeRadioButtons(classtype: ArrayList<String>?) {
+        if (classtype!!.size < 0) {
+            /*   val rdbtn = RadioButton(this)
+               rdbtn.id = View.generateViewId()
+               //rdbtn.text = "Radio " + rdbtn.id
+               rdbtn.text = mUserViewModel!!.user.academicInfo!!.classType
+               mBinding!!.classtyperadio.addView(rdbtn)*/
         }
 
         for (element in classtype) {

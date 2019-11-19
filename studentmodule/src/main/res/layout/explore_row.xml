@@ -187,7 +187,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
 
-                            android:text="@string/toolsgroun_individual" />
+                            tools:text="@string/toolsgroun_individual" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/_rating"

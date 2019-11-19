@@ -49,7 +49,7 @@ class ProfileFragment : BaseFragment() {
                     mBinding.name.text = tutorData!!.personInfo!!.firstName + " " +
                             tutorData!!.personInfo!!.lastName!!.get(0) + "."
 
-                    mBinding.type.text = tutorData!!.academicInfo!!.classType
+                    mBinding.type.text = tutorData!!.academicInfo!!.classType.toString()
 
                     GlideApp.with(this)
                             .load(tutorData!!.personInfo!!.accountPicture)
