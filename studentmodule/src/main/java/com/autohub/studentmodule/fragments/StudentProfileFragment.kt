@@ -66,7 +66,7 @@ class StudentProfileFragment : BaseFragment() {
         firebaseStore.collection(root).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     var user: UserModel = documentSnapshot.toObject(UserModel::class.java)!!
-                    if (user.personInfo!!.accountPicture != null) {
+                    if (user.personInfo!!.accountPicture != null && !user.personInfo!!.accountPicture.equals("")) {
 
                         val ref = FirebaseStorage.getInstance().reference.child(user.personInfo!!.accountPicture!!)
                         GlideApp.with(this)

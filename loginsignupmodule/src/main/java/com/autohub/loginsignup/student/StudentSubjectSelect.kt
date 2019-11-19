@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.autohub.SubjectsModel
-import com.autohub.loginsignup.R
 import com.autohub.loginsignup.databinding.ActivityStudentSubjectSelectBinding
 import com.autohub.loginsignup.listners.ClassSelectionListner
 import com.autohub.loginsignup.student.fragments.StudentSubjectSelectFragmnet
@@ -22,8 +21,8 @@ import com.autohub.loginsignup.utility.Utilities
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.utills.AppConstants.*
 import com.google.firebase.firestore.SetOptions
-import java.util.*
-import kotlin.collections.ArrayList
+import com.google.firebase.firestore.WriteBatch
+
 
 /**
  * Created by Vt Netzwelt
@@ -46,9 +45,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
                     } else {
                         selectedSubjects.add(selectedClass)
-
                         fragmentsList[i].updateFragment(isSecond = true, selected = true)
-
                     }
 
                 } else {
@@ -78,7 +75,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_student_subject_select)
+        mBinding = DataBindingUtil.setContentView(this, com.autohub.loginsignup.R.layout.activity_student_subject_select)
         mBinding!!.callback = this
         selectedSubjects = ArrayList()
         fetchSubjects()
@@ -121,12 +118,12 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
         subjectDataList = ArrayList()
 
-        subjectsDataMap[SUBJECT_SCIENCE] = SubjectsData(R.color.science, com.autohub.skln.R.drawable.microscope, false, SUBJECT_SCIENCE)
-        subjectsDataMap[SUBJECT_ENGLISH] = SubjectsData(R.color.english, com.autohub.skln.R.drawable.noun, false, SUBJECT_ENGLISH)
-        subjectsDataMap[SUBJECT_MATHS] = SubjectsData(R.color.math, com.autohub.skln.R.drawable.geometry, false, SUBJECT_MATHS)
-        subjectsDataMap[SUBJECT_SOCIAL_STUDIES] = SubjectsData(R.color.socialstudies, com.autohub.skln.R.drawable.strike, false, SUBJECT_SOCIAL_STUDIES)
-        subjectsDataMap[SUBJECT_LANGUAGES] = SubjectsData(R.color.language, com.autohub.skln.R.drawable.language, false, SUBJECT_LANGUAGES)
-        subjectsDataMap[SUBJECT_COMPUTER_SCIENCE] = SubjectsData(R.color.computerscience, com.autohub.skln.R.drawable.informatic, false, SUBJECT_COMPUTER_SCIENCE)
+        subjectsDataMap[SUBJECT_SCIENCE] = SubjectsData(com.autohub.loginsignup.R.color.science, com.autohub.skln.R.drawable.microscope, false, SUBJECT_SCIENCE)
+        subjectsDataMap[SUBJECT_ENGLISH] = SubjectsData(com.autohub.loginsignup.R.color.english, com.autohub.skln.R.drawable.noun, false, SUBJECT_ENGLISH)
+        subjectsDataMap[SUBJECT_MATHS] = SubjectsData(com.autohub.loginsignup.R.color.math, com.autohub.skln.R.drawable.geometry, false, SUBJECT_MATHS)
+        subjectsDataMap[SUBJECT_SOCIAL_STUDIES] = SubjectsData(com.autohub.loginsignup.R.color.socialstudies, com.autohub.skln.R.drawable.strike, false, SUBJECT_SOCIAL_STUDIES)
+        subjectsDataMap[SUBJECT_LANGUAGES] = SubjectsData(com.autohub.loginsignup.R.color.language, com.autohub.skln.R.drawable.language, false, SUBJECT_LANGUAGES)
+        subjectsDataMap[SUBJECT_COMPUTER_SCIENCE] = SubjectsData(com.autohub.loginsignup.R.color.computerscience, com.autohub.skln.R.drawable.informatic, false, SUBJECT_COMPUTER_SCIENCE)
 
 
         for (i in listData.indices) {
@@ -139,8 +136,6 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
                 subjectDataList.add(listData[i])
             }
-
-
         }
         showView()
 
@@ -156,7 +151,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         mFavoriteOrLeast = intent.getBooleanExtra("favorite_or_least", true)
 
         if (mFavoriteOrLeast) {
-            val spannable = SpannableStringBuilder(resources.getString(R.string.select_favorite_subject))
+            val spannable = SpannableStringBuilder(resources.getString(com.autohub.loginsignup.R.string.select_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.BLUE), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE)
@@ -165,7 +160,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         } else {
             Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 60.0f, 80.0f)
 
-            val spannable = SpannableStringBuilder(resources.getString(R.string.select_least_favorite_subject))
+            val spannable = SpannableStringBuilder(resources.getString(com.autohub.loginsignup.R.string.select_least_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.RED), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE)
@@ -177,12 +172,48 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         mBinding!!.viewpager.adapter = pagerAdapter
         mBinding!!.viewpager.offscreenPageLimit = 2
         mBinding!!.wormDotsIndicator.setViewPager(mBinding!!.viewpager)
+    }
+
+
+    fun onNextClick() {
+
+        showLoading()
+
+        var batch: WriteBatch = firebaseStore.batch()
+        for (i in selectedSubjects) {
+            var map: HashMap<String, String> = HashMap()
+
+            if (mFavoriteOrLeast)
+                map["category"] = "favorite"
+            else
+                map["category"] = "leastfavorite"
+
+            map["category"] = "leastfavorite"
+            map["id"] = ""
+            map["studentId"] = firebaseAuth.currentUser!!.uid
+            map["subjectId"] = i
+
+
+            val nycRef = firebaseStore.collection("studentSubjects").document()
+            batch.set(nycRef, map)
+
+        }
+
+        batch.commit().addOnCompleteListener {
+            if (it.isSuccessful) {
+                saveData()
+            }
+
+        }.addOnFailureListener {
+
+            showSnackError(it.message)
+        }
 
 
     }
 
 
-    fun onNextClick() {
+    fun saveData() {
         val stringBuilder = StringBuilder()
         if (selectedSubjects.size > 0) {
             stringBuilder.append(selectedSubjects[0])
@@ -194,27 +225,16 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         println("===================$stringBuilder")
 
         if (stringBuilder.isEmpty()) {
-            showSnackError(R.string.choose_subjects)
+            showSnackError(com.autohub.loginsignup.R.string.choose_subjects)
             return
         }
-
-        showLoading()
-
-
-        /*
-        *catagory
-        * id
-        * studentId
-        * subjectid
-        *
-        * */
         val user = HashMap<String, Any>()
         if (mFavoriteOrLeast)
             user[KEY_STDT_FAVORITE_CLASSES] = stringBuilder.toString()
         else
             user[KEY_STDT_LEAST_FAV_CLASSES] = stringBuilder.toString()
 
-        firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).set(
+        firebaseStore.collection(getString(com.autohub.loginsignup.R.string.db_root_students)).document(appPreferenceHelper.getuserID()).set(
                 mapOf(
                         KEY_ACADEMICINFO to user
                 )
@@ -235,7 +255,9 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
                     hideLoading()
                     showSnackError(e.message)
                 }
+
     }
+
 
     inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<StudentSubjectSelectFragmnet>) :
             FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -243,8 +265,6 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         // 2
         override fun getItem(position: Int): Fragment {
             return fragmentsList[position]
-
-
         }
 
         override fun getPageWidth(position: Int): Float {

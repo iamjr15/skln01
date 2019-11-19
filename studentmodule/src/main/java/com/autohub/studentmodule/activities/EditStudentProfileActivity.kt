@@ -23,6 +23,7 @@ import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.ActivityEditStudentProfileBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.WriteBatch
 import com.google.firebase.storage.FirebaseStorage
 import com.vansuita.pickimage.bundle.PickSetup
 import com.vansuita.pickimage.dialog.PickImageDialog
@@ -307,7 +308,7 @@ class EditStudentProfileActivity : BaseActivity() {
 
 
     fun setUserProfileImage(user: UserModel) {
-        if (user.personInfo!!.accountPicture != null) {
+        if (user.personInfo!!.accountPicture != null && !user.personInfo!!.accountPicture.equals("")) {
 
             val ref = FirebaseStorage.getInstance().reference.child(user.personInfo!!.accountPicture!!)
             GlideApp.with(this)
@@ -410,6 +411,11 @@ class EditStudentProfileActivity : BaseActivity() {
 
     fun saveData(selectedGradeId: String) {
         showLoading()
+
+
+        createBatchesForFavtSubject(favtselectedId.split(","), true)
+
+
         val userpersonalinfo = HashMap<String, Any>()
         if (mBinding!!.edtFirstName.text.toString().split(" ").size > 1) {
             userpersonalinfo[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[0]
@@ -461,6 +467,38 @@ class EditStudentProfileActivity : BaseActivity() {
                     showSnackError(e.message)
                 }
 
+    }
+
+    private fun createBatchesForFavtSubject(selectedSubjects: List<String>, mFavoriteOrLeast: Boolean) {
+        var batch: WriteBatch = firebaseStore.batch()
+        for (i in selectedSubjects) {
+            var map: HashMap<String, String> = HashMap()
+
+            if (mFavoriteOrLeast)
+                map["category"] = "favorite"
+            else
+                map["category"] = "leastfavorite"
+
+            map["category"] = "leastfavorite"
+            map["id"] = ""
+            map["studentId"] = firebaseAuth.currentUser!!.uid
+            map["subjectId"] = i
+
+
+            val nycRef = firebaseStore.collection("studentSubjects").document()
+            batch.set(nycRef, map)
+
+        }
+
+        batch.commit().addOnCompleteListener {
+            if (it.isSuccessful) {
+                //saveData()
+            }
+
+        }.addOnFailureListener {
+
+            showSnackError(it.message)
+        }
     }
 
 
@@ -555,7 +593,6 @@ class EditStudentProfileActivity : BaseActivity() {
                 hideLoading()
                 Toast.makeText(this, "Upload Failed -> $e", Toast.LENGTH_LONG).show()
             }
-
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
             hideLoading()

@@ -78,7 +78,7 @@ class TutorFullProfileActivity : BaseActivity() {
         mBinding!!.txtdistence.text = mUserViewModel!!.user.distance.toString()
 
         try {
-            if (mUserViewModel!!.user.personInfo!!.accountPicture != null) {
+            if (mUserViewModel!!.user.personInfo!!.accountPicture != null && !mUserViewModel!!.user.personInfo!!.accountPicture.equals("")) {
                 val pathReference1 = FirebaseStorage.getInstance().reference.child(mUserViewModel!!.user.personInfo!!.accountPicture!!)
                 GlideApp.with(this)
                         .load(pathReference1)
