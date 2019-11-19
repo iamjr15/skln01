@@ -413,7 +413,7 @@ class EditStudentProfileActivity : BaseActivity() {
         showLoading()
 
 
-        createBatchesForFavtSubject(favtselectedId.split(","), true)
+        // createBatchesForFavtSubject(favtselectedId.split(","), true)
 
 
         val userpersonalinfo = HashMap<String, Any>()
