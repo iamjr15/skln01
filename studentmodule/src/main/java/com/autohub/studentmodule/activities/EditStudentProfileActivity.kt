@@ -555,7 +555,6 @@ class EditStudentProfileActivity : BaseActivity() {
                 hideLoading()
                 Toast.makeText(this, "Upload Failed -> $e", Toast.LENGTH_LONG).show()
             }
-
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
             hideLoading()

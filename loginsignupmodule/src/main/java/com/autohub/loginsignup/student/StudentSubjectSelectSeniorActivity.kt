@@ -22,6 +22,7 @@ import com.autohub.loginsignup.utility.Utilities
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.utills.AppConstants.*
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.WriteBatch
 import java.util.*
 
 /**
@@ -185,6 +186,42 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
     }
 
     fun onNextClick() {
+
+        showLoading()
+
+        var batch: WriteBatch = firebaseStore.batch()
+        for (i in selectedSubjects) {
+            var map: HashMap<String, String> = HashMap()
+
+            if (mFavoriteOrLeast)
+                map["category"] = "favorite"
+            else
+                map["category"] = "leastfavorite"
+
+            map["category"] = "leastfavorite"
+            map["id"] = ""
+            map["studentId"] = firebaseAuth.currentUser!!.uid
+            map["subjectId"] = i
+
+
+            val nycRef = firebaseStore.collection("studentSubjects").document()
+            batch.set(nycRef, map)
+
+        }
+
+        batch.commit().addOnCompleteListener {
+            if (it.isSuccessful) {
+                saveData()
+            }
+
+        }.addOnFailureListener {
+
+            showSnackError(it.message)
+        }
+    }
+
+
+    fun saveData() {
         val stringBuilder = StringBuilder()
         if (selectedSubjects.size > 0) {
             stringBuilder.append(selectedSubjects[0])
@@ -198,7 +235,6 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
             return
         }
 
-        showLoading()
 
         val user = HashMap<String, Any>()
         if (mFavoriteOrLeast)
@@ -232,7 +268,6 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
 
 
     }
-
 
     inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<StudentSubjectSelectSeniorFragment>) :
             FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
