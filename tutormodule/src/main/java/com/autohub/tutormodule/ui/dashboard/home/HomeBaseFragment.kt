@@ -65,8 +65,11 @@ class HomeBaseFragment : BaseFragment() {
     }
 
 
-    fun showBatchOptionsFragment() {
+    fun showBatchOptionsFragment(batchCode: String) {
         val batchOptionsFragment = BatchOptionsFragment()
+        val bundle = Bundle()
+        bundle.putString("batchCode", batchCode)
+        batchOptionsFragment.arguments = bundle
         childFragmentManager
                 .beginTransaction()
                 .replace(R.id.homecontainer, batchOptionsFragment).commit()

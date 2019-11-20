@@ -10,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.autohub.skln.fragment.BaseFragment
+import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorAddBatchBinding
 import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
+import com.autohub.tutormodule.ui.utils.AppUtils
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -81,7 +83,7 @@ class AddBatchFragment : BaseFragment() {
         items.add("Class " + AppConstants.CLASS_11 + CommonUtils.getClassSuffix(AppConstants.CLASS_11.toInt()))
         items.add("Class " + AppConstants.CLASS_12 + CommonUtils.getClassSuffix(AppConstants.CLASS_12.toInt()))
 
-        showDialog(items, mBinding.selectClass, "Select Class", selectedClass, false)
+        showDialog(items, mBinding.selectClass, "Select Class", selectedClass)
 
     }
 
@@ -100,13 +102,43 @@ class AddBatchFragment : BaseFragment() {
         items.add(AppConstants.SUBJECT_MATHS)
         items.add(AppConstants.SUBJECT_ENGLISH)
 
-        showDialog(items, mBinding.selectSubject, "Select Subject", selectedSub, false)
+        showDialog(items, mBinding.selectSubject, "Select Subject", selectedSub)
 
     }
 
     fun openBatchOptions() {
         if (isVerified()) {
-            homeListener.showBatchOptionsFragment()
+            saveBatchData()
+
+        }
+    }
+
+    private fun saveBatchData() {
+        showLoading()
+        val batchesModel = BatchesModel()
+
+        batchesModel.title = mBinding.batchName.text.toString()
+
+//        batchesModel.timing.startTime = firebase.firestore.Timestamp mBinding . startTime . text . toString ()
+//        batchesModel.timing.endTime = mBinding.endTime.text.toString() as Timestamp
+
+        batchesModel.subject.name = mBinding.selectSubject.text.toString()
+
+        batchesModel.grade.name = mBinding.selectClass.text.toString()
+
+        batchesModel.batchCode = mBinding.batchName.text.toString().toCharArray()[0] +
+                mBinding.batchName.text.toString().toCharArray()[1].toString() +
+                mBinding.selectSubject.text.toString().toCharArray()[0].toString() +
+                mBinding.selectSubject.text.toString().toCharArray()[1].toString() +
+                (((Math.random() * 9000) + 1000).toInt())
+
+        firebaseStore.collection(getString(R.string.db_root_batches)).add(batchesModel).addOnSuccessListener {
+            hideLoading()
+            showSnackError("Batch Added successfully!!")
+            homeListener.showBatchOptionsFragment(batchesModel.batchCode)
+        }.addOnFailureListener { e ->
+            hideLoading()
+            showSnackError(e.toString())
         }
     }
 
@@ -130,45 +162,38 @@ class AddBatchFragment : BaseFragment() {
         }
     }
 
-    private fun showDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>, isSingle: Boolean) {
+    private fun showDialog(items: ArrayList<String>, textView: TextView, title: String, selectedItems: ArrayList<String>) {
         val namesArr = items.toTypedArray()
-        val booleans = BooleanArray(items.size)
-        val selectedValues = ArrayList<String>()
-
-        for (i in selectedItems.indices) {
-            if (items.contains(selectedItems[i])) {
-                booleans[items.indexOf(selectedItems[i])] = true
-                selectedValues.add(selectedItems[i])
+        var indexSelected = -1
+        if (selectedItems.size > 0) {
+            for (i in namesArr.indices) {
+                if (namesArr[i].equals(selectedItems[0])) {
+                    indexSelected = i
+                    break
+                } else {
+                    indexSelected = 0
+                }
             }
+        } else {
+            indexSelected = 0
+
         }
 
-        AlertDialog.Builder(this.context!!)
-                .setMultiChoiceItems(namesArr, booleans
-                ) { _, i, b ->
-                    if (b) {
-                        selectedValues.add(items[i])
-                    } else {
-                        selectedValues.remove(items[i])
-                    }
-                }
+
+        AlertDialog.Builder(requireContext())
+                .setSingleChoiceItems(namesArr, indexSelected, null)
                 .setTitle(title)
                 .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
-                    var selectedSubString = ""
-                    for (i in selectedValues.indices) {
-                        selectedSubString += if (i == selectedValues.size - 1) {
-                            selectedValues[i]
-                        } else {
-                            selectedValues[i] + ","
-                        }
+                    var selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
+                    if (selectedPosition < 0) {
+                        selectedPosition = 0
                     }
-                    testview.text = selectedSubString
+                    textView.text = namesArr[selectedPosition]
                     selectedItems.clear()
-                    selectedItems.addAll(selectedValues)
-
+                    selectedItems.add(namesArr[selectedPosition])
                 }
                 .show()
-
     }
 
     private fun isVerified(): Boolean {

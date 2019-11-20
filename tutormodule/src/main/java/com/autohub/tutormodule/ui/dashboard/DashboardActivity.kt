@@ -129,8 +129,8 @@ class DashboardActivity : BaseActivity(), HomeListener ,ClassRequestListener{
         }
     }
 
-    override fun showBatchOptionsFragment() {
-        homeBaseFragment.showBatchOptionsFragment()
+    override fun showBatchOptionsFragment(batchCode: String) {
+        homeBaseFragment.showBatchOptionsFragment(batchCode)
     }
 
     override fun showAddBatchFragment(showAddBatch: Boolean) {

@@ -5,7 +5,7 @@ interface HomeListener {
     fun managerSelected()
     fun pendingRequestSelect()
     fun showAddBatchFragment(showAddBatch: Boolean)
-    fun showBatchOptionsFragment()
+    fun showBatchOptionsFragment(batchCode: String)
     fun showStudentsListFragment()
 
 }

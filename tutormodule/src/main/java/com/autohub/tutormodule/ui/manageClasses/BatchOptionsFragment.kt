@@ -22,7 +22,10 @@ class BatchOptionsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinding = FragmentTutorBatchOptionsBinding.bind(view)
         mBinding.callback = this
+
+        mBinding.batchCode.text = arguments?.getString("batchCode")
     }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
