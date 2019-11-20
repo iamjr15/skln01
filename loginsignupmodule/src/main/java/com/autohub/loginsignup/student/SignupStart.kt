@@ -78,6 +78,14 @@ class SignupStart : BaseActivity() {
                 return
             }
 
+            if (password.toString().length < 7) {
+                mBinding!!.edtPassword.error = getString(R.string.passwordweak)
+                mBinding!!.edtPassword.requestFocus()
+//                showSnackError(R.string.enter_password)
+                return
+            }
+
+
             if (mLocation == null || TextUtils.isEmpty(mCity)) {
                 Toast.makeText(this, "Please check you GPS setting, we need You location", Toast.LENGTH_SHORT).show()
                 return

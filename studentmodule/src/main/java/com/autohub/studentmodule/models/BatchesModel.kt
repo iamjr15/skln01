@@ -10,6 +10,8 @@ data class BatchesModel(var batchCode: String = "", var grade: Grade = Grade(), 
                         var title: String = "", var type: String = "",
                         var enrolledStudentsId: ArrayList<String> = ArrayList(),
                         var imagesList: ArrayList<String> = ArrayList(),
+                        var batchTiming: String = "",
+                        var status: String = "",
                         var documentId: String? = "") {
 
 

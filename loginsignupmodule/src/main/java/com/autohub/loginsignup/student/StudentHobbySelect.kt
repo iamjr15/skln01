@@ -78,8 +78,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
             }
 
 
-            listData.add(SubjectsModel(id = "jhjshjfbscdf", name = "keyboard"))
-
+            //  listData.add(SubjectsModel(id = "jhjshjfbscdf", name = "keyboard"))
 
 
             insertHobbiesData(listData)

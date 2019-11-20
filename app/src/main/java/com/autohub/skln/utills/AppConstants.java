@@ -4,7 +4,7 @@ import com.autohub.skln.BuildConfig;
 
 
 /**
- *Modified by Vt Netzwelt
+ * Modified by Vt Netzwelt
  */
 public interface AppConstants {
     int GPS_REQUEST = 3434;

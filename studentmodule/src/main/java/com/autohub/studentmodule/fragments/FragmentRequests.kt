@@ -7,17 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.skln.models.Request
 import com.autohub.skln.models.UserModel
+import com.autohub.skln.models.batches.BatchRequestModel
+import com.autohub.skln.models.batches.BatchRequestViewModel
 import com.autohub.skln.utills.AppConstants
-import com.autohub.studentmodule.R
 import com.autohub.studentmodule.adaptors.RequestAdapter
 import com.autohub.studentmodule.databinding.FragmentStudentRequestsBinding
 import com.autohub.studentmodule.listners.HomeListners
-import com.autohub.skln.models.batches.BatchRequestViewModel
-import com.autohub.skln.models.batches.BatchRequestModel
 import java.util.*
 
 
@@ -31,6 +31,8 @@ class FragmentRequests : BaseFragment() {
     private var mUser: UserModel? = null
     private var mAdapter: RequestAdapter? = null
     private lateinit var homeListner: HomeListners
+    private var binding: FragmentStudentRequestsBinding? = null
+
 
     private val mItemClickListener = ItemClickListener<BatchRequestViewModel> { requestViewModel ->
         if (!requestViewModel.batchRequestModel!!.status.equals(Request.STATUS.CANCELED.value)) {
@@ -51,25 +53,32 @@ class FragmentRequests : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_student_requests, container, false)
+        return inflater.inflate(com.autohub.studentmodule.R.layout.fragment_student_requests, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentStudentRequestsBinding.bind(view)
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.setEmptyView(binding.rrempty)
+        binding = FragmentStudentRequestsBinding.bind(view)
+        binding!!.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding!!.recyclerView.setEmptyView(binding!!.rrempty)
         mAdapter = RequestAdapter(requireContext(), mItemClickListener)
-        binding.recyclerView.adapter = mAdapter
+        binding!!.recyclerView.adapter = mAdapter
         getRequests()
+
+        binding!!.swiperefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+            getRequests()
+        })
+
     }
 
     private fun getRequests() {
         if (mUser == null || mUser!!.id == null) {
             Log.e(">>>>Nulll", (mUser == null).toString() + "")
+            binding!!.swiperefresh.isRefreshing = false
+
             return
         }
-        val dbRoot = getString(R.string.db_root_batchRequests)
+        val dbRoot = getString(com.autohub.studentmodule.R.string.db_root_batchRequests)
         var query = firebaseStore.collection(dbRoot).whereEqualTo("student.id", mUser!!.id)
 
         if (mType!!.equals("Latest", ignoreCase = true)) {
@@ -87,9 +96,13 @@ class FragmentRequests : BaseFragment() {
             } else {
                 Log.d(">>>Explore", "Error getting documents: ", task.exception)
             }
-            hideLoading()
+
+            binding!!.swiperefresh.isRefreshing = false
+
+
         }.addOnFailureListener { e ->
-            hideLoading()
+            binding!!.swiperefresh.isRefreshing = false
+
             Log.e(">>>Explore", "Error getting documents: ", e)
         }
     }

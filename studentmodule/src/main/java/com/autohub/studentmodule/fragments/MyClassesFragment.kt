@@ -2,16 +2,15 @@ package com.autohub.studentmodule.fragments
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.FragmentMyClassesBinding
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by Vt Netzwelt
@@ -31,20 +30,11 @@ class MyClassesFragment : Fragment() {
 
         mBinding = FragmentMyClassesBinding.bind(view)
         val adapter = ViewPagerAdapter(childFragmentManager)
-        adapter.addData(getFragmentClassRequests(ScheduleFragment()), "Schedule")
-        adapter.addData(getFragmentClassRequests(EnrolledClassesFragment()), "Enrolled classes")
+        adapter.addData(ScheduleFragment(), "Schedule")
+        adapter.addData(EnrolledClassesFragment(), "Enrolled classes")
 
         mBinding!!.tabs.setupWithViewPager(mBinding!!.viewpager)
         mBinding!!.viewpager.adapter = adapter
-    }
-
-    private fun getFragmentClassRequests(fragment: Fragment/*, user: User?*/): Fragment {
-        /* val bundle = Bundle()
-         bundle.putString(AppConstants.KEY_TYPE, type)
-         bundle.putParcelable(AppConstants.KEY_DATA, user)*/
-        //    bundle.putString("_user_type", mType)
-        //  latestRequests.arguments = bundle
-        return fragment
     }
 
 

@@ -89,6 +89,7 @@ public class CommonUtils {
         return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
+
     public static double distance(double lat1, double lon1, double lat2, double lon2) {
         double theta = lon1 - lon2;
         double dist = Math.sin(deg2rad(lat1))
@@ -109,4 +110,6 @@ public class CommonUtils {
     private static double rad2deg(double rad) {
         return (rad * 180.0 / Math.PI);
     }
+
+
 }
