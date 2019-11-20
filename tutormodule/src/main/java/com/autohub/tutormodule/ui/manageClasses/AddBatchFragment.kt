@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.batches.BatchesModel
+import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.tutormodule.R
@@ -30,6 +31,7 @@ class AddBatchFragment : BaseFragment() {
     private val selectedSub = ArrayList<String>()
     private val selectedClass = ArrayList<String>()
     private var counter = 0
+    lateinit var tutorData: TutorData
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_tutor_add_batch, container, false)
@@ -48,6 +50,7 @@ class AddBatchFragment : BaseFragment() {
         } else {
             mBinding.textHeading.text = resources.getString(R.string.add_batch)
         }
+        fetchTutorData()
     }
 
     override fun onAttach(context: Context) {
@@ -112,6 +115,16 @@ class AddBatchFragment : BaseFragment() {
         }
     }
 
+    private fun fetchTutorData() {
+        firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    tutorData = documentSnapshot.toObject(TutorData::class.java)!!
+                }
+                .addOnFailureListener { e ->
+                    showSnackError(e.message)
+                }
+    }
+
     private fun saveBatchData() {
         showLoading()
         val batchesModel = BatchesModel()
@@ -124,6 +137,12 @@ class AddBatchFragment : BaseFragment() {
         batchesModel.subject?.name = mBinding.selectSubject.text.toString()
 
         batchesModel.grade?.name = mBinding.selectClass.text.toString()
+
+        batchesModel.teacher?.id = tutorData.id
+        batchesModel.teacher?.name = tutorData.personInfo?.firstName + " " + tutorData.personInfo?.lastName
+        batchesModel.teacher?.instituteName = tutorData.academicInfo?.instituteNeme
+        batchesModel.teacher?.accountPicture = tutorData.personInfo?.accountPicture
+        batchesModel.teacher?.bioData = tutorData.personInfo?.biodata
 
         batchesModel.batchCode = mBinding.batchName.text.toString().toCharArray()[0] +
                 mBinding.batchName.text.toString().toCharArray()[1].toString() +
