@@ -26,7 +26,9 @@ class ScheduleAdaptor(var context: Context)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        exploreRowBinding.batchName.text = batchList[position].title
+
+        exploreRowBinding.batchName.text = batchList[position].title+" - "+ AppUtils.getClassName(batchList[position].grade?.name?.split("_")?.get(1)?.trim()!!)
+
         exploreRowBinding.time.text = AppUtils.uTCToLocal(
                 "EEE MMM dd HH:mm:ss z YYYY",
                 "EEE, d MMM yyyy HH:mm:ss z",

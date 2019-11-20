@@ -16,6 +16,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 /**
  * Created by Vt Netzwelt
  */
@@ -39,7 +40,6 @@ class ScheduleFragment : BaseFragment() {
         val dates = getDates("01-01-" + Calendar.getInstance().get(Calendar.YEAR),
                 "31-12-" + Calendar.getInstance().get(Calendar.YEAR))
 
-        initializeCalendarView(dates)
         mBinding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
@@ -65,6 +65,7 @@ class ScheduleFragment : BaseFragment() {
         adaptor = ScheduleAdaptor(requireContext())
         mBinding.schedulerecycleview.adapter = adaptor
         fetchTutorData()
+        initializeCalendarView(dates)
 
     }
 
@@ -97,6 +98,15 @@ class ScheduleFragment : BaseFragment() {
 
         val adapter = ScheduleCalenderAdapter(dates)
         mBinding.calendarView.adapter = adapter
+
+        val timeStamp = SimpleDateFormat("MMM,dd,EEE", Locale.ENGLISH).format(Calendar.getInstance().time)
+        for (i in dates.indices) {
+            if (dates[i].contains(timeStamp)) {
+                mBinding.calendarView.scrollToPosition(i)
+                adapter.selectedPosition = i
+                adaptor.notifyDataSetChanged()
+            }
+        }
     }
 
 
