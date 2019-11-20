@@ -49,8 +49,6 @@ import kotlin.collections.ArrayList
  * Created by Vt Netzwelt
  */
 class ExploreTutorsFragment : BaseFragment() {
-
-
     private var tutorsList = ArrayList<TutorData>()
     private var mBinding: ExploreTutorFragmentBinding? = null
     private var mCurrentLocation: Location? = null
@@ -110,7 +108,7 @@ class ExploreTutorsFragment : BaseFragment() {
         }
     }
 
-    private fun setupProfile() {
+    fun setupProfile() {
         /*  val ref = FirebaseStorage.getInstance().reference.child("student/" +
                   firebaseAuth.currentUser!!.uid + ".jpg")*/
         var user = (context as StudentHomeActivity).user!!

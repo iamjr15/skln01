@@ -48,7 +48,8 @@ class StudentsListFragment : BaseFragment() {
                 }
                 .addOnFailureListener { e ->
                     hideLoading()
-                    showSnackError(e.message) }
+                    showSnackError(e.message)
+                }
     }
 
     private fun fetchStudents(grades: MutableList<GradeData>) {
@@ -67,7 +68,8 @@ class StudentsListFragment : BaseFragment() {
                 }
                 .addOnFailureListener { e ->
                     hideLoading()
-                    showSnackError(e.message) }
+                    showSnackError(e.message)
+                }
     }
 
 }

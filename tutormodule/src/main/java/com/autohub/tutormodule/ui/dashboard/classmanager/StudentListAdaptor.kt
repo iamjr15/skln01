@@ -17,7 +17,7 @@ class StudentListAdaptor(var context: Context)
     lateinit var mBinding: ItemStudentBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-         mBinding = DataBindingUtil.inflate(
+        mBinding = DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
                         R.layout.item_student, parent, false
                 )
@@ -27,7 +27,7 @@ class StudentListAdaptor(var context: Context)
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        mBinding.name.text = studentList[position].personInfo?.firstName +" "+studentList[position].personInfo?.lastName
+        mBinding.name.text = studentList[position].personInfo?.firstName + " " + studentList[position].personInfo?.lastName
         mBinding.className.text = AppUtils.getClassName(studentList[position].className!!)
 
     }

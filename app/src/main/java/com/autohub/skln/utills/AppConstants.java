@@ -122,9 +122,7 @@ public interface AppConstants {
 
     // bundel keys
     String KEY_USERMAP = "usermap";
-
     String STATUS_PENDING = "pending";
-
     String STATUS_ACTIVE = "active";
     String STATUS_CANCELLED = "cancelled";
 

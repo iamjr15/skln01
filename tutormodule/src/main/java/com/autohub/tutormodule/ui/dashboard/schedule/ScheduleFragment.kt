@@ -1,7 +1,6 @@
 package com.autohub.tutormodule.ui.dashboard.schedule
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,8 +82,7 @@ class ScheduleFragment : BaseFragment() {
     }
 
     private fun fetchBatches() {
-        firebaseStore.collection(getString(R.string.db_root_batches)).
-                whereEqualTo("teacher.id", tutorData.id)
+        firebaseStore.collection(getString(R.string.db_root_batches)).whereEqualTo("teacher.id", tutorData.id)
                 .get().addOnSuccessListener { documentSnapshot ->
                     val data = documentSnapshot.toObjects(BatchesModel::class.java)
                     adaptor.setData(data)

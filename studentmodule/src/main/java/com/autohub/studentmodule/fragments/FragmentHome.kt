@@ -70,7 +70,7 @@ class FragmentHome : BaseFragment() {
 
     }
 
-    private fun setupProfile() {
+    fun setupProfile() {
         /* val ref = FirebaseStorage.getInstance().reference.child("student/" +
                  firebaseAuth.currentUser!!.uid + ".jpg")*/
 

@@ -35,14 +35,12 @@ data class BatchesModel(var batchCode: String? = "",
             parcel.readParcelable(Teacher::class.java.classLoader),
             parcel.readParcelable(Timing::class.java.classLoader),
             parcel.readString(),
-            parcel.readString()) {
-    }
+            parcel.readString())
 
     data class Grade(var id: String? = "", var name: String? = "") : Parcelable {
         constructor(parcel: Parcel) : this(
                 parcel.readString(),
-                parcel.readString()) {
-        }
+                parcel.readString())
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
             parcel.writeString(id)
@@ -67,8 +65,7 @@ data class BatchesModel(var batchCode: String? = "",
     data class Student(var id: String? = "", var name: String? = "") : Parcelable {
         constructor(parcel: Parcel) : this(
                 parcel.readString(),
-                parcel.readString()) {
-        }
+                parcel.readString())
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
             parcel.writeString(id)
@@ -93,8 +90,7 @@ data class BatchesModel(var batchCode: String? = "",
     data class Subject(var id: String? = "", var name: String? = "") : Parcelable {
         constructor(parcel: Parcel) : this(
                 parcel.readString(),
-                parcel.readString()) {
-        }
+                parcel.readString())
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
             parcel.writeString(id)
@@ -120,8 +116,7 @@ data class BatchesModel(var batchCode: String? = "",
         constructor(parcel: Parcel) : this(
                 parcel.readParcelable(Timestamp::class.java.classLoader),
                 parcel.readString(),
-                parcel.readParcelable(Timestamp::class.java.classLoader)) {
-        }
+                parcel.readParcelable(Timestamp::class.java.classLoader))
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
             parcel.writeParcelable(endTime, flags)
@@ -151,8 +146,7 @@ data class BatchesModel(var batchCode: String? = "",
                 parcel.readString(),
                 parcel.readString(),
                 parcel.readString(),
-                parcel.readString()) {
-        }
+                parcel.readString())
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
             parcel.writeString(id)
@@ -179,8 +173,7 @@ data class BatchesModel(var batchCode: String? = "",
 
 
     data class Location(var geopoint: GeoPoint? = GeoPoint(0.0, 0.0)) : Parcelable {
-        constructor(parcel: Parcel) : this() {
-        }
+        constructor(parcel: Parcel) : this()
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
 

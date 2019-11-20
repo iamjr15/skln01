@@ -30,7 +30,6 @@ class FragmentClassRequests : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinding = FragmentClassRequestsBinding.bind(view)
         fetchUser()
-
     }
 
     private fun fetchUser() {
