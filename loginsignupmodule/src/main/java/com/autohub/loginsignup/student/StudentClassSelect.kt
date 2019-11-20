@@ -14,7 +14,6 @@ import com.autohub.loginsignup.student.fragments.StudentClassFragment
 import com.autohub.loginsignup.student.models.Classdata
 import com.autohub.loginsignup.utility.Utilities
 import com.autohub.skln.BaseActivity
-import com.autohub.skln.models.AcadmicsData
 import com.autohub.skln.utills.AppConstants.*
 import com.google.firebase.firestore.SetOptions
 import java.util.*
@@ -42,14 +41,12 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
     private var fragmentsList: ArrayList<StudentClassFragment> = ArrayList()
     private var selectedClass: String = ""
 
-    private val classesmap = HashMap<String, AcadmicsData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_student_class_select)
         mBinding!!.callback = this
 
-//        Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 1.0f, 2.0f)
         Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 20.0f, 40.0f)
 
 
