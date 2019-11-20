@@ -101,5 +101,6 @@
     <string name="showpas">show</string>
     <string name="headerprofile">profile</string>
     <string name="addbatchcode">Please add your batch code.</string>
+    <string name="passwordchangemessage">Your password has been changed successfully!</string>
 
 </resources>

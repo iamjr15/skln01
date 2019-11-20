@@ -52,7 +52,9 @@ class TutorSignupActivity : BaseActivity() {
     }
 
     fun login() {
-        ActivityUtils.launchActivity(this@TutorSignupActivity, LoginActivity::class.java)
+        val extras = Bundle()
+        extras.putSerializable("isTutor", true)
+        ActivityUtils.launchActivity(this@TutorSignupActivity, LoginActivity::class.java, extras)
         finish()
     }
 

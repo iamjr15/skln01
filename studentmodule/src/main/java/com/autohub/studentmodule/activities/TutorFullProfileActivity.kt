@@ -19,7 +19,6 @@ import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.ActivityTutorFullProfileBinding
 import com.autohub.studentmodule.models.TutorViewModel
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
 /**
@@ -79,9 +78,8 @@ class TutorFullProfileActivity : BaseActivity() {
 
         try {
             if (mUserViewModel!!.user.personInfo!!.accountPicture != null && !mUserViewModel!!.user.personInfo!!.accountPicture.equals("")) {
-                val pathReference1 = FirebaseStorage.getInstance().reference.child(mUserViewModel!!.user.personInfo!!.accountPicture!!)
                 GlideApp.with(this)
-                        .load(pathReference1)
+                        .load(mUserViewModel!!.user.personInfo!!.accountPicture)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(com.autohub.skln.R.drawable.default_pic)
                         .fallback(com.autohub.skln.R.drawable.default_pic)

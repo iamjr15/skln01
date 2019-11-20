@@ -41,7 +41,6 @@ class ScheduleFragment : BaseFragment() {
 
         initializeCalendarView(dates)
         mBinding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
                 if (i < 10) {
                     mBinding.calendarView.scrollToPosition(0)

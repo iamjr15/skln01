@@ -458,7 +458,7 @@ class EditStudentProfileActivity : BaseActivity() {
             if (!mBinding!!.password.text.toString().equals("")) {
                 firebaseAuth.currentUser!!.updatePassword(mBinding!!.password.text.toString()).addOnCompleteListener {
                     Toast.makeText(this,
-                            "Password changes.", Toast.LENGTH_SHORT).show()
+                            getString(R.string.passwordchangemessage), Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -515,10 +515,18 @@ class EditStudentProfileActivity : BaseActivity() {
 * And also need to link this changed values with old firebase User Id
 *
 * */
+
+
         // user.put(AppConstants.KEY_PASSWORD, encryptedPassword())
         // user[AppConstants.KEY_PHONE_NUMBER] = mBinding!!.codePicker.fullNumberWithPlus
 
         val useracadmicinfo = HashMap<String, Any>()
+
+        if (!mBinding!!.password.text.toString().equals("")) {
+            useracadmicinfo[KEY_PASSWORD] = getString(mBinding!!.password.text)
+
+        }
+
         useracadmicinfo[KEY_STDT_LEAST_FAV_CLASSES] = leastselectedId.split(",")
 //hdsjhsa
 
@@ -541,7 +549,7 @@ class EditStudentProfileActivity : BaseActivity() {
                 .addOnSuccessListener {
                     hideLoading()
                     Toast.makeText(this,
-                            "Profile Updated.", Toast.LENGTH_SHORT).show()
+                            "Profile has been Updated succesfully!", Toast.LENGTH_SHORT).show()
 
                     ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
                     finishAffinity()
@@ -605,7 +613,6 @@ class EditStudentProfileActivity : BaseActivity() {
 
         batch.commit().addOnCompleteListener {
             if (it.isSuccessful) {
-                //saveData()
             }
 
         }.addOnFailureListener {

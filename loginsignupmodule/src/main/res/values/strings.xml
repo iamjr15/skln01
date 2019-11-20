@@ -28,10 +28,10 @@
     <string name="sending">Sending code... Please wait.</string>
     <string name="welcome_onboard">welcome\nonboard.</string>
     <string name="tutor_institutes">Tutors/Institutes</string>
-    <string name="tutor_institute">Tutor/Institute</string>
+    <string name="tutor_institute">Tutors / Institute</string>
     <string name="student">Student</string>
     <string name="student_p">Students/Parents</string>
-    <string name="studentp">Students/Parent</string>
+    <string name="studentp">Student / Parent</string>
     <string name="i_am">I\'m a...</string>
     <string name="getToKnowYou">Let\'s get to know you!</string>
     <string name="heythere">Hey there !</string>
@@ -51,7 +51,7 @@
     <string name="choose_hobbies">Please choose hobbies to teach</string>
     <string name="select_class_text_1">Select the class you are in.</string>
     <string name="hey">Hey,</string>
-    <string name="lets_custom_learning_plan">let\'s customize your learning plan.</string>
+    <string name="lets_custom_learning_plan">let\'s customise your learning plan.</string>
     <string name="select_favorite_subject">select your favourite subjects.</string>
     <string name="select_least_favorite_subject">select your least favourite subjects.</string>
     <string name="jack_a_dull">\"All work and no play makes  Jack/Jake a dull boy/girl\"</string>
@@ -69,6 +69,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_loginsignup">LoginSignup Module</string>
     <string name="if_already_registered_login_by_clicking_the_button_below">If already registered , login by clicking the button below.</string>
-    <string name="forgot_passwodheader">forgot passwod</string>
+    <string name="forgot_passwodheader">forgot password</string>
     <string name="passwordweak">Weak password. Password should not be less than 6 characters</string>
+    <string name="tutors_institute_tutorsignup">Tutors/Institute</string>
 </resources>
