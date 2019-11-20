@@ -16,7 +16,6 @@ import com.autohub.skln.utills.CommonUtils
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorAddBatchBinding
 import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
-import com.autohub.tutormodule.ui.utils.AppUtils
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -122,9 +121,9 @@ class AddBatchFragment : BaseFragment() {
 //        batchesModel.timing.startTime = firebase.firestore.Timestamp mBinding . startTime . text . toString ()
 //        batchesModel.timing.endTime = mBinding.endTime.text.toString() as Timestamp
 
-        batchesModel.subject.name = mBinding.selectSubject.text.toString()
+        batchesModel.subject?.name = mBinding.selectSubject.text.toString()
 
-        batchesModel.grade.name = mBinding.selectClass.text.toString()
+        batchesModel.grade?.name = mBinding.selectClass.text.toString()
 
         batchesModel.batchCode = mBinding.batchName.text.toString().toCharArray()[0] +
                 mBinding.batchName.text.toString().toCharArray()[1].toString() +
@@ -135,7 +134,7 @@ class AddBatchFragment : BaseFragment() {
         firebaseStore.collection(getString(R.string.db_root_batches)).add(batchesModel).addOnSuccessListener {
             hideLoading()
             showSnackError("Batch Added successfully!!")
-            homeListener.showBatchOptionsFragment(batchesModel.batchCode)
+            homeListener.showBatchOptionsFragment(batchesModel)
         }.addOnFailureListener { e ->
             hideLoading()
             showSnackError(e.toString())

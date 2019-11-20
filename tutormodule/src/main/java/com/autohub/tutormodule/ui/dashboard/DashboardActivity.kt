@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
+import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.ui.dashboard.home.HomeBaseFragment
 import com.autohub.tutormodule.ui.dashboard.listner.ClassRequestListener
@@ -129,8 +130,8 @@ class DashboardActivity : BaseActivity(), HomeListener ,ClassRequestListener{
         }
     }
 
-    override fun showBatchOptionsFragment(batchCode: String) {
-        homeBaseFragment.showBatchOptionsFragment(batchCode)
+    override fun showBatchOptionsFragment(batch: BatchesModel) {
+        homeBaseFragment.showBatchOptionsFragment(batch)
     }
 
     override fun showAddBatchFragment(showAddBatch: Boolean) {

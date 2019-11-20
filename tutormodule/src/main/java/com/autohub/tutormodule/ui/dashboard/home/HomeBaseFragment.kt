@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.autohub.skln.fragment.BaseFragment
+import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.ui.dashboard.classmanager.ClassManagerFragment
 import com.autohub.tutormodule.ui.dashboard.classmanager.StudentsListFragment
@@ -65,10 +66,10 @@ class HomeBaseFragment : BaseFragment() {
     }
 
 
-    fun showBatchOptionsFragment(batchCode: String) {
+    fun showBatchOptionsFragment(batch: BatchesModel) {
         val batchOptionsFragment = BatchOptionsFragment()
         val bundle = Bundle()
-        bundle.putString("batchCode", batchCode)
+        bundle.putParcelable("batch", batch)
         batchOptionsFragment.arguments = bundle
         childFragmentManager
                 .beginTransaction()

@@ -30,10 +30,10 @@ class ScheduleAdaptor(var context: Context)
         exploreRowBinding.time.text = AppUtils.uTCToLocal(
                 "EEE MMM dd HH:mm:ss z YYYY",
                 "EEE, d MMM yyyy HH:mm:ss z",
-                batchList[position].timing.startTime!!.toDate().toString()).toString() + " - " +
+                batchList[position].timing?.startTime!!.toDate().toString()).toString() + " - " +
                 AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
                         "EEE, d MMM yyyy HH:mm:ss z",
-                        batchList[position].timing.endTime!!.toDate().toString()).toString()
+                        batchList[position].timing?.endTime!!.toDate().toString()).toString()
 
         exploreRowBinding.activeButton.text = batchList[position].status
 
