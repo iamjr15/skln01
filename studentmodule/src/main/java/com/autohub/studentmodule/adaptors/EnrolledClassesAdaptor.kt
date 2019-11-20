@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.EnrolledclassesRowBinding
+import com.autohub.studentmodule.models.BatchesModel
 
 /**
  * Created by Vt Netzwelt
@@ -16,19 +17,31 @@ import com.autohub.studentmodule.databinding.EnrolledclassesRowBinding
 class EnrolledClassesAdaptor(var context: Context, var mItemClickListener: ItemClickListener<String>)
     : RecyclerView.Adapter<EnrolledClassesAdaptor.Holder>() {
 
-    private var userList: List<String> = ArrayList()
+    private var userList: List<BatchesModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val exploreRowBinding: EnrolledclassesRowBinding =
+        val enrolledClasesBinding: EnrolledclassesRowBinding =
                 DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
                         R.layout.enrolledclasses_row, parent, false
                 )
 
-        return Holder(exploreRowBinding)
+        return Holder(enrolledClasesBinding)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+
+        userList[position].let {
+            with(holder.enrolledClasesBinding)
+            {
+                batchName.text = it.title
+                className.text = it.grade.name + " | " + it.subject.name
+
+            }
+
+
+        }
+
 
         /*  holder.exploreRowBinding.setItemClickListener(mItemClickListener)
           userList[position].let {
@@ -84,16 +97,16 @@ class EnrolledClassesAdaptor(var context: Context, var mItemClickListener: ItemC
     }
 
     override fun getItemCount(): Int {
-        return 0/*userList.size*/
+        return userList.size
     }
 
-    fun setData(userList: List<String>) {
+    fun setData(userList: List<BatchesModel>) {
         this.userList = userList
         notifyDataSetChanged()
     }
 
-    inner class Holder(exploreRowBinding: EnrolledclassesRowBinding) :
-            RecyclerView.ViewHolder(exploreRowBinding.root) {
+    inner class Holder(var enrolledClasesBinding: EnrolledclassesRowBinding) :
+            RecyclerView.ViewHolder(enrolledClasesBinding.root) {
         fun bind() {
         }
     }
