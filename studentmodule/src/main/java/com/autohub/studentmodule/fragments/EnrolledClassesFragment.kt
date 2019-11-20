@@ -50,8 +50,6 @@ class EnrolledClassesFragment : BaseFragment() {
                     "Batch code deleted", Toast.LENGTH_SHORT).show()
             fetchEnrolledClasses()
         }
-
-
     }
 
     private var adaptor: EnrolledClassesAdaptor? = null
@@ -93,15 +91,7 @@ class EnrolledClassesFragment : BaseFragment() {
                         for (document in task.result!!) {
                             val batchesModel = document.toObject(BatchesModel::class.java)
 
-                            /*  var studentsIds: ArrayList<String> = ArrayList()
-                            if (batchesModel.studentsEnrolled.student.size > 0) {
-                                for (student in batchesModel!!.studentsEnrolled.student) {
-                                    studentsIds.add(student.id)
-                                }
-                            }
-                            studentsEnrollesIdMap[batchesModel.id!!] = studentsIds*/
 
-                            //  batchesModel.batchTiming = uTCToLocal(batchesModel.timing.startTime.toString())
 
 
                             try {

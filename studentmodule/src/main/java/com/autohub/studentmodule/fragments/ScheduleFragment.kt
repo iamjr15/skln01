@@ -6,23 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.autohub.skln.fragment.BaseFragment
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.adaptors.ScheduleCalenderAdapter
 import com.autohub.studentmodule.adaptors.SchedulesAdaptor
 import com.autohub.studentmodule.databinding.FragmentScheduleBinding
+import com.autohub.studentmodule.models.BatchesModel
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Vt Netzwelt
  */
-class ScheduleFragment : Fragment() {
+class ScheduleFragment : BaseFragment() {
     private lateinit var mBinding: FragmentScheduleBinding
     private lateinit var adaptor: SchedulesAdaptor
+    private lateinit var scheduleData: MutableList<BatchesModel>
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -38,12 +41,55 @@ class ScheduleFragment : Fragment() {
         val dates = getDates("01-01-" + Calendar.getInstance().get(Calendar.YEAR),
                 "31-12-" + Calendar.getInstance().get(Calendar.YEAR))
         initializeCalendarView(dates)
+        scheduleData = ArrayList()
         setUpSeekBar(dates)
 
         mBinding.schedulerecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         adaptor = SchedulesAdaptor(requireContext())
         mBinding.schedulerecycleview.adapter = adaptor
+        fetchBatches()
+    }
 
+    private fun fetchBatches() {
+        firebaseStore.collection("batches").whereArrayContains("enrolledStudentsId", firebaseAuth.currentUser!!.uid)
+                .get().addOnCompleteListener { task ->
+
+                    if (task.isSuccessful) {
+                        scheduleData.clear()
+                        for (document in task.result!!) {
+                            val batchesModel = document.toObject(com.autohub.studentmodule.models.BatchesModel::class.java)
+
+                            try {
+                                var endTime = uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
+                                        "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.endTime!!.toDate().toString()
+                                )
+                                var startTime = uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
+                                        "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.startTime!!.toDate().toString()
+                                ).toString()
+                                batchesModel.batchTiming =
+                                        startTime + " - " + endTime
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+
+                            scheduleData.add(batchesModel)
+                        }
+
+                        if (scheduleData.size > 0) {
+                            mBinding.rrempty.visibility = View.GONE
+                        } else {
+                            mBinding.rrempty.visibility = View.VISIBLE
+                        }
+
+
+                        adaptor.setData(scheduleData)
+
+                    }
+
+                }
+                .addOnFailureListener { e ->
+                    showSnackError(e.message)
+                }
     }
 
     private fun setUpSeekBar(dates: List<String>) {
@@ -108,4 +154,37 @@ class ScheduleFragment : Fragment() {
         }
         return dates
     }
+
+    fun uTCToLocal(dateFormatInPut: String, dateFomratOutPut: String, datesToConvert: String): String? {
+
+
+        val dateToReturn = datesToConvert
+
+        val sdf = SimpleDateFormat(dateFormatInPut)
+
+        var gmt: Date? = null
+
+        val sdfOutPutToSend = SimpleDateFormat(dateFomratOutPut)
+        sdfOutPutToSend.timeZone = TimeZone.getDefault()
+        try {
+            gmt = sdf.parse(datesToConvert)
+
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+
+        val originalFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss z YYYY", Locale.ENGLISH)
+        val targetFormat = SimpleDateFormat("h:mm a")
+        val date = originalFormat.parse(gmt.toString())
+        val formattedDate = targetFormat.format(date)
+
+
+
+
+
+
+        return formattedDate
+    }
+
 }

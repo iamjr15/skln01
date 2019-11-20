@@ -68,4 +68,5 @@
     <string name="title_loginsignup">LoginSignup Module</string>
     <string name="if_already_registered_login_by_clicking_the_button_below">If already registered , login by clicking the button below.</string>
     <string name="forgot_passwodheader">forgot passwod</string>
+    <string name="passwordweak">Weak password. Password should not be less than 6 characters</string>
 </resources>

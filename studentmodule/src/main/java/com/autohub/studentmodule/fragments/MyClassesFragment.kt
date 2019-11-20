@@ -30,20 +30,11 @@ class MyClassesFragment : Fragment() {
 
         mBinding = FragmentMyClassesBinding.bind(view)
         val adapter = ViewPagerAdapter(childFragmentManager)
-        adapter.addData(getFragmentClassRequests(ScheduleFragment()), "Schedule")
-        adapter.addData(getFragmentClassRequests(EnrolledClassesFragment()), "Enrolled classes")
+        adapter.addData(ScheduleFragment(), "Schedule")
+        adapter.addData(EnrolledClassesFragment(), "Enrolled classes")
 
         mBinding!!.tabs.setupWithViewPager(mBinding!!.viewpager)
         mBinding!!.viewpager.adapter = adapter
-    }
-
-    private fun getFragmentClassRequests(fragment: Fragment/*, user: User?*/): Fragment {
-        /* val bundle = Bundle()
-         bundle.putString(AppConstants.KEY_TYPE, type)
-         bundle.putParcelable(AppConstants.KEY_DATA, user)*/
-        //    bundle.putString("_user_type", mType)
-        //  latestRequests.arguments = bundle
-        return fragment
     }
 
 

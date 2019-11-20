@@ -108,7 +108,6 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
     }
 
 
-
     inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<StudentClassFragment>) :
             FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 

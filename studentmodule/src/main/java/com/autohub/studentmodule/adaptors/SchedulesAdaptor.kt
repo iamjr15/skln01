@@ -1,12 +1,15 @@
 package com.autohub.studentmodule.adaptors
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.autohub.skln.utills.AppConstants
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.SchedulesRowBinding
+import com.autohub.studentmodule.models.BatchesModel
 
 /**
  * Created by Vt Netzwelt
@@ -14,7 +17,7 @@ import com.autohub.studentmodule.databinding.SchedulesRowBinding
 class SchedulesAdaptor(var context: Context)
     : RecyclerView.Adapter<SchedulesAdaptor.Holder>() {
 
-    private var userList: List<String> = ArrayList()
+    private var batchList: List<BatchesModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val exploreRowBinding: SchedulesRowBinding =
@@ -28,69 +31,55 @@ class SchedulesAdaptor(var context: Context)
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        /*  holder.exploreRowBinding.setItemClickListener(mItemClickListener)
-          userList[position].let {
-              with(holder.exploreRowBinding)
-              {
+        batchList[position].let {
+            with(holder.exploreRowBinding)
+            {
+                batchName.text = it.title
+                time.text = it.batchTiming
+                if (it.status == AppConstants.STATUS_ACTIVE) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        cardView.setBackgroundColor(context.resources.getColor(R.color.skyblue, null))
+                    } else {
+                        cardView.setBackgroundColor(context.resources.getColor(R.color.skyblue))
+                    }
+                    activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_green_round, null)
+                }
 
-                  if (mCurrentLocation != null) {
-                      txtdistance.setText("${it.distance.toString()} Km")
-                  }
+                if (it.status == AppConstants.STATUS_ACTIVE) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        cardView.setBackgroundColor(context.resources.getColor(R.color.skyblue, null))
+                    } else {
+                        cardView.setBackgroundColor(context.resources.getColor(R.color.skyblue))
+                    }
+                    activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_green_round, null)
+                }
 
-                  user = it
-                  tutorname.setText(it.firstName + " " + it.lastName)
-                  txtclassprice.setText(it.rate + " / " + it.noOfClasses + " PER " + it.paymentDuration)
-
-
-                  var splitarray = it.classesToTeach.split(",")
-                  if (splitarray.size > 0) {
-                      var stringBuilder = StringBuilder(splitarray.size)
-                      for (i in splitarray.indices) {
-                          if (i == splitarray.size - 1) {
-                              stringBuilder.append(splitarray.get(i) + CommonUtils.getClassSuffix(splitarray.get(i).toInt()))
-
-                          } else {
-                              stringBuilder.append(splitarray.get(i) + CommonUtils.getClassSuffix(splitarray.get(i).toInt()) + " - ")
-                          }
-                      }
-                      txtgrades.setText(stringBuilder.toString())
+                if (it.status == AppConstants.STATUS_CANCELLED) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        cardView.setBackgroundColor(context.resources.getColor(R.color.yellow, null))
+                    } else {
+                        cardView.setBackgroundColor(context.resources.getColor(R.color.yellow))
+                    }
+                    activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_black_round, null)
+                }
+            }
 
 
-                  } else {
-                      txtgrades.setText(it.classesToTeach)
-
-                  }
-
-
-
-                  txtclasstype.setText(it.classType)
-                  txtsubjects.setText(it.subjectsToTeach.replace(",", " | "))
-
-                  if (!TextUtils.isEmpty(it.pictureUrl)) {
-                      val pathReference1 = FirebaseStorage.getInstance().reference.child(it.pictureUrl)
-                      val options = RequestOptions()
-                      options.transforms(MultiTransformation(CenterCrop(), RoundedCornersTransformation(context, CommonUtils.convertDpToPixel(6f, context).toInt(), 0)))
-                      options.placeholder(R.drawable.dummyexploreimage)
-                      Glide.with(context).load(pathReference1)
-                              .apply(options).into(imgprofile)
-
-                  }
-
-              }
-          }*/
+        }
 
     }
+
 
     override fun getItemCount(): Int {
-        return 10/*userList.size*/
+        return batchList.size
     }
 
-    fun setData(userList: List<String>) {
-        this.userList = userList
+    fun setData(userList: List<BatchesModel>) {
+        this.batchList = userList
         notifyDataSetChanged()
     }
 
-    inner class Holder(exploreRowBinding: SchedulesRowBinding) :
+    inner class Holder(var exploreRowBinding: SchedulesRowBinding) :
             RecyclerView.ViewHolder(exploreRowBinding.root) {
         fun bind() {
         }
