@@ -239,6 +239,10 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
                 explorebaseFragment.showRequestDetailFragment(bundle!!)
                 setStatusBarColor(com.autohub.skln.R.drawable.bg_purple_blue)
             }
+
+
+            fragmentClassRequests.showRequestFragmentClass()
+
         }
 
     }

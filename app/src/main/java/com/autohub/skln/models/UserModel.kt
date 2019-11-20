@@ -10,6 +10,8 @@ import java.util.*
 
 data class UserModel(var academicInfo: AcademicInformation? = AcademicInformation(),
                      var id: String? = "", var personInfo: PersonalInformation? = PersonalInformation()
+
+
 ) : Parcelable {
 
     private val FAVORITE_CLASSES = HashMap<String, Int>()
@@ -20,8 +22,7 @@ data class UserModel(var academicInfo: AcademicInformation? = AcademicInformatio
     constructor(parcel: Parcel) : this(
             TODO("academicInfo"),
             parcel.readString(),
-            TODO("personInfo")) {
-    }
+            TODO("personInfo"))
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)

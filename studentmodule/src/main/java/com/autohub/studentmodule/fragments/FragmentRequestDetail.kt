@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.Request
+import com.autohub.skln.models.batches.BatchRequestViewModel
 import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.FragmentRequestDetailBinding
-import com.autohub.skln.models.batches.BatchRequestViewModel
 import com.autohub.studentmodule.models.TutorViewModel
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.firestore.SetOptions

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.autohub.skln.fragment.BaseFragment
@@ -13,7 +12,7 @@ import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.studentmodule.adaptors.EnrolledClassesAdaptor
 import com.autohub.studentmodule.databinding.FragmentEnrolledClassesBinding
 import com.autohub.studentmodule.models.BatchesModel
-import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.SetOptions
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,17 +39,65 @@ class EnrolledClassesFragment : BaseFragment() {
         removeBatchFromProfile(it)
     }
 
-    private fun removeBatchFromProfile(it: BatchesModel?) {
-        firebaseStore.collection("students").document(appPreferenceHelper.getuserID()).update("batchCodes",
-                FieldValue.arrayRemove(it!!.batchCode)).addOnSuccessListener {
+    private fun removeBatchFromProfile(batchmodel: BatchesModel?) {
+        showLoading()
+
+
+        firebaseStore.collection("students").document(appPreferenceHelper.getuserID()).get().addOnSuccessListener {
+            hideLoading()
+            if (it["batchCodes"] != null) {
+                var batches: ArrayList<String> = it["batchCodes"] as ArrayList<String>
+                if (batches.contains(batchmodel!!.batchCode)) {
+                    batches.removeAt(batches.indexOf(batchmodel.batchCode))
+                    firebaseStore.collection("students").document(appPreferenceHelper.getuserID()).set(
+                            mapOf("batchCodes" to batches), SetOptions.merge()
+                    ).addOnCompleteListener {
+                        removeUserIdFromBatch(batchmodel)
+                    }
+                }
+
+
+            }
+            // user!!.batchCodes
+
+
+        }.addOnFailureListener {
+
+            hideLoading()
         }
-        firebaseStore.collection("batches").document(it.documentId!!).update("enrolledStudentId",
-                FieldValue.arrayRemove(firebaseAuth.currentUser!!.uid)).addOnSuccessListener {
-            Toast.makeText(context,
-                    "Batch code deleted", Toast.LENGTH_SHORT).show()
-            fetchEnrolledClasses()
-        }
+
+
     }
+
+    private fun removeUserIdFromBatch(batchmodel: BatchesModel) {
+
+
+        firebaseStore.collection("batches").whereEqualTo("batchCode", batchmodel.batchCode)
+                .get().addOnSuccessListener {
+
+                    it.forEach {
+                        if (it["enrolledStudentsId"] != null) {
+                            var enrollstudentIds: ArrayList<String> = it["enrolledStudentsId"] as ArrayList<String>
+                            if (enrollstudentIds.contains(firebaseAuth.currentUser!!.uid)) {
+                                enrollstudentIds.removeAt(enrollstudentIds.indexOf(firebaseAuth.currentUser!!.uid))
+                                firebaseStore.collection("batches").document(batchmodel.documentId!!).set(
+                                        mapOf("enrolledStudentsId" to enrollstudentIds), SetOptions.merge()
+                                ).addOnCompleteListener {
+                                    fetchEnrolledClasses()
+
+                                }
+
+
+                            }
+
+                        }
+                    }
+
+
+                }
+    }
+    // user!!.batchCodes
+
 
     private var adaptor: EnrolledClassesAdaptor? = null
 
@@ -90,7 +137,7 @@ class EnrolledClassesFragment : BaseFragment() {
                         enrolledClassesList.clear()
                         for (document in task.result!!) {
                             val batchesModel = document.toObject(BatchesModel::class.java)
-
+                            batchesModel.documentId = document.id
 
 
 

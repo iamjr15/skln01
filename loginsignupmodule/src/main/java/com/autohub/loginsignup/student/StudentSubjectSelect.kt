@@ -281,7 +281,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         }
 
         override fun getPageWidth(position: Int): Float {
-            return 0.5f
+            return 0.6f
         }
 
         // 3

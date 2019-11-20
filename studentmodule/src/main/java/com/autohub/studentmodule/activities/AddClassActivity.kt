@@ -49,12 +49,14 @@ class AddClassActivity : BaseActivity() {
                 , batchCode).get().addOnCompleteListener { task ->
             if (task.isSuccessful && task.result!!.size() > 0) {
                 var batchTitle = ""
+                var batchCode = ""
                 for (document in task.result!!) {
                     val batchesModel = document.toObject(BatchesModel::class.java)
                     batchesModel.documentId = document.id
 
 
                     batchTitle = batchesModel.title
+                    batchCode = batchesModel.batchCode
 
                 }
                 mBinding!!.txtadded.text = "you have been added into - ${batchTitle} Successfully."
@@ -62,7 +64,7 @@ class AddClassActivity : BaseActivity() {
                 mBinding!!.lladdclasssucess.visibility = View.VISIBLE
                 // add batch code as array in your profile for future use
 
-                addBatchCodeInStudent(batchTitle)
+                addBatchCodeInStudent(batchTitle, batchCode)
 
             } else {
                 showSnackError("No batch exist with this batch code.")
@@ -76,10 +78,10 @@ class AddClassActivity : BaseActivity() {
 
     }
 
-    private fun addBatchCodeInStudent(batchTitle: String) {
+    private fun addBatchCodeInStudent(batchTitle: String, batchCode: String) {
         firebaseStore.collection(getString(R.string.db_root_students))
                 .document(appPreferenceHelper.getuserID()).set(
-                        mapOf("batchCodes" to FieldValue.arrayUnion(batchTitle)
+                        mapOf("batchCodes" to FieldValue.arrayUnion(batchCode)
 
                         ), SetOptions.merge()).addOnSuccessListener {
                     hideLoading()
