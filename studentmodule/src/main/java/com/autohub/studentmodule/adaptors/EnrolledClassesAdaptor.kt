@@ -14,7 +14,7 @@ import com.autohub.studentmodule.models.BatchesModel
  * Created by Vt Netzwelt
  */
 
-class EnrolledClassesAdaptor(var context: Context, var mItemClickListener: ItemClickListener<String>)
+class EnrolledClassesAdaptor(var context: Context, var erolldClassDeleteClickListener: ItemClickListener<BatchesModel>)
     : RecyclerView.Adapter<EnrolledClassesAdaptor.Holder>() {
 
     private var userList: List<BatchesModel> = ArrayList()
@@ -31,12 +31,18 @@ class EnrolledClassesAdaptor(var context: Context, var mItemClickListener: ItemC
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
+        holder.enrolledClasesBinding.delete.setOnClickListener {
+            erolldClassDeleteClickListener.onClick(userList[position])
+        }
+
         userList[position].let {
             with(holder.enrolledClasesBinding)
             {
                 batchName.text = it.title
                 className.text = it.grade.name + " | " + it.subject.name
+                studentsCount.text = it.enrolledStudentsId.size.toString() + " students"
 
+//7:30 PM - 9 PM | TUE, THU, FRI
             }
 
 

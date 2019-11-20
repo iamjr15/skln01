@@ -55,15 +55,7 @@ class StudentProfileFragment : BaseFragment() {
 
     private fun setupProfile() {
 
-        /*val ref = FirebaseStorage.getInstance().reference.child(path +
-                firebaseAuth.currentUser!!.uid + ".jpg")*/
-
-
-        var root = getString(R.string.db_root_tutors)
-        if (mProfileType.equals("student", ignoreCase = true)) {
-            root = getString(R.string.db_root_students)
-        }
-        firebaseStore.collection(root).document(appPreferenceHelper.getuserID()).get()
+        firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     var user: UserModel = documentSnapshot.toObject(UserModel::class.java)!!
                     if (user.personInfo!!.accountPicture != null && !user.personInfo!!.accountPicture.equals("")) {

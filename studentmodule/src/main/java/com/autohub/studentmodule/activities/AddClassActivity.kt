@@ -2,16 +2,21 @@ package com.autohub.studentmodule.activities
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.autohub.skln.BaseActivity
+import com.autohub.skln.utills.ActivityUtils
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.ActivityAddClassBinding
+import com.autohub.studentmodule.models.BatchesModel
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.SetOptions
 
 /**
  * Created by Vt Netzwelt
  */
 
-class AddClassActivity : AppCompatActivity() {
+class AddClassActivity : BaseActivity() {
     private var mBinding: ActivityAddClassBinding? = null
 
 
@@ -20,13 +25,69 @@ class AddClassActivity : AppCompatActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_class)
         mBinding!!.callback = this
     }
+
     fun onAddclick() {
-        mBinding!!.lladdclass.visibility = View.GONE
-        mBinding!!.lladdclasssucess.visibility = View.VISIBLE
+        if (mBinding!!.edtcode.equals("")) {
+            showSnackError(getString(R.string.addbatchcode))
+            return
+        }
+        showLoading()
+
+
+        getBatchCodeDetails()
+
+
     }
 
     fun onOkClick() {
         finish()
+    }
+
+    private fun getBatchCodeDetails() {
+        var batchCode = mBinding!!.edtcode.text.toString().trim()
+        firebaseStore.collection("batches").whereEqualTo("batchCode"
+                , batchCode).get().addOnCompleteListener { task ->
+            if (task.isSuccessful && task.result!!.size() > 0) {
+                var batchTitle = ""
+                for (document in task.result!!) {
+                    val batchesModel = document.toObject(BatchesModel::class.java)
+                    batchesModel.documentId = document.id
+
+
+                    batchTitle = batchesModel.title
+
+                }
+                mBinding!!.txtadded.text = "you have been added into - ${batchTitle} Successfully."
+                mBinding!!.lladdclass.visibility = View.GONE
+                mBinding!!.lladdclasssucess.visibility = View.VISIBLE
+                // add batch code as array in your profile for future use
+
+                addBatchCodeInStudent(batchTitle)
+
+            } else {
+                showSnackError("No batch exist with this batch code.")
+
+            }
+            hideLoading()
+        }.addOnFailureListener { e ->
+            hideLoading()
+            showSnackError(e.message)
+        }
+
+    }
+
+    private fun addBatchCodeInStudent(batchTitle: String) {
+        firebaseStore.collection(getString(R.string.db_root_students))
+                .document(appPreferenceHelper.getuserID()).set(
+                        mapOf("batchCodes" to FieldValue.arrayUnion(batchTitle)
+
+                        ), SetOptions.merge()).addOnSuccessListener {
+                    hideLoading()
+                    Toast.makeText(this,
+                            "Your have been added into - ${batchTitle} Successfully.", Toast.LENGTH_SHORT).show()
+                    ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
+                    finishAffinity()
+                }
 
     }
 

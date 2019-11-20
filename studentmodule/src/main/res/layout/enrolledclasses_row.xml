@@ -119,10 +119,11 @@
                     tools:text="7:30 PM - 9 PM | TUE, THU, FRI" />
 
                 <ImageView
-                    android:id="@+id/next"
-                    android:layout_width="16dp"
-                    android:layout_height="20dp"
+                    android:id="@+id/delete"
+                    android:layout_width="28dp"
+                    android:layout_height="32dp"
                     android:layout_marginEnd="8dp"
+                    android:padding="4dp"
                     android:src="@drawable/deleteicon"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

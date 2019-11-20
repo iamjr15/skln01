@@ -99,5 +99,6 @@
     <string name="payment_method_cash">PAYMENT METHOD:CASH</string>
     <string name="showpas">show</string>
     <string name="headerprofile">profile</string>
+    <string name="addbatchcode">Please add your batch code.</string>
 
 </resources>
