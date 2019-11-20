@@ -30,10 +30,10 @@ import java.util.*
  */
 class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner {
 
-    private var selectedSubjects: ArrayList<String> = ArrayList()
+    private var selectedSubjects: ArrayList<SubjectsModel> = ArrayList()
     lateinit var subjectDataList: ArrayList<SubjectsModel>
 
-    override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: String) {
+    override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: Any) {
 
 
         for (i in fragmentsList.indices) {
@@ -44,7 +44,7 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
                         fragmentsList[i].updateFragment(isSecond = true, selected = false)
 
                     } else {
-                        selectedSubjects.add(selectedClass)
+                        selectedSubjects.add(selectedClass as SubjectsModel)
 
                         fragmentsList[i].updateFragment(isSecond = true, selected = true)
 
@@ -56,7 +56,7 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
                         fragmentsList[i].updateFragment(isSecond = false, selected = false)
 
                     } else {
-                        selectedSubjects.add(selectedClass)
+                        selectedSubjects.add(selectedClass as SubjectsModel)
 
                         fragmentsList[i].updateFragment(isSecond = false, selected = true)
 
@@ -203,15 +203,25 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
         for (i in selectedSubjects) {
             var map: HashMap<String, String> = HashMap()
 
-            if (mFavoriteOrLeast)
+            if (mFavoriteOrLeast) {
                 map["category"] = "favorite"
-            else
+                map["isFavourite"] = "true"
+                map["isLeastFavourite"] = "false"
+                map["isHobby"] = "false"
+            } else {
                 map["category"] = "leastfavorite"
-//hdsjhsa
-            map["id"] = firebaseAuth.currentUser!!.uid + "_" + i
-            map["studentId"] = firebaseAuth.currentUser!!.uid
-            map["subjectId"] = i
 
+                map["isFavourite"] = "false"
+                map["isLeastFavourite"] = "true"
+                map["isHobby"] = "false"
+            }
+
+            map["id"] = firebaseAuth.currentUser!!.uid + "_" + i.id
+            map["studentId"] = firebaseAuth.currentUser!!.uid
+            map["subjectId"] = i.id!!
+            map["subjectName"] = i.name!!
+            map["subjectQuestion"] = ""
+            map["answer"] = ""
 
             val nycRef = firebaseStore.collection("studentSubjects").document()
             batch.set(nycRef, map)
@@ -233,9 +243,9 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
     fun saveData() {
         val stringBuilder = StringBuilder()
         if (selectedSubjects.size > 0) {
-            stringBuilder.append(selectedSubjects[0])
+            stringBuilder.append(selectedSubjects[0].id)
             for (i in 1 until selectedSubjects.size) {
-                stringBuilder.append(", ").append(selectedSubjects[i])
+                stringBuilder.append(", ").append(selectedSubjects[i].id)
             }
         }
 
