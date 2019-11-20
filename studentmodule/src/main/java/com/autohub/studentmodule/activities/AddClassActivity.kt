@@ -42,7 +42,7 @@ class AddClassActivity : BaseActivity() {
 
     private fun getBatchCodeDetails() {
         var batchCode = mBinding!!.edtcode.text.toString().trim()
-        firebaseStore.collection("batches").whereEqualTo("batchCode"
+        firebaseStore.collection(getString(R.string.db_root_batches)).whereEqualTo("batchCode"
                 , batchCode).get().addOnCompleteListener { task ->
             if (task.isSuccessful && task.result!!.size() > 0) {
                 var batchTitle = ""

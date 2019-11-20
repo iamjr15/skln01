@@ -51,6 +51,7 @@ class ProfileFragment : BaseFragment() {
 
                     mBinding.type.text = tutorData?.qualification?.classType?.joinToString(",")
 
+                    mBinding.id.text = tutorData?.tutorCode
                     GlideApp.with(this)
                             .load(tutorData!!.personInfo!!.accountPicture)
                             .placeholder(com.autohub.skln.R.drawable.default_pic)

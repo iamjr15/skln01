@@ -18,8 +18,7 @@ import com.autohub.skln.CropActivity
 import com.autohub.skln.models.batchRequests.GradeData
 import com.autohub.skln.models.batchRequests.SubjectData
 import com.autohub.skln.models.User
-import com.autohub.skln.models.tutor.TutorData
-import com.autohub.skln.models.tutor.TutorGradesSubjects
+import com.autohub.skln.models.tutor.*
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.GlideApp
@@ -27,6 +26,7 @@ import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ActivityTutorEditProfileBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
@@ -501,12 +501,30 @@ class EditProfileActivity : BaseActivity() {
     }
 
     fun makeSaveRequest() {
+        showLoading()
         if (isVerified()) {
-            showSnackError("In progress")
+            val tutor = TutorData()
 
+            tutor.qualification?.currentOccupation = mBinding.selectOccupation.text.toString()
+            tutor.qualification?.experience = mBinding.teachingExperience.text.toString()
+            tutor.qualification?.qualification = mBinding.qualification.text.toString()
+            tutor.qualification?.qualificationArea = mBinding.areaOfQualification.text.toString()
+            tutor.qualification?.targetBoard = mBinding.targetedBoard.text.toString()
+            tutor.personInfo?.biodata = mBinding.bio.text.toString()
+
+            Log.e("tutor", tutor.toString())
+            firebaseStore.collection(getString(R.string.db_root_tutors)).
+                    document(appPreferenceHelper.getuserID()).
+                    update("qualification", tutor.qualification,
+                    "personInfo.biodata", tutor.personInfo?.biodata).
+                    addOnSuccessListener {
+                hideLoading()
+                showSnackError("Your profile is updated successfully!!")
+            }.addOnFailureListener { e ->
+                hideLoading()
+                showSnackError(e.toString())
+            }
         }
-
-
     }
 
     private fun isVerified(): Boolean {
