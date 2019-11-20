@@ -1,39 +1,60 @@
 package com.autohub.tutormodule.ui.dashboard.schedule
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.autohub.skln.models.batches.BatchesModel
+import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ScheduleRowBinding
 
 class ScheduleAdaptor(var context: Context)
     : RecyclerView.Adapter<ScheduleAdaptor.Holder>() {
 
-    private var userList: List<String> = ArrayList()
+    private var batchList: List<BatchesModel> = ArrayList()
+    lateinit var exploreRowBinding: ScheduleRowBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val exploreRowBinding: ScheduleRowBinding =
-                DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.schedule_row, parent, false
-                )
+        exploreRowBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
+                R.layout.schedule_row, parent, false)
 
         return Holder(exploreRowBinding)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+        exploreRowBinding.batchName.text = batchList[position].title
+        exploreRowBinding.time.text = batchList[position].timing.startTime?.toDate()?.time.toString() + " - " +
+                batchList[position].timing.endTime?.toDate()?.time.toString()
+        exploreRowBinding.activeButton.text = batchList[position].status
 
+        if (batchList[position].status == AppConstants.STATUS_ACTIVE) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                exploreRowBinding.cardView.setBackgroundColor(context.resources.getColor(R.color.skyblue, null))
+            } else {
+                exploreRowBinding.cardView.setBackgroundColor(context.resources.getColor(R.color.skyblue))
+            }
+            exploreRowBinding.activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_green_round, null)
+        }
 
+        if (batchList[position].status == AppConstants.STATUS_CANCELLED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                exploreRowBinding.cardView.setBackgroundColor(context.resources.getColor(R.color.yellow, null))
+            } else {
+                exploreRowBinding.cardView.setBackgroundColor(context.resources.getColor(R.color.yellow))
+            }
+            exploreRowBinding.activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_black_round, null)
+        }
     }
 
     override fun getItemCount(): Int {
-        return 10/*userList.size*/
+        return batchList.size
     }
 
-    fun setData(userList: List<String>) {
-        this.userList = userList
+    fun setData(batchList: List<BatchesModel>) {
+        this.batchList = batchList
         notifyDataSetChanged()
     }
 

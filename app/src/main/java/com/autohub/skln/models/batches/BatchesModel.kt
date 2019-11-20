@@ -4,6 +4,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.GeoPoint
 
 data class BatchesModel(var batchCode: String = "",
+                        var status: String = "",
                         var grade: Grade = Grade(),
                         var subject: Subject = Subject(),
                         var location: Location = Location(),
