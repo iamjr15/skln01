@@ -15,6 +15,7 @@ data class TutorData(var academicInfo: TutorAcademicInfo? = TutorAcademicInfo(),
                      var qualification: TutorQualification? = TutorQualification(),
                      var classToTeach: String? = "",
                      var subjectsToTeach: String? = "",
+                     var tutorCode: String? = "",
                      var distance: Double? = 0.0
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -25,6 +26,7 @@ data class TutorData(var academicInfo: TutorAcademicInfo? = TutorAcademicInfo(),
             parcel.readParcelable(TutorPackageInfo::class.java.classLoader),
             parcel.readParcelable(TutorPersonalInfo::class.java.classLoader),
             parcel.readParcelable(TutorQualification::class.java.classLoader),
+            parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readValue(Double::class.java.classLoader) as? Double)
@@ -39,6 +41,7 @@ data class TutorData(var academicInfo: TutorAcademicInfo? = TutorAcademicInfo(),
         parcel.writeParcelable(qualification, flags)
         parcel.writeString(classToTeach)
         parcel.writeString(subjectsToTeach)
+        parcel.writeString(tutorCode)
         parcel.writeValue(distance)
     }
 

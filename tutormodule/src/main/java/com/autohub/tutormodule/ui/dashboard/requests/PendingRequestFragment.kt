@@ -116,7 +116,9 @@ class PendingRequestFragment : BaseFragment() {
                     hideLoading()
                     val data = documentSnapshot.toObject(BatchesModel::class.java)
                     data?.enrolledStudentsId?.add(arguments?.getString("studentId")!!)
-                    firebaseStore.collection(getString(R.string.db_root_batches)).document(selectedBatch.documentId!!).update("enrolledStudentsId", data?.enrolledStudentsId)
+                    firebaseStore.collection(getString(R.string.db_root_batches)).
+                            document(selectedBatch.documentId!!).
+                            update("enrolledStudentsId", data?.enrolledStudentsId)
                             .addOnSuccessListener {
                                 Log.d("success", "enrollStudentToBatch")
                                 showSnackError("Your request is accepted successfully!!")

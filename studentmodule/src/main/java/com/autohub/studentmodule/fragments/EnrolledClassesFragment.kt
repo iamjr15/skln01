@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.listeners.ItemClickListener
+import com.autohub.studentmodule.R
 import com.autohub.studentmodule.adaptors.EnrolledClassesAdaptor
 import com.autohub.studentmodule.databinding.FragmentEnrolledClassesBinding
 import com.autohub.studentmodule.models.BatchesModel
@@ -41,10 +42,10 @@ class EnrolledClassesFragment : BaseFragment() {
     }
 
     private fun removeBatchFromProfile(it: BatchesModel?) {
-        firebaseStore.collection("students").document(appPreferenceHelper.getuserID()).update("batchCodes",
+        firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).update("batchCodes",
                 FieldValue.arrayRemove(it!!.batchCode)).addOnSuccessListener {
         }
-        firebaseStore.collection("batches").document(it.documentId!!).update("enrolledStudentId",
+        firebaseStore.collection(getString(R.string.db_root_batches)).document(it.documentId!!).update("enrolledStudentId",
                 FieldValue.arrayRemove(firebaseAuth.currentUser!!.uid)).addOnSuccessListener {
             Toast.makeText(context,
                     "Batch code deleted", Toast.LENGTH_SHORT).show()
@@ -81,7 +82,7 @@ class EnrolledClassesFragment : BaseFragment() {
 
         var studentsEnrollesIdMap: HashMap<String, ArrayList<String>> = HashMap()
 
-        firebaseStore.collection("batches").whereArrayContains("enrolledStudentsId", firebaseAuth.currentUser!!.uid)
+        firebaseStore.collection(getString(R.string.db_root_batches)).whereArrayContains("enrolledStudentsId", firebaseAuth.currentUser!!.uid)
                 .get().addOnCompleteListener { task ->
 
                     mBinding!!.swiperefresh.isRefreshing = false

@@ -51,7 +51,7 @@ class ScheduleFragment : BaseFragment() {
     }
 
     private fun fetchBatches() {
-        firebaseStore.collection("batches").whereArrayContains("enrolledStudentsId", firebaseAuth.currentUser!!.uid)
+        firebaseStore.collection(getString(R.string.db_root_batches)).whereArrayContains("enrolledStudentsId", firebaseAuth.currentUser!!.uid)
                 .get().addOnCompleteListener { task ->
 
                     if (task.isSuccessful) {
