@@ -87,19 +87,21 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:orientation="vertical">
 
                     <TextView
                         style="@style/already_go"
-                        android:fontFamily="@font/montserrat_bold"
+                        android:fontFamily="@font/montserrat_alternates_bold"
                         android:text="@string/pending_requests"
                         android:textSize="19sp" />
 
                     <TextView
-                        android:id="@+id/requests"
+                        android:id="@+id/pending_request_count"
                         style="@style/click_to_a"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/montserrat_bold"
+                        android:text="0"
                         android:textSize="62sp" />
 
                 </LinearLayout>
@@ -116,7 +118,6 @@
 
             <RelativeLayout
                 android:id="@+id/manage_classes"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -136,11 +137,12 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:orientation="vertical">
 
                     <TextView
                         style="@style/already_go"
-                        android:fontFamily="@font/montserrat_bold"
+                        android:fontFamily="@font/montserrat_alternates_bold"
                         android:text="@string/manage_classes"
                         android:textSize="19sp" />
 
@@ -174,11 +176,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:orientation="vertical">
 
                     <TextView
                         style="@style/already_go"
-                        android:fontFamily="@font/montserrat_bold"
+                        android:fontFamily="@font/montserrat_alternates_bold"
                         android:text="@string/your_reviews"
                         android:textSize="19sp" />
 
@@ -190,7 +193,9 @@
                         <ImageView
                             android:layout_width="54dp"
                             android:layout_height="52dp"
-                            android:layout_margin="15dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="15dp"
                             android:src="@drawable/ic_star_full"
                             android:tint="@color/white" />
 
@@ -198,6 +203,7 @@
                             android:id="@+id/avg_rating"
                             style="@style/click_to_a"
                             android:fontFamily="@font/montserrat_semi_bold"
+                            android:text="@string/_0_0"
                             android:textSize="62sp" />
                     </LinearLayout>
                 </LinearLayout>

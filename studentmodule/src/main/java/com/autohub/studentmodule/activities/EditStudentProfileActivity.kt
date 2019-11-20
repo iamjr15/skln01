@@ -23,6 +23,8 @@ import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.ActivityEditStudentProfileBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.firebase.FirebaseApp
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.WriteBatch
 import com.google.firebase.storage.FirebaseStorage
@@ -229,8 +231,9 @@ class EditStudentProfileActivity : BaseActivity() {
                     favtdata.name?.let { selectedItems.add(it) }
                 }
             }
-
         }
+
+
         if (user!!.academicInfo!!.leastFavoriteSubjects != null && user!!.academicInfo!!.leastFavoriteSubjects!!.isNotEmpty() && isLeastFav) {
             for (leastfav in favleastsubjectsDataList) {
                 if (leastfav.isleastelected!!) {
@@ -365,7 +368,6 @@ class EditStudentProfileActivity : BaseActivity() {
     *
     * */
     private fun setUpUserInfo() {
-
 
         firebaseStore.collection(getString(com.autohub.skln.R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->

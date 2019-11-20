@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.autohub.tutormodule.R
+import java.util.*
 
 class ScheduleCalenderAdapter(private val list: List<String>) :
         RecyclerView.Adapter<ScheduleCalenderAdapter.ViewHolder>() {
@@ -28,6 +29,11 @@ class ScheduleCalenderAdapter(private val list: List<String>) :
         viewHolder.month.text = date[0]
         viewHolder.date.text = date[1]
         viewHolder.day.text = date[2]
+
+        if (Calendar.getInstance().get(Calendar.MONTH).toString().contains(date[0]) &&
+                date[1] == Calendar.getInstance().get(Calendar.DAY_OF_MONTH).toString()) {
+            selectedPosition = position
+        }
 
         if (position == selectedPosition) {
             viewHolder.month.setTextColor(Color.WHITE)

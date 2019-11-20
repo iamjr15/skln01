@@ -34,7 +34,7 @@ class RequestBaseFragment : BaseFragment() {
         val pendingRequestFragment = PendingRequestFragment()
         pendingRequestFragment.arguments = bundle
         childFragmentManager
-                .beginTransaction()
+                .beginTransaction().addToBackStack(PendingRequestFragment::class.java.name)
                 .replace(R.id.requestcontainer, pendingRequestFragment).commit()
     }
 

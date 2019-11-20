@@ -61,6 +61,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/title"
                 tools:text="Physics - Morning" />
 
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="48dp"
+                android:background="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/batch_name"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
 
             <TextView
                 android:id="@+id/class_name"
@@ -88,6 +98,7 @@
                 android:padding="12dp"
                 android:textColor="@color/white"
                 android:textSize="18sp"
+                android:textAllCaps="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/class_name"
@@ -112,7 +123,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/montserrat_semi_bold"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="@string/info_text_batch_options"
                 android:textColor="@color/black"
                 android:textSize="12sp"
