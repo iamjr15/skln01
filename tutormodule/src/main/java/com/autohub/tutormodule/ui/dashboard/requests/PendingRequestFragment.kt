@@ -64,7 +64,7 @@ class PendingRequestFragment : BaseFragment() {
                 .update("status", "rejected")
                 .addOnSuccessListener {
                     Log.d(" ", "DocumentSnapshot successfully updated!")
-                    showSnackError("Your request is accepted successfully!!")
+                    showSnackError("Your request is rejected successfully!!")
                 }
                 .addOnFailureListener { e ->
                     hideLoading()
@@ -119,8 +119,8 @@ class PendingRequestFragment : BaseFragment() {
                     firebaseStore.collection(getString(R.string.db_root_batches)).document("dIRGpBbG3ciL4eM6lx8m").update("enrolledStudentsId", data?.enrolledStudentsId)
                             .addOnSuccessListener {
                                 Log.d("success", "enrollStudentToBatch")
+                                showSnackError("Your request is accepted successfully!!")
                             }.addOnFailureListener { e ->
-
                                 showSnackError(e.message)
                             }
                 }
