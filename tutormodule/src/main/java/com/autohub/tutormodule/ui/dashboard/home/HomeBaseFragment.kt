@@ -43,14 +43,14 @@ class HomeBaseFragment : BaseFragment() {
     fun showHomefragment() {
         homeFragment = HomeFragment()
         childFragmentManager
-                .beginTransaction()
+                .beginTransaction().addToBackStack(HomeFragment::class.java.name)
                 .replace(R.id.homecontainer, homeFragment!!).commit()
     }
 
     fun showManagerFragment() {
         homeFragment = null
         childFragmentManager
-                .beginTransaction()
+                .beginTransaction().addToBackStack(ClassManagerFragment::class.java.name)
                 .replace(R.id.homecontainer, ClassManagerFragment()).commit()
     }
 
@@ -61,7 +61,7 @@ class HomeBaseFragment : BaseFragment() {
         val addBatchFragment = AddBatchFragment()
         addBatchFragment.arguments = bundle
         childFragmentManager
-                .beginTransaction()
+                .beginTransaction().addToBackStack(AddBatchFragment::class.java.name)
                 .replace(R.id.homecontainer, addBatchFragment).commit()
     }
 
@@ -72,14 +72,14 @@ class HomeBaseFragment : BaseFragment() {
         bundle.putParcelable("batch", batch)
         batchOptionsFragment.arguments = bundle
         childFragmentManager
-                .beginTransaction()
+                .beginTransaction().addToBackStack(BatchOptionsFragment::class.java.name)
                 .replace(R.id.homecontainer, batchOptionsFragment).commit()
     }
 
     fun showStudentsListFragment() {
         val studentsListFragment = StudentsListFragment()
         childFragmentManager
-                .beginTransaction()
+                .beginTransaction().addToBackStack(StudentsListFragment::class.java.name)
                 .replace(R.id.homecontainer, studentsListFragment).commit()
     }
 

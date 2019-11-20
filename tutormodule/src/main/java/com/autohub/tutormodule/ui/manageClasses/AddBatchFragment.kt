@@ -189,12 +189,12 @@ class AddBatchFragment : BaseFragment() {
         batchesModel.teacher?.accountPicture = tutorData.personInfo?.accountPicture
         batchesModel.teacher?.bioData = tutorData.personInfo?.biodata
 
-        batchesModel.batchCode = tutorData.personInfo?.firstName.toString().toCharArray()[0].toString() +
-                tutorData.personInfo?.lastName.toString().toCharArray()[0].toString() +
-                mBinding.batchName.text.toString().toCharArray()[0].toString() +
-                mBinding.batchName.text.toString().toCharArray()[1].toString() +
-                mBinding.selectSubject.text.toString().toCharArray()[0].toString() +
-                mBinding.selectSubject.text.toString().toCharArray()[1].toString() +
+        batchesModel.batchCode = tutorData.personInfo?.firstName.toString().toCharArray()[0].toString().toUpperCase() +
+                tutorData.personInfo?.lastName.toString().toCharArray()[0].toString().toUpperCase() +
+                mBinding.batchName.text.toString().toCharArray()[0].toString().toUpperCase() +
+                mBinding.batchName.text.toString().toCharArray()[1].toString().toUpperCase() +
+                mBinding.selectSubject.text.toString().toCharArray()[0].toString().toUpperCase() +
+                mBinding.selectSubject.text.toString().toCharArray()[1].toString().toUpperCase() +
                 (((Math.random() * 9000) + 1000).toInt())
 
         firebaseStore.collection(getString(R.string.db_root_batches)).add(batchesModel).addOnSuccessListener {
