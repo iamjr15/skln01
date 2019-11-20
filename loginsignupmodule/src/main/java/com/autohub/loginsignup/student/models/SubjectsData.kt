@@ -2,6 +2,7 @@ package com.autohub.loginsignup.student.models
 
 import android.os.Parcel
 import android.os.Parcelable
+
 /**
  * Created by Vt Netzwelt
  */
