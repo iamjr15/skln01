@@ -74,12 +74,12 @@ class HobbiesFragment : BaseFragment() {
 
     fun onSelectFirst() {
         classSelectionListner.selectedClass(position = position,
-                isSecondSelected = false, selectedClass = datalist[0].id!!)
+                isSecondSelected = false, selectedClass = datalist[0])
     }
 
     fun onSelectSecond() {
         classSelectionListner.selectedClass(position = position,
-                isSecondSelected = true, selectedClass = datalist[1].id!!)
+                isSecondSelected = true, selectedClass = datalist[1])
     }
 
     fun updateFragment(selected: Boolean, isSecond: Boolean) {

@@ -32,7 +32,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
     lateinit var hobbyDataList: ArrayList<SubjectsModel>
 
 
-    override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: String) {
+    override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: Any) {
         for (i in fragmentsList.indices) {
             if (position == i) {
                 if (isSecondSelected) {
@@ -41,7 +41,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
                         fragmentsList[i].updateFragment(isSecond = true, selected = false)
 
                     } else {
-                        selectedHobbies.add(selectedClass)
+                        selectedHobbies.add(selectedClass as SubjectsModel)
 
                         fragmentsList[i].updateFragment(isSecond = true, selected = true)
 
@@ -53,7 +53,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
                         fragmentsList[i].updateFragment(isSecond = false, selected = false)
 
                     } else {
-                        selectedHobbies.add(selectedClass)
+                        selectedHobbies.add(selectedClass as SubjectsModel)
 
                         fragmentsList[i].updateFragment(isSecond = false, selected = true)
 
@@ -116,7 +116,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
         showView()
     }
 
-    private var selectedHobbies: ArrayList<String> = ArrayList()
+    private var selectedHobbies: ArrayList<SubjectsModel> = ArrayList()
     private var mBinding: ActivityStudentHobbySelectBinding? = null
     private var fragmentsList: ArrayList<HobbiesFragment> = ArrayList()
 
@@ -207,10 +207,16 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
         for (i in selectedHobbies) {
             var map: HashMap<String, String> = HashMap()
             map["category"] = "hobby"
-            //hdsjhsa
-            map["id"] = firebaseAuth.currentUser!!.uid + "_" + i
+            map["isFavourite"] = "false"
+            map["isLeastFavourite"] = "false"
+            map["isHobby"] = "true"
+
+            map["id"] = firebaseAuth.currentUser!!.uid + "_" + i.id
             map["studentId"] = firebaseAuth.currentUser!!.uid
-            map["subjectId"] = i
+            map["subjectId"] = i.id!!
+            map["subjectName"] = i.name!!
+            map["subjectQuestion"] = ""
+            map["answer"] = ""
 
 
             val nycRef = firebaseStore.collection("studentSubjects").document()
@@ -236,9 +242,9 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
     fun saveData() {
         val stringBuilder = StringBuilder()
         if (selectedHobbies.size > 0) {
-            stringBuilder.append(selectedHobbies[0])
+            stringBuilder.append(selectedHobbies[0].id)
             for (i in 1 until selectedHobbies.size) {
-                stringBuilder.append(", ").append(selectedHobbies[i])
+                stringBuilder.append(", ").append(selectedHobbies[i].id)
             }
         }
 

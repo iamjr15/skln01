@@ -25,8 +25,8 @@ import kotlin.collections.set
  * Created by Vt Netzwelt
  */
 class StudentClassSelect : BaseActivity(), ClassSelectionListner {
-    override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: String) {
-        this.selectedClass = selectedClass
+    override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: Any) {
+        this.selectedClass = selectedClass as String
         for (i in fragmentsList.indices) {
             if (position != i) {
                 fragmentsList[i].updateFragment(true)

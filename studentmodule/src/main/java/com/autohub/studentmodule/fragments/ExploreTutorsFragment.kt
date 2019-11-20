@@ -225,9 +225,12 @@ class ExploreTutorsFragment : BaseFragment() {
 
                     Log.e("document", document.toString())
                     val user = document.toObject(TutorData::class.java)
-                    val geopoints = ((document.data.get("location") as HashMap<*, *>).get("geopoint")) as GeoPoint
-                    user.location!!.latitude = geopoints.latitude
-                    user.location!!.longitude = geopoints.longitude
+
+                    if (document.data.get("location") != null) {
+                        val geopoints = ((document.data.get("location") as HashMap<*, *>).get("geopoint")) as GeoPoint
+                        user.location!!.latitude = geopoints.latitude
+                        user.location!!.longitude = geopoints.longitude
+                    }
 
 
                     var subjects: StringBuilder = StringBuilder()

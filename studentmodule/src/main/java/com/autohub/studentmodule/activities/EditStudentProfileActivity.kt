@@ -379,11 +379,14 @@ class EditStudentProfileActivity : BaseActivity() {
                     var hobbiesIdBuilder = StringBuilder()
                     for (i in user.academicInfo!!.hobbies!!) {
                         var idsList = subjectDataList.map { it.id }
-                        val index = idsList.indexOf(i.trim())
-                        val items = ArrayList<String>()
-                        subjectDataList[index].isHobbySelected = true
-                        hobbiesBuilder.append(", " + subjectDataList[index].name)
-                        hobbiesIdBuilder.append("," + subjectDataList[index].id)
+                        if (idsList.contains(i.trim())) {
+                            val index = idsList.indexOf(i.trim())
+                            val items = ArrayList<String>()
+                            subjectDataList[index].isHobbySelected = true
+                            hobbiesBuilder.append(", " + subjectDataList[index].name)
+                            hobbiesIdBuilder.append("," + subjectDataList[index].id)
+                        }
+
                     }
 
                     selectedHobbiesid = hobbiesIdBuilder.toString().removeRange(0..0)
@@ -398,10 +401,14 @@ class EditStudentProfileActivity : BaseActivity() {
 
                     for (i in user.academicInfo!!.favoriteSubjects!!) {
                         var idsList = favleastsubjectsDataList.map { it.id }
-                        val index = idsList.indexOf(i.trim())
-                        favleastsubjectsDataList[index].isFavSelected = true
-                        favsujectsbuilder.append(", " + favleastsubjectsDataList[index].name)
-                        favsujectsidsbuilder.append("," + favleastsubjectsDataList[index].id)
+                        if (idsList.contains(i.trim())) {
+                            val index = idsList.indexOf(i.trim())
+                            favleastsubjectsDataList[index].isFavSelected = true
+                            favsujectsbuilder.append(", " + favleastsubjectsDataList[index].name)
+                            favsujectsidsbuilder.append("," + favleastsubjectsDataList[index].id)
+                        }
+
+
                     }
 
                     favtselectedId = favsujectsidsbuilder.toString().removeRange(0..0)
@@ -412,10 +419,12 @@ class EditStudentProfileActivity : BaseActivity() {
 
                     for (i in user.academicInfo!!.leastFavoriteSubjects!!) {
                         var idsList = favleastsubjectsDataList.map { it.id }
-                        val index = idsList.indexOf(i.trim())
-                        favleastsubjectsDataList[index].isleastelected = true
-                        leastsujectsbuilder.append(", " + favleastsubjectsDataList[index].name)
-                        leastsujectsidsbuilder.append("," + favleastsubjectsDataList[index].id)
+                        if (idsList.contains(i.trim())) {
+                            val index = idsList.indexOf(i.trim())
+                            favleastsubjectsDataList[index].isleastelected = true
+                            leastsujectsbuilder.append(", " + favleastsubjectsDataList[index].name)
+                            leastsujectsidsbuilder.append("," + favleastsubjectsDataList[index].id)
+                        }
                     }
                     leastselectedId = leastsujectsidsbuilder.toString().removeRange(0..0)
                     mBinding!!.leastFavuSubj.text = leastsujectsbuilder.toString().removeRange(0..0)
@@ -549,23 +558,45 @@ class EditStudentProfileActivity : BaseActivity() {
 * */
 
     private fun createBatchesForSubject(selectedSubjects: List<String>, value: Int) {
+
+
         var batch: WriteBatch = firebaseStore.batch()
         for (i in selectedSubjects) {
+            var name = ""
+            var idsList = subjectDataList.map { it.id }
+            if (idsList.contains(i)) {
+                val index = idsList.indexOf(i)
+                name = subjectDataList[index].name!!
+            }
+
+
             var map: HashMap<String, String> = HashMap()
 
-            if (value == 0)
+
+            if (value == 0) {
                 map["category"] = "favorite"
-            else if (value == 1)
+                map["isFavourite"] = "true"
+                map["isLeastFavourite"] = "false"
+                map["isHobby"] = "false"
+            } else if (value == 1) {
                 map["category"] = "leastfavorite"
-            else
+                map["isFavourite"] = "false"
+                map["isLeastFavourite"] = "true"
+                map["isHobby"] = "false"
+            } else {
                 map["category"] = "hobby"
+                map["isFavourite"] = "false"
+                map["isLeastFavourite"] = "false"
+                map["isHobby"] = "true"
 
+            }
 
-            //hdsjhsa
             map["id"] = firebaseAuth.currentUser!!.uid + "_" + i
             map["studentId"] = firebaseAuth.currentUser!!.uid
             map["subjectId"] = i
-
+            map["subjectName"] = name
+            map["subjectQuestion"] = ""
+            map["answer"] = ""
 
             val nycRef = firebaseStore.collection("studentSubjects").document()
             batch.set(nycRef, map)
