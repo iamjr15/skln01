@@ -1,6 +1,7 @@
 package com.autohub.tutormodule.ui.dashboard.schedule
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,8 @@ import android.widget.SeekBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.autohub.skln.fragment.BaseFragment
+import com.autohub.skln.models.batches.BatchesModel
+import com.autohub.skln.models.tutor.TutorData
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorScheduleBinding
 import java.text.ParseException
@@ -22,6 +25,7 @@ class ScheduleFragment : BaseFragment() {
 
     private lateinit var mBinding: FragmentTutorScheduleBinding
     private lateinit var adaptor: ScheduleAdaptor
+    private lateinit var tutorData: TutorData
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_tutor_schedule, container, false)
@@ -61,7 +65,32 @@ class ScheduleFragment : BaseFragment() {
         mBinding.schedulerecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         adaptor = ScheduleAdaptor(requireContext())
         mBinding.schedulerecycleview.adapter = adaptor
+        fetchTutorData()
 
+    }
+
+    private fun fetchTutorData() {
+        firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    hideLoading()
+                    tutorData = documentSnapshot.toObject(TutorData::class.java)!!
+                    fetchBatches()
+                }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
+    }
+
+    private fun fetchBatches() {
+        firebaseStore.collection(getString(R.string.db_root_batches)).whereEqualTo("teacher.id", tutorData.id)
+                .get().addOnSuccessListener { documentSnapshot ->
+                    val data = documentSnapshot.toObjects(BatchesModel::class.java)
+                    adaptor.setData(data)
+                }
+                .addOnFailureListener { e ->
+                    showSnackError(e.message)
+                }
     }
 
     private fun initializeCalendarView(dates: List<String>) {
@@ -100,4 +129,5 @@ class ScheduleFragment : BaseFragment() {
             cal1.add(Calendar.DATE, 1)
         }
         return dates
-    }}
+    }
+}

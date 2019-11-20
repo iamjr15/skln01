@@ -39,7 +39,9 @@ class RequestsAdaptor(var context: Context, val listener: Listener)
         }
 
         holder.itemView.setOnClickListener {
-            listener.showPendingRequestFragment(requestsList[position].student?.id!!, requestsList[position].documentId!!)
+            if (requestsList[position].status == AppConstants.STATUS_PENDING) {
+                listener.showPendingRequestFragment(requestsList[position].student?.id!!, requestsList[position].documentId!!)
+            }
         }
     }
 

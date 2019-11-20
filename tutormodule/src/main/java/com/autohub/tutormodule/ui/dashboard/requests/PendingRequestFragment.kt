@@ -12,12 +12,12 @@ import androidx.fragment.app.Fragment
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.UserModel
 import com.autohub.skln.models.batches.BatchRequestModel
+import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.GlideApp
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentPendingRequestBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.google.firebase.firestore.SetOptions
 
 
 /**
@@ -31,6 +31,7 @@ class PendingRequestFragment : BaseFragment() {
     private val selectedBatch = ArrayList<String>()
     private val batchNames = ArrayList<String>()
     private lateinit var selectedBatchId: String
+    private var selectedPosition: Int = -1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -63,6 +64,7 @@ class PendingRequestFragment : BaseFragment() {
                 .update("status", "rejected")
                 .addOnSuccessListener {
                     Log.d(" ", "DocumentSnapshot successfully updated!")
+                    showSnackError("Your request is rejected successfully!!")
                 }
                 .addOnFailureListener { e ->
                     hideLoading()
@@ -71,17 +73,21 @@ class PendingRequestFragment : BaseFragment() {
     }
 
     private fun acceptRequest() {
-        showLoading()
-        firebaseStore.collection(getString(R.string.db_root_batch_requests)).document(arguments?.getString("documentId")!!)
-                .update("status", "accepted")
-                .addOnSuccessListener {
-                    Log.d(" ", "DocumentSnapshot successfully updated!")
-                    fetchBatches(true)
-                }
-                .addOnFailureListener { e ->
-                    hideLoading()
-                    showSnackError(e.message)
-                }
+        if (selectedPosition == -1) {
+            showSnackError("You need to add student to batch first!!")
+        } else {
+            showLoading()
+            firebaseStore.collection(getString(R.string.db_root_batch_requests)).document(arguments?.getString("documentId")!!)
+                    .update("status", "accepted")
+                    .addOnSuccessListener {
+                        Log.d(" ", "DocumentSnapshot successfully updated!")
+                        fetchBatches(true)
+                    }
+                    .addOnFailureListener { e ->
+                        hideLoading()
+                        showSnackError(e.message)
+                    }
+        }
     }
 
     private fun fetchBatches(enrollStudent: Boolean) {
@@ -94,7 +100,7 @@ class PendingRequestFragment : BaseFragment() {
                     }
 
                     if (enrollStudent) {
-                        enrollStudentToBatch(batches)
+                        enrollStudentToBatch(batches[selectedPosition])
                     }
                 }
                 .addOnFailureListener { e ->
@@ -103,17 +109,20 @@ class PendingRequestFragment : BaseFragment() {
                 }
     }
 
-    private fun enrollStudentToBatch(batches: MutableList<BatchRequestModel>) {
-        val student: HashMap<String, String> = HashMap()
-        student["studentsEnrolled"] = arguments?.getString("studentId")!!
-        student["studentsEnrolled.name"] = "Test"
+    private fun enrollStudentToBatch(selectedBatch: BatchRequestModel) {
 
-        firebaseStore.collection(getString(R.string.db_root_batches) ).
-                document("dIRGpBbG3ciL4eM6lx8m")
-                .set(student, SetOptions.merge())
-                .addOnSuccessListener { documentSnapshot ->
+        firebaseStore.collection(getString(R.string.db_root_batches)).document(selectedBatch.documentId!!)
+                .get().addOnSuccessListener { documentSnapshot ->
                     hideLoading()
-                    Log.d("Aaaa", "success");
+                    val data = documentSnapshot.toObject(BatchesModel::class.java)
+                    data?.enrolledStudentsId?.add(arguments?.getString("studentId")!!)
+                    firebaseStore.collection(getString(R.string.db_root_batches)).document(selectedBatch.documentId!!).update("enrolledStudentsId", data?.enrolledStudentsId)
+                            .addOnSuccessListener {
+                                Log.d("success", "enrollStudentToBatch")
+                                showSnackError("Your request is accepted successfully!!")
+                            }.addOnFailureListener { e ->
+                                showSnackError(e.message)
+                            }
                 }
                 .addOnFailureListener { e ->
                     hideLoading()
@@ -194,7 +203,7 @@ class PendingRequestFragment : BaseFragment() {
                 .setTitle(title)
                 .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
-                    var selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
+                    selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
                     if (selectedPosition < 0) {
                         selectedPosition = 0
                     }
