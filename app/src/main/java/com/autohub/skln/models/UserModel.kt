@@ -12,6 +12,7 @@ data class UserModel(var academicInfo: AcademicInformation? = AcademicInformatio
                      var id: String? = "",
                      var className: String? = "",
                      var personInfo: PersonalInformation? = PersonalInformation()
+
 ) : Parcelable {
 
     private val FAVORITE_CLASSES = HashMap<String, Int>()
@@ -21,6 +22,7 @@ data class UserModel(var academicInfo: AcademicInformation? = AcademicInformatio
 
     constructor(parcel: Parcel) : this(
             TODO("academicInfo"),
+            parcel.readString(),
             parcel.readString(),
             TODO("personInfo"))
 

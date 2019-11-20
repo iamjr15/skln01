@@ -32,15 +32,12 @@ class AddClassActivity : BaseActivity() {
             return
         }
         showLoading()
-
-
         getBatchCodeDetails()
-
-
     }
 
     fun onOkClick() {
-        finish()
+        ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
+        finishAffinity()
     }
 
     private fun getBatchCodeDetails() {

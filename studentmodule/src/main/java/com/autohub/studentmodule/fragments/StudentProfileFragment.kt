@@ -53,7 +53,7 @@ class StudentProfileFragment : BaseFragment() {
         // mBinding!!.profilePicture.setOnClickListener { onAddPicture() }
     }
 
-    private fun setupProfile() {
+    fun setupProfile() {
 
         firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->

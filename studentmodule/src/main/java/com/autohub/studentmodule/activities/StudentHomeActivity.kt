@@ -60,6 +60,10 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     private val mTabs = ArrayList<TextView>()
     private var mViewPager: ViewPager? = null
     private lateinit var explorebaseFragment: ExploreBaseFragment
+    private lateinit var homefragment: FragmentHome
+    private lateinit var fragmentProfile: StudentProfileFragment
+
+
     private lateinit var fragmentClassRequests: MyRequestBaseFragment
 
 
@@ -214,7 +218,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
                     return fragmentClassRequests
                 }
                 else -> {
-                    val fragmentProfile = StudentProfileFragment()
+                    fragmentProfile = StudentProfileFragment()
                     val bundle = Bundle()
                     bundle.putString(AppConstants.KEY_TYPE, "student")
                     fragmentProfile.arguments = bundle
@@ -244,6 +248,14 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
             fragmentClassRequests.showRequestFragmentClass()
 
         }
+
+    }
+
+    fun updateUserProfileImage() {
+        fragmentProfile.setupProfile()
+        explorebaseFragment.exploreTutorsFragment!!.setupProfile()
+        homefragment.setupProfile()
+
 
     }
 
