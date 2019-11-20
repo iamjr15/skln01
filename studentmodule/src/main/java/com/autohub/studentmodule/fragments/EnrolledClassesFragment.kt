@@ -11,7 +11,7 @@ import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.adaptors.EnrolledClassesAdaptor
 import com.autohub.studentmodule.databinding.FragmentEnrolledClassesBinding
-import com.autohub.studentmodule.models.BatchesModel
+import com.autohub.skln.models.batches.BatchesModel
 
 /**
  * Created by Vt Netzwelt

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.EnrolledclassesRowBinding
-import com.autohub.studentmodule.models.BatchesModel
+import com.autohub.skln.models.batches.BatchesModel
 
 /**
  * Created by Vt Netzwelt
@@ -35,7 +35,7 @@ class EnrolledClassesAdaptor(var context: Context, var mItemClickListener: ItemC
             with(holder.enrolledClasesBinding)
             {
                 batchName.text = it.title
-                className.text = it.grade.name + " | " + it.subject.name
+                className.text = it.grade?.name + " | " + it.subject?.name
 
             }
 

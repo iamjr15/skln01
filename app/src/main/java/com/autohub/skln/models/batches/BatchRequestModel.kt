@@ -7,9 +7,10 @@ data class BatchRequestModel(var documentId: String? = "",
                              var id: String? = "",
                              var status: String? = "",
                              var title: String? = "",
-                             var grade: Grade? = Grade()
-                             , var student: Student? = Student(),
-                             var teacher: Teacher? = Teacher(), var subject: Subject? = Subject()) : Parcelable {
+                             var grade: Grade? = Grade(),
+                             var student: Student? = Student(),
+                             var teacher: Teacher? = Teacher(),
+                             var subject: Subject? = Subject()) : Parcelable {
 
 
     constructor(parcel: Parcel) : this(
