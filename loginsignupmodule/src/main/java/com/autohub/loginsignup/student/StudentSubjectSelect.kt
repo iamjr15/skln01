@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.autohub.SubjectsModel
+import com.autohub.loginsignup.R
 import com.autohub.loginsignup.databinding.ActivityStudentSubjectSelectBinding
 import com.autohub.loginsignup.listners.ClassSelectionListner
 import com.autohub.loginsignup.student.fragments.StudentSubjectSelectFragmnet
@@ -176,6 +177,18 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
 
     fun onNextClick() {
+        if (selectedSubjects.size == 0) {
+            if (mFavoriteOrLeast) {
+                showSnackError(R.string.select_favorite_subject)
+
+            } else {
+                showSnackError(R.string.select_least_favorite_subject)
+
+            }
+
+            return
+        }
+
 
         showLoading()
 
@@ -187,8 +200,9 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
                 map["category"] = "favorite"
             else
                 map["category"] = "leastfavorite"
+            //hdsjhsa
 
-            map["id"] = ""
+            map["id"] = firebaseAuth.currentUser!!.uid + "_" + i
             map["studentId"] = firebaseAuth.currentUser!!.uid
             map["subjectId"] = i
 

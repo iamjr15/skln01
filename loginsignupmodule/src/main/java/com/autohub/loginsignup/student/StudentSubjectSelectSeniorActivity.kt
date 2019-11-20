@@ -186,7 +186,17 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
     }
 
     fun onNextClick() {
+        if (selectedSubjects.size == 0) {
+            if (mFavoriteOrLeast) {
+                showSnackError(R.string.select_favorite_subject)
 
+            } else {
+                showSnackError(R.string.select_least_favorite_subject)
+
+            }
+
+            return
+        }
         showLoading()
 
         var batch: WriteBatch = firebaseStore.batch()
@@ -197,8 +207,8 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
                 map["category"] = "favorite"
             else
                 map["category"] = "leastfavorite"
-
-            map["id"] = ""
+//hdsjhsa
+            map["id"] = firebaseAuth.currentUser!!.uid + "_" + i
             map["studentId"] = firebaseAuth.currentUser!!.uid
             map["subjectId"] = i
 

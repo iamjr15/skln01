@@ -7,6 +7,10 @@ import com.autohub.loginsignup.databinding.ActivityForgetPasswordBinding
 import com.autohub.skln.BaseActivity
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * Created by Vt Netzwelt
+ */
+
 class ForgetPasswordActivity : BaseActivity() {
     private var mBinding: ActivityForgetPasswordBinding? = null
 

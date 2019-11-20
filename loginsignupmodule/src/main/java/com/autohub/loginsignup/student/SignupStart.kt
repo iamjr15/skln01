@@ -113,6 +113,7 @@ class SignupStart : BaseActivity() {
 
     }
 
+
     private fun makeSaveRequest() {
         val userMap = HashMap<String, Any>()
         userMap[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString()
@@ -131,9 +132,6 @@ class SignupStart : BaseActivity() {
         ActivityUtils.launchActivity(this@SignupStart, NumberVerificationActivity::class.java, extras)
     }
 
-    /*override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }*/
 
     override fun onResume() {
         super.onResume()

@@ -3,6 +3,10 @@ package com.autohub
 import android.os.Parcel
 import android.os.Parcelable
 
+/**
+ * Created by Vt Netzwelt
+ */
+
 data class SubjectsModel(var color: String? = "",
                          var id: String? = "",
                          var image: String? = "",

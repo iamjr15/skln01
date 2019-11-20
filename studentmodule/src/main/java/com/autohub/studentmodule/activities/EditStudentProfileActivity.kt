@@ -40,10 +40,9 @@ import kotlin.collections.ArrayList
 class EditStudentProfileActivity : BaseActivity() {
     lateinit var subjectDataList: ArrayList<SubjectData>
     private var favleastsubjectsDataList: ArrayList<SubjectData> = ArrayList()
-
     private var favtselectedId = ""
     private var leastselectedId = ""
-    private var selectedGrade = ""
+    private var selectedHobbiesid = ""
     private var isSeniorSelected = true
 
     private var mBinding: ActivityEditStudentProfileBinding? = null
@@ -58,6 +57,10 @@ class EditStudentProfileActivity : BaseActivity() {
 
     }
 
+    /*
+    * fetch all subjects (1-10, 11-12 and hobbies)
+    *
+    * */
     private fun fetchSubjects() {
         subjectDataList = arrayListOf()
         firebaseStore.collection("subjects").get().addOnCompleteListener {
@@ -68,7 +71,7 @@ class EditStudentProfileActivity : BaseActivity() {
                     subjectDataList.add(user)
                 }
             }
-            setleastFavSubjects(true)
+            setleastFavSubjects(true, true)
             setUpUserInfo()
 
 
@@ -93,20 +96,37 @@ class EditStudentProfileActivity : BaseActivity() {
     }
 
 
+    /*
+    * show hobbies Dialog with already selected hobbies
+    *
+    * */
+
     fun showHobby() {
         val items = ArrayList<String>()
-        items.add(HOBBY_DANCE)
-        items.add(HOBBY_DRUM)
-        items.add(HOBBY_GUITAR)
-        items.add(HOBBY_KEYBOARD)
-        items.add(HOBBY_MARTIAL)
-        items.add(HOBBY_PAINT)
+
+
+        for (subjecdata in subjectDataList) {
+            if (subjecdata.grades!!.hobbies) {
+                items.add(subjecdata.name!!)
+            }
+
+        }
+
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
-        var selectedItems: List<String> = ArrayList()
+        var selectedItems: MutableList<String> = ArrayList()
+
         if (user!!.academicInfo!!.hobbies != null && user!!.academicInfo!!.hobbies!!.isNotEmpty()) {
-            selectedItems = listOf(*user!!.academicInfo!!.hobbies!!.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+            //   selectedItems = listOf(*user!!.academicInfo!!.hobbies!!.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+
+            for (subjectData in subjectDataList) {
+                if (subjectData.isHobbySelected!!) {
+                    subjectData.name?.let { selectedItems.add(it) }
+                }
+            }
         }
+
+
         val selectedHobbies = ArrayList<String>()
         for (i in selectedItems.indices) {
             if (items.contains(selectedItems[i])) {
@@ -127,21 +147,34 @@ class EditStudentProfileActivity : BaseActivity() {
                 }
                 .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
-                    var selectedHobbyString = ""
-                    for (i in selectedHobbies.indices) {
-                        selectedHobbyString += if (i == selectedHobbies.size - 1) {
-                            selectedHobbies[i]
-                        } else {
-                            selectedHobbies[i] + ","
-                        }
+
+                    for (i in subjectDataList.indices) {
+                        subjectDataList[i].isHobbySelected = false
                     }
-                    mBinding!!.favHobby.text = selectedHobbyString
-                    user!!.academicInfo!!.hobbies = selectedHobbyString
+
+                    var hobbiesBuilder = StringBuilder()
+                    var hobbiesIdBuilder = StringBuilder()
+                    for (i in selectedHobbies) {
+                        var idsList = subjectDataList.map { it.name }
+                        val index = idsList.indexOf(i.trim())
+                        subjectDataList[index].isHobbySelected = true
+                        hobbiesBuilder.append(", " + subjectDataList[index].name)
+                        hobbiesIdBuilder.append("," + subjectDataList[index].id)
+                    }
+
+                    selectedHobbiesid = hobbiesIdBuilder.toString().removeRange(0..0)
+                    mBinding!!.favHobby.text = hobbiesBuilder.toString().removeRange(0..0)
+
+
                     // Do something useful withe the position of the selected radio button
                 }
                 .show()
     }
 
+    /*
+       * show grades Dialog with already selected grade
+       *
+       * */
     fun showGrade() {
         val namesArr = arrayOfNulls<String>(12)
         var indexSelected = -1
@@ -177,6 +210,10 @@ class EditStudentProfileActivity : BaseActivity() {
                 .show()
     }
 
+    /*
+       * show least/fav subject Dialog with already selected subjects
+       *
+       * */
     fun showSub(isLeastFav: Boolean) {
         val items = ArrayList<String>()
         for (i in favleastsubjectsDataList) {
@@ -230,14 +267,6 @@ class EditStudentProfileActivity : BaseActivity() {
                 .setTitle(title)
                 .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
-                    var selectedSubString = ""
-                    for (i in selectedSub.indices) {
-                        selectedSubString += if (i == selectedSub.size - 1) {
-                            selectedSub[i]
-                        } else {
-                            selectedSub[i] + ","
-                        }
-                    }
                     if (isLeastFav) {
 
                         for (i in favleastsubjectsDataList.indices) {
@@ -256,9 +285,6 @@ class EditStudentProfileActivity : BaseActivity() {
                         leastselectedId = leastsujectsidsbuilder.toString().removeRange(0..0)
                         mBinding!!.leastFavuSubj.text = leastsujectsbuilder.toString().removeRange(0..0)
 
-
-                        /*  user!!.academicInfo!!.leastFavoriteClasses = selectedSubString
-                          mBinding!!.leastFavuSubj.text = selectedSubString*/
                     } else {
                         for (i in favleastsubjectsDataList.indices) {
                             favleastsubjectsDataList[i].isFavSelected = false
@@ -279,7 +305,13 @@ class EditStudentProfileActivity : BaseActivity() {
                 .show()
     }
 
-    fun setleastFavSubjects(seniorClass: Boolean) {
+
+    /*
+    *
+    * update favleastsubjectsDataList as per grade selection (1-10 or 11-12)
+    * */
+
+    fun setleastFavSubjects(seniorClass: Boolean, isFirst: Boolean = false) {
         isSeniorSelected = seniorClass
         favleastsubjectsDataList.clear()
         val items = ArrayList<String>()
@@ -294,6 +326,12 @@ class EditStudentProfileActivity : BaseActivity() {
             items.add(SUBJECT_ECONOMICS)//
             items.add(SUBJECT_PHYSICS)//
         } else {
+            items.add(SUBJECT_SOCIAL_STUDIES)//
+            items.add(SUBJECT_LANGUAGES)//
+            items.add(SUBJECT_SCIENCE)//
+        }
+
+        if (isFirst) {
             items.add(SUBJECT_SOCIAL_STUDIES)//
             items.add(SUBJECT_LANGUAGES)//
             items.add(SUBJECT_SCIENCE)//
@@ -322,7 +360,10 @@ class EditStudentProfileActivity : BaseActivity() {
 
     }
 
-
+    /*
+    * show all user deatils on Ui
+    *
+    * */
     private fun setUpUserInfo() {
 
 
@@ -331,11 +372,25 @@ class EditStudentProfileActivity : BaseActivity() {
                     val user = documentSnapshot.toObject(UserModel::class.java)
                     this.user = user
                     user!!.id = documentSnapshot.id
-
-
                     mBinding!!.edtFirstName.setText(user.personInfo!!.firstName)
                     mBinding!!.etPhoneNumber.setText(user.personInfo!!.phoneNumber)
-                    mBinding!!.favHobby.text = user.academicInfo!!.hobbies
+
+                    var hobbies = user.academicInfo!!.hobbies!!.split(",")
+                    var hobbiesBuilder = StringBuilder()
+                    var hobbiesIdBuilder = StringBuilder()
+                    for (i in hobbies) {
+                        var idsList = subjectDataList.map { it.id }
+                        val index = idsList.indexOf(i.trim())
+                        val items = ArrayList<String>()
+                        subjectDataList[index].isHobbySelected = true
+                        hobbiesBuilder.append(", " + subjectDataList[index].name)
+                        hobbiesIdBuilder.append("," + subjectDataList[index].id)
+                    }
+
+                    selectedHobbiesid = hobbiesIdBuilder.toString().removeRange(0..0)
+                    mBinding!!.favHobby.text = hobbiesBuilder.toString().removeRange(0..0)
+
+
 
                     setUserProfileImage(user)
 
@@ -401,18 +456,21 @@ class EditStudentProfileActivity : BaseActivity() {
                 }
             }
 
-            saveDatainFireBase()
+            saveDetailsinFireBase()
 
         }
     }
 
-    fun saveDatainFireBase() {
+    fun saveDetailsinFireBase() {
         showLoading()
-
-        deleteOldSubject()
+/*
+*  0 favt, 1 lestfav, 2 hobbies
+* */
+        deleteOldStudentSubject()
         Handler().postDelayed({
-            createBatchesForSubject(favtselectedId.split(","), true)
-            createBatchesForSubject(leastselectedId.split(","), false)
+            createBatchesForSubject(favtselectedId.split(","), 0)
+            createBatchesForSubject(leastselectedId.split(","), 1)
+            createBatchesForSubject(selectedHobbiesid.split(","), 2)
 
             firebaseStore.collection("grades").whereEqualTo("grade", user!!.academicInfo!!.selectedClass).get().addOnSuccessListener {
                 it.forEach {
@@ -424,7 +482,7 @@ class EditStudentProfileActivity : BaseActivity() {
 
     }
 
-    private fun deleteOldSubject() {
+    private fun deleteOldStudentSubject() {
         firebaseStore.collection("studentSubjects")
                 .whereEqualTo("studentId", firebaseAuth.currentUser!!.uid).get()
                 .addOnSuccessListener {
@@ -447,7 +505,7 @@ class EditStudentProfileActivity : BaseActivity() {
             userpersonalinfo[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString()
         }
 /*
-* Need to create seprate module for Phone number and password editing.
+* Need to create seprate module for Phone number editing.
 * And also need to link this changed values with old firebase User Id
 *
 * */
@@ -458,11 +516,9 @@ class EditStudentProfileActivity : BaseActivity() {
         useracadmicinfo[KEY_STDT_LEAST_FAV_CLASSES] = leastselectedId
 
 
-
-
         useracadmicinfo[KEY_STDT_FAVORITE_CLASSES] = favtselectedId
         useracadmicinfo[KEY_SELECTED_CLASS] = selectedGradeId
-        useracadmicinfo[KEY_STDT_HOBBIES] = mBinding!!.favHobby.text.toString()
+        useracadmicinfo[KEY_STDT_HOBBIES] = selectedHobbiesid/*mBinding!!.favHobby.text.toString()*/
         val dbRoot = getString(com.autohub.skln.R.string.db_root_students)
 
 
@@ -490,19 +546,25 @@ class EditStudentProfileActivity : BaseActivity() {
                 }
 
     }
+/*
+* value = 0 favt, value = 1 lestfav, value = 2 hobbies
+* */
 
-
-    private fun createBatchesForSubject(selectedSubjects: List<String>, mFavoriteOrLeast: Boolean) {
+    private fun createBatchesForSubject(selectedSubjects: List<String>, value: Int) {
         var batch: WriteBatch = firebaseStore.batch()
         for (i in selectedSubjects) {
             var map: HashMap<String, String> = HashMap()
 
-            if (mFavoriteOrLeast)
+            if (value == 0)
                 map["category"] = "favorite"
-            else
+            else if (value == 1)
                 map["category"] = "leastfavorite"
+            else
+                map["category"] = "hobby"
 
-            map["id"] = ""
+
+            //hdsjhsa
+            map["id"] = firebaseAuth.currentUser!!.uid + "_" + i
             map["studentId"] = firebaseAuth.currentUser!!.uid
             map["subjectId"] = i
 
@@ -555,6 +617,9 @@ class EditStudentProfileActivity : BaseActivity() {
     }
 
 
+    /*
+    * Show Dialog for adding pic from Camera/Gallery
+    * */
     fun onAddPicture() {
         val galleryPermissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (!checkIfAlreadyhavePermission()) {
@@ -610,7 +675,7 @@ class EditStudentProfileActivity : BaseActivity() {
             val uploadTask = picRef.putBytes(bytes)
             uploadTask.addOnSuccessListener {
                 hideLoading()
-                saveUserPhoneOnFirestore(pathString)
+                saveUserPhotoOnFirestore(pathString)
             }.addOnFailureListener { e ->
                 hideLoading()
                 Toast.makeText(this, "Upload Failed -> $e", Toast.LENGTH_LONG).show()
@@ -625,7 +690,7 @@ class EditStudentProfileActivity : BaseActivity() {
 
     }
 
-    private fun saveUserPhoneOnFirestore(pathString: String) {
+    private fun saveUserPhotoOnFirestore(pathString: String) {
 
 
         val root = getString(R.string.db_root_students)

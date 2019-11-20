@@ -116,8 +116,9 @@ class TutorFullProfileActivity : BaseActivity() {
 
                                 }
 
-
-                                var batchRequest = BatchRequestModel(id = "", status = "pending",
+//hdsjhsa
+                                var batchRequest = BatchRequestModel(id = studentId + "_" + subjectId + "_" + gradeId
+                                        , status = "pending",
                                         teacher = BatchRequestModel.Teacher(tutorId, mUserViewModel!!.fullName),
                                         student = BatchRequestModel.Student(studentId, mCurrentUser!!.personInfo!!.firstName!! + " " +
                                                 mCurrentUser!!.personInfo!!.lastName!!),

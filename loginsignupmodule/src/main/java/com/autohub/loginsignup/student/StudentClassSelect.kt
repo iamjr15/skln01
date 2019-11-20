@@ -93,8 +93,6 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
     }
 
     private fun insertClassData() {
-
-
         classdatalist.add(Classdata(R.color.black, R.drawable.one, false, CLASS_1))
         classdatalist.add(Classdata(R.color.two, R.drawable.two, false, CLASS_2))
         classdatalist.add(Classdata(R.color.three, R.drawable.three, false, CLASS_3))
@@ -109,14 +107,7 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         classdatalist.add(Classdata(R.color.tweleve, R.drawable.tweleve, false, CLASS_12))
     }
 
-    /*
-        override fun attachBaseContext(newBase: Context) {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-        }*/
-    fun fetchTutorGrades() {
 
-
-    }
 
     inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<StudentClassFragment>) :
             FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -155,6 +146,10 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
 
     }
 
+
+    /*
+    * add user slected class id on firebase
+    * */
     fun updatedataOnFirebase(selectedclassId: String) {
 
         val isSeniorClass = selectedClass.equals(CLASS_11, ignoreCase = true) || selectedClass.equals(CLASS_12, ignoreCase = true)
@@ -166,6 +161,11 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         firebaseStore.collection(getString(R.string.db_root_students)).whereEqualTo(KEY_USER_ID, firebaseAuth.currentUser!!.uid)
                 .get().addOnSuccessListener {
                     it.forEach {
+
+                        /*
+                        * Save user Document Id locally for future use
+                        * */
+
                         appPreferenceHelper.setUserId(it.id)
 
                         firebaseStore.collection(getString(R.string.db_root_students)).document(it.id).set(mapOf(

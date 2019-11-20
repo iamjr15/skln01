@@ -5,6 +5,10 @@ import androidx.databinding.BaseObservable
 import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.CommonUtils
 
+/**
+ * Created by Vt Netzwelt
+ */
+
 class TutorViewModel(private var mUser: TutorData) : BaseObservable() {
 
     val rating: String

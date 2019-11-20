@@ -55,6 +55,9 @@ class StudentClassFragment : Fragment() {
         classSelectionListner.selectedClass(position = position, isSecondSelected = true, selectedClass = datalist[1].classname!!)
     }
 
+    /*
+    * function handles the single selection for classes
+    * */
     fun updateFragment(deselectall: Boolean = false, isSecondSelect: Boolean = false) {
         when {
             deselectall -> {

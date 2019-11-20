@@ -16,12 +16,12 @@ import com.autohub.loginsignup.student.models.SubjectsData
 import com.autohub.loginsignup.utility.Utilities
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.BuildConfig
-import com.autohub.skln.models.HobbiesData
 import com.autohub.skln.utills.AppConstants.*
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.WriteBatch
 import java.util.*
 
 /**
@@ -29,6 +29,7 @@ import java.util.*
  */
 class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
     private lateinit var manager: SplitInstallManager
+    lateinit var hobbyDataList: ArrayList<SubjectsModel>
 
 
     override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: String) {
@@ -75,7 +76,13 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
                     listData.add(user)
                 }
             }
-            insertHobbiesData2(listData)
+
+
+            listData.add(SubjectsModel(id = "jhjshjfbscdf", name = "keyboard"))
+
+
+
+            insertHobbiesData(listData)
 
         }.addOnFailureListener {
             showSnackError(it.message)
@@ -83,13 +90,15 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
     }
 
 
-    private fun insertHobbiesData2(listData: ArrayList<SubjectsModel>) {
+    private fun insertHobbiesData(listData: ArrayList<SubjectsModel>) {
+        hobbyDataList = ArrayList()
+
         var hobbiesDataMap: HashMap<String, SubjectsData> = HashMap()
 
         hobbiesDataMap[HOBBY_GUITAR] = SubjectsData(R.color.guitar, com.autohub.skln.R.drawable.guitar, false, HOBBY_GUITAR)
         hobbiesDataMap[HOBBY_KEYBOARD] = SubjectsData(R.color.keyboard, com.autohub.skln.R.drawable.piano, false, HOBBY_KEYBOARD)
         hobbiesDataMap[HOBBY_MARTIAL] = SubjectsData(R.color.materialarts, com.autohub.skln.R.drawable.attack, false, HOBBY_MARTIAL)
-        hobbiesDataMap[HOBBY_MARTIAL] = SubjectsData(R.color.dance, com.autohub.skln.R.drawable.dancing, false, HOBBY_DANCE)
+        hobbiesDataMap[HOBBY_DANCE] = SubjectsData(R.color.dance, com.autohub.skln.R.drawable.dancing, false, HOBBY_DANCE)
         hobbiesDataMap[HOBBY_PAINT] = SubjectsData(R.color.painting, com.autohub.skln.R.drawable.brush, false, HOBBY_PAINT)
         hobbiesDataMap[HOBBY_DRUM] = SubjectsData(R.color.drum, com.autohub.skln.R.drawable.drum, false, HOBBY_DRUM)
 
@@ -101,14 +110,15 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
                 listData[i].icon = data.icon
                 listData[i].selected = data.selected
 
-                //subjectDataList.add(listData[i])
+                hobbyDataList.add(listData[i])
             }
         }
+
+        showView()
     }
 
     private var selectedHobbies: ArrayList<String> = ArrayList()
     private var mBinding: ActivityStudentHobbySelectBinding? = null
-    private var hobbiesDataList: ArrayList<HobbiesData> = ArrayList()
     private var fragmentsList: ArrayList<HobbiesFragment> = ArrayList()
 
 
@@ -119,8 +129,12 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_student_hobby_select)
         mBinding!!.callback = this
-        insertHobbiesData()
+        fetchobbies()
 
+
+    }
+
+    fun showView() {
         val countList: ArrayList<String> = ArrayList()
         countList.add("1")
         countList.add("2")
@@ -132,10 +146,10 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
         mBinding!!.viewpager.offscreenPageLimit = 2
         mBinding!!.wormDotsIndicator.setViewPager(mBinding!!.viewpager)
 
+
         Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 80.0f, 100.0f)
-
-
     }
+
 
     private fun loadAndLaunchModule(name: String, feature_name: String) {
         if (manager.installedModules.contains(feature_name)) {
@@ -169,32 +183,58 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
 
     private fun getFragments(countList: ArrayList<String>) {
 
-
         for (position in countList.indices) {
 
             when (position) {
-                0 -> fragmentsList.add(HobbiesFragment.newInstance(position, ArrayList(hobbiesDataList.subList(0, 2))))
-                1 -> fragmentsList.add(HobbiesFragment.newInstance(position, ArrayList(hobbiesDataList.subList(2, 4))))
-                else -> fragmentsList.add(HobbiesFragment.newInstance(position, ArrayList(hobbiesDataList.subList(4, 6))))
+                0 -> fragmentsList.add(HobbiesFragment.newInstance(position, ArrayList(hobbyDataList.subList(0, 2))))
+                1 -> fragmentsList.add(HobbiesFragment.newInstance(position, ArrayList(hobbyDataList.subList(2, 4))))
+                else -> fragmentsList.add(HobbiesFragment.newInstance(position, ArrayList(hobbyDataList.subList(4, 6))))
             }
         }
     }
 
-    private fun insertHobbiesData() {
-
-
-        hobbiesDataList.add(HobbiesData(R.color.guitar, HOBBY_GUITAR, com.autohub.skln.R.drawable.guitar))
-        hobbiesDataList.add(HobbiesData(R.color.keyboard, HOBBY_KEYBOARD, com.autohub.skln.R.drawable.piano))
-        hobbiesDataList.add(HobbiesData(R.color.materialarts, HOBBY_MARTIAL, com.autohub.skln.R.drawable.attack))
-
-        hobbiesDataList.add(HobbiesData(R.color.dance, HOBBY_DANCE, com.autohub.skln.R.drawable.dancing))
-        hobbiesDataList.add(HobbiesData(R.color.painting, HOBBY_PAINT, com.autohub.skln.R.drawable.brush))
-
-        hobbiesDataList.add(HobbiesData(R.color.drum, HOBBY_DRUM, com.autohub.skln.R.drawable.drum))
-
-    }
 
     fun onNextClick() {
+
+        if (selectedHobbies.size == 0) {
+            showSnackError(R.string.select_hobby_text_1)
+
+            return
+        }
+
+
+        showLoading()
+        var batch: WriteBatch = firebaseStore.batch()
+        for (i in selectedHobbies) {
+            var map: HashMap<String, String> = HashMap()
+            map["category"] = "hobby"
+            //hdsjhsa
+            map["id"] = firebaseAuth.currentUser!!.uid + "_" + i
+            map["studentId"] = firebaseAuth.currentUser!!.uid
+            map["subjectId"] = i
+
+
+            val nycRef = firebaseStore.collection("studentSubjects").document()
+            batch.set(nycRef, map)
+
+        }
+
+        batch.commit().addOnCompleteListener {
+            if (it.isSuccessful) {
+                saveData()
+            }
+
+        }.addOnFailureListener {
+
+            showSnackError(it.message)
+        }
+
+
+
+        saveData()
+    }
+
+    fun saveData() {
         val stringBuilder = StringBuilder()
         if (selectedHobbies.size > 0) {
             stringBuilder.append(selectedHobbies[0])
@@ -208,7 +248,6 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
             return
         }
 
-        showLoading()
 
         val user = HashMap<String, Any>()
         user[KEY_STDT_HOBBIES] = stringBuilder.toString()
@@ -242,8 +281,8 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
                     showSnackError(e.message)
                 }
 
-
     }
+
 
     inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<HobbiesFragment>) :
             FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

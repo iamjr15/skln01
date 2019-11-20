@@ -79,10 +79,10 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
         setCustomTypeface((findViewById<View>(R.id.codePicker) as CountryCodePicker).textView_selectedCountry, FONT_TYPE_CERAPRO_BOLD)
     }
 
-    /* override fun attachBaseContext(newBase: Context) {
-         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-     }*/
 
+    /*
+    * function to send OTP on user number
+    * */
     private fun verifyPhoneNumber() {
         if (mBinding!!.codePicker.isValidFullNumber) {
             PhoneAuthProvider.getInstance().verifyPhoneNumber(

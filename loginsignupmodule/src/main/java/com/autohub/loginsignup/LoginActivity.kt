@@ -116,10 +116,10 @@ class LoginActivity : BaseActivity() {
 
         if (mBinding!!.radiostudent.isChecked) {
             credential = EmailAuthProvider.getCredential(mBinding!!.edtemail.text.toString().trim(),
-                    /*encrypt(*/mBinding!!.edtPassword.text.toString().trim()/*)*/)
+                    mBinding!!.edtPassword.text.toString().trim())
         } else {
             credential = EmailAuthProvider.getCredential(mBinding!!.edtloginid.text.toString().trim(),
-                    /*encrypt(*/mBinding!!.edtPassword.text.toString().trim()/*)*/)
+                    mBinding!!.edtPassword.text.toString().trim())
         }
 
 
@@ -166,6 +166,11 @@ class LoginActivity : BaseActivity() {
         }
 
     }
+
+
+    /*
+    *  Save user Document Id locally for future use
+       * */
 
     private fun saveUserIdLocally() {
         if (mBinding!!.radiostudent.isChecked) {
