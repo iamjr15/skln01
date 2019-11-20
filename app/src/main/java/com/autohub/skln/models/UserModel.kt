@@ -9,7 +9,9 @@ import com.autohub.skln.utills.CommonUtils
 import java.util.*
 
 data class UserModel(var academicInfo: AcademicInformation? = AcademicInformation(),
-                     var id: String? = "", var personInfo: PersonalInformation? = PersonalInformation()
+                     var id: String? = "",
+                     var className: String? = "",
+                     var personInfo: PersonalInformation? = PersonalInformation()
 ) : Parcelable {
 
     private val FAVORITE_CLASSES = HashMap<String, Int>()

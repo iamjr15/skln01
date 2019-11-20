@@ -42,7 +42,7 @@ class BatchOptionsFragment : BaseFragment() {
     }
 
     fun openManageStudentsScreen() {
-        homeListener.showAddBatchFragment(false)
+        homeListener.showStudentsListFragment()
 
     }
 
