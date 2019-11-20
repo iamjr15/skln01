@@ -144,7 +144,9 @@ class AddBatchFragment : BaseFragment() {
         batchesModel.teacher?.accountPicture = tutorData.personInfo?.accountPicture
         batchesModel.teacher?.bioData = tutorData.personInfo?.biodata
 
-        batchesModel.batchCode = mBinding.batchName.text.toString().toCharArray()[0] +
+        batchesModel.batchCode = tutorData.personInfo?.firstName.toString().toCharArray()[0].toString() +
+                tutorData.personInfo?.lastName.toString().toCharArray()[0].toString() +
+                mBinding.batchName.text.toString().toCharArray()[0].toString() +
                 mBinding.batchName.text.toString().toCharArray()[1].toString() +
                 mBinding.selectSubject.text.toString().toCharArray()[0].toString() +
                 mBinding.selectSubject.text.toString().toCharArray()[1].toString() +
