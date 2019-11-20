@@ -2,16 +2,15 @@ package com.autohub.studentmodule.fragments
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.FragmentMyClassesBinding
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by Vt Netzwelt

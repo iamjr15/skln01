@@ -41,6 +41,8 @@ class EnrolledClassesAdaptor(var context: Context, var erolldClassDeleteClickLis
                 batchName.text = it.title
                 className.text = it.grade.name + " | " + it.subject.name
                 studentsCount.text = it.enrolledStudentsId.size.toString() + " students"
+                time.text = it.batchTiming
+
 
 //7:30 PM - 9 PM | TUE, THU, FRI
             }
