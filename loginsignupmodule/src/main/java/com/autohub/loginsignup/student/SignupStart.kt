@@ -18,12 +18,6 @@ import com.autohub.skln.utills.AppConstants.*
 import com.autohub.skln.utills.GpsUtils
 import com.autohub.skln.utills.LocationProvider
 import com.google.android.gms.location.LocationListener
-import java.security.InvalidAlgorithmParameterException
-import java.security.InvalidKeyException
-import java.security.NoSuchAlgorithmException
-import javax.crypto.BadPaddingException
-import javax.crypto.IllegalBlockSizeException
-import javax.crypto.NoSuchPaddingException
 
 /**
  * Created by Vt Netzwelt
@@ -40,25 +34,6 @@ class SignupStart : BaseActivity() {
         }
     }
 
-    private fun getEncryptedPassword(): String {
-        try {
-            return encrypt(getString(mBinding!!.edtPassword.text))
-        } catch (e: NoSuchPaddingException) {
-            e.printStackTrace()
-        } catch (e: NoSuchAlgorithmException) {
-            e.printStackTrace()
-        } catch (e: InvalidAlgorithmParameterException) {
-            e.printStackTrace()
-        } catch (e: InvalidKeyException) {
-            e.printStackTrace()
-        } catch (e: BadPaddingException) {
-            e.printStackTrace()
-        } catch (e: IllegalBlockSizeException) {
-            e.printStackTrace()
-        }
-
-        return getString(mBinding!!.edtPassword.text)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,7 +95,7 @@ class SignupStart : BaseActivity() {
         userMap[KEY_LAST_NAME] = mBinding!!.edtLastName.text.toString()
         userMap[KEY_EMAIL] = mBinding!!.edtemail.text.toString()
         userMap[KEY_SEX] = if (mBinding!!.radioMale.isChecked) MALE else FEMALE
-        userMap[KEY_PASSWORD] = getEncryptedPassword()
+        userMap[KEY_PASSWORD] = getString(mBinding!!.edtPassword.text)
         userMap[KEY_CITY] = mCity!!
         userMap[KEY_LONGITUDE] = mLocation!!.longitude
         userMap[KEY_LATITUDE] = mLocation!!.latitude

@@ -9,9 +9,9 @@ import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.autohub.studentmodule.R
 import com.autohub.studentmodule.adaptors.ScheduleCalenderAdapter
 import com.autohub.studentmodule.adaptors.SchedulesAdaptor
-import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.FragmentScheduleBinding
 import java.text.ParseException
 import java.text.SimpleDateFormat

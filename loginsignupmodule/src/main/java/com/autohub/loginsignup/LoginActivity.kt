@@ -74,7 +74,6 @@ class LoginActivity : BaseActivity() {
     fun login() {
 
 
-
         val email: Editable
         if (mBinding!!.radiostudent.isChecked) {
             email = mBinding!!.edtemail.text!!
@@ -106,7 +105,7 @@ class LoginActivity : BaseActivity() {
             return
         }
         showLoading()
-
+        hideSoftKeyboard()
 
         validateUserCredentials()
 
@@ -181,7 +180,7 @@ class LoginActivity : BaseActivity() {
                             moveNext()
                         }
                     }
-        }else{
+        } else {
             firebaseStore.collection(getString(R.string.db_root_tutors)).whereEqualTo(AppConstants.KEY_USER_ID, "1fdc24cf-ee65-40f3-843f-c9b62225f620")
                     .get().addOnSuccessListener {
                         it.forEach {
