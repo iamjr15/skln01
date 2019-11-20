@@ -5,85 +5,45 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ItemTutorManageClassesBinding
+import com.autohub.tutormodule.ui.utils.AppUtils
 
-class ClassesAdaptor(var context: Context)
-    : RecyclerView.Adapter<ClassesAdaptor.Holder>() {
+class ClassesAdaptor(var context: Context) : RecyclerView.Adapter<ClassesAdaptor.Holder>() {
 
-    private var userList: List<String> = ArrayList()
+    private var batchesList: List<BatchesModel> = ArrayList()
+    lateinit var mBinding: ItemTutorManageClassesBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val exploreRowBinding: ItemTutorManageClassesBinding =
-                DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_tutor_manage_classes, parent, false
-                )
+        mBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_tutor_manage_classes, parent, false
+        )
 
-        return Holder(exploreRowBinding)
+        return Holder(mBinding)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        /*  holder.exploreRowBinding.setItemClickListener(mItemClickListener)
-          userList[position].let {
-              with(holder.exploreRowBinding)
-              {
+        mBinding.batchName.text = batchesList[position].title
+        mBinding.className.text = batchesList[position].grade?.name + " | " + batchesList[position].subject?.name
+        mBinding.studentsCount.text = batchesList[position].enrolledStudentsId.size.toString() + " students"
 
-                  if (mCurrentLocation != null) {
-                      txtdistance.setText("${it.distance.toString()} Km")
-                  }
-
-                  user = it
-                  tutorname.setText(it.firstName + " " + it.lastName)
-                  txtclassprice.setText(it.rate + " / " + it.noOfClasses + " PER " + it.paymentDuration)
-
-
-                  var splitarray = it.classesToTeach.split(",")
-                  if (splitarray.size > 0) {
-                      var stringBuilder = StringBuilder(splitarray.size)
-                      for (i in splitarray.indices) {
-                          if (i == splitarray.size - 1) {
-                              stringBuilder.append(splitarray.get(i) + CommonUtils.getClassSuffix(splitarray.get(i).toInt()))
-
-                          } else {
-                              stringBuilder.append(splitarray.get(i) + CommonUtils.getClassSuffix(splitarray.get(i).toInt()) + " - ")
-                          }
-                      }
-                      txtgrades.setText(stringBuilder.toString())
-
-
-                  } else {
-                      txtgrades.setText(it.classesToTeach)
-
-                  }
-
-
-
-                  txtclasstype.setText(it.classType)
-                  txtsubjects.setText(it.subjectsToTeach.replace(",", " | "))
-
-                  if (!TextUtils.isEmpty(it.pictureUrl)) {
-                      val pathReference1 = FirebaseStorage.getInstance().reference.child(it.pictureUrl)
-                      val options = RequestOptions()
-                      options.transforms(MultiTransformation(CenterCrop(), RoundedCornersTransformation(context, CommonUtils.convertDpToPixel(6f, context).toInt(), 0)))
-                      options.placeholder(R.drawable.dummyexploreimage)
-                      Glide.with(context).load(pathReference1)
-                              .apply(options).into(imgprofile)
-
-                  }
-
-              }
-          }*/
-
+        mBinding.time.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
+                "EEE, d MMM yyyy HH:mm:ss z",
+                batchesList[position].timing?.startTime!!.toDate().toString()).toString() + " - " +
+                AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
+                        "EEE, d MMM yyyy HH:mm:ss z",
+                        batchesList[position].timing?.endTime!!.toDate().toString()).toString()
     }
 
     override fun getItemCount(): Int {
-        return 2/*userList.size*/
+        return batchesList.size
     }
 
-    fun setData(userList: List<String>) {
-        this.userList = userList
+    fun setData(batchesList: MutableList<BatchesModel>) {
+        this.batchesList = batchesList
         notifyDataSetChanged()
     }
 

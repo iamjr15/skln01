@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.autohub.skln.fragment.BaseFragment
+import com.autohub.skln.models.tutor.TutorData
+import com.autohub.skln.utills.GlideApp
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorHomeBinding
 import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class HomeFragment : BaseFragment() {
     private lateinit var mBinding: FragmentTutorHomeBinding
@@ -27,6 +30,28 @@ class HomeFragment : BaseFragment() {
 
         mBinding = FragmentTutorHomeBinding.bind(view)
         mBinding.callback = this
+
+        fetchTutorData()
+    }
+
+    private fun fetchTutorData() {
+        firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    hideLoading()
+                    val tutorData = documentSnapshot.toObject(TutorData::class.java)!!
+                    mBinding.name.text = "Hey," + tutorData.personInfo?.firstName
+
+                    GlideApp.with(this)
+                            .load(tutorData.personInfo?.accountPicture)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                            .skipMemoryCache(true)
+                            .placeholder(com.autohub.skln.R.drawable.default_pic)
+                            .into(mBinding.profileImage)
+                }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
     }
 
     override fun onAttach(context: Context) {

@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.autohub.skln.fragment.BaseFragment
+import com.autohub.skln.models.UserModel
+import com.autohub.skln.models.batchRequests.GradeData
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentStudentsListBinding
 
@@ -32,6 +34,42 @@ class StudentsListFragment : BaseFragment() {
 //        binding.recyclerView.setEmptyView(binding.rrempty)
         mAdapter = StudentListAdaptor(requireContext())
         binding.recyclerView.adapter = mAdapter
+
+        fetchGrades()
+    }
+
+    private fun fetchGrades() {
+        showLoading()
+        firebaseStore.collection(getString(R.string.db_root_grades)).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    val grades = documentSnapshot.toObjects(GradeData::class.java)
+                    fetchStudents(grades)
+
+                }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
+    }
+
+    private fun fetchStudents(grades: MutableList<GradeData>) {
+        firebaseStore.collection(getString(R.string.db_root_students)).get()
+                .addOnSuccessListener { documentSnapshot ->
+                    hideLoading()
+                    val students = documentSnapshot.toObjects(UserModel::class.java)
+                    for (i in 0 until students.size) {
+                        for (j in 0 until grades.size) {
+                            if (students[i].academicInfo?.selectedClass == grades[j].id) {
+                                students[i].className = grades[j].grade?.trim()
+                            }
+                        }
+                    }
+                    mAdapter.setData(students)
+                }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
     }
 
 }

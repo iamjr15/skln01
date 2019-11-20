@@ -49,6 +49,7 @@ class ClassManagerFragment : BaseFragment() {
         mBinding.viewpager.adapter = adapter
     }
 
+
     private fun getFragmentClassRequests(fragment: Fragment/*, user: User?*/): Fragment {
         return fragment
     }
