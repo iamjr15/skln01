@@ -250,7 +250,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
 
 
         val user = HashMap<String, Any>()
-        user[KEY_STDT_HOBBIES] = stringBuilder.toString()
+        user[KEY_STDT_HOBBIES] = stringBuilder.toString().split(",")
 
         val user1 = HashMap<String, Any>()
         user1[KEY_PHONE_NUMBER] = appPreferenceHelper.userPhone

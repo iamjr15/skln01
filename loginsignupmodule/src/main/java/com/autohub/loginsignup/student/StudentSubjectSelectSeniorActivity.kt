@@ -247,9 +247,9 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
 
         val user = HashMap<String, Any>()
         if (mFavoriteOrLeast)
-            user[KEY_STDT_FAVORITE_CLASSES] = stringBuilder.toString()
+            user[KEY_STDT_FAVORITE_CLASSES] = stringBuilder.toString().split(",")
         else
-            user[KEY_STDT_LEAST_FAV_CLASSES] = stringBuilder.toString()
+            user[KEY_STDT_LEAST_FAV_CLASSES] = stringBuilder.toString().split(",")
 
 
 

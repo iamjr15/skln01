@@ -375,10 +375,9 @@ class EditStudentProfileActivity : BaseActivity() {
                     mBinding!!.edtFirstName.setText(user.personInfo!!.firstName)
                     mBinding!!.etPhoneNumber.setText(user.personInfo!!.phoneNumber)
 
-                    var hobbies = user.academicInfo!!.hobbies!!.split(",")
                     var hobbiesBuilder = StringBuilder()
                     var hobbiesIdBuilder = StringBuilder()
-                    for (i in hobbies) {
+                    for (i in user.academicInfo!!.hobbies!!) {
                         var idsList = subjectDataList.map { it.id }
                         val index = idsList.indexOf(i.trim())
                         val items = ArrayList<String>()
@@ -397,8 +396,7 @@ class EditStudentProfileActivity : BaseActivity() {
                     var favsujectsbuilder = StringBuilder()
                     var favsujectsidsbuilder = StringBuilder()
 
-                    var favsub = user.academicInfo!!.favoriteSubjects!!.split(",")
-                    for (i in favsub) {
+                    for (i in user.academicInfo!!.favoriteSubjects!!) {
                         var idsList = favleastsubjectsDataList.map { it.id }
                         val index = idsList.indexOf(i.trim())
                         favleastsubjectsDataList[index].isFavSelected = true
@@ -412,8 +410,7 @@ class EditStudentProfileActivity : BaseActivity() {
                     var leastsujectsbuilder = StringBuilder()
                     var leastsujectsidsbuilder = StringBuilder()
 
-                    var leastsub = user.academicInfo!!.leastFavoriteSubjects!!.split(",")
-                    for (i in leastsub) {
+                    for (i in user.academicInfo!!.leastFavoriteSubjects!!) {
                         var idsList = favleastsubjectsDataList.map { it.id }
                         val index = idsList.indexOf(i.trim())
                         favleastsubjectsDataList[index].isleastelected = true
@@ -513,12 +510,13 @@ class EditStudentProfileActivity : BaseActivity() {
         // user[AppConstants.KEY_PHONE_NUMBER] = mBinding!!.codePicker.fullNumberWithPlus
 
         val useracadmicinfo = HashMap<String, Any>()
-        useracadmicinfo[KEY_STDT_LEAST_FAV_CLASSES] = leastselectedId
+        useracadmicinfo[KEY_STDT_LEAST_FAV_CLASSES] = leastselectedId.split(",")
+//hdsjhsa
 
 
-        useracadmicinfo[KEY_STDT_FAVORITE_CLASSES] = favtselectedId
+        useracadmicinfo[KEY_STDT_FAVORITE_CLASSES] = favtselectedId.split(",")
         useracadmicinfo[KEY_SELECTED_CLASS] = selectedGradeId
-        useracadmicinfo[KEY_STDT_HOBBIES] = selectedHobbiesid/*mBinding!!.favHobby.text.toString()*/
+        useracadmicinfo[KEY_STDT_HOBBIES] = selectedHobbiesid.split(",")
         val dbRoot = getString(com.autohub.skln.R.string.db_root_students)
 
 

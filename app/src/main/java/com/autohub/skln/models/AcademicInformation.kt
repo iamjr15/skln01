@@ -1,5 +1,5 @@
 package com.autohub.skln.models
 
-data class AcademicInformation(var favoriteSubjects: String? = "",
-                               var hobbies: String? = "", var leastFavoriteSubjects: String? = "",
+data class AcademicInformation(var favoriteSubjects: ArrayList<String>? = ArrayList(),
+                               var hobbies: ArrayList<String>? = ArrayList(), var leastFavoriteSubjects: ArrayList<String>? = ArrayList(),
                                var selectedClass: String? = "")
