@@ -35,7 +35,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     lateinit var subjectDataList: ArrayList<SubjectData>
     lateinit var gradesDataList: ArrayList<GradeData>
     var user: UserModel? = null
-    var imagePath: String? = ""
+    var userimagePath: String? = ""
 
     override fun onClassRequestSelectListner(requestViewModel: BatchRequestViewModel) {
         val bundle = Bundle()
@@ -142,11 +142,6 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
     }
 
-    private fun updateExploreViews() {
-        explorebaseFragment.showExploreFragment()
-
-    }
-
 
     private fun getUserInfo() {
         firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
@@ -156,6 +151,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
                     user!!.personInfo!!.latitude = geopoints.latitude
                     user!!.personInfo!!.longitude = geopoints.longitude
                     user = user
+                    userimagePath = user!!.personInfo!!.accountPicture
                     user!!.id = documentSnapshot.id
                     hideLoading()
 
@@ -168,7 +164,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     private fun getAppData() {
         gradesDataList = ArrayList()
         subjectDataList = ArrayList()
-        firebaseStore.collection("subjects").get().addOnCompleteListener {
+        firebaseStore.collection(getString(R.string.db_root_subjects)).get().addOnCompleteListener {
 
             if (it.isSuccessful) {
                 for (document in it.result!!) {
@@ -177,7 +173,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
                 }
 
 
-                firebaseStore.collection("grades").get().addOnCompleteListener {
+                firebaseStore.collection(getString(R.string.db_root_grades)).get().addOnCompleteListener {
 
                     if (it.isSuccessful) {
                         for (document in it.result!!) {
@@ -201,15 +197,18 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         }
     }
 
-    /*override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }*/
 
-    inner class SectionsPagerAdapter internal constructor(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    inner class SectionsPagerAdapter internal constructor(fm: FragmentManager) :
+            FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getItem(position: Int): Fragment {
             when (position) {
-                0 -> return FragmentHome()
+                0 -> {
+
+                    homefragment = FragmentHome()
+                    return homefragment
+
+                }
                 1 -> return MyClassesFragment()
                 2 -> {
                     explorebaseFragment = ExploreBaseFragment()
@@ -221,9 +220,6 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
                 }
                 else -> {
                     fragmentProfile = StudentProfileFragment()
-                    val bundle = Bundle()
-                    bundle.putString(AppConstants.KEY_TYPE, "student")
-                    fragmentProfile.arguments = bundle
                     return fragmentProfile
                 }
             }
@@ -249,12 +245,24 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
             fragmentClassRequests.showRequestFragmentClass()
 
+        } else if (requestCode == EDITPROFILE_REQUEST) {
+
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                val bundle = data.extras
+                if (!bundle!!.getString("imageUrl").equals("")) {
+                    userimagePath = bundle.getString("imageUrl")
+                    updateUserProfileImage()
+                }
+
+            }
+
+
         }
 
     }
 
     fun updateUserProfileImage() {
-        fragmentProfile.setupProfile()
+        fragmentProfile.setProfileImage()
         explorebaseFragment.exploreTutorsFragment!!.setupProfile()
         homefragment.setupProfile()
 
@@ -264,6 +272,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
     companion object {
         const val TUROR_REQUEST = 1001
+        const val EDITPROFILE_REQUEST = 10012
 
     }
 }

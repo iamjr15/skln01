@@ -18,7 +18,6 @@ import com.autohub.studentmodule.databinding.FragmentRequestDetailBinding
 import com.autohub.studentmodule.models.TutorViewModel
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
 /**
@@ -101,9 +100,9 @@ class FragmentRequestDetail : BaseFragment() {
         }*/
 
         try {
-            val pathReference1 = FirebaseStorage.getInstance().reference.child(path!!)
+
             GlideApp.with(requireContext())
-                    .load(pathReference1)
+                    .load(path)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .fallback(com.autohub.skln.R.drawable.default_pic)
                     .into(mBinding!!.profilePicture)

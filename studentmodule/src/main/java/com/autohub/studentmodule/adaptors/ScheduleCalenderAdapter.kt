@@ -16,7 +16,7 @@ import com.autohub.studentmodule.R
 class ScheduleCalenderAdapter(private val list: List<String>) :
         RecyclerView.Adapter<ScheduleCalenderAdapter.ViewHolder>() {
 
-    private var selectedPosition = -1
+    var selectedPosition = -1
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, int: Int): ViewHolder {
         val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_calendar_view, viewGroup, false)
