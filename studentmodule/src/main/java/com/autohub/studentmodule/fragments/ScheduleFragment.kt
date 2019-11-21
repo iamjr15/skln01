@@ -98,10 +98,12 @@ class ScheduleFragment : BaseFragment() {
         mBinding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                when {
-                    i < 10 -> mBinding.calendarView.scrollToPosition(0)
-                    i > 90 -> mBinding.calendarView.scrollToPosition(dates.size - 1)
-                    (i * 3) < (dates.size - 1) -> mBinding.calendarView.scrollToPosition(i * 3)
+                if (i < 10) {
+                    mBinding.calendarView.scrollToPosition(0)
+                } else if (i > 90) {
+                    mBinding.calendarView.scrollToPosition(dates.size - 1)
+                } else if ((i * 3) < (dates.size - 1)) {
+                    mBinding.calendarView.scrollToPosition((i * 3))
                 }
             }
 
@@ -113,10 +115,7 @@ class ScheduleFragment : BaseFragment() {
 
             }
         })
-
-
     }
-
 
     private fun initializeCalendarView(dates: List<String>) {
         mBinding.calendarView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
@@ -127,6 +126,7 @@ class ScheduleFragment : BaseFragment() {
         val timeStamp = SimpleDateFormat("MMM,dd,EEE", Locale.ENGLISH).format(Calendar.getInstance().time)
         for (i in dates.indices) {
             if (dates[i].contains(timeStamp)) {
+                mBinding.seekBar.progress = (i * 0.27).toInt()
                 mBinding.calendarView.scrollToPosition(i)
                 adapter.selectedPosition = i
                 adaptor.notifyDataSetChanged()
@@ -183,17 +183,10 @@ class ScheduleFragment : BaseFragment() {
             e.printStackTrace()
         }
 
-
         val originalFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss z YYYY", Locale.ENGLISH)
         val targetFormat = SimpleDateFormat("h:mm a")
         val date = originalFormat.parse(gmt.toString())
         val formattedDate = targetFormat.format(date)
-
-
-
-
-
-
         return formattedDate
     }
 
