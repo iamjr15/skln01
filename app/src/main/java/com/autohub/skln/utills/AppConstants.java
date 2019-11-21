@@ -70,6 +70,7 @@ public interface AppConstants {
 
     // firestore db keys - tutor
     String KEY_USER_ID = "id";
+    String KEY_ID = "id";
     String KEY_PHONE_NUMBER = "phoneNumber";
     String KEY_ACCOUNT_TYPE = "accountType";
     String KEY_PASSWORD = "password";
@@ -101,6 +102,13 @@ public interface AppConstants {
     String KEY_LOCATION = "location";
     String KEY_PERSONALINFO = "personInfo";
     String KEY_ACADEMICINFO = "academicInfo";
+
+
+    String KEY_BATCHCODE = "batchCode";
+    String KEY_BATCHCODES = "batchCodes";
+    String KEY_GRADE = "grade";
+    String KEY_STUDENTID = "studentId";
+
 
     // firestore db keys - student
   /*  String KEY_STDT_CLASS = "studentClass";

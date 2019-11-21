@@ -23,8 +23,6 @@ import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.ActivityEditStudentProfileBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.google.firebase.FirebaseApp
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.WriteBatch
 import com.google.firebase.storage.FirebaseStorage
@@ -47,6 +45,8 @@ class EditStudentProfileActivity : BaseActivity() {
     private var selectedHobbiesid = ""
     private var isSeniorSelected = true
 
+    var imageURL = ""
+
     private var mBinding: ActivityEditStudentProfileBinding? = null
 
     private var user: UserModel? = null
@@ -65,7 +65,7 @@ class EditStudentProfileActivity : BaseActivity() {
     * */
     private fun fetchSubjects() {
         subjectDataList = arrayListOf()
-        firebaseStore.collection("subjects").get().addOnCompleteListener {
+        firebaseStore.collection(getString(R.string.db_root_subjects)).get().addOnCompleteListener {
 
             if (it.isSuccessful) {
                 for (document in it.result!!) {
@@ -83,7 +83,12 @@ class EditStudentProfileActivity : BaseActivity() {
     }
 
     fun onBackClick() {
-        onBackPressed()
+        val intent = Intent()
+        val bundle = Bundle()
+        intent.putExtra("imageUrl", imageURL)
+        intent.putExtras(bundle)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 
 
@@ -139,7 +144,7 @@ class EditStudentProfileActivity : BaseActivity() {
 
 
         AlertDialog.Builder(this)
-                .setTitle("Choose your favourite hobby")
+                .setTitle(getString(R.string.chossesyourHobby_title))
                 .setMultiChoiceItems(namesArr, booleans) { _, i, b ->
                     if (b) {
                         selectedHobbies.add(items[i])
@@ -189,8 +194,8 @@ class EditStudentProfileActivity : BaseActivity() {
 
         AlertDialog.Builder(this)
                 .setSingleChoiceItems(namesArr, indexSelected, null)
-                .setTitle("Select Current Grade")
-                .setPositiveButton("OK") { dialog, _ ->
+                .setTitle(getString(R.string.selectGrade_title))
+                .setPositiveButton(R.string.ok) { dialog, _ ->
                     dialog.dismiss()
                     var selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
                     if (selectedPosition < 0) {
@@ -199,7 +204,8 @@ class EditStudentProfileActivity : BaseActivity() {
                     mBinding!!.grade.text = namesArr[selectedPosition]
                     var grade = (selectedPosition + 1).toString()
                     user!!.academicInfo!!.selectedClass = grade
-                    val isSeniorClass = grade.equals(CLASS_11, ignoreCase = true) || grade.equals(CLASS_12, ignoreCase = true)
+                    val isSeniorClass = grade.equals(CLASS_11, ignoreCase = true)
+                            || grade.equals(CLASS_12, ignoreCase = true)
                     if (isSeniorSelected.compareTo(isSeniorClass) != 0) {
                         favtselectedId = ""
                         leastselectedId = ""
@@ -253,9 +259,9 @@ class EditStudentProfileActivity : BaseActivity() {
 
         val title: String
         title = if (!isLeastFav) {
-            "Choose Favourite Subject"
+            getString(R.string.chooseFavtsubj_title)
         } else {
-            "Choose Least Favourite Subject"
+            getString(R.string.chossleastfavtsub_title)
         }
         AlertDialog.Builder(this)
                 .setMultiChoiceItems(namesArr, booleans
@@ -268,7 +274,7 @@ class EditStudentProfileActivity : BaseActivity() {
                     }
                 }
                 .setTitle(title)
-                .setPositiveButton("OK") { dialog, _ ->
+                .setPositiveButton(getString(R.string.ok)) { dialog, _ ->
                     dialog.dismiss()
                     if (isLeastFav) {
 
@@ -353,12 +359,19 @@ class EditStudentProfileActivity : BaseActivity() {
         if (user.personInfo!!.accountPicture != null && !user.personInfo!!.accountPicture.equals("")) {
 
             val ref = FirebaseStorage.getInstance().reference.child(user.personInfo!!.accountPicture!!)
-            GlideApp.with(this)
-                    .load(ref)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                    .skipMemoryCache(true)
-                    .placeholder(com.autohub.skln.R.drawable.default_pic)
-                    .into(mBinding!!.profilePicture)
+
+            try {
+                GlideApp.with(this)
+                        .load(ref)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                        .skipMemoryCache(true)
+                        .placeholder(com.autohub.skln.R.drawable.default_pic)
+                        .into(mBinding!!.profilePicture)
+
+            } catch (e: Exception) {
+            }
+
+
         }
 
     }
@@ -432,13 +445,13 @@ class EditStudentProfileActivity : BaseActivity() {
                     mBinding!!.leastFavuSubj.text = leastsujectsbuilder.toString().removeRange(0..0)
 
 
-                    firebaseStore.collection("grades").whereEqualTo("id", user.academicInfo!!.selectedClass!!).get().addOnSuccessListener {
+                    firebaseStore.collection(getString(R.string.db_root_grades)).whereEqualTo(KEY_ID, user.academicInfo!!.selectedClass!!).get().addOnSuccessListener {
 
                         it.forEach {
-                            mBinding!!.grade.text = "grade ${it.getString("grade")!!}${CommonUtils.getClassSuffix(it.getString("grade")!!.toInt())} "
+                            mBinding!!.grade.text = "grade ${it.getString(KEY_GRADE)!!}${CommonUtils.getClassSuffix(it.getString(KEY_GRADE)!!.toInt())} "
                             mBinding!!.grade.text = CommonUtils.getGrade(Integer.parseInt(it.getString("grade")!!.trim { it <= ' ' }))
                             this.user!!.academicInfo!!.selectedClass = it.getString("grade")
-                            val isSeniorClass = it.getString("grade")!!.equals(CLASS_11, ignoreCase = true) || it.getString("grade")!!.equals(CLASS_12, ignoreCase = true)
+                            val isSeniorClass = it.getString(KEY_GRADE)!!.equals(CLASS_11, ignoreCase = true) || it.getString(KEY_GRADE)!!.equals(CLASS_12, ignoreCase = true)
                             if (isSeniorSelected.compareTo(isSeniorClass) != 0) setleastFavSubjects(isSeniorClass)
 
                         }
@@ -480,9 +493,9 @@ class EditStudentProfileActivity : BaseActivity() {
             createBatchesForSubject(leastselectedId.split(","), 1)
             createBatchesForSubject(selectedHobbiesid.split(","), 2)
 
-            firebaseStore.collection("grades").whereEqualTo("grade", user!!.academicInfo!!.selectedClass).get().addOnSuccessListener {
+            firebaseStore.collection(getString(R.string.db_root_grades)).whereEqualTo(KEY_GRADE, user!!.academicInfo!!.selectedClass).get().addOnSuccessListener {
                 it.forEach {
-                    saveData(it.getString("id")!!)
+                    saveData(it.getString(KEY_ID)!!)
                 }
             }
         }, 1000)
@@ -491,11 +504,11 @@ class EditStudentProfileActivity : BaseActivity() {
     }
 
     private fun deleteOldStudentSubject() {
-        firebaseStore.collection("studentSubjects")
-                .whereEqualTo("studentId", firebaseAuth.currentUser!!.uid).get()
+        firebaseStore.collection(getString(R.string.db_root_studentSubjects))
+                .whereEqualTo(KEY_STUDENTID, firebaseAuth.currentUser!!.uid).get()
                 .addOnSuccessListener {
                     it.forEach {
-                        firebaseStore.collection("studentSubjects").document(it.id).delete()
+                        firebaseStore.collection(getString(R.string.db_root_studentSubjects)).document(it.id).delete()
                     }
                 }
                 .addOnFailureListener { e ->
@@ -551,7 +564,7 @@ class EditStudentProfileActivity : BaseActivity() {
                 .addOnSuccessListener {
                     hideLoading()
                     Toast.makeText(this,
-                            "Profile has been Updated succesfully!", Toast.LENGTH_SHORT).show()
+                            getString(R.string.profileupdatesuccessfully_msg), Toast.LENGTH_SHORT).show()
 
                     ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
                     finishAffinity()
@@ -735,7 +748,7 @@ class EditStudentProfileActivity : BaseActivity() {
         /*  if (mProfileType.equals("student", ignoreCase = true)) {
               root = getString(R.string.db_root_students)
           }*/
-
+        imageURL = pathString
 
         /*accountPicture*/
 

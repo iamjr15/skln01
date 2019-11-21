@@ -111,11 +111,11 @@ class ExploreTutorsFragment : BaseFragment() {
     fun setupProfile() {
         /*  val ref = FirebaseStorage.getInstance().reference.child("student/" +
                   firebaseAuth.currentUser!!.uid + ".jpg")*/
-        var user = (context as StudentHomeActivity).user!!
+        var userimagePath = (context as StudentHomeActivity).userimagePath!!
 
-        if (user.personInfo!!.accountPicture != null && !user.personInfo!!.accountPicture.equals("")) {
+        if (userimagePath != null && !userimagePath.equals("")) {
 
-            val ref = FirebaseStorage.getInstance().reference.child(user.personInfo!!.accountPicture!!)
+            val ref = FirebaseStorage.getInstance().reference.child(userimagePath)
             GlideApp.with(this)
                     .load(ref)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide

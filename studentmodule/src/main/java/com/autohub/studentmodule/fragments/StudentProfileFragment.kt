@@ -1,5 +1,6 @@
 package com.autohub.studentmodule.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -9,11 +10,11 @@ import com.autohub.skln.activities.OnBoardActivity
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.UserModel
 import com.autohub.skln.utills.ActivityUtils
-import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.activities.EditStudentProfileActivity
+import com.autohub.studentmodule.activities.StudentHomeActivity
 import com.autohub.studentmodule.databinding.FragmentStudentProfileBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseAuth
@@ -26,7 +27,6 @@ import com.google.firebase.storage.StorageReference
 class StudentProfileFragment : BaseFragment() {
 
     private var mBinding: FragmentStudentProfileBinding? = null
-    private var mProfileType = "tutor"
     private var mStorageReference: StorageReference? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,9 +36,7 @@ class StudentProfileFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (arguments != null) {
-            mProfileType = arguments!!.getString(AppConstants.KEY_TYPE, "student")
-        }
+
         mBinding = FragmentStudentProfileBinding.bind(view)
         mBinding!!.calback = this
         mStorageReference = FirebaseStorage.getInstance().reference
@@ -53,23 +51,31 @@ class StudentProfileFragment : BaseFragment() {
         // mBinding!!.profilePicture.setOnClickListener { onAddPicture() }
     }
 
+
+    fun setProfileImage() {
+        var userimagePath = (context as StudentHomeActivity).userimagePath!!
+
+        if (userimagePath != null && !userimagePath.equals("")) {
+
+            val ref = FirebaseStorage.getInstance().reference.child(userimagePath)
+            GlideApp.with(this)
+                    .load(ref)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                    .skipMemoryCache(true)
+                    .placeholder(com.autohub.skln.R.drawable.default_pic)
+                    .into(mBinding!!.profilePicture)
+        }
+    }
+
+
     fun setupProfile() {
 
         firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     var user: UserModel = documentSnapshot.toObject(UserModel::class.java)!!
-                    if (user.personInfo!!.accountPicture != null && !user.personInfo!!.accountPicture.equals("")) {
+                    (context as StudentHomeActivity).userimagePath = user.personInfo!!.accountPicture
 
-                        val ref = FirebaseStorage.getInstance().reference.child(user.personInfo!!.accountPicture!!)
-                        GlideApp.with(this)
-                                .load(ref)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                                .skipMemoryCache(true)
-                                .placeholder(com.autohub.skln.R.drawable.default_pic)
-                                .into(mBinding!!.profilePicture)
-                    }
-
-
+                    setProfileImage()
 
                     if (!TextUtils.isEmpty(user.personInfo?.lastName)) {
                         mBinding!!.name.text = String.format("%s %s.", user.personInfo?.firstName,
@@ -91,8 +97,10 @@ class StudentProfileFragment : BaseFragment() {
 
     fun onEditProfileClick() {
 
+        val intent = Intent(context, EditStudentProfileActivity::class.java)
+        activity!!.startActivityForResult(intent, StudentHomeActivity.EDITPROFILE_REQUEST)
 
-        ActivityUtils.launchActivity(requireContext(), EditStudentProfileActivity::class.java)
+//        ActivityUtils.launchActivity(requireContext(), EditStudentProfileActivity::class.java)
 
     }
 

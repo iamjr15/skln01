@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.utills.ActivityUtils
+import com.autohub.skln.utills.AppConstants.KEY_BATCHCODE
+import com.autohub.skln.utills.AppConstants.KEY_BATCHCODES
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.ActivityAddClassBinding
 import com.autohub.studentmodule.models.BatchesModel
@@ -42,7 +44,7 @@ class AddClassActivity : BaseActivity() {
 
     private fun getBatchCodeDetails() {
         var batchCode = mBinding!!.edtcode.text.toString().trim()
-        firebaseStore.collection(getString(R.string.db_root_batches)).whereEqualTo("batchCode"
+        firebaseStore.collection(getString(R.string.db_root_batches)).whereEqualTo(KEY_BATCHCODE
                 , batchCode).get().addOnCompleteListener { task ->
             if (task.isSuccessful && task.result!!.size() > 0) {
                 var batchTitle = ""
@@ -61,7 +63,7 @@ class AddClassActivity : BaseActivity() {
 
                         addBatchCodeInStudent(batchTitle, batchCode)
                     } else {
-                        showSnackError("You are not enrolled in this batch.")
+                        showSnackError(getString(R.string.youarenotenrolled_msg))
                     }
 
 
@@ -69,7 +71,7 @@ class AddClassActivity : BaseActivity() {
 
 
             } else {
-                showSnackError("No batch exist with this batch code.")
+                showSnackError(getString(R.string.nobatchExist_message))
 
             }
             hideLoading()
@@ -83,7 +85,7 @@ class AddClassActivity : BaseActivity() {
     private fun addBatchCodeInStudent(batchTitle: String, batchCode: String) {
         firebaseStore.collection(getString(R.string.db_root_students))
                 .document(appPreferenceHelper.getuserID()).set(
-                        mapOf("batchCodes" to FieldValue.arrayUnion(batchCode)
+                        mapOf(KEY_BATCHCODES to FieldValue.arrayUnion(batchCode)
 
                         ), SetOptions.merge()).addOnSuccessListener {
                     hideLoading()

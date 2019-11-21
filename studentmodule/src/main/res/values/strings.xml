@@ -6,6 +6,9 @@
     <string name="db_root_requests">requests</string>
     <string name="db_root_batchRequests">batchRequests</string>
     <string name="db_root_batches">batches</string>
+    <string name="db_root_subjects">subjects</string>
+    <string name="db_root_grades">grades</string>
+    <string name="db_root_studentSubjects">studentSubjects</string>
 
 
     <string name="login">login</string>
@@ -102,5 +105,12 @@
     <string name="headerprofile">profile</string>
     <string name="addbatchcode">Please add your batch code.</string>
     <string name="passwordchangemessage">Your password has been changed successfully!</string>
+    <string name="nobatchExist_message">No batch exist with this batch code.</string>
+    <string name="youarenotenrolled_msg">You are not enrolled in this batch.</string>
+    <string name="chossesyourHobby_title">Choose your favourite hobby</string>
+    <string name="selectGrade_title">Select Current Grade</string>
+    <string name="chooseFavtsubj_title">Choose Favourite Subject</string>
+    <string name="chossleastfavtsub_title">Choose Least Favourite Subject</string>
+    <string name="profileupdatesuccessfully_msg">Profile has been Updated succesfully!</string>
 
 </resources>

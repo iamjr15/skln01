@@ -73,10 +73,11 @@ class FragmentHome : BaseFragment() {
     fun setupProfile() {
         /* val ref = FirebaseStorage.getInstance().reference.child("student/" +
                  firebaseAuth.currentUser!!.uid + ".jpg")*/
+        var userimagePath = (context as StudentHomeActivity).userimagePath!!
 
-        if (user.personInfo!!.accountPicture != null && !user.personInfo!!.accountPicture.equals("")) {
+        if (userimagePath != null && !userimagePath.equals("")) {
 
-            val ref = FirebaseStorage.getInstance().reference.child(user.personInfo!!.accountPicture!!)
+            val ref = FirebaseStorage.getInstance().reference.child(userimagePath)
             GlideApp.with(this)
                     .load(ref)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
@@ -93,12 +94,14 @@ class FragmentHome : BaseFragment() {
                     user = documentSnapshot.toObject(UserModel::class.java)!!
 
                     (context as StudentHomeActivity).user = user
+                    (context as StudentHomeActivity).userimagePath = user.personInfo!!.accountPicture
 
                     user.id = documentSnapshot.id
                     //                        User user = User.prepareUser(documentSnapshot);
                     mBinding!!.heyUser.text = String.format("Hey, \n%s.", user.personInfo!!.firstName)
                     setSubjects(user)
                     setHobbies(user)
+
 
                     setupProfile()
 
