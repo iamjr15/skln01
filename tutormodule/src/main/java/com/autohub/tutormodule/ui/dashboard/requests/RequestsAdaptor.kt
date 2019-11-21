@@ -35,7 +35,7 @@ class RequestsAdaptor(var context: Context, val listener: Listener)
         if (requestsList[position].status == AppConstants.STATUS_PENDING) {
             itemRequestBinding.next.visibility = View.VISIBLE
         } else {
-            itemRequestBinding.next.visibility = View.GONE
+            itemRequestBinding.next.visibility = View.INVISIBLE
         }
 
         holder.itemView.setOnClickListener {

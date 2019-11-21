@@ -135,5 +135,4 @@ public interface AppConstants {
     String STATUS_PENDING = "pending";
     String STATUS_ACTIVE = "active";
     String STATUS_CANCELLED = "cancelled";
-
 }

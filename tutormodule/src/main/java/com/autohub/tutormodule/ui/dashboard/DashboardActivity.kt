@@ -1,5 +1,7 @@
 package com.autohub.tutormodule.ui.dashboard
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
@@ -11,6 +13,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.models.batches.BatchesModel
+import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.ui.dashboard.home.HomeBaseFragment
 import com.autohub.tutormodule.ui.dashboard.listner.ClassRequestListener
@@ -22,15 +25,13 @@ import kotlinx.android.synthetic.main.activity_dashboard.*
 import java.util.*
 
 class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
-    override fun refreshSchedule() {
-        scheduleFragment.fetchTutorData()
-    }
 
     private val mTabs = ArrayList<TextView>()
     private lateinit var mViewPager: ViewPager
     private lateinit var homeBaseFragment: HomeBaseFragment
     private lateinit var requestBaseFragment: RequestBaseFragment
     private lateinit var scheduleFragment: ScheduleFragment
+    private lateinit var profileFragment: ProfileFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,7 +131,8 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
                     return requestBaseFragment
                 }
                 else -> {
-                    return ProfileFragment()
+                    profileFragment = ProfileFragment()
+                    return profileFragment
                 }
             }
         }
@@ -166,5 +168,7 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
         requestBaseFragment.showPendingRequestScreen(studentId, documentId)
     }
 
-
+    override fun refreshSchedule() {
+        scheduleFragment.fetchTutorData()
+    }
 }

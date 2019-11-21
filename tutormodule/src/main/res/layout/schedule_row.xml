@@ -41,7 +41,8 @@
                     app:layout_constraintEnd_toStartOf="@+id/active_button"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Physics Morning Batch - XI" />
+                    tools:text="Physics Morning Batch - XI"
+                    android:fontFamily="sans-serif-medium"/>
 
                 <TextView
                     android:id="@+id/active_button"
@@ -60,7 +61,8 @@
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:fontFamily="sans-serif"/>
 
                 <TextView
                     android:id="@+id/time"
