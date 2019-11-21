@@ -43,13 +43,13 @@ class ScheduleFragment : BaseFragment() {
         mBinding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-//                if (i < 10) {
-//                    mBinding.calendarView.scrollToPosition(0)
-//                } else if (i > 90) {
-//                    mBinding.calendarView.scrollToPosition(dates.size - 1)
-//                } else if ((i * 3) < (dates.size - 1)) {
-                    mBinding.calendarView.scrollToPosition((i * 0.27).toInt())
-//                }
+                if (i < 10) {
+                    mBinding.calendarView.scrollToPosition(0)
+                } else if (i > 90) {
+                    mBinding.calendarView.scrollToPosition(dates.size - 1)
+                } else if ((i * 3) < (dates.size - 1)) {
+                    mBinding.calendarView.scrollToPosition((i * 3))
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -69,7 +69,7 @@ class ScheduleFragment : BaseFragment() {
 
     }
 
-    fun fetchTutorData() {
+    private fun fetchTutorData() {
         firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     hideLoading()
@@ -102,6 +102,7 @@ class ScheduleFragment : BaseFragment() {
         val timeStamp = SimpleDateFormat("MMM,dd,EEE", Locale.ENGLISH).format(Calendar.getInstance().time)
         for (i in dates.indices) {
             if (dates[i].contains(timeStamp)) {
+                mBinding.seekBar.progress = (i * 0.27).toInt()
                 mBinding.calendarView.scrollToPosition(i)
                 adapter.selectedPosition = i
                 adaptor.notifyDataSetChanged()
