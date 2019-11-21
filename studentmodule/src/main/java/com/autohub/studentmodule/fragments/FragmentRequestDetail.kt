@@ -105,6 +105,7 @@ class FragmentRequestDetail : BaseFragment() {
                     .load(path)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .fallback(com.autohub.skln.R.drawable.default_pic)
+                    .placeholder(com.autohub.skln.R.drawable.default_pic)
                     .into(mBinding!!.profilePicture)
         } catch (e: Exception) {
         }

@@ -148,8 +148,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:background="#756C6C" />
-<!--                        android:text="@{tutorViewModel.costPerDuration}"
--->
+                    <!--                        android:text="@{tutorViewModel.costPerDuration}"
+                    -->
                     <TextView
                         android:id="@+id/rate"
                         style="@style/subjecttextstyle"

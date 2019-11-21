@@ -69,7 +69,7 @@
                                 android:id="@+id/rateimage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignBottom="@+id/txtrating"
+                                android:layout_centerVertical="true"
                                 android:src="@drawable/ratingicon" />
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -77,6 +77,7 @@
                                 style="@style/smallexploretest"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
                                 android:layout_toEndOf="@+id/rateimage"
                                 android:text="@string/tools_4_2" />
                         </RelativeLayout>
@@ -84,7 +85,7 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/_rating"
-                            android:layout_width="74dp"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/rr"
                             android:layout_centerHorizontal="true"
@@ -110,11 +111,12 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:gravity="center"
+                            android:maxLines="2"
                             android:text="@string/tools_8th_12th" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/_rating"
-                            android:layout_width="74dp"
+                            android:layout_width="80dp"
 
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/txtgrades"
@@ -159,7 +161,7 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/_rating"
-                            android:layout_width="74dp"
+                            android:layout_width="80dp"
 
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/txtdistance"
@@ -192,7 +194,7 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/_rating"
-                            android:layout_width="74dp"
+                            android:layout_width="80dp"
                             android:layout_height="wrap_content"
 
                             android:layout_below="@+id/txtclasstype"

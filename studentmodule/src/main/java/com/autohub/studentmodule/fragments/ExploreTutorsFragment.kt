@@ -240,7 +240,7 @@ class ExploreTutorsFragment : BaseFragment() {
                     * Add tutors Subjects
                     * */
                     for (i in tutorsSubjectList) {
-                        if (i.teacherId.equals(user.id)) {
+                        if (i.teacherId.equals(user.id) && (context as StudentHomeActivity).subjectDataList.size > 0) {
                             subjects.append("," + (context as StudentHomeActivity).subjectDataList
                                     .get((context as StudentHomeActivity).subjectDataList.map { it.id }.indexOf(i.subjectId)).name)
                         }
@@ -249,7 +249,7 @@ class ExploreTutorsFragment : BaseFragment() {
                      * Add tutors Grades
                      * */
                     for (i in tutorsGradeList) {
-                        if (i.teacherId.equals(user.id)) {
+                        if (i.teacherId.equals(user.id) && (context as StudentHomeActivity).gradesDataList.size > 0) {
                             grades.append("," + (context as StudentHomeActivity).gradesDataList
                                     .get((context as StudentHomeActivity).gradesDataList.map { it.id }.indexOf(i.gradeId)).grade)
                         }

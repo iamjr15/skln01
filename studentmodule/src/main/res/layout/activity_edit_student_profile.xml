@@ -61,6 +61,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
+                            android:fontFamily="@font/montserrat_semi_bold"
                             android:paddingStart="14dp"
                             android:text="@string/headerprofile"
                             android:textAllCaps="true"
@@ -113,13 +114,15 @@
                             android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/TextAppearance.AppCompat.Body1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="20dp"
+                                android:fontFamily="@font/montserrat_semi_bold"
+
                                 android:text="@string/headerprofile"
                                 android:textAllCaps="true"
+                                android:textColor="@color/black"
                                 android:textSize="19sp" />
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -127,6 +130,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginTop="12dp"
+                                android:fontFamily="@font/montserrat_light"
                                 android:text="@string/edit_details"
                                 android:textAllCaps="true"
                                 android:textSize="18sp" />
@@ -177,8 +181,10 @@
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="22dp"
                         android:layout_marginRight="14dp"
+                        android:fontFamily="@font/montserrat_semi_bold"
                         android:text="@string/name"
                         android:textAllCaps="true"
+                        android:textColor="@color/black"
                         android:textSize="14sp" />
 
                     <LinearLayout
@@ -212,8 +218,10 @@
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="14dp"
+                        android:fontFamily="@font/montserrat_semi_bold"
                         android:text="@string/passwordlabel"
                         android:textAllCaps="true"
+                        android:textColor="@color/black"
                         android:textSize="14sp" />
 
                     <LinearLayout
@@ -249,15 +257,16 @@
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/show_hide_password"
                                 android:layout_width="wrap_content"
-
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="16dp"
                                 android:background="?attr/selectableItemBackground"
+                                android:fontFamily="@font/montserrat_semi_bold"
                                 android:onClick="@{() -> callback.showHidePass()}"
                                 android:text="@string/hidepass"
                                 android:textAllCaps="true"
+                                android:textColor="@color/black"
                                 android:textStyle="bold" />
 
                         </RelativeLayout>
@@ -269,8 +278,10 @@
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="14dp"
+                        android:fontFamily="@font/montserrat_semi_bold"
                         android:text="@string/contact_numberlabel"
                         android:textAllCaps="true"
+                        android:textColor="@color/black"
                         android:textSize="14sp" />
 
                     <LinearLayout
@@ -327,8 +338,10 @@
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="14dp"
+                        android:fontFamily="@font/montserrat_semi_bold"
                         android:text="@string/current_gradelabel"
                         android:textAllCaps="true"
+                        android:textColor="@color/black"
                         android:textSize="14sp" />
 
                     <LinearLayout
@@ -367,8 +380,10 @@
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="14dp"
+                        android:fontFamily="@font/montserrat_semi_bold"
                         android:text="@string/favourite_subjectlabel"
                         android:textAllCaps="true"
+                        android:textColor="@color/black"
                         android:textSize="14sp" />
 
                     <LinearLayout
@@ -407,8 +422,10 @@
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="14dp"
+                        android:fontFamily="@font/montserrat_semi_bold"
                         android:text="@string/least_favourite_subjectlabel"
                         android:textAllCaps="true"
+                        android:textColor="@color/black"
                         android:textSize="14sp" />
 
                     <LinearLayout
@@ -447,8 +464,10 @@
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="14dp"
+                        android:fontFamily="@font/montserrat_semi_bold"
                         android:text="@string/favourite_hobbylable"
                         android:textAllCaps="true"
+                        android:textColor="@color/black"
                         android:textSize="14sp" />
 
                     <LinearLayout

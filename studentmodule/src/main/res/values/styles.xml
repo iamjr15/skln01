@@ -11,7 +11,7 @@
     <style name="science">
         <item name="android:textColor">#ffffffff</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
 
     </style>
 
@@ -22,7 +22,7 @@
     <style name="keyboard">
         <item name="android:textColor">#ccffffff</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
 
     </style>
 
@@ -50,6 +50,8 @@
         <item name="android:textColor">#ffffffff</item>
         <item name="android:textSize">13sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
     <!-- Text style for "physics" -->
     <!-- Add this snippet to styles.xml. -->
@@ -57,6 +59,8 @@
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">13sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
 
 
@@ -80,7 +84,7 @@
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">13sp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:fontFamily">@font/montserrat_light</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
 
     </style>
 
@@ -92,13 +96,15 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
 
 
     <!-- Text style for "request_th" -->
     <!-- Add this snippet to styles.xml. -->
     <style name="request_th">
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
 
         <item name="android:textColor">#ffffffff</item>
         <item name="android:textSize">13sp</item>
@@ -116,6 +122,9 @@
         <item name="android:textColor">#ff0031f6</item>
         <item name="android:textSize">21sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+
+
     </style>
 
     <!-- Text style for "class_deta" -->
@@ -126,6 +135,8 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+
     </style>
 
     <!-- Text style for "teaching_e" -->
@@ -134,6 +145,8 @@
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
 
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -160,6 +173,7 @@
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">11sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
 
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -172,6 +186,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
 
     <!-- Text style for "schedule" -->
@@ -240,7 +256,7 @@
         <item name="android:textSize">17sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
     </style>
 
     <!-- Text style for "click_to_a" -->
@@ -250,7 +266,7 @@
         <item name="android:textSize">14sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
     </style>
 
     <!-- Text style for "show" -->
@@ -265,6 +281,8 @@
     <!-- Text style for "you_haven'" -->
     <!-- Add this snippet to styles.xml. -->
     <style name="you_haven">
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">17sp</item>
     </style>
@@ -295,6 +313,8 @@
     <style name="change">
         <item name="android:textColor">#ff18d29f</item>
         <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
     <!-- Text style for "$_250__/__" -->
     <!-- Add this snippet to styles.xml. -->
@@ -302,6 +322,8 @@
         <item name="android:textColor">#ffffffff</item>
         <item name="android:textSize">10sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
 
     <!-- Text style for "richard_ni" -->
@@ -309,7 +331,7 @@
     <style name="richard_ni">
         <item name="android:textColor">#ff141414</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
 
     </style>
     <!-- Text style for "physics_|_" -->
@@ -318,7 +340,7 @@
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
     </style>
 
 
@@ -330,12 +352,17 @@
     <style name="smallexploretest">
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
 
     <style name="_rating">
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">10sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserrat_alternates_bold</item>
+
+
     </style>
 
     <!-- Text style for "_not_regis" -->
