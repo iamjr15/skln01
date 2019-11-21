@@ -48,7 +48,7 @@ class ScheduleFragment : BaseFragment() {
                 } else if (i > 90) {
                     mBinding.calendarView.scrollToPosition(dates.size - 1)
                 } else if ((i * 3) < (dates.size - 1)) {
-                    mBinding.calendarView.scrollToPosition((i * 0.27).toInt())
+                    mBinding.calendarView.scrollToPosition((i * 3))
                 }
             }
 

@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.autohub.skln.activities.OnBoardActivity
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.tutor.TutorData
+import com.autohub.skln.utills.ActivityUtils
 import com.autohub.skln.utills.GlideApp
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorProfileBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.GeoPoint
 
 class ProfileFragment : BaseFragment() {
@@ -32,6 +35,14 @@ class ProfileFragment : BaseFragment() {
                 intent.putExtra(getString(R.string.containsTutorData), tutorData)
             }
             startActivity(intent)
+        }
+
+        mBinding.logout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            appPreferenceHelper.tutorSignUpComplete = false
+
+            ActivityUtils.launchActivity(requireContext(), OnBoardActivity::class.java)
+            requireActivity().finishAffinity()
         }
     }
 
