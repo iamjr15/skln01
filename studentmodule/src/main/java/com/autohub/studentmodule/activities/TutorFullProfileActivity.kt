@@ -30,6 +30,7 @@ class TutorFullProfileActivity : BaseActivity() {
     private var mBinding: ActivityTutorFullProfileBinding? = null
     private var mUserViewModel: TutorViewModel? = null
     private var mCurrentUser: UserModel? = null
+    private var isClassTyperequire = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -169,8 +170,8 @@ class TutorFullProfileActivity : BaseActivity() {
     }
 
     private fun addClassTypeRadioButtons(classtype: ArrayList<String>?) {
-        if (classtype!!.size < 0) {
-
+        if (classtype!!.size <= 0) {
+            isClassTyperequire = false
         }
 
         for (element in classtype) {
@@ -189,15 +190,35 @@ class TutorFullProfileActivity : BaseActivity() {
 
         when {
             mBinding!!.subjectradio.checkedRadioButtonId == -1 -> showSnackError(getString(R.string.selectSeubject_msg))
-            mBinding!!.classtyperadio.checkedRadioButtonId == -1 -> showSnackError(getString(R.string.selectclasstype_msg))
-            else -> {
-                var selectedsubjectRadio = (findViewById(mBinding!!.subjectradio.checkedRadioButtonId)) as RadioButton
+            mBinding!!.classtyperadio.checkedRadioButtonId == -1 -> {
+                if (!isClassTyperequire) {
+                    setRequireData()
+                } else {
+                    showSnackError(getString(R.string.selectclasstype_msg))
 
-                var selectedclasstypeRadio = (findViewById(mBinding!!.classtyperadio.checkedRadioButtonId)) as RadioButton
-                makeRequest(selectedsubjectRadio.text.toString(), selectedclasstypeRadio.text.toString())
+                }
+            }
+            else -> {
+                setRequireData()
 
 
             }
         }
     }
+
+    fun setRequireData() {
+        var selectedsubjectRadio = (findViewById(mBinding!!.subjectradio.checkedRadioButtonId)) as RadioButton
+
+        if (isClassTyperequire) {
+
+            var selectedclasstypeRadio = (findViewById(mBinding!!.classtyperadio.checkedRadioButtonId)) as RadioButton
+            makeRequest(selectedsubjectRadio.text.toString(), selectedclasstypeRadio.text.toString())
+        } else {
+            makeRequest(selectedsubjectRadio.text.toString(), "")
+
+        }
+
+
+    }
+
 }

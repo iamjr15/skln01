@@ -106,7 +106,7 @@ class AddBatchFragment : BaseFragment() {
             hideLoading()
             subjectList = documentSnapshot.toObjects(SubjectData::class.java) as ArrayList<SubjectData>
             for (i in 0 until subjectList.size) {
-                items.add(subjectList[i]?.name!!)
+                items.add(subjectList[i].name!!)
             }
             showDialog(items, mBinding.selectSubject, "Select Subject", selectedSub)
 
@@ -140,12 +140,12 @@ class AddBatchFragment : BaseFragment() {
         batchesModel.title = mBinding.batchName.text.toString()
 
         val calendarStartDate = Calendar.getInstance()
-        calendarStartDate.add(Calendar.HOUR, mBinding.startTime.text.toString().split(":")[0].toInt());
-        calendarStartDate.add(Calendar.MINUTE, mBinding.startTime.text.toString().split(":")[1].toInt());
+        calendarStartDate.add(Calendar.HOUR, mBinding.startTime.text.toString().split(":")[0].toInt())
+        calendarStartDate.add(Calendar.MINUTE, mBinding.startTime.text.toString().split(":")[1].toInt())
 
         val calendarEndDate = Calendar.getInstance()
-        calendarEndDate.add(Calendar.HOUR, mBinding.startTime.text.toString().split(":")[0].toInt());
-        calendarEndDate.add(Calendar.MINUTE, mBinding.startTime.text.toString().split(":")[1].toInt());
+        calendarEndDate.add(Calendar.HOUR, mBinding.startTime.text.toString().split(":")[0].toInt())
+        calendarEndDate.add(Calendar.MINUTE, mBinding.startTime.text.toString().split(":")[1].toInt())
 
         batchesModel.id = UUID.randomUUID().toString()
         batchesModel.timing?.startTime = Timestamp(calendarStartDate.time)
@@ -177,7 +177,10 @@ class AddBatchFragment : BaseFragment() {
         firebaseStore.collection(getString(R.string.db_root_batches)).add(batchesModel).addOnSuccessListener {
             hideLoading()
             showSnackError("Batch Added successfully!!")
+
+
             homeListener.showBatchOptionsFragment(batchesModel)
+            homeListener.refreshSchedule()
         }.addOnFailureListener { e ->
             hideLoading()
             showSnackError(e.toString())

@@ -5,8 +5,10 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.text.TextUtils
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.loginsignup.R
@@ -32,6 +34,23 @@ class SignupStart : BaseActivity() {
             Log.d(">>>>LocationAddress", "Address is :$address")
             mCity = address
         }
+    }
+
+    fun passwordVisibility(editText: AppCompatEditText) {
+        if (editText.transformationMethod is PasswordTransformationMethod) {
+            editText.transformationMethod = null
+            mBinding!!.txtshowpass.setText(R.string.hide)
+        } else {
+            editText.transformationMethod = PasswordTransformationMethod()
+            mBinding!!.txtshowpass.setText(R.string.show)
+
+        }
+        editText.setSelection(editText.length())
+    }
+
+    fun updatepasswordVisibility() {
+        passwordVisibility(mBinding!!.edtPassword)
+
     }
 
 
@@ -78,7 +97,7 @@ class SignupStart : BaseActivity() {
                 return
             }
 
-            if (password.toString().length < 7) {
+            if (password.toString().length < 6) {
                 mBinding!!.edtPassword.error = getString(R.string.passwordweak)
                 mBinding!!.edtPassword.requestFocus()
 //                showSnackError(R.string.enter_password)

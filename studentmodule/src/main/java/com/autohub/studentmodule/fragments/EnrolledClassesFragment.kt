@@ -17,7 +17,6 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 /**
@@ -126,54 +125,82 @@ class EnrolledClassesFragment : BaseFragment() {
 
     fun fetchEnrolledClasses() {
 
-        var studentsEnrollesIdMap: HashMap<String, ArrayList<String>> = HashMap()
+        firebaseStore.collection("students").document(appPreferenceHelper.getuserID()).get().addOnSuccessListener {
+            hideLoading()
+            if (it["batchCodes"] != null && (it["batchCodes"] as ArrayList<String>).size > 0) {
+                var userBatchesCode: ArrayList<String> = it["batchCodes"] as ArrayList<String>
 
-        firebaseStore.collection("batches").whereArrayContains("enrolledStudentsId", firebaseAuth.currentUser!!.uid)
-                .get().addOnCompleteListener { task ->
+                firebaseStore.collection("batches").whereArrayContains("enrolledStudentsId", firebaseAuth.currentUser!!.uid)
+                        .get().addOnCompleteListener { task ->
 
-                    mBinding!!.swiperefresh.isRefreshing = false
+                            mBinding!!.swiperefresh.isRefreshing = false
 
-                    if (task.isSuccessful) {
-                        enrolledClassesList.clear()
-                        for (document in task.result!!) {
-                            val batchesModel = document.toObject(BatchesModel::class.java)
-                            batchesModel.documentId = document.id
+                            if (task.isSuccessful) {
+                                enrolledClassesList.clear()
+                                for (document in task.result!!) {
+                                    val batchesModel = document.toObject(BatchesModel::class.java)
+                                    batchesModel.documentId = document.id
 
 
 
-                            try {
-                                var endTime = uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
-                                        "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.endTime!!.toDate().toString()
-                                )
-                                var startTime = uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
-                                        "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.startTime!!.toDate().toString()
-                                ).toString()
-                                batchesModel.batchTiming =
-                                        startTime + " - " + endTime
-                            } catch (e: Exception) {
-                                e.printStackTrace()
+                                    try {
+                                        var endTime = uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
+                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.endTime!!.toDate().toString()
+                                        )
+                                        var startTime = uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
+                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.startTime!!.toDate().toString()
+                                        ).toString()
+                                        batchesModel.batchTiming =
+                                                startTime + " - " + endTime
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+
+                                    if (userBatchesCode.contains(batchesModel.batchCode)) {
+                                        enrolledClassesList.add(batchesModel)
+
+
+                                    }
+
+
+                                }
+                                updateEmptyview()
+                                adaptor!!.setData(enrolledClassesList)
+
                             }
+                        }.addOnFailureListener {
+                            updateEmptyview()
 
-
-
-
-                            enrolledClassesList.add(batchesModel)
+                            mBinding!!.swiperefresh.isRefreshing = false
 
                         }
-                        if (enrolledClassesList.size > 0) {
-                            mBinding!!.rrempty.visibility = View.GONE
-                        } else {
-                            mBinding!!.rrempty.visibility = View.VISIBLE
-                        }
-                        adaptor!!.setData(enrolledClassesList)
 
-                    }
-                }.addOnFailureListener {
+            } else {
+                updateEmptyview()
+                enrolledClassesList.clear()
+                adaptor!!.setData(enrolledClassesList)
 
-                    mBinding!!.swiperefresh.isRefreshing = false
 
-                }
+                mBinding!!.swiperefresh.isRefreshing = false
 
+            }
+        }.addOnFailureListener()
+        {
+
+            mBinding!!.swiperefresh.isRefreshing = false
+
+
+        }
+
+
+    }
+
+    private fun updateEmptyview() {
+        if (enrolledClassesList.size > 0) {
+            mBinding!!.rrempty.visibility = View.GONE
+        } else {
+            mBinding!!.rrempty.visibility = View.VISIBLE
+        }
     }
 
 /*uTCToLocal("EEE, d MMM yyyy HH:mm:ss z",

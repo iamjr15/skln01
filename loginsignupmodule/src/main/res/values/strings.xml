@@ -70,6 +70,6 @@
     <string name="title_loginsignup">LoginSignup Module</string>
     <string name="if_already_registered_login_by_clicking_the_button_below">If already registered , login by clicking the button below.</string>
     <string name="forgot_passwodheader">forgot password</string>
-    <string name="passwordweak">Weak password. Password should not be less than 6 characters</string>
+    <string name="passwordweak">Weak password.You have to enter at least 6 digit in password field!</string>
     <string name="tutors_institute_tutorsignup">Tutors/Institute</string>
 </resources>

@@ -9,5 +9,6 @@ interface HomeListener {
     fun showAddBatchFragment(showAddBatch: Boolean)
     fun showBatchOptionsFragment(batch: BatchesModel)
     fun showStudentsListFragment()
+    fun refreshSchedule()
 
 }

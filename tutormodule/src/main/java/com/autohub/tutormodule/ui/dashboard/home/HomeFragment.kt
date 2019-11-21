@@ -87,7 +87,10 @@ class HomeFragment : BaseFragment() {
 
     fun onManageClassClick() {
         homeListner.managerSelected()
+    }
 
+
+    fun updateBatches() {
 
     }
 

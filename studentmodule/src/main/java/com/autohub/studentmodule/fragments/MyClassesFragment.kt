@@ -64,4 +64,5 @@ class MyClassesFragment : Fragment() {
         internal inner class Info(val fragment: Fragment, val title: String)
     }
 
+
 }

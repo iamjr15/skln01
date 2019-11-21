@@ -11,19 +11,18 @@
 
 
     <RelativeLayout
-        android:background="@android:color/white"
-
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/onboard"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="2"
-            tools:context=".activities.OnBoardActivity"
-            android:baselineAligned="false">
+            tools:context=".activities.OnBoardActivity">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -64,32 +63,64 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="14dp">
 
-
-            <Button
-                style="@style/onboard_login"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/onboard_loginbutton"
-                android:onClick="@{()->callback.onLogin()}"
-                android:text="@string/login"
-                android:textAllCaps="false" />
+                android:layout_height="match_parent">
 
-            <Button
-                style="@style/onboard_signup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="13dp"
-                android:background="@drawable/onboard_signupbutton"
-                android:onClick="@{()->callback.onSignup()}"
+                <RelativeLayout
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="end|right|top"
+                    android:background="@drawable/onboardrect_drawable">
 
-                android:text="@string/sign_up"
-                android:textAllCaps="false" />
+                    <TextView
+                        style="@style/s"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="S." />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom">
+
+                    <Button
+                        android:id="@+id/btn"
+
+                        style="@style/onboard_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="62dp"
+                        android:background="@drawable/onboard_loginbutton"
+                        android:onClick="@{()->callback.onLogin()}"
+                        android:text="@string/login"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        style="@style/onboard_signup"
+                        android:layout_width="match_parent"
+                        android:layout_height="62dp"
+                        android:layout_below="@+id/btn"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="13dp"
+                        android:background="@drawable/onboard_signupbutton"
+                        android:onClick="@{()->callback.onSignup()}"
+
+                        android:text="@string/sign_up"
+                        android:textAllCaps="false" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
 
         </LinearLayout>
 
