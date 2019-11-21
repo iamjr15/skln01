@@ -164,7 +164,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     private fun getAppData() {
         gradesDataList = ArrayList()
         subjectDataList = ArrayList()
-        firebaseStore.collection(getString(R.string.db_root_subjects)).get().addOnCompleteListener {
+        firebaseStore.collection("subjects").get().addOnCompleteListener {
 
             if (it.isSuccessful) {
                 for (document in it.result!!) {

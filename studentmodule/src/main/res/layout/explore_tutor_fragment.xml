@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:background="@android:color/white"
-
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -66,10 +66,10 @@
                         android:focusable="false"
                         android:gravity="center"
                         android:paddingEnd="8dp"
-                        tools:text="grade 8"
                         android:textColor="@android:color/white"
+                        tools:ignore="RtlSymmetry"
 
-                        tools:ignore="RtlSymmetry" />
+                        tools:text="grade 8" />
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -95,6 +95,8 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textlocation"
                 style="@style/avenue"
+                android:fontFamily="@font/montserrat_bold"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="9dp"

@@ -65,7 +65,7 @@ class EditStudentProfileActivity : BaseActivity() {
     * */
     private fun fetchSubjects() {
         subjectDataList = arrayListOf()
-        firebaseStore.collection(getString(R.string.db_root_subjects)).get().addOnCompleteListener {
+        firebaseStore.collection("subjects").get().addOnCompleteListener {
 
             if (it.isSuccessful) {
                 for (document in it.result!!) {
@@ -402,9 +402,14 @@ class EditStudentProfileActivity : BaseActivity() {
                         }
 
                     }
+                    if (hobbiesIdBuilder.isNotBlank()) {
+                        selectedHobbiesid = hobbiesIdBuilder.toString().removeRange(0..0)
 
-                    selectedHobbiesid = hobbiesIdBuilder.toString().removeRange(0..0)
-                    mBinding!!.favHobby.text = hobbiesBuilder.toString().removeRange(0..0)
+                    }
+                    if (hobbiesBuilder.isNotBlank()) {
+                        mBinding!!.favHobby.text = hobbiesBuilder.toString().removeRange(0..0)
+
+                    }
 
 
 

@@ -126,8 +126,11 @@ class ScheduleFragment : BaseFragment() {
     private fun updateEmptyview() {
         if (scheduleData.size > 0) {
             mBinding.rrempty.visibility = View.GONE
+            mBinding.seekBar.visibility = View.VISIBLE
         } else {
             mBinding.rrempty.visibility = View.VISIBLE
+            mBinding.seekBar.visibility = View.GONE
+
         }
     }
 
