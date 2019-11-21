@@ -1,6 +1,5 @@
 package com.autohub.tutormodule.ui.dashboard.profile
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -11,14 +10,13 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
-import com.autohub.skln.CropActivity
+import com.autohub.skln.models.User
 import com.autohub.skln.models.batchRequests.GradeData
 import com.autohub.skln.models.batchRequests.SubjectData
-import com.autohub.skln.models.User
-import com.autohub.skln.models.tutor.*
+import com.autohub.skln.models.tutor.TutorData
+import com.autohub.skln.models.tutor.TutorGradesSubjects
 import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.CommonUtils
 import com.autohub.skln.utills.GlideApp
@@ -26,13 +24,11 @@ import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ActivityTutorEditProfileBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.vansuita.pickimage.bundle.PickSetup
-import com.vansuita.pickimage.dialog.PickImageDialog
+import gun0912.tedbottompicker.TedBottomPicker
 import kotlinx.android.synthetic.main.activity_tutor_edit_profile.*
 import java.io.*
 import java.util.*
@@ -50,6 +46,7 @@ class EditProfileActivity : BaseActivity() {
 
     private var selectedGradesList = ArrayList<String>()
     private var gradesList = ArrayList<GradeData>()
+    private var profilePictureUri: String = ""
 
     private val mWatcherWrapper = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -363,28 +360,20 @@ class EditProfileActivity : BaseActivity() {
     }
 
     fun onAddPicture() {
-        val galleryPermissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        if (!checkIfAlreadyhavePermission()) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                return
-            }
-            ActivityCompat.requestPermissions(this, galleryPermissions, 0)
-        } else {
-            val setup = PickSetup()
-            setup.cancelText = "Close"
-            PickImageDialog.build(setup) { pickResult ->
-                if (pickResult.error == null) {
-                    val uri = pickResult.uri
-                    mBinding.profilePicture.setImageURI(uri)
-                    mBinding.profilePicture.tag = pickResult.path
 
-                    val file = File(pickResult.path)
-                    val intent = Intent(this, CropActivity::class.java)
-                    intent.putExtra(AppConstants.KEY_URI, Uri.fromFile(file))
-                    startActivityForResult(intent, 1122)
+        TedBottomPicker.with(this)
+                .show { uri ->
+
+                    GlideApp.with(this)
+                            .load(uri)
+                            .placeholder(com.autohub.skln.R.drawable.default_pic)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                            .skipMemoryCache(true)
+
+                            .into(mBinding.profilePicture)
+                    uploadImage(uri)
+
                 }
-            }.show(this)
-        }
     }
 
 
@@ -461,7 +450,10 @@ class EditProfileActivity : BaseActivity() {
             buf.close()
             val picRef = mStorageReference!!.child("tutor/" + firebaseAuth.currentUser!!.uid + ".jpg")
             val uploadTask = picRef.putBytes(bytes)
-            uploadTask.addOnSuccessListener { hideLoading() }.addOnFailureListener { e ->
+            uploadTask.addOnSuccessListener {
+                profilePictureUri = uploadTask.result.uploadSessionUri.toString()
+                hideLoading()
+            }.addOnFailureListener { e ->
                 hideLoading()
                 Toast.makeText(this, "Upload Failed -> $e", Toast.LENGTH_LONG).show()
             }
@@ -501,28 +493,30 @@ class EditProfileActivity : BaseActivity() {
     }
 
     fun makeSaveRequest() {
-        showLoading()
         if (isVerified()) {
+            showLoading()
+
             val tutor = TutorData()
 
-            tutor.qualification?.currentOccupation = mBinding.selectOccupation.text.toString()
-            tutor.qualification?.experience = mBinding.teachingExperience.text.toString()
             tutor.qualification?.qualification = mBinding.qualification.text.toString()
             tutor.qualification?.qualificationArea = mBinding.areaOfQualification.text.toString()
             tutor.qualification?.targetBoard = mBinding.targetedBoard.text.toString()
             tutor.personInfo?.biodata = mBinding.bio.text.toString()
+            if (profilePictureUri.trim().isNotEmpty()) {
+                tutor.personInfo?.accountPicture = profilePictureUri
+            } else {
+                profilePictureUri = tutorData?.personInfo?.accountPicture!!
+            }
 
             Log.e("tutor", tutor.toString())
-            firebaseStore.collection(getString(R.string.db_root_tutors)).
-                    document(appPreferenceHelper.getuserID()).
-                    update("qualification", tutor.qualification,
-                    "personInfo.biodata", tutor.personInfo?.biodata).
-                    addOnSuccessListener {
+            firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).update("qualification", tutor.qualification,
+                    "personInfo.biodata", tutor.personInfo?.biodata,
+                    "personInfo.accountPicture", tutor.personInfo?.accountPicture).addOnSuccessListener {
                 hideLoading()
                 showSnackError("Your profile is updated successfully!!")
             }.addOnFailureListener { e ->
                 hideLoading()
-                showSnackError(e.toString())
+               showSnackError(e.toString())
             }
         }
     }
