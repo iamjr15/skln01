@@ -69,7 +69,7 @@ class ScheduleFragment : BaseFragment() {
 
     }
 
-    private fun fetchTutorData() {
+    fun fetchTutorData() {
         firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     hideLoading()

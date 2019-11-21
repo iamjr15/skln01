@@ -91,8 +91,7 @@ class AddClassActivity : BaseActivity() {
                     hideLoading()
                     Toast.makeText(this,
                             "Your have been added into - ${batchTitle} Successfully.", Toast.LENGTH_SHORT).show()
-                    ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
-                    finishAffinity()
+
                 }
 
     }

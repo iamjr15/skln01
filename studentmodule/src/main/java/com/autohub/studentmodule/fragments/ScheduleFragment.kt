@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.adaptors.ScheduleCalenderAdapter
@@ -49,48 +50,85 @@ class ScheduleFragment : BaseFragment() {
         fetchBatches()
         initializeCalendarView(dates)
 
+        mBinding.swiperefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+            fetchBatches()
+        })
+
+
     }
 
     private fun fetchBatches() {
-        firebaseStore.collection(getString(R.string.db_root_batches)).whereArrayContains("enrolledStudentsId", firebaseAuth.currentUser!!.uid)
-                .get().addOnCompleteListener { task ->
+        firebaseStore.collection("students").document(appPreferenceHelper.getuserID()).get().addOnSuccessListener {
+            hideLoading()
+            if (it["batchCodes"] != null && (it["batchCodes"] as ArrayList<String>).size > 0) {
+                var userBatchesCode: ArrayList<String> = it["batchCodes"] as ArrayList<String>
 
-                    if (task.isSuccessful) {
-                        scheduleData.clear()
-                        for (document in task.result!!) {
-                            val batchesModel = document.toObject(com.autohub.studentmodule.models.BatchesModel::class.java)
+                firebaseStore.collection(getString(R.string.db_root_batches)).whereArrayContains("enrolledStudentsId", firebaseAuth.currentUser!!.uid)
+                        .get().addOnCompleteListener { task ->
+                            mBinding.swiperefresh.isRefreshing = false
+                            if (task.isSuccessful) {
+                                scheduleData.clear()
+                                for (document in task.result!!) {
+                                    val batchesModel = document.toObject(com.autohub.studentmodule.models.BatchesModel::class.java)
 
-                            try {
-                                var endTime = uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
-                                        "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.endTime!!.toDate().toString()
-                                )
-                                var startTime = uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
-                                        "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.startTime!!.toDate().toString()
-                                ).toString()
-                                batchesModel.batchTiming =
-                                        startTime + " - " + endTime
-                            } catch (e: Exception) {
-                                e.printStackTrace()
+                                    try {
+                                        var endTime = uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
+                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.endTime!!.toDate().toString()
+                                        )
+                                        var startTime = uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
+                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.startTime!!.toDate().toString()
+                                        ).toString()
+                                        batchesModel.batchTiming =
+                                                startTime + " - " + endTime
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+
+                                    if (userBatchesCode.contains(batchesModel.batchCode)) {
+                                        scheduleData.add(batchesModel)
+
+
+                                    }
+                                }
+
+                                updateEmptyview()
+
+
+                                adaptor.setData(scheduleData)
+
                             }
 
-                            scheduleData.add(batchesModel)
                         }
-
-                        if (scheduleData.size > 0) {
-                            mBinding.rrempty.visibility = View.GONE
-                        } else {
-                            mBinding.rrempty.visibility = View.VISIBLE
+                        .addOnFailureListener { e ->
+                            mBinding.swiperefresh.isRefreshing = false
+                            showSnackError(e.message)
                         }
 
 
-                        adaptor.setData(scheduleData)
+            } else {
+                updateEmptyview()
+                mBinding.swiperefresh.isRefreshing = false
+                scheduleData.clear()
+                adaptor.setData(scheduleData)
 
-                    }
+            }
+        }.addOnFailureListener()
+        {
+            mBinding.swiperefresh.isRefreshing = false
+            scheduleData.clear()
+            adaptor.setData(scheduleData)
 
-                }
-                .addOnFailureListener { e ->
-                    showSnackError(e.message)
-                }
+        }
+
+
+    }
+
+    private fun updateEmptyview() {
+        if (scheduleData.size > 0) {
+            mBinding.rrempty.visibility = View.GONE
+        } else {
+            mBinding.rrempty.visibility = View.VISIBLE
+        }
     }
 
     private fun setUpSeekBar(dates: List<String>) {

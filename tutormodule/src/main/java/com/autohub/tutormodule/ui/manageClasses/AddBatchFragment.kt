@@ -15,17 +15,11 @@ import com.autohub.skln.models.batchRequests.SubjectData
 import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.AppConstants
-import com.autohub.skln.utills.CommonUtils
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorAddBatchBinding
 import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
 import com.google.firebase.Timestamp
-import java.lang.reflect.Array
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -112,7 +106,7 @@ class AddBatchFragment : BaseFragment() {
             hideLoading()
             subjectList = documentSnapshot.toObjects(SubjectData::class.java) as ArrayList<SubjectData>
             for (i in 0 until subjectList.size) {
-                items.add(subjectList[i]?.name!!)
+                items.add(subjectList[i].name!!)
             }
             showDialog(items, mBinding.selectSubject, "Select Subject", selectedSub)
 
@@ -146,12 +140,12 @@ class AddBatchFragment : BaseFragment() {
         batchesModel.title = mBinding.batchName.text.toString()
 
         val calendarStartDate = Calendar.getInstance()
-        calendarStartDate.add(Calendar.HOUR, mBinding.startTime.text.toString().split(":")[0].toInt());
-        calendarStartDate.add(Calendar.MINUTE, mBinding.startTime.text.toString().split(":")[1].toInt());
+        calendarStartDate.add(Calendar.HOUR, mBinding.startTime.text.toString().split(":")[0].toInt())
+        calendarStartDate.add(Calendar.MINUTE, mBinding.startTime.text.toString().split(":")[1].toInt())
 
         val calendarEndDate = Calendar.getInstance()
-        calendarEndDate.add(Calendar.HOUR, mBinding.startTime.text.toString().split(":")[0].toInt());
-        calendarEndDate.add(Calendar.MINUTE, mBinding.startTime.text.toString().split(":")[1].toInt());
+        calendarEndDate.add(Calendar.HOUR, mBinding.startTime.text.toString().split(":")[0].toInt())
+        calendarEndDate.add(Calendar.MINUTE, mBinding.startTime.text.toString().split(":")[1].toInt())
 
         batchesModel.id = UUID.randomUUID().toString()
         batchesModel.timing?.startTime = Timestamp(calendarStartDate.time)
@@ -183,7 +177,10 @@ class AddBatchFragment : BaseFragment() {
         firebaseStore.collection(getString(R.string.db_root_batches)).add(batchesModel).addOnSuccessListener {
             hideLoading()
             showSnackError("Batch Added successfully!!")
+
+
             homeListener.showBatchOptionsFragment(batchesModel)
+            homeListener.refreshSchedule()
         }.addOnFailureListener { e ->
             hideLoading()
             showSnackError(e.toString())

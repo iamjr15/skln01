@@ -21,12 +21,16 @@ import com.autohub.tutormodule.ui.dashboard.schedule.ScheduleFragment
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import java.util.*
 
-class DashboardActivity : BaseActivity(), HomeListener ,ClassRequestListener{
+class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
+    override fun refreshSchedule() {
+        scheduleFragment.fetchTutorData()
+    }
 
     private val mTabs = ArrayList<TextView>()
     private lateinit var mViewPager: ViewPager
     private lateinit var homeBaseFragment: HomeBaseFragment
     private lateinit var requestBaseFragment: RequestBaseFragment
+    private lateinit var scheduleFragment: ScheduleFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,8 +118,14 @@ class DashboardActivity : BaseActivity(), HomeListener ,ClassRequestListener{
                     homeBaseFragment = HomeBaseFragment()
                     return homeBaseFragment
                 }
-                1 -> return ScheduleFragment()
-                2 -> {
+                1 -> {
+
+                    scheduleFragment = ScheduleFragment()
+                    return scheduleFragment
+                }
+
+                2
+                -> {
                     requestBaseFragment = RequestBaseFragment()
                     return requestBaseFragment
                 }
@@ -153,7 +163,7 @@ class DashboardActivity : BaseActivity(), HomeListener ,ClassRequestListener{
     }
 
     override fun showPendingRequestScreen(studentId: String, documentId: String) {
-        requestBaseFragment.showPendingRequestScreen(studentId,documentId)
+        requestBaseFragment.showPendingRequestScreen(studentId, documentId)
     }
 
 
