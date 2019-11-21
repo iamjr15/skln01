@@ -20,6 +20,7 @@ import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorAddBatchBinding
 import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
 import com.google.firebase.Timestamp
+import java.lang.reflect.Array
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.LocalDate
@@ -85,23 +86,14 @@ class AddBatchFragment : BaseFragment() {
 
     fun showClasses() {
         val items = ArrayList<String>()
-//        items.add("Class " + AppConstants.CLASS_1 + CommonUtils.getClassSuffix(AppConstants.CLASS_1.toInt()))
-//        items.add("Class " + AppConstants.CLASS_2 + CommonUtils.getClassSuffix(AppConstants.CLASS_2.toInt()))
-//        items.add("Class " + AppConstants.CLASS_3 + CommonUtils.getClassSuffix(AppConstants.CLASS_3.toInt()))
-//        items.add("Class " + AppConstants.CLASS_4 + CommonUtils.getClassSuffix(AppConstants.CLASS_4.toInt()))
-//        items.add("Class " + AppConstants.CLASS_5 + CommonUtils.getClassSuffix(AppConstants.CLASS_5.toInt()))
-//        items.add("Class " + AppConstants.CLASS_6 + CommonUtils.getClassSuffix(AppConstants.CLASS_6.toInt()))
-//        items.add("Class " + AppConstants.CLASS_7 + CommonUtils.getClassSuffix(AppConstants.CLASS_7.toInt()))
-//        items.add("Class " + AppConstants.CLASS_8 + CommonUtils.getClassSuffix(AppConstants.CLASS_8.toInt()))
-//        items.add("Class " + AppConstants.CLASS_9 + CommonUtils.getClassSuffix(AppConstants.CLASS_9.toInt()))
-//        items.add("Class " + AppConstants.CLASS_10 + CommonUtils.getClassSuffix(AppConstants.CLASS_10.toInt()))
-//        items.add("Class " + AppConstants.CLASS_11 + CommonUtils.getClassSuffix(AppConstants.CLASS_11.toInt()))
-//        items.add("Class " + AppConstants.CLASS_12 + CommonUtils.getClassSuffix(AppConstants.CLASS_12.toInt()))
+
         firebaseStore.collection(getString(R.string.db_root_grades)).get().addOnSuccessListener { documentSnapshot ->
             hideLoading()
-            gradesList = documentSnapshot.toObjects(GradeData::class.java) as ArrayList<GradeData>
+            val data = documentSnapshot.toObjects(GradeData::class.java)
+            gradesList = ArrayList(data.sortedWith(compareBy { it.grade?.toInt() }))
+
             for (i in 0 until gradesList.size) {
-                items.add("Class" + gradesList[i]?.grade!!)
+                items.add("Class " + gradesList[i].grade!!)
             }
             showDialog(items, mBinding.selectClass, "Select Class", selectedClass)
 
@@ -115,18 +107,6 @@ class AddBatchFragment : BaseFragment() {
     fun showSubjects() {
         showLoading()
         val items = ArrayList<String>()
-//        items.add(AppConstants.SUBJECT_SCIENCE)
-//        items.add(AppConstants.SUBJECT_COMPUTER_SCIENCE)
-//        items.add(AppConstants.SUBJECT_ACCOUNTANCY)
-//        items.add(AppConstants.SUBJECT_BIOLOGY)
-//        items.add(AppConstants.SUBJECT_BUSINESS)
-//        items.add(AppConstants.SUBJECT_SOCIAL_STUDIES)
-//        items.add(AppConstants.SUBJECT_CHEMISTRY)
-//        items.add(AppConstants.SUBJECT_ECONOMICS)
-//        items.add(AppConstants.SUBJECT_LANGUAGES)
-//        items.add(AppConstants.SUBJECT_PHYSICS)
-//        items.add(AppConstants.SUBJECT_MATHS)
-//        items.add(AppConstants.SUBJECT_ENGLISH)
 
         firebaseStore.collection(getString(R.string.db_root_subjects)).get().addOnSuccessListener { documentSnapshot ->
             hideLoading()
@@ -173,6 +153,7 @@ class AddBatchFragment : BaseFragment() {
         calendarEndDate.add(Calendar.HOUR, mBinding.startTime.text.toString().split(":")[0].toInt());
         calendarEndDate.add(Calendar.MINUTE, mBinding.startTime.text.toString().split(":")[1].toInt());
 
+        batchesModel.id = UUID.randomUUID().toString()
         batchesModel.timing?.startTime = Timestamp(calendarStartDate.time)
 
         batchesModel.timing?.endTime = Timestamp(calendarEndDate.time)
@@ -180,8 +161,10 @@ class AddBatchFragment : BaseFragment() {
         batchesModel.subject?.name = mBinding.selectSubject.text.toString()
         batchesModel.subject?.id = subjectList[selectedSubPosition].id
 
-        batchesModel.grade?.name = mBinding.selectClass.text.toString()
+        batchesModel.grade?.name = "Class_" + gradesList[selectedClassPosition].grade
         batchesModel.grade?.id = gradesList[selectedClassPosition].id
+
+        batchesModel.status = AppConstants.STATUS_ACTIVE
 
         batchesModel.teacher?.id = tutorData.id
         batchesModel.teacher?.name = tutorData.personInfo?.firstName + " " + tutorData.personInfo?.lastName

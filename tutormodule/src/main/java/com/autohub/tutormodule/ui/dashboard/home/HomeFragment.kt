@@ -41,9 +41,11 @@ class HomeFragment : BaseFragment() {
                 .whereEqualTo("teacher.id", tutorData.id)
                 .whereEqualTo("status", AppConstants.STATUS_PENDING)
                 .get().addOnSuccessListener { documentSnapshot ->
-                    val data = documentSnapshot.toObjects(BatchesModel::class.java)
-                    if (data != null && data.size > 0) {
-                        mBinding.pendingRequestCount.setText(data.size)
+                    if (documentSnapshot.documents.size > 0) {
+                        val data = documentSnapshot.toObjects(BatchesModel::class.java)
+                        if (data != null && data.size > 0) {
+                            mBinding.pendingRequestCount.text = data.size.toString()
+                        }
                     }
                 }
                 .addOnFailureListener { e ->
