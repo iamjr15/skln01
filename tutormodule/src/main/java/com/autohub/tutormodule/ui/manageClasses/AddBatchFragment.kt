@@ -15,17 +15,11 @@ import com.autohub.skln.models.batchRequests.SubjectData
 import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.AppConstants
-import com.autohub.skln.utills.CommonUtils
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorAddBatchBinding
 import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
 import com.google.firebase.Timestamp
-import java.lang.reflect.Array
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
