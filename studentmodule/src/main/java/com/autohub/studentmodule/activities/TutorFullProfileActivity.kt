@@ -13,7 +13,7 @@ import com.autohub.skln.models.UserModel
 import com.autohub.skln.models.batches.BatchRequestModel
 import com.autohub.skln.models.batches.BatchRequestViewModel
 import com.autohub.skln.models.tutor.TutorData
-import com.autohub.skln.utills.AppConstants
+import com.autohub.skln.utills.AppConstants.*
 import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.ActivityTutorFullProfileBinding
@@ -55,7 +55,7 @@ class TutorFullProfileActivity : BaseActivity() {
     private fun getIntentData() {
         if (intent.extras != null) {
             val bundle = intent.extras
-            val user = bundle!!.getParcelable<TutorData>(AppConstants.KEY_DATA)
+            val user = bundle!!.getParcelable<TutorData>(KEY_DATA)
             mUserViewModel = TutorViewModel(user!!)
         }
     }
@@ -69,7 +69,6 @@ class TutorFullProfileActivity : BaseActivity() {
 
     private fun setUpView() {
         addSubjectRadioButtons(mUserViewModel!!.user.subjectsToTeach!!.split(","))
-//        mUserViewModel!!.user.academicInfo!!.classType?.split(",")?.let { }
 
         addClassTypeRadioButtons(mUserViewModel!!.user.qualification!!.classType)
 
@@ -98,25 +97,25 @@ class TutorFullProfileActivity : BaseActivity() {
         val gradeId = mCurrentUser!!.academicInfo!!.selectedClass
         var grade = ""
         var subjectId = ""
-        firebaseStore.collection("grades")
-                .whereEqualTo("id", gradeId).get().addOnSuccessListener {
+        firebaseStore.collection(getString(R.string.db_root_grades))
+                .whereEqualTo(KEY_ID, gradeId).get().addOnSuccessListener {
 
                     it.forEach {
-                        grade = "class_${it.getString("grade")!!} "
+                        grade = "class_${it.getString(KEY_GRADE)!!} "
 
                     }
 
-                    firebaseStore.collection("subjects")
-                            .whereEqualTo("name", subject).get().addOnSuccessListener {
+                    firebaseStore.collection(getString(R.string.db_root_subjects))
+                            .whereEqualTo(KEY_NAME, subject).get().addOnSuccessListener {
 
                                 it.forEach {
-                                    subjectId = "${it.getString("id")!!} "
+                                    subjectId = "${it.getString(KEY_ID)!!} "
 
                                 }
 
 //hdsjhsa
                                 var batchRequest = BatchRequestModel(id = studentId + "_" + subjectId + "_" + gradeId
-                                        , status = "pending",
+                                        , status = KEY_REQUESTSTATUS_PENDING,
                                         teacher = BatchRequestModel.Teacher(tutorId, mUserViewModel!!.fullName),
                                         student = BatchRequestModel.Student(studentId, mCurrentUser!!.personInfo!!.firstName!! + " " +
                                                 mCurrentUser!!.personInfo!!.lastName!!),
@@ -138,18 +137,14 @@ class TutorFullProfileActivity : BaseActivity() {
 
     private fun makeBatchRequest(batchRequest: BatchRequestModel) {
 
-
-        /*       val request = Request(batchRequest.student!!.id,
-                       batchRequest.teacher!!.id, batchRequest., mUserViewModel!!.firstName, mCurrentUser!!.personInfo!!.firstName,
-                       mCurrentUser!!.academicInfo!!.selectedClass, classtype)*////* mUserViewModel!!.classType*/
         val dbRoot = getString(R.string.db_root_batchRequests)
         firebaseStore.collection(dbRoot).add(batchRequest).addOnSuccessListener { documentReference ->
             Log.d(">>>>Request", "DocumentSnapshot added with ID: " + documentReference.id)
             hideLoading()
             val intent = Intent()
             val bundle = Bundle()
-            bundle.putParcelable(AppConstants.KEY_DATA, BatchRequestViewModel(batchRequest, "Student", documentReference.id))
-            intent.putExtra(AppConstants.KEY_DATA, bundle)
+            bundle.putParcelable(KEY_DATA, BatchRequestViewModel(batchRequest, "Student", documentReference.id))
+            intent.putExtra(KEY_DATA, bundle)
             intent.putExtras(bundle)
             setResult(Activity.RESULT_OK, intent)
             finish()
@@ -168,7 +163,6 @@ class TutorFullProfileActivity : BaseActivity() {
         for (element in subjects) {
             val rdbtn = RadioButton(this)
             rdbtn.id = View.generateViewId()
-            //rdbtn.text = "Radio " + rdbtn.id
             rdbtn.text = element
             mBinding!!.subjectradio.addView(rdbtn)
         }
@@ -176,17 +170,12 @@ class TutorFullProfileActivity : BaseActivity() {
 
     private fun addClassTypeRadioButtons(classtype: ArrayList<String>?) {
         if (classtype!!.size < 0) {
-            /*   val rdbtn = RadioButton(this)
-               rdbtn.id = View.generateViewId()
-               //rdbtn.text = "Radio " + rdbtn.id
-               rdbtn.text = mUserViewModel!!.user.academicInfo!!.classType
-               mBinding!!.classtyperadio.addView(rdbtn)*/
+
         }
 
         for (element in classtype) {
             val rdbtn = RadioButton(this)
             rdbtn.id = View.generateViewId()
-            //rdbtn.text = "Radio " + rdbtn.id
             rdbtn.text = element
             mBinding!!.classtyperadio.addView(rdbtn)
         }
@@ -199,14 +188,12 @@ class TutorFullProfileActivity : BaseActivity() {
     fun onRequestClick() {
 
         when {
-            mBinding!!.subjectradio.checkedRadioButtonId == -1 -> showSnackError("Please select a subject")
-            mBinding!!.classtyperadio.checkedRadioButtonId == -1 -> showSnackError("Please select a class type")
+            mBinding!!.subjectradio.checkedRadioButtonId == -1 -> showSnackError(getString(R.string.selectSeubject_msg))
+            mBinding!!.classtyperadio.checkedRadioButtonId == -1 -> showSnackError(getString(R.string.selectclasstype_msg))
             else -> {
                 var selectedsubjectRadio = (findViewById(mBinding!!.subjectradio.checkedRadioButtonId)) as RadioButton
-                println("==================== Selected subject" + selectedsubjectRadio.text.toString())
 
                 var selectedclasstypeRadio = (findViewById(mBinding!!.classtyperadio.checkedRadioButtonId)) as RadioButton
-                println("==================== Selected subject" + selectedclasstypeRadio.text.toString())
                 makeRequest(selectedsubjectRadio.text.toString(), selectedclasstypeRadio.text.toString())
 
 

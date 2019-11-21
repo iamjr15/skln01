@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.skln.models.TutorGrades
@@ -106,6 +107,8 @@ class ExploreTutorsFragment : BaseFragment() {
             Log.d(">>>>Location", "Oncreate")
             LocationProvider.getInstance().start(requireContext(), mLocationListener)
         }
+
+
     }
 
     fun setupProfile() {
@@ -167,7 +170,6 @@ class ExploreTutorsFragment : BaseFragment() {
         }
 
 
-
         mBinding!!.spinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 mBinding!!.txtgrade.setText("grade ${grades[position]}")
@@ -178,19 +180,17 @@ class ExploreTutorsFragment : BaseFragment() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-
             }
         }
-
         mBinding!!.txtgrade.setOnClickListener {
             mBinding!!.spinner!!.performClick()
-
         }
 
-
-
         setupProfile()
+        mBinding!!.swiperefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
 
+            getTutors(exploreFilter)
+        })
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -212,6 +212,7 @@ class ExploreTutorsFragment : BaseFragment() {
 
     private fun getTutors(exploreFilter: ExploreFilter) {
         firebaseStore.collection(getString(R.string.db_root_tutors)).get().addOnCompleteListener { task ->
+            mBinding!!.swiperefresh.isRefreshing = false
 
             if (task.isSuccessful) {
                 tutorsList = ArrayList()
@@ -304,7 +305,12 @@ class ExploreTutorsFragment : BaseFragment() {
             } else {
                 Log.d(">>>Explore", "Error getting documents: ", task.exception)
             }
-        }.addOnFailureListener { e -> Log.e(">>>Explore", "Error getting documents: ", e) }
+        }.addOnFailureListener { e ->
+
+            mBinding!!.swiperefresh.isRefreshing = false
+
+            Log.e(">>>Explore", "Error getting documents: ", e)
+        }
     }
 
     private fun checkFilterfoData(exploreFilter: ExploreFilter, tutorData: TutorData): Boolean {

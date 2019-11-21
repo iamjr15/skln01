@@ -109,6 +109,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
+                            android:gravity="center"
                             android:text="@string/tools_8th_12th" />
 
                         <androidx.appcompat.widget.AppCompatTextView

@@ -108,6 +108,7 @@ public interface AppConstants {
     String KEY_BATCHCODES = "batchCodes";
     String KEY_GRADE = "grade";
     String KEY_STUDENTID = "studentId";
+    String KEY_NAME = "name";
 
 
     // firestore db keys - student
@@ -123,6 +124,7 @@ public interface AppConstants {
     String KEY_STDT_LEAST_FAV_CLASSES = "leastFavoriteSubjects";
     String KEY_STDT_HOBBIES = "hobbies";
     String KEY_ACCOUNT_PICTURE = "accountPicture";
+    String KEY_REQUESTSTATUS_PENDING = "pending";
 
 
     String KEY_SELECTED_CLASS = "selectedClass";

@@ -124,7 +124,6 @@ class EditStudentProfileActivity : BaseActivity() {
         var selectedItems: MutableList<String> = ArrayList()
 
         if (user!!.academicInfo!!.hobbies != null && user!!.academicInfo!!.hobbies!!.isNotEmpty()) {
-            //   selectedItems = listOf(*user!!.academicInfo!!.hobbies!!.split("\\s*,\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
 
             for (subjectData in subjectDataList) {
                 if (subjectData.isHobbySelected!!) {
@@ -152,7 +151,7 @@ class EditStudentProfileActivity : BaseActivity() {
                         selectedHobbies.remove(items[i])
                     }
                 }
-                .setPositiveButton("OK") { dialog, _ ->
+                .setPositiveButton(getString(R.string.ok)) { dialog, _ ->
                     dialog.dismiss()
 
                     for (i in subjectDataList.indices) {
@@ -355,10 +354,10 @@ class EditStudentProfileActivity : BaseActivity() {
     }
 
 
-    fun setUserProfileImage(user: UserModel) {
-        if (user.personInfo!!.accountPicture != null && !user.personInfo!!.accountPicture.equals("")) {
+    fun setUserProfileImage(user: String?) {
+        if (user != null && !user.equals("")) {
 
-            val ref = FirebaseStorage.getInstance().reference.child(user.personInfo!!.accountPicture!!)
+            val ref = FirebaseStorage.getInstance().reference.child(user)
 
             try {
                 GlideApp.with(this)
@@ -409,7 +408,7 @@ class EditStudentProfileActivity : BaseActivity() {
 
 
 
-                    setUserProfileImage(user)
+                    setUserProfileImage(user.personInfo!!.accountPicture)
 
                     var favsujectsbuilder = StringBuilder()
                     var favsujectsidsbuilder = StringBuilder()
@@ -698,8 +697,8 @@ class EditStudentProfileActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1122 && resultCode == Activity.RESULT_OK && data != null) {
             val croppedUri = data.getParcelableExtra<Uri>("_cropped_uri_")
-            mBinding!!.profilePicture.setImageURI(croppedUri)
-            mBinding!!.profilePicture.tag = croppedUri!!.path
+            /* mBinding!!.profilePicture.setImageURI(croppedUri)
+             mBinding!!.profilePicture.tag = croppedUri!!.path*/
             uploadImage(croppedUri)
         }
     }
@@ -758,7 +757,10 @@ class EditStudentProfileActivity : BaseActivity() {
                         KEY_PERSONALINFO to mapOf(KEY_ACCOUNT_PICTURE to pathString)
                 )
                 , SetOptions.merge())
-                .addOnSuccessListener { }
+                .addOnSuccessListener {
+
+                    setUserProfileImage(imageURL)
+                }
                 .addOnFailureListener { }
     }
 

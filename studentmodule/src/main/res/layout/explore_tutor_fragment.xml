@@ -136,14 +136,22 @@
         </RelativeLayout>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/turorsrecycleview"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swiperefresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="28dp"
-            android:layout_marginRight="28dp"
-            android:orientation="horizontal" />
+
+            android:layout_marginRight="28dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/turorsrecycleview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
     <!--        <TextView

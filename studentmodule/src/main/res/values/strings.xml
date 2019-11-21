@@ -112,5 +112,7 @@
     <string name="chooseFavtsubj_title">Choose Favourite Subject</string>
     <string name="chossleastfavtsub_title">Choose Least Favourite Subject</string>
     <string name="profileupdatesuccessfully_msg">Profile has been Updated succesfully!</string>
+    <string name="selectSeubject_msg">Please select a subject.</string>
+    <string name="selectclasstype_msg">Please select a class type.</string>
 
 </resources>
