@@ -84,10 +84,11 @@
                         <TextView
                             android:id="@+id/txt"
                             style="@style/class_1_"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-
+                            android:textSize="19sp"
                             tools:text="class 1." />
 
                     </RelativeLayout>
@@ -147,8 +148,10 @@
                         android:id="@+id/txtsecond"
                         style="@style/class_1_"
                         android:layout_width="wrap_content"
+
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:textSize="19sp"
 
                         tools:text="class 2." />
 

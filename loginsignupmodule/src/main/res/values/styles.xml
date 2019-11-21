@@ -44,13 +44,14 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">29sp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
     </style>
 
     <style name="signup_second_title_style">
         <item name="android:textColor">#ffffffff</item>
         <item name="android:textSize">17sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
     </style>
     <!-- Text style for "students/p" -->
     <!-- Add this snippet to styles.xml. -->
@@ -64,6 +65,8 @@
     <style name="signup_general_hint_style">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
     <!-- Text style for "login_id" -->
     <!-- Add this snippet to styles.xml. -->
@@ -92,7 +95,7 @@
     <style name="class_1_">
         <item name="android:textColor">#ccffffff</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
 
     </style>
 
@@ -155,22 +158,30 @@
     <style name="hey_student_style">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">80sp</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+
     </style>
 
     <style name="hey_student_name_style">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">54sp</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+
     </style>
 
     <style name="hey_student_lets_style">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">35sp</item>
+        <item name="android:textSize">36sp</item>
         <item name="android:gravity">center_horizontal</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+
     </style>
 
     <style name="signup_student_jack_style">
         <item name="android:textColor">@color/blue_jack</item>
         <item name="android:textSize">19sp</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
 
 

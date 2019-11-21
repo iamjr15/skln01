@@ -116,8 +116,7 @@
             android:background="@drawable/next"
 
             android:onClick="@{() -> callback.onNextClick()}"
-            android:textAllCaps="false"
-           />
+            android:textAllCaps="false" />
 
     </RelativeLayout>
 </layout>
