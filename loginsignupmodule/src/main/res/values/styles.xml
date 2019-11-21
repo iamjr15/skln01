@@ -24,6 +24,8 @@
     <style name="verify_you">
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">25sp</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
 
     </style>
 
@@ -76,6 +78,9 @@
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">17sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
+
     </style>
 
 
@@ -87,6 +92,8 @@
     <style name="class_1_">
         <item name="android:textColor">#ccffffff</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
 
     <!-- Text style for "keyboard." -->
@@ -247,6 +254,8 @@
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">29sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
 
 
@@ -267,6 +276,7 @@
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">10sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
     </style>
 
     <!-- Text style for "let's_get_" -->
@@ -276,6 +286,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
 
     <!-- Text style for "_not_regis" -->

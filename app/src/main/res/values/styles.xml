@@ -877,6 +877,13 @@
 
         </style>
 
+    <style name="s">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+
+        <item name="android:textAllCaps">true</item>
+    </style>
 
         <style name="onboard_login">
             <item name="android:textColor">#ffffffff</item>

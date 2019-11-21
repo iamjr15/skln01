@@ -139,7 +139,7 @@ class ScheduleFragment : BaseFragment() {
                 when {
                     i < 10 -> mBinding.calendarView.scrollToPosition(0)
                     i > 90 -> mBinding.calendarView.scrollToPosition(dates.size - 1)
-                    (i * 3) < (dates.size - 1) -> mBinding.calendarView.scrollToPosition(i * 3)
+                    (i * 3) < (dates.size - 1) -> mBinding.calendarView.scrollToPosition((i * 0.27).toInt())
                 }
             }
 

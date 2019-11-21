@@ -11,10 +11,10 @@
     </data>
 
     <FrameLayout
-        android:background="@android:color/white"
-
         android:layout_width="200dp"
+
         android:layout_height="wrap_content"
+        android:background="@android:color/white"
         tools:context="com.autohub.loginsignup.com.autohub.loginsignup.student.fragments.StudentClassFragment">
 
         <LinearLayout
@@ -77,6 +77,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
+                            android:textSize="24sp"
 
                             tools:text="class 1." />
 
@@ -135,8 +136,10 @@
                         android:id="@+id/txtsecond"
                         style="@style/class_1_"
                         android:layout_width="wrap_content"
+
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:textSize="24sp"
 
                         tools:text="class 2." />
 

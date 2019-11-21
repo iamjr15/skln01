@@ -210,26 +210,67 @@
                         android:paddingStart="12dp"
                         android:text="@string/labelsetpass" />
 
+                    <!--    <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginTop="4dp"
+
+                            android:layout_marginBottom="40dp"
+                            android:paddingStart="10dp">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/edtPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/shadow_rect"
+                                android:drawableStart="@drawable/password"
+                                android:drawablePadding="9dp"
+                                android:inputType="textPassword"
+                                android:paddingLeft="12dp"
+                                android:paddingRight="12dp"
+                                android:paddingBottom="8dp" />
+                        </RelativeLayout>-->
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="4dp"
-
-                        android:layout_marginBottom="40dp"
-                        android:paddingStart="10dp">
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="100dp"
+                        android:background="@drawable/shadow_rect">
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/edtPassword"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/shadow_rect"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/txtshowpass"
+                            android:background="@android:color/transparent"
                             android:drawableStart="@drawable/password"
+
                             android:drawablePadding="9dp"
                             android:inputType="textPassword"
                             android:paddingLeft="12dp"
                             android:paddingRight="12dp"
                             android:paddingBottom="8dp" />
+
+
+                        <TextView
+                            android:id="@+id/txtshowpass"
+                            style="@style/show"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:clickable="true"
+
+                            android:focusable="true"
+                            android:onClick="@{()->callback.updatepasswordVisibility()}"
+                            android:paddingEnd="11dp"
+                            android:paddingBottom="8dp"
+                            android:text="@string/show"
+                            tools:ignore="RtlSymmetry" />
+
                     </RelativeLayout>
 
 
