@@ -40,7 +40,6 @@ class ScheduleFragment : BaseFragment() {
         mBinding = FragmentScheduleBinding.bind(view)
         val dates = getDates("01-01-" + Calendar.getInstance().get(Calendar.YEAR),
                 "31-12-" + Calendar.getInstance().get(Calendar.YEAR))
-        initializeCalendarView(dates)
         scheduleData = ArrayList()
         setUpSeekBar(dates)
 
@@ -48,6 +47,8 @@ class ScheduleFragment : BaseFragment() {
         adaptor = SchedulesAdaptor(requireContext())
         mBinding.schedulerecycleview.adapter = adaptor
         fetchBatches()
+        initializeCalendarView(dates)
+
     }
 
     private fun fetchBatches() {
@@ -122,6 +123,15 @@ class ScheduleFragment : BaseFragment() {
 
         val adapter = ScheduleCalenderAdapter(dates)
         mBinding.calendarView.adapter = adapter
+
+        val timeStamp = SimpleDateFormat("MMM,dd,EEE", Locale.ENGLISH).format(Calendar.getInstance().time)
+        for (i in dates.indices) {
+            if (dates[i].contains(timeStamp)) {
+                mBinding.calendarView.scrollToPosition(i)
+                adapter.selectedPosition = i
+                adaptor.notifyDataSetChanged()
+            }
+        }
     }
 
 
