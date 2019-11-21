@@ -44,7 +44,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">29sp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
     </style>
 
     <style name="signup_second_title_style">
@@ -59,6 +59,8 @@
         <item name="android:textColor">#ffffffff</item>
         <item name="android:textSize">17sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+
     </style>
 
 
@@ -106,7 +108,7 @@
     <style name="please_fol">
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
 
     </style>
     <!-- Text style for "if_already" -->
@@ -114,7 +116,7 @@
     <style name="if_already">
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
 
     </style>
 
@@ -240,6 +242,8 @@
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">23sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
     <!-- Text style for "students/p" -->
     <!-- Add this snippet to styles.xml. -->
@@ -247,6 +251,8 @@
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">23sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
 
 
@@ -352,6 +358,8 @@
     <style name="loginbtn">
         <item name="android:textColor">#ffffffff</item>
         <item name="android:textSize">19sp</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+
     </style>
 
 

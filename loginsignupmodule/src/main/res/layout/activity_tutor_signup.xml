@@ -70,7 +70,7 @@
                     style="@style/please_fol"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="11dp"
+                    android:layout_marginTop="13dp"
                     android:text="@string/step1"
 
                     android:textColorLink="@color/blue" />
@@ -79,28 +79,28 @@
                     style="@style/please_fol"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="11dp"
+                    android:layout_marginTop="13dp"
                     android:text="@string/step2" />
 
                 <TextView
                     style="@style/please_fol"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="11dp"
+                    android:layout_marginTop="13dp"
                     android:text="@string/step3" />
 
                 <TextView
                     style="@style/please_fol"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="11dp"
+                    android:layout_marginTop="13dp"
                     android:text="@string/step4" />
 
                 <TextView
                     style="@style/if_already"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="11dp"
+                    android:layout_marginTop="13dp"
                     android:layout_marginEnd="76dp"
                     android:text="@string/if_already_registered_login_by_clicking_the_button_below" />
 
