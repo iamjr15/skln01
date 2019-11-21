@@ -27,7 +27,7 @@ class ClassesAdaptor(var context: Context) : RecyclerView.Adapter<ClassesAdaptor
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
         mBinding.batchName.text = batchesList[position].title
-        mBinding.className.text = batchesList[position].grade?.name + " | " + batchesList[position].subject?.name
+        mBinding.className.text = batchesList[position].grade?.name?.replace("_", " ") + " | " + batchesList[position].subject?.name
         mBinding.studentsCount.text = batchesList[position].enrolledStudentsId.size.toString() + " students"
 
         mBinding.time.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
