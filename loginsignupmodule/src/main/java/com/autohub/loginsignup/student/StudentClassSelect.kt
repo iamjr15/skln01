@@ -77,7 +77,6 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
     private fun getFragments(countList: ArrayList<String>) {
 
         for (position in countList.indices) {
-
             when (position) {
                 0 -> fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(0, 2))))
                 1 -> fragmentsList.add(StudentClassFragment.newInstance(position, ArrayList(classdatalist.subList(2, 4))))

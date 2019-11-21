@@ -39,7 +39,7 @@
             android:paddingTop="4dp"
             android:paddingEnd="29dp"
             android:paddingBottom="3dp"
-            android:text="@string/tutor_institutes" />
+            android:text="@string/tutors_institute_tutorsignup" />
 
 
         <ScrollView
@@ -71,9 +71,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
-                    android:textColorLink="@color/blue"
+                    android:text="@string/step1"
 
-                    android:text="@string/step1" />
+                    android:textColorLink="@color/blue" />
 
                 <TextView
                     style="@style/please_fol"

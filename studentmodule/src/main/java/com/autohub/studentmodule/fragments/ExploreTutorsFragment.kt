@@ -255,9 +255,15 @@ class ExploreTutorsFragment : BaseFragment() {
                     }
 
 
+                    if (!subjects.isEmpty()) {
+                        user.subjectsToTeach = subjects.toString().removeRange(0..0)
 
-                    user.subjectsToTeach = subjects.toString().removeRange(0..0)
-                    user.classToTeach = grades.toString().removeRange(0..0)
+                    }
+
+                    if (!grades.isEmpty()) {
+                        user.classToTeach = grades.toString().removeRange(0..0)
+
+                    }
 
 
                     /*

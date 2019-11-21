@@ -49,19 +49,24 @@ class AddClassActivity : BaseActivity() {
                 var batchCode = ""
                 for (document in task.result!!) {
                     val batchesModel = document.toObject(BatchesModel::class.java)
-                    batchesModel.documentId = document.id
+                    if (batchesModel.enrolledStudentsId.contains(firebaseAuth.currentUser!!.uid)) {
+                        batchesModel.documentId = document.id
+                        batchTitle = batchesModel.title
+                        batchCode = batchesModel.batchCode
 
+                        mBinding!!.txtadded.text = "you have been added into - ${batchTitle} Successfully."
+                        mBinding!!.lladdclass.visibility = View.GONE
+                        mBinding!!.lladdclasssucess.visibility = View.VISIBLE
+                        // add batch code as array in your profile for future use
 
-                    batchTitle = batchesModel.title
-                    batchCode = batchesModel.batchCode
+                        addBatchCodeInStudent(batchTitle, batchCode)
+                    } else {
+                        showSnackError("You are not enrolled in this batch.")
+                    }
+
 
                 }
-                mBinding!!.txtadded.text = "you have been added into - ${batchTitle} Successfully."
-                mBinding!!.lladdclass.visibility = View.GONE
-                mBinding!!.lladdclasssucess.visibility = View.VISIBLE
-                // add batch code as array in your profile for future use
 
-                addBatchCodeInStudent(batchTitle, batchCode)
 
             } else {
                 showSnackError("No batch exist with this batch code.")

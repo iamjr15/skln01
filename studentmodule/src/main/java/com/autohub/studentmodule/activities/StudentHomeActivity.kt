@@ -35,6 +35,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     lateinit var subjectDataList: ArrayList<SubjectData>
     lateinit var gradesDataList: ArrayList<GradeData>
     var user: UserModel? = null
+    var imagePath: String? = ""
 
     override fun onClassRequestSelectListner(requestViewModel: BatchRequestViewModel) {
         val bundle = Bundle()
@@ -157,6 +158,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
                     user = user
                     user!!.id = documentSnapshot.id
                     hideLoading()
+
 
                 }
                 .addOnFailureListener { e -> showSnackError(e.message) }

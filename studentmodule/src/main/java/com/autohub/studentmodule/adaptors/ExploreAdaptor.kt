@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
-import com.google.firebase.storage.FirebaseStorage
 
 /**
  * Created by Vt Netzwelt
@@ -58,26 +57,27 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
 
                 txtclassprice.text = """$ ${it.packageInfo!!.price} / ${it.packageInfo!!.occurances} CLASSES / PER ${it.packageInfo!!.rateOption}"""
 
+                if (it.classToTeach!! != "") {
+                    val splitarray = it.classToTeach!!.split(",")
+                    if (splitarray.isNotEmpty()) {
+                        val stringBuilder = StringBuilder(splitarray.size)
+                        for (i in splitarray.indices) {
+                            if (i == splitarray.size - 1) {
+                                stringBuilder.append(splitarray[i] + CommonUtils.getClassSuffix(splitarray[i].toInt()))
 
-                txtgrades.text = "pending"
-                val splitarray = it.classToTeach!!.split(",")
-                if (splitarray.isNotEmpty()) {
-                    val stringBuilder = StringBuilder(splitarray.size)
-                    for (i in splitarray.indices) {
-                        if (i == splitarray.size - 1) {
-                            stringBuilder.append(splitarray[i] + CommonUtils.getClassSuffix(splitarray[i].toInt()))
-
-                        } else {
-                            stringBuilder.append(splitarray[i] + CommonUtils.getClassSuffix(splitarray[i].toInt()) + " - ")
+                            } else {
+                                stringBuilder.append(splitarray[i] + CommonUtils.getClassSuffix(splitarray[i].toInt()) + " - ")
+                            }
                         }
+                        txtgrades.text = stringBuilder.toString()
+
+
+                    } else {
+                        txtgrades.text = it.classToTeach
+
                     }
-                    txtgrades.text = stringBuilder.toString()
-
-
-                } else {
-                    txtgrades.text = it.classToTeach
-
                 }
+
 
                 if (it.qualification!!.classType!!.size > 0) {
                     var list = it.qualification!!.classType!!
@@ -94,11 +94,11 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
                 txtsubjects.text = it.subjectsToTeach!!.replace(",", " | ")
 
                 if (!TextUtils.isEmpty(it.personInfo!!.accountPicture)) {
-                    val pathReference1 = FirebaseStorage.getInstance().reference.child(it.personInfo!!.accountPicture!!)
+//                    val pathReference1 = FirebaseStorage.getInstance().reference.child(it.personInfo!!.accountPicture!!)
                     val options = RequestOptions()
                     options.transforms(MultiTransformation(CenterCrop(), RoundedCornersTransformation(context, CommonUtils.convertDpToPixel(6f, context).toInt(), 0)))
                     options.placeholder(R.drawable.dummyexploreimage)
-                    Glide.with(context).load(pathReference1)
+                    Glide.with(context).load(it.personInfo!!.accountPicture!!)
                             .apply(options).into(imgprofile)
 
                 }

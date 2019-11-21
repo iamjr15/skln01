@@ -37,11 +37,22 @@ class LoginActivity : BaseActivity() {
         manager = SplitInstallManagerFactory.create(this)
         mBinding!!.callback = this
 
+
         mBinding!!.usertype.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.radiostudent) {
                 updateUi(true)
             } else {
                 updateUi(false)
+            }
+        }
+        getIntentData()
+
+    }
+
+    private fun getIntentData() {
+        if (intent.hasExtra("isTutor")) {
+            if (intent.extras!!.getBoolean("isTutor", false)) {
+                mBinding!!.usertype.check(R.id.radiotutor)
             }
         }
     }
