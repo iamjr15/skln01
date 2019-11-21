@@ -417,6 +417,12 @@ class EditProfileActivity : BaseActivity() {
         onBackPressed()
     }
 
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
     private fun setupProfile() {
         val ref = FirebaseStorage.getInstance().reference.child("tutor/" +
                 "j9MtRdT5L0g62QiQ7z514z0hQz52"/*firebaseAuth.currentUser!!.uid*/ + ".jpg")
@@ -450,8 +456,8 @@ class EditProfileActivity : BaseActivity() {
             buf.close()
             val picRef = mStorageReference!!.child("tutor/" + firebaseAuth.currentUser!!.uid + ".jpg")
             val uploadTask = picRef.putBytes(bytes)
-            uploadTask.addOnSuccessListener {
-                profilePictureUri = uploadTask.result.uploadSessionUri.toString()
+            uploadTask.addOnSuccessListener {taskSnapshot ->
+                profilePictureUri = taskSnapshot.uploadSessionUri.toString()
                 hideLoading()
             }.addOnFailureListener { e ->
                 hideLoading()
@@ -467,6 +473,8 @@ class EditProfileActivity : BaseActivity() {
         }
 
     }
+
+
 
     private fun editBio(bio: String) {
         val user = HashMap<String, Any>()
@@ -498,6 +506,8 @@ class EditProfileActivity : BaseActivity() {
 
             val tutor = TutorData()
 
+            tutor.qualification?.currentOccupation = mBinding.selectOccupation.text.toString()
+            tutor.qualification?.experience = mBinding.teachingExperience.text.toString()
             tutor.qualification?.qualification = mBinding.qualification.text.toString()
             tutor.qualification?.qualificationArea = mBinding.areaOfQualification.text.toString()
             tutor.qualification?.targetBoard = mBinding.targetedBoard.text.toString()
@@ -509,14 +519,19 @@ class EditProfileActivity : BaseActivity() {
             }
 
             Log.e("tutor", tutor.toString())
-            firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).update("qualification", tutor.qualification,
+            firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).update(
+                    "qualification.currentOccupation", tutor.qualification?.currentOccupation,
+                    "qualification.experience", tutor.qualification?.experience,
+                    "qualification.qualification", tutor.qualification?.qualification,
+                    "qualification.qualificationArea", tutor.qualification?.qualificationArea,
+                    "qualification.targetBoard", tutor.qualification?.targetBoard,
                     "personInfo.biodata", tutor.personInfo?.biodata,
                     "personInfo.accountPicture", tutor.personInfo?.accountPicture).addOnSuccessListener {
                 hideLoading()
                 showSnackError("Your profile is updated successfully!!")
             }.addOnFailureListener { e ->
                 hideLoading()
-               showSnackError(e.toString())
+                showSnackError(e.toString())
             }
         }
     }
@@ -543,10 +558,6 @@ class EditProfileActivity : BaseActivity() {
 
         } else {
             return true
-
         }
-
     }
-
-
 }
