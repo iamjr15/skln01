@@ -40,9 +40,7 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
         val sectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
         mViewPager = findViewById(R.id.container)
         mViewPager.adapter = sectionsPagerAdapter
-        mViewPager.offscreenPageLimit = 3
-
-
+        mViewPager.offscreenPageLimit = 1
 
 
         mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
