@@ -22,7 +22,7 @@ import com.autohub.tutormodule.ui.dashboard.listner.ClassRequestListener
 class RequestsListFragment : BaseFragment(), Listener {
     private lateinit var mAdapter: RequestsAdaptor
     private lateinit var listener: ClassRequestListener
-    private lateinit var binding : FragmentRequestsListBinding
+    private lateinit var binding: FragmentRequestsListBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -37,7 +37,7 @@ class RequestsListFragment : BaseFragment(), Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-         binding = FragmentRequestsListBinding.bind(view)
+        binding = FragmentRequestsListBinding.bind(view)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.setEmptyView(binding.emptyView)
         mAdapter = RequestsAdaptor(requireContext(), this)
@@ -57,7 +57,7 @@ class RequestsListFragment : BaseFragment(), Listener {
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
                     val tutorData = documentSnapshot.toObject(TutorData::class.java)!!
-                    fetchDetails(tutorData.id, status,documentSnapshot.id)
+                    fetchDetails(tutorData.id, status, documentSnapshot.id)
 
                 }
                 .addOnFailureListener { e ->
@@ -70,8 +70,8 @@ class RequestsListFragment : BaseFragment(), Listener {
         firebaseStore.collection(getString(R.string.db_root_batch_requests)).whereEqualTo("teacher.id", id).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val batchRequestData = documentSnapshot.toObjects(BatchRequestData::class.java)
-                    for (i in 0 until documentSnapshot.size()){
-                        batchRequestData[i].documentId= documentSnapshot.documents[i].id
+                    for (i in 0 until documentSnapshot.size()) {
+                        batchRequestData[i].documentId = documentSnapshot.documents[i].id
                     }
                     binding.divider.visibility = View.VISIBLE
                     if (status == AppConstants.STATUS_PENDING) {
@@ -89,6 +89,6 @@ class RequestsListFragment : BaseFragment(), Listener {
     }
 
     override fun showPendingRequestFragment(studentId: String, documentId: String) {
-        listener.showPendingRequestScreen(studentId,documentId)
+        listener.showPendingRequestScreen(studentId, documentId)
     }
 }
