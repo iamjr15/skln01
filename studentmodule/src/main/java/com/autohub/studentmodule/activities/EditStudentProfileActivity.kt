@@ -1,5 +1,6 @@
 package com.autohub.studentmodule.activities
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -8,6 +9,7 @@ import android.os.Handler
 import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.models.UserModel
@@ -660,7 +662,6 @@ class EditStudentProfileActivity : BaseActivity() {
         } else if (mBinding!!.favHobby.text.toString() == "") {
             return true
 
-
         }
         return true
 
@@ -671,45 +672,46 @@ class EditStudentProfileActivity : BaseActivity() {
     * Show Dialog for adding pic from Camera/Gallery
     * */
     fun onAddPicture() {
-        TedBottomPicker.with(this)
-                .show { uri ->
+        /* TedBottomPicker.with(this)
+                 .show { uri ->
 
-                    uploadImage(uri)
+                     uploadImage(uri)
 
+                 }*/
+        val galleryPermissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (!checkIfAlreadyhavePermission()) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                return
+            }
+            ActivityCompat.requestPermissions(this, galleryPermissions, 0)
+        } else {
+            /* val setup = PickSetup()
+            setup.cancelText = "Close"
+            PickImageDialog.build(setup) { pickResult ->
+                if (pickResult.error == null) {
+                    val uri = pickResult.uri
+                    mBinding!!.profilePicture.setImageURI(uri)
+                    val file = File(pickResult.path)
+                    val intent = Intent(this, CropActivity::class.java)
+                    intent.putExtra(AppConstants.KEY_URI, Uri.fromFile(file))
+                    startActivityForResult(intent, 1122)
                 }
-//        val galleryPermissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//        if (!checkIfAlreadyhavePermission()) {
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//                return
-//            }
-//            ActivityCompat.requestPermissions(this, galleryPermissions, 0)
-//        } else {
-//            val setup = PickSetup()
-//            setup.cancelText = "Close"
-//            PickImageDialog.build(setup) { pickResult ->
-//                if (pickResult.error == null) {
-//                    val uri = pickResult.uri
-//                    mBinding!!.profilePicture.setImageURI(uri)
-//                    val file = File(pickResult.path)
-//                    val intent = Intent(this, CropActivity::class.java)
-//                    intent.putExtra(AppConstants.KEY_URI, Uri.fromFile(file))
-//                    startActivityForResult(intent, 1122)
-//                }
-//            }.show(this)
-//
-//            /*          TedBottomPicker.with(this)
-//                              .show { uri ->
-//
-//                                  GlideApp.with(this)
-//                                          .load(uri)
-//                                          .placeholder(com.autohub.skln.R.drawable.default_pic)
-//                                          .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-//                                          .skipMemoryCache(true)
-//
-//                                          .into(mBinding!!.profilePicture)
-//                                  uploadImage(uri)
-//
-//                              }*/
+            }.show(this)*/
+
+            TedBottomPicker.with(this)
+                    .show { uri ->
+
+                        GlideApp.with(this)
+                                .load(uri)
+                                .placeholder(com.autohub.skln.R.drawable.default_pic)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                                .skipMemoryCache(true)
+
+                                .into(mBinding!!.profilePicture)
+                        uploadImage(uri)
+
+                    }
+        }
 //        }
     }
 
@@ -759,9 +761,7 @@ class EditStudentProfileActivity : BaseActivity() {
 
 
         val root = getString(R.string.db_root_students)
-        /*  if (mProfileType.equals("student", ignoreCase = true)) {
-              root = getString(R.string.db_root_students)
-          }*/
+
         imageURL = pathString
 
         /*accountPicture*/
@@ -774,7 +774,7 @@ class EditStudentProfileActivity : BaseActivity() {
                 , SetOptions.merge())
                 .addOnSuccessListener {
 
-                    setUserProfileImage(imageURL)
+                    //  setUserProfileImage(imageURL)
                 }
                 .addOnFailureListener { }
     }

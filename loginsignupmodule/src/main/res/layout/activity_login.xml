@@ -102,12 +102,12 @@
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/edtemail"
+                        style="@style/editext_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/shadow_rect"
                         android:drawableStart="@drawable/email"
                         android:drawablePadding="9dp"
-                        style="@style/editext_style"
 
                         android:inputType="textEmailAddress"
                         android:paddingLeft="12dp"
@@ -172,13 +172,13 @@
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/edtPassword"
+                        style="@style/editext_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@+id/txtshowpass"
                         android:background="@android:color/transparent"
                         android:drawableStart="@drawable/password"
-                        style="@style/editext_style"
 
                         android:drawablePadding="9dp"
                         android:inputType="textPassword"
