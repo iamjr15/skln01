@@ -36,6 +36,7 @@ public class BaseFragment extends Fragment {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseFirestore mFirebaseFirestore;
     private PreferencesImpl mPreferencesImpl;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +45,13 @@ public class BaseFragment extends Fragment {
         mPreferencesImpl = new PreferencesImpl(getActivity(), AppConstants.PREF_NAME);
 
 
-
     }
 
 
     protected PreferencesImpl getAppPreferenceHelper() {
         return mPreferencesImpl;
     }
+
     protected FirebaseAuth getFirebaseAuth() {
         return mFirebaseAuth;
     }

@@ -283,6 +283,11 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         if (mViewPager!!.currentItem == 0) {
 
             super.onBackPressed()
+        } else if (explorebaseFragment.exploreTutorsFragment == null) {
+            explorebaseFragment.showExploreFragment()
+
+        } else if (fragmentClassRequests.fragmentClassRequests == null) {
+            fragmentClassRequests.showRequestFragmentClass()
         } else {
             mViewPager!!.currentItem = 0
 

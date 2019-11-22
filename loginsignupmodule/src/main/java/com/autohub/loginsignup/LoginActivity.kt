@@ -27,7 +27,6 @@ import com.google.firebase.auth.EmailAuthProvider
  */
 class LoginActivity : BaseActivity() {
     private var mBinding: ActivityLoginBinding? = null
-    private val mAccountType = AppConstants.TYPE_STUDENT
     private lateinit var manager: SplitInstallManager
     private lateinit var credential: AuthCredential
 
@@ -72,11 +71,8 @@ class LoginActivity : BaseActivity() {
 
 
         } else {
-
             mBinding!!.rrtutorpass.visibility = View.VISIBLE
             mBinding!!.rrstudentpass.visibility = View.GONE
-
-
             mBinding!!.tvForgotPassword.text = resources.getString(R.string.forgot_passid)
             mBinding!!.tvHintemamil.visibility = View.GONE
             mBinding!!.rremail.visibility = View.GONE
