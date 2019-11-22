@@ -31,7 +31,10 @@ import kotlin.collections.ArrayList
 
 class StudentHomeActivity : BaseActivity(), HomeListners {
     override fun updateScheduleFragment() {
-        myClassesFragment.updateSchedules()
+        if (myClassesFragment != null) {
+            myClassesFragment.updateSchedules()
+
+        }
     }
 
 
@@ -273,7 +276,16 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         fragmentProfile.setProfileImage()
         explorebaseFragment.exploreTutorsFragment!!.setupProfile()
         homefragment.setupProfile()
+    }
 
+    override fun onClassRequestDeleted(isMyRequest: Boolean) {
+        if (isMyRequest) {
+            fragmentClassRequests.showRequestFragmentClass()
+
+        } else {
+            explorebaseFragment.showExploreFragment()
+
+        }
 
     }
 
@@ -281,7 +293,6 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     override fun onBackPressed() {
 
         if (mViewPager!!.currentItem == 0) {
-
             super.onBackPressed()
         } else if (explorebaseFragment.exploreTutorsFragment == null) {
             explorebaseFragment.showExploreFragment()

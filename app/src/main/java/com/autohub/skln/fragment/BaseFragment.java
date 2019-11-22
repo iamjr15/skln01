@@ -86,7 +86,13 @@ public class BaseFragment extends Fragment {
 
     protected void hideLoading() {
         if (requireActivity() instanceof BaseActivity) {
-            ((BaseActivity) requireActivity()).hideLoading();
+            try {
+                ((BaseActivity) requireActivity()).hideLoading();
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+
         }
     }
 

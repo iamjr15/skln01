@@ -78,6 +78,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
+                                android:layout_marginLeft="4dp"
                                 android:layout_toEndOf="@+id/rateimage"
                                 android:text="@string/tools_4_2" />
                         </RelativeLayout>
@@ -195,7 +196,7 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/_rating"
-                            android:layout_width="80dp"
+                            android:layout_width="82dp"
                             android:layout_height="wrap_content"
 
                             android:layout_below="@+id/txtclasstype"

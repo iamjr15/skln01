@@ -111,7 +111,17 @@ class FragmentHome : BaseFragment() {
     }
 
     private fun setSubjects(user: UserModel) {
-        acadmicsAdaptor!!.setData(user.getAcadmics())
+        var grade = "0"
+
+        firebaseStore.collection("grades").whereEqualTo("id", user.academicInfo!!.selectedClass).get().addOnSuccessListener {
+
+            it.forEach {
+                grade = it.getString("grade")!!
+
+                acadmicsAdaptor!!.setData(user.getAcadmics(grade))
+            }
+        }
+
 
     }
 

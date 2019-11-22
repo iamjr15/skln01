@@ -91,9 +91,9 @@ data class UserModel(var academicInfo: AcademicInformation? = AcademicInformatio
     }
 
 
-    fun getAcadmics(): List<AcadmicsData> {
+    fun getAcadmics(grade: String): List<AcadmicsData> {
 
-        val isSeniorClass = academicInfo!!.selectedClass == AppConstants.CLASS_11 || academicInfo!!.selectedClass == AppConstants.CLASS_12
+        val isSeniorClass = grade == AppConstants.CLASS_11 || grade == AppConstants.CLASS_12
         val acadmicsDataList = ArrayList<AcadmicsData>()
         //        if (TextUtils.isEmpty(favoriteClasses)) return acadmicsDataList;
         //        String[] subjects = favoriteClasses.split(",");

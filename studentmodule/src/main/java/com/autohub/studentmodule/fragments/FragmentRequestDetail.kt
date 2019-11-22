@@ -1,5 +1,6 @@
 package com.autohub.studentmodule.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -15,6 +16,7 @@ import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.FragmentRequestDetailBinding
+import com.autohub.studentmodule.listners.HomeListners
 import com.autohub.studentmodule.models.TutorViewModel
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.firestore.SetOptions
@@ -28,11 +30,15 @@ class FragmentRequestDetail : BaseFragment() {
     private var batchRequestViewModel: BatchRequestViewModel? = null
     private var mBinding: FragmentRequestDetailBinding? = null
     private var mTutor: TutorData? = null
+    private var isMyRequest = false
+    private lateinit var homeListner: HomeListners
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (requireActivity() as BaseActivity).setStatusBarColor(R.drawable.purple_header)
         batchRequestViewModel = arguments!!.getParcelable(AppConstants.KEY_DATA)
+        isMyRequest = arguments!!.getBoolean("isMyRequest", false)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -73,15 +79,7 @@ class FragmentRequestDetail : BaseFragment() {
     }
 
     private fun setUpUi() {
-        /*if (mRequestViewModel.getUserType().equalsIgnoreCase("tutor")) {
-            mBinding.deleteRequest.setText(R.string.delete_request);
-            mBinding.deleteRequest.setEnabled(!mRequestViewModel.getRequest().requestStatus.equalsIgnoreCase(Request.STATUS.DELETED.getValue()));
-            mBinding.messageLabel.setText(R.string.request_message);
-            mBinding.requestLogo.setImageResource(R.drawable.ic_flash);
-            mBinding.requestStatus.setText(R.string.new_request_received);
-            mBinding.contactStd.setText(R.string.contact_student);
-            mBinding.addBatch.setText(R.string.add_to_batch);
-        } else {*/
+
         mBinding!!.deleteRequest.isEnabled = !batchRequestViewModel!!.batchRequestModel!!.status.equals(Request.STATUS.CANCELED.value, ignoreCase = true)
         mBinding!!.deleteRequest.setText(R.string.cancel_request)
         mBinding!!.messageLabel.setText(R.string.request_message_student)
@@ -137,7 +135,6 @@ class FragmentRequestDetail : BaseFragment() {
 
                         firebaseStore.collection(root).document(it.id).get()
                                 .addOnSuccessListener { documentSnapshot ->
-                                    hideLoading()
                                     val tutor = documentSnapshot.toObject(TutorData::class.java)
                                     /* if (mRequestViewModel!!.userType.equals("student", ignoreCase = true)) {
                                          mBinding!!.userViewModel = TutorViewModel(tutor!!)
@@ -148,7 +145,6 @@ class FragmentRequestDetail : BaseFragment() {
                                     mBinding!!.rate.text = "fees : $${tutor.packageInfo!!.price} / ${tutor.packageInfo!!.frequency}"
                                 }
                                 .addOnFailureListener { e ->
-                                    hideLoading()
                                     showSnackError(e.message)
                                 }
                     }
@@ -166,8 +162,17 @@ class FragmentRequestDetail : BaseFragment() {
         firebaseStore.collection(dbRoot).document(batchRequestViewModel!!.mRequestId!!).set(map, SetOptions.merge()).addOnSuccessListener {
             hideLoading()
             // mRequestViewModel!!.request.requestStatus = requestStatus
-            setUpUi()
+            // setUpUi()
+            homeListner.onClassRequestDeleted(isMyRequest)
+
         }.addOnFailureListener { hideLoading() }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        homeListner = context as HomeListners
+
+
     }
 
     private fun opDialer() {

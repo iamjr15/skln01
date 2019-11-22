@@ -11,4 +11,5 @@ interface HomeListners {
     fun onAcadmicsSelect(user: UserModel, classname: String)
     fun onClassRequestSelectListner(requestViewModel: BatchRequestViewModel)
     fun updateScheduleFragment()
+    fun onClassRequestDeleted(isMyRequest: Boolean)
 }

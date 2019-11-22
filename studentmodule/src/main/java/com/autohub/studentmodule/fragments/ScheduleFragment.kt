@@ -105,10 +105,11 @@ class ScheduleFragment : BaseFragment() {
 
 
             } else {
-                updateEmptyview()
                 mBinding.swiperefresh.isRefreshing = false
                 scheduleData.clear()
                 adaptor.setData(scheduleData)
+                updateEmptyview()
+
 
             }
         }.addOnFailureListener()
