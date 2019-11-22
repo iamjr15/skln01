@@ -22,6 +22,7 @@ import com.autohub.tutormodule.ui.dashboard.listner.ClassRequestListener
 class RequestsListFragment : BaseFragment(), Listener {
     private lateinit var mAdapter: RequestsAdaptor
     private lateinit var listener: ClassRequestListener
+    private lateinit var binding : FragmentRequestsListBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,7 +37,7 @@ class RequestsListFragment : BaseFragment(), Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentRequestsListBinding.bind(view)
+         binding = FragmentRequestsListBinding.bind(view)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.setEmptyView(binding.emptyView)
         mAdapter = RequestsAdaptor(requireContext(), this)
@@ -72,8 +73,8 @@ class RequestsListFragment : BaseFragment(), Listener {
                     for (i in 0 until documentSnapshot.size()){
                         batchRequestData[i].documentId= documentSnapshot.documents[i].id
                     }
-                    if (status == AppConstants.STATUS_PENDING
-                    ) {
+                    binding.divider.visibility = View.VISIBLE
+                    if (status == AppConstants.STATUS_PENDING) {
 
                         mAdapter.setData(batchRequestData.filter {
                             it.status.equals(AppConstants.STATUS_PENDING)

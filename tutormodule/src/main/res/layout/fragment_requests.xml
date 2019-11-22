@@ -40,12 +40,12 @@
                 android:layout_height="wrap_content"
                 app:elevation="0dp"
                 app:tabGravity="fill"
-
                 app:tabIndicatorColor="@color/tabindicator"
                 app:tabIndicatorFullWidth="false"
                 app:tabIndicatorHeight="1dp"
                 app:tabMode="fixed"
                 app:tabTextColor="@color/black" />
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.autohub.skln.widgets.NonSwipeAbleViewPager

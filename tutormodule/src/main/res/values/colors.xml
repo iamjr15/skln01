@@ -10,8 +10,10 @@
     <color name="yellow">#fff6c44e</color>
     <color name="darkBlue">#ff0b26d8</color>
     <color name="light_grey">#ff707070</color>
-    <color name="tabindicator">#0055fe</color>
-    <color name="lineGrayColor">#707070</color>
+    <color name="tabindicator">#ff0055fe</color>
+    <color name="lineGrayColor">#ff707070</color>
     <color name="skyblue">#ff039be5</color>
+
+    <color name="sliderColor">#ff4285f4</color>
 
 </resources>
