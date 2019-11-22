@@ -41,18 +41,18 @@ class ScheduleAdaptor(var context: Context)
 
         if (batchList[position].status == AppConstants.STATUS_ACTIVE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                exploreRowBinding.cardView.setBackgroundColor(context.resources.getColor(R.color.skyblue, null))
+                exploreRowBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.skyblue, null))
             } else {
-                exploreRowBinding.cardView.setBackgroundColor(context.resources.getColor(R.color.skyblue))
+                exploreRowBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.skyblue))
             }
             exploreRowBinding.activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_green_round, null)
         }
 
         if (batchList[position].status == AppConstants.STATUS_CANCELLED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                exploreRowBinding.cardView.setBackgroundColor(context.resources.getColor(R.color.yellow, null))
+                exploreRowBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.yellow, null))
             } else {
-                exploreRowBinding.cardView.setBackgroundColor(context.resources.getColor(R.color.yellow))
+                exploreRowBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.yellow))
             }
             exploreRowBinding.activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_black_round, null)
         }
