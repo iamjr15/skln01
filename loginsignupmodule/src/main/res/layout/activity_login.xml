@@ -46,7 +46,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="22dp"
-                    android:background="@drawable/cardshadowbg_drawable">
+                    android:background="@drawable/cardshadowbg_login">
 
                     <RadioGroup
                         android:id="@+id/usertype"

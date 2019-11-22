@@ -35,7 +35,7 @@
 
             android:layout_centerHorizontal="true"
             android:layout_marginTop="23dp"
-            android:background="@drawable/cardshadowbg_drawable"
+            android:background="@drawable/cardshadowbg_login"
             android:gravity="center">
 
             <TextView

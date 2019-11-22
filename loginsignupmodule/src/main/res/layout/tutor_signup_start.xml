@@ -31,7 +31,7 @@
             android:layout_below="@+id/tvSignup"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="23dp"
-            android:background="@drawable/cardshadowbg_drawable"
+            android:background="@drawable/cardshadowbg_login"
 
             >
 
@@ -151,7 +151,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="31dp"
-                        android:background="@drawable/cardshadowbg_drawable">
+                        android:background="@drawable/cardshadowbg_login">
 
                         <RadioGroup
                             android:id="@+id/sexGroup"

@@ -73,7 +73,7 @@ class RequestsListFragment : BaseFragment(), Listener {
                     for (i in 0 until documentSnapshot.size()) {
                         batchRequestData[i].documentId = documentSnapshot.documents[i].id
                     }
-                    binding.divider.visibility = View.VISIBLE
+
                     if (status == AppConstants.STATUS_PENDING) {
 
                         mAdapter.setData(batchRequestData.filter {
@@ -82,6 +82,12 @@ class RequestsListFragment : BaseFragment(), Listener {
                     } else {
                         mAdapter.setData(batchRequestData)
                     }
+                    if (mAdapter.itemCount > 0) {
+                        binding.divider.visibility = View.VISIBLE
+                    } else {
+                        binding.divider.visibility = View.GONE
+                    }
+
                 }
                 .addOnFailureListener { e ->
                     showSnackError(e.message)
