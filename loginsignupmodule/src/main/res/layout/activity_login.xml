@@ -38,38 +38,47 @@
                     android:text="@string/login"
                     android:textStyle="bold" />
 
-                <RadioGroup
-                    android:id="@+id/usertype"
+                <RelativeLayout
+                    android:id="@+id/rrshaddowradio"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="22dp"
-                    android:checkedButton="@id/radiostudent"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:background="@drawable/cardshadowbg_drawable">
 
-                    <RadioButton
-                        android:id="@+id/radiostudent"
-                        style="@style/student_p"
+                    <RadioGroup
+                        android:id="@+id/usertype"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/loginborder_rectangle"
-                        android:button="@null"
-                        android:text="@string/studentp"
-                        android:textColor="@drawable/logintext_selector" />
+                        android:checkedButton="@id/radiostudent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/radiotutor"
-                        style="@style/tutors_"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/loginborder_rectangle"
-                        android:button="@null"
+                        <RadioButton
+                            android:id="@+id/radiostudent"
+                            style="@style/student_p"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/loginborder_rectangle"
+                            android:button="@null"
+                            android:text="@string/studentp"
+                            android:textColor="@drawable/logintext_selector" />
 
-                        android:text="@string/tutor_institute"
-                        android:textColor="@drawable/logintext_selector" />
-                </RadioGroup>
+                        <RadioButton
+                            android:id="@+id/radiotutor"
+                            style="@style/tutors_"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/loginborder_rectangle"
+                            android:button="@null"
+                            android:text="@string/tutor_institute"
 
+                            android:textColor="@drawable/logintext_selector" />
+                    </RadioGroup>
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/tvHintemamil"
@@ -98,6 +107,8 @@
                         android:background="@drawable/shadow_rect"
                         android:drawableStart="@drawable/email"
                         android:drawablePadding="9dp"
+                        style="@style/editext_style"
+
                         android:inputType="textEmailAddress"
                         android:paddingLeft="12dp"
                         android:paddingRight="12dp"
@@ -167,6 +178,7 @@
                         android:layout_toStartOf="@+id/txtshowpass"
                         android:background="@android:color/transparent"
                         android:drawableStart="@drawable/password"
+                        style="@style/editext_style"
 
                         android:drawablePadding="9dp"
                         android:inputType="textPassword"

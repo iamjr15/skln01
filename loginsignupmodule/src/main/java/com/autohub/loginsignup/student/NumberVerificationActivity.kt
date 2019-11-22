@@ -201,6 +201,7 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
                     appPreferenceHelper.setUserPhoneNumber(mBinding!!.codePicker.fullNumberWithPlus)
                     ActivityUtils.launchActivity(this@NumberVerificationActivity,
                             StudentClassSelect::class.java)
+                    finishAffinity()
                 }
                 .addOnFailureListener { e ->
                     hideLoading()

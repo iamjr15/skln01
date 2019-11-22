@@ -25,27 +25,37 @@
             android:layout_marginTop="10dp"
             android:text="@string/sign_up" />
 
-        <TextView
-            android:id="@+id/tvTutorOrStudent"
-            style="@style/signup_students_p"
+
+        <RelativeLayout
+            android:id="@+id/rrshaddow"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvSignup"
+
             android:layout_centerHorizontal="true"
             android:layout_marginTop="23dp"
-            android:background="@drawable/signup_back_rect"
-            android:gravity="center"
-            android:paddingStart="28dp"
-            android:paddingTop="4dp"
-            android:paddingEnd="29dp"
-            android:paddingBottom="3dp"
-            android:text="@string/tutors_institute_tutorsignup" />
+            android:background="@drawable/cardshadowbg_drawable"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvTutorOrStudent"
+                style="@style/signup_students_p"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/signup_back_rect"
+                android:paddingStart="28dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="29dp"
+                android:paddingBottom="3dp"
+                android:text="@string/tutors_institute_tutorsignup" />
+        </RelativeLayout>
 
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvTutorOrStudent"
+            android:layout_below="@+id/rrshaddow"
             android:paddingTop="29dp"
             android:paddingEnd="10dp"
             android:scrollbars="none"

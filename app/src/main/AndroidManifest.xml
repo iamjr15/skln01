@@ -60,7 +60,7 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/picker_provider_paths"
-                tools:replace="android:resource"/>
+                tools:replace="android:resource" />
         </provider>
     </application>
 

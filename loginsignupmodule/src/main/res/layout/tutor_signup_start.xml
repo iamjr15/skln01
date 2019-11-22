@@ -24,29 +24,39 @@
             android:layout_marginTop="10dp"
             android:text="@string/sign_up" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-
-            android:id="@+id/tvTutorOrStudent"
-            style="@style/signup_students_p"
+        <RelativeLayout
+            android:id="@+id/rrshaddow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvSignup"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="23dp"
-            android:background="@drawable/signup_back_rect"
-            android:gravity="center"
-            android:paddingStart="28dp"
-            android:paddingTop="4dp"
-            android:paddingEnd="29dp"
-            android:paddingBottom="3dp"
-            android:text="@string/student_p" />
+            android:background="@drawable/cardshadowbg_drawable"
+
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTutorOrStudent"
+                style="@style/signup_students_p"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/signup_back_rect"
+                android:gravity="center"
+                android:paddingStart="28dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="29dp"
+                android:paddingBottom="3dp"
+                android:text="@string/student_p" />
+        </RelativeLayout>
+
 
         <ProgressBar
             android:id="@+id/pbSignupProgress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="9dp"
-            android:layout_below="@id/tvTutorOrStudent"
+            android:layout_below="@id/rrshaddow"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="12dp"
             android:layout_marginTop="14dp"
@@ -133,36 +143,47 @@
 
                     </RelativeLayout>
 
-                    <RadioGroup
-                        android:id="@+id/sexGroup"
+
+                    <RelativeLayout
+                        android:id="@+id/rrshaddowradio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="31dp"
-                        android:checkedButton="@id/radioMale"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:background="@drawable/cardshadowbg_drawable">
 
-                        <RadioButton
-                            android:id="@+id/radioMale"
-                            style="@style/sex"
-                            android:layout_width="132dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/border_rectangle"
-                            android:button="@null"
-                            android:text="@string/male"
-                            android:textColor="@drawable/logintext_selector" />
+                        <RadioGroup
+                            android:id="@+id/sexGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-                        <RadioButton
-                            android:id="@+id/radioFemale"
-                            style="@style/sex"
-                            android:layout_width="132dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/border_rectangle"
-                            android:button="@null"
-                            android:text="@string/female"
-                            android:textColor="@drawable/logintext_selector" />
-                    </RadioGroup>
+                            android:checkedButton="@id/radioMale"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radioMale"
+                                style="@style/sex"
+                                android:layout_width="132dp"
+                                android:layout_height="36dp"
+                                android:background="@drawable/border_rectangle"
+                                android:button="@null"
+                                android:text="@string/male"
+                                android:textColor="@drawable/logintext_selector" />
+
+                            <RadioButton
+                                android:id="@+id/radioFemale"
+                                style="@style/sex"
+                                android:layout_width="132dp"
+                                android:layout_height="36dp"
+                                android:background="@drawable/border_rectangle"
+                                android:button="@null"
+                                android:text="@string/female"
+                                android:textColor="@drawable/logintext_selector" />
+                        </RadioGroup>
+                        >
+                    </RelativeLayout>
 
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -186,6 +207,7 @@
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/edtemail"
+                            style="@style/editext_style"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shadow_rect"
@@ -241,6 +263,7 @@
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/edtPassword"
+                            style="@style/editext_style"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
