@@ -404,7 +404,12 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-
+    <style name="editext_style">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+    </style>
     <!-- Text style for "next" -->
     <!-- Add this snippet to styles.xml. -->
 

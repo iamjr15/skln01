@@ -3,6 +3,7 @@ package com.autohub.studentmodule.activities
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +11,7 @@ import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.models.UserModel
@@ -41,6 +43,7 @@ class EditStudentProfileActivity : BaseActivity() {
     private var leastselectedId = ""
     private var selectedHobbiesid = ""
     private var isSeniorSelected = true
+    private var PermissionsRequest: Int = 12
 
     var imageURL = ""
 
@@ -667,52 +670,44 @@ class EditStudentProfileActivity : BaseActivity() {
 
     }
 
+    fun onAddPicture() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA) &&
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
+                        PermissionsRequest)
+            }
+        } else {
+            addPicture()
+        }
+    }
+
 
     /*
     * Show Dialog for adding pic from Camera/Gallery
     * */
-    fun onAddPicture() {
-        /* TedBottomPicker.with(this)
-                 .show { uri ->
+    fun addPicture() {
+        TedBottomPicker.with(this)
+                .show { uri ->
 
-                     uploadImage(uri)
+                    GlideApp.with(this)
+                            .load(uri)
+                            .placeholder(com.autohub.skln.R.drawable.default_pic)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                            .skipMemoryCache(true)
 
-                 }*/
-        val galleryPermissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        if (!checkIfAlreadyhavePermission()) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                return
-            }
-            ActivityCompat.requestPermissions(this, galleryPermissions, 0)
-        } else {
-            /* val setup = PickSetup()
-            setup.cancelText = "Close"
-            PickImageDialog.build(setup) { pickResult ->
-                if (pickResult.error == null) {
-                    val uri = pickResult.uri
-                    mBinding!!.profilePicture.setImageURI(uri)
-                    val file = File(pickResult.path)
-                    val intent = Intent(this, CropActivity::class.java)
-                    intent.putExtra(AppConstants.KEY_URI, Uri.fromFile(file))
-                    startActivityForResult(intent, 1122)
+                            .into(mBinding!!.profilePicture)
+                    uploadImage(uri)
+
                 }
-            }.show(this)*/
 
-            TedBottomPicker.with(this)
-                    .show { uri ->
-
-                        GlideApp.with(this)
-                                .load(uri)
-                                .placeholder(com.autohub.skln.R.drawable.default_pic)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                                .skipMemoryCache(true)
-
-                                .into(mBinding!!.profilePicture)
-                        uploadImage(uri)
-
-                    }
-        }
-//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
