@@ -10,160 +10,167 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
-        android:orientation="vertical"
-        android:paddingLeft="29dp"
-        android:paddingTop="39dp"
-        android:paddingRight="29dp"
-        tools:context=".activities.AddClassActivity">
+
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/add_your_c"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_your_class" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="18dp"
-                android:background="@android:color/black" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lladdclasssucess"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:paddingLeft="29dp"
+            android:paddingTop="39dp"
+            android:paddingRight="29dp"
+            tools:context=".activities.AddClassActivity">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:layout_marginBottom="44dp"
-                android:src="@drawable/mirage_done" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txtadded"
-
-                    style="@style/you_have_b"
-                    android:layout_width="292dp"
+                    style="@style/add_your_c"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/addedinclass" />
+                    android:text="@string/add_your_class" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="18dp"
+                    android:background="@android:color/black" />
 
-                <Button
-                    android:layout_width="148dp"
+            </LinearLayout>
 
-                    android:layout_height="42dp"
-                    android:layout_below="@+id/txtadded"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="32dp"
-                    android:background="@drawable/selector_black"
-                    android:fontFamily="@font/montserrat_semi_bold"
-                    android:onClick="@{() -> callback.onOkClick()}"
-                    android:text="@string/ok"
-                    android:textColor="@color/white"
-                    android:textSize="17sp" />
-
-            </RelativeLayout>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/lladdclass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatImageView
+            <LinearLayout
+                android:id="@+id/lladdclasssucess"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/foggwaiting" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/rr"
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="44dp"
+                    android:src="@drawable/mirage_done" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/add_your_c"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/txtadded"
 
+                        style="@style/you_have_b"
+                        android:layout_width="292dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/enter_your_batch_code_to_continue"
-                        android:textSize="14sp" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="20dp"
-                        android:layout_height="26dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:src="@drawable/arrowright"
-                        android:tint="@color/black" />
-
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/edtcode"
-                    android:layout_width="281dp"
-                    android:layout_height="35dp"
-                    android:layout_below="@+id/rr"
-                    android:layout_marginTop="18dp"
-                    android:background="@drawable/rectangle_blackborder"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    tools:ignore="LabelFor" />
+                        android:text="@string/addedinclass" />
 
 
-                <Button
-                    android:id="@+id/updateProfile"
+                    <Button
+                        android:layout_width="148dp"
 
-                    android:layout_width="148dp"
-                    android:layout_height="42dp"
-                    android:layout_below="@+id/edtcode"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="17dp"
-                    android:background="@drawable/selector_black"
-                    android:fontFamily="@font/montserrat_semi_bold"
-                    android:onClick="@{() -> callback.onAddclick()}"
-                    android:text="@string/addbtn"
+                        android:layout_height="42dp"
+                        android:layout_below="@+id/txtadded"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="32dp"
+                        android:background="@drawable/selector_black"
+                        android:fontFamily="@font/montserrat_semi_bold"
+                        android:onClick="@{() -> callback.onOkClick()}"
+                        android:text="@string/ok"
+                        android:textColor="@color/white"
+                        android:textSize="17sp" />
+
+                </RelativeLayout>
+            </LinearLayout>
 
 
-                    android:textColor="@color/white"
-                    android:textSize="17sp" />
+            <LinearLayout
+                android:id="@+id/lladdclass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            </RelativeLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/foggwaiting" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/rr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/add_your_c"
+                            android:layout_width="wrap_content"
+
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/enter_your_batch_code_to_continue"
+                            android:textSize="14sp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="20dp"
+                            android:layout_height="26dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="5dp"
+                            android:src="@drawable/arrowright"
+                            android:tint="@color/black" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edtcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_below="@+id/rr"
+                        android:layout_marginTop="18dp"
+                        android:background="@drawable/rectangle_blackborder"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:singleLine="true"
+                        tools:ignore="LabelFor" />
+
+
+                    <Button
+                        android:id="@+id/updateProfile"
+
+                        android:layout_width="148dp"
+                        android:layout_height="42dp"
+                        android:layout_below="@+id/edtcode"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="17dp"
+                        android:background="@drawable/selector_black"
+                        android:fontFamily="@font/montserrat_semi_bold"
+                        android:onClick="@{() -> callback.onAddclick()}"
+                        android:text="@string/addbtn"
+
+
+                        android:textColor="@color/white"
+                        android:textSize="17sp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
         </LinearLayout>
-
-
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

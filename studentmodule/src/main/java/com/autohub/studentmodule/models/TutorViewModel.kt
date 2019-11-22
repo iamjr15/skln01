@@ -19,7 +19,7 @@ class TutorViewModel(private var mUser: TutorData) : BaseObservable() {
         get() = mUser.personInfo!!.firstName + " " + mUser.personInfo!!.lastName
 
     val firstAndLastNameLetter: String
-        get() = mUser.personInfo!!.firstName + " " + (mUser.personInfo!!.lastName!!.substring(0, 1) + ".".toUpperCase())
+        get() = CommonUtils.capitalize(mUser.personInfo!!.firstName + " " + (mUser.personInfo!!.lastName!!.substring(0, 1) + ".".toUpperCase()))
 
     val firstName: String
         get() = mUser.personInfo!!.firstName!!
@@ -95,7 +95,7 @@ class TutorViewModel(private var mUser: TutorData) : BaseObservable() {
         get() = CommonUtils.getString(mUser.qualification!!.targetBoard)
 
     var bioData: String
-        get() = CommonUtils.getString(mUser.personInfo!!.biodata)
+        get() = CommonUtils.getString(mUser.personInfo!!.biodata).replace("\n", "")
         set(bio) {
             mUser.personInfo!!.biodata = bio
         }

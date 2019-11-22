@@ -110,8 +110,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
+                            android:ellipsize="end"
                             android:gravity="center"
-                            android:maxLines="2"
+                            android:maxLines="1"
                             android:text="@string/tools_8th_12th" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -231,6 +232,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
+            android:fontFamily="@font/montserrat_bold"
             android:text="@string/toolsphysics_chemistry_computer_science" />
 
         <RelativeLayout

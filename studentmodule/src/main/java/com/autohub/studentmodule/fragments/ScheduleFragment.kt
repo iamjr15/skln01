@@ -57,9 +57,8 @@ class ScheduleFragment : BaseFragment() {
 
     }
 
-    private fun fetchBatches() {
+    fun fetchBatches() {
         firebaseStore.collection("students").document(appPreferenceHelper.getuserID()).get().addOnSuccessListener {
-            hideLoading()
             if (it["batchCodes"] != null && (it["batchCodes"] as ArrayList<String>).size > 0) {
                 var userBatchesCode: ArrayList<String> = it["batchCodes"] as ArrayList<String>
 

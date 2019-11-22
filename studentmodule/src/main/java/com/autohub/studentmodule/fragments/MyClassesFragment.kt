@@ -18,6 +18,8 @@ import java.util.*
 class MyClassesFragment : Fragment() {
     private var mBinding: FragmentMyClassesBinding? = null
 
+    lateinit var scheduleFragment: ScheduleFragment
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -30,7 +32,9 @@ class MyClassesFragment : Fragment() {
 
         mBinding = FragmentMyClassesBinding.bind(view)
         val adapter = ViewPagerAdapter(childFragmentManager)
-        adapter.addData(ScheduleFragment(), "Schedule")
+        scheduleFragment = ScheduleFragment()
+
+        adapter.addData(scheduleFragment, "Schedule")
         adapter.addData(EnrolledClassesFragment(), "Enrolled classes")
 
         mBinding!!.tabs.setupWithViewPager(mBinding!!.viewpager)
@@ -64,5 +68,10 @@ class MyClassesFragment : Fragment() {
         internal inner class Info(val fragment: Fragment, val title: String)
     }
 
+
+    fun updateSchedules() {
+
+        scheduleFragment.fetchBatches()
+    }
 
 }

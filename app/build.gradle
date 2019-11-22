@@ -78,5 +78,7 @@ dependencies {
     api 'com.google.android.play:core:1.6.4'
 
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+
 }
 apply plugin: 'com.google.gms.google-services'

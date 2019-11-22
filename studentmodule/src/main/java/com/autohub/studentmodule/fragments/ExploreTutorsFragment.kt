@@ -172,7 +172,9 @@ class ExploreTutorsFragment : BaseFragment() {
 
         mBinding!!.spinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+
                 mBinding!!.txtgrade.setText("grade ${grades[position]}")
+
                 exploreFilter = ExploreFilter(grades[position], "", 0.0, 0.0, filterType = GREAD_SELECTION_FILTER)
                 if (tutorsSubjectList.isNotEmpty()) {
                     getTutors(exploreFilter)

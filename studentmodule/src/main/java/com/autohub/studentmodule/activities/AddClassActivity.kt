@@ -29,7 +29,7 @@ class AddClassActivity : BaseActivity() {
     }
 
     fun onAddclick() {
-        if (mBinding!!.edtcode.equals("")) {
+        if (mBinding!!.edtcode.text.equals("")) {
             showSnackError(getString(R.string.addbatchcode))
             return
         }

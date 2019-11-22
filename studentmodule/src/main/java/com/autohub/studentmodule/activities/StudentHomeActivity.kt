@@ -30,6 +30,9 @@ import kotlin.collections.ArrayList
  */
 
 class StudentHomeActivity : BaseActivity(), HomeListners {
+    override fun updateScheduleFragment() {
+        myClassesFragment.updateSchedules()
+    }
 
 
     lateinit var subjectDataList: ArrayList<SubjectData>
@@ -62,6 +65,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     private var mViewPager: ViewPager? = null
     private lateinit var explorebaseFragment: ExploreBaseFragment
     private lateinit var homefragment: FragmentHome
+    private lateinit var myClassesFragment: MyClassesFragment
     private lateinit var fragmentProfile: StudentProfileFragment
 
 
@@ -209,7 +213,11 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
                     return homefragment
 
                 }
-                1 -> return MyClassesFragment()
+                1 -> {
+                    myClassesFragment = MyClassesFragment()
+                    return myClassesFragment
+
+                }
                 2 -> {
                     explorebaseFragment = ExploreBaseFragment()
                     return explorebaseFragment

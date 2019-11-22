@@ -695,6 +695,20 @@ class EditStudentProfileActivity : BaseActivity() {
                     startActivityForResult(intent, 1122)
                 }
             }.show(this)
+
+            /*          TedBottomPicker.with(this)
+                              .show { uri ->
+
+                                  GlideApp.with(this)
+                                          .load(uri)
+                                          .placeholder(com.autohub.skln.R.drawable.default_pic)
+                                          .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                                          .skipMemoryCache(true)
+
+                                          .into(mBinding!!.profilePicture)
+                                  uploadImage(uri)
+
+                              }*/
         }
     }
 

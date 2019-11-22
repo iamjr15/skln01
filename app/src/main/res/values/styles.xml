@@ -868,12 +868,14 @@
             <item name="android:textColor">#ff000000</item>
             <item name="android:textSize">33sp</item>
             <item name="android:textStyle">bold</item>
+            <item name="android:fontFamily">@font/cera_pro_bold</item>
+
         </style>
 
         <style name="hey_there_">
             <item name="android:textColor">#ff000000</item>
             <item name="android:textSize">19sp</item>
-            <item name="android:textStyle">bold</item>
+            <item name="android:fontFamily">@font/montserrat_bold</item>
 
         </style>
 
@@ -888,11 +890,15 @@
         <style name="onboard_login">
             <item name="android:textColor">#ffffffff</item>
             <item name="android:textSize">25sp</item>
+            <item name="android:fontFamily">@font/montserrat_bold</item>
+
         </style>
 
         <style name="onboard_signup">
             <item name="android:textColor">#ffffffff</item>
             <item name="android:textSize">25sp</item>
+            <item name="android:fontFamily">@font/montserrat_bold</item>
+
         </style>
 
 
