@@ -67,9 +67,7 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:4.9.0"
     api 'de.hdodenhof:circleimageview:3.0.0'
     api 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
-
-    api 'com.github.jrvansuita:PickImage:2.2.4'
-
+    
     api 'com.google.android.gms:play-services-location:17.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
@@ -78,6 +76,8 @@ dependencies {
     api 'com.google.android.play:core:1.6.4'
 
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    api 'gun0912.ted:tedbottompicker:2.0.1'
 
 
 }

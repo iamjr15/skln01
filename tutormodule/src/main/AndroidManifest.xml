@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.autohub.tutormodule">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <dist:module
         dist:instant="false"
         dist:title="@string/title_tutormodule">
@@ -24,6 +28,7 @@
             android:name=".ui.dashboard.profile.EditProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+
     </application>
 
 </manifest>

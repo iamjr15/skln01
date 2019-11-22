@@ -26,8 +26,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.WriteBatch
 import com.google.firebase.storage.FirebaseStorage
-import com.vansuita.pickimage.bundle.PickSetup
-import com.vansuita.pickimage.dialog.PickImageDialog
+import gun0912.tedbottompicker.TedBottomPicker
 import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -676,40 +675,46 @@ class EditStudentProfileActivity : BaseActivity() {
     * Show Dialog for adding pic from Camera/Gallery
     * */
     fun onAddPicture() {
-        val galleryPermissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        if (!checkIfAlreadyhavePermission()) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                return
-            }
-            ActivityCompat.requestPermissions(this, galleryPermissions, 0)
-        } else {
-            val setup = PickSetup()
-            setup.cancelText = "Close"
-            PickImageDialog.build(setup) { pickResult ->
-                if (pickResult.error == null) {
-                    val uri = pickResult.uri
-                    mBinding!!.profilePicture.setImageURI(uri)
-                    val file = File(pickResult.path)
-                    val intent = Intent(this, CropActivity::class.java)
-                    intent.putExtra(AppConstants.KEY_URI, Uri.fromFile(file))
-                    startActivityForResult(intent, 1122)
+        TedBottomPicker.with(this)
+                .show { uri ->
+
+                    uploadImage(uri)
+
                 }
-            }.show(this)
-
-            /*          TedBottomPicker.with(this)
-                              .show { uri ->
-
-                                  GlideApp.with(this)
-                                          .load(uri)
-                                          .placeholder(com.autohub.skln.R.drawable.default_pic)
-                                          .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                                          .skipMemoryCache(true)
-
-                                          .into(mBinding!!.profilePicture)
-                                  uploadImage(uri)
-
-                              }*/
-        }
+//        val galleryPermissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//        if (!checkIfAlreadyhavePermission()) {
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//                return
+//            }
+//            ActivityCompat.requestPermissions(this, galleryPermissions, 0)
+//        } else {
+//            val setup = PickSetup()
+//            setup.cancelText = "Close"
+//            PickImageDialog.build(setup) { pickResult ->
+//                if (pickResult.error == null) {
+//                    val uri = pickResult.uri
+//                    mBinding!!.profilePicture.setImageURI(uri)
+//                    val file = File(pickResult.path)
+//                    val intent = Intent(this, CropActivity::class.java)
+//                    intent.putExtra(AppConstants.KEY_URI, Uri.fromFile(file))
+//                    startActivityForResult(intent, 1122)
+//                }
+//            }.show(this)
+//
+//            /*          TedBottomPicker.with(this)
+//                              .show { uri ->
+//
+//                                  GlideApp.with(this)
+//                                          .load(uri)
+//                                          .placeholder(com.autohub.skln.R.drawable.default_pic)
+//                                          .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+//                                          .skipMemoryCache(true)
+//
+//                                          .into(mBinding!!.profilePicture)
+//                                  uploadImage(uri)
+//
+//                              }*/
+//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

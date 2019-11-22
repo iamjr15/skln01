@@ -22,7 +22,7 @@ class RequestBaseFragment : BaseFragment() {
     fun showRequestFragmentClass() {
         fragmentRequests = RequestsFragment()
         childFragmentManager
-                .beginTransaction()
+                .beginTransaction().addToBackStack(RequestsFragment::class.java.name)
                 .replace(R.id.requestcontainer, fragmentRequests!!).commit()
     }
 
