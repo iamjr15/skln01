@@ -38,7 +38,7 @@ class MyRequestBaseFragment : Fragment() {
 
         childFragmentManager
                 .beginTransaction()
-                .replace(R.id.explorecontainer, fragment).commit()
+                .replace(R.id.explorecontainer, fragment).addToBackStack(null).commit()
 
 
         /*    getChildFragmentManager()

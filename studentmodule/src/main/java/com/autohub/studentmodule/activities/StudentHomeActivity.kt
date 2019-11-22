@@ -278,6 +278,18 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     }
 
 
+    override fun onBackPressed() {
+
+        if (mViewPager!!.currentItem == 0) {
+
+            super.onBackPressed()
+        } else {
+            mViewPager!!.currentItem = 0
+
+        }
+
+    }
+
     companion object {
         const val TUROR_REQUEST = 1001
         const val EDITPROFILE_REQUEST = 10012

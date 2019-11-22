@@ -40,7 +40,6 @@
 
                 <RelativeLayout
                     android:id="@+id/rrshaddowradio"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -98,16 +97,17 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/shadow_rect">
+                    android:background="@drawable/shadow_rect"
+                    android:visibility="visible">
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/edtemail"
+                        style="@style/editext_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/shadow_rect"
                         android:drawableStart="@drawable/email"
                         android:drawablePadding="9dp"
-                        style="@style/editext_style"
 
                         android:inputType="textEmailAddress"
                         android:paddingLeft="12dp"
@@ -168,17 +168,60 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/shadow_rect">
+                    android:background="@drawable/shadow_rect"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/edtTutorPassword"
+                        style="@style/editext_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/txtshowedtpass"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@drawable/password"
+
+                        android:drawablePadding="9dp"
+                        android:inputType="textPassword"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:paddingBottom="8dp" />
+
+
+                    <TextView
+                        android:id="@+id/txtshowedtpass"
+                        style="@style/show"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:clickable="true"
+
+                        android:focusable="true"
+                        android:onClick="@{()->callback.updatetutorpasswordVisibility()}"
+                        android:paddingEnd="11dp"
+                        android:paddingBottom="8dp"
+                        android:text="@string/show"
+                        tools:ignore="RtlSymmetry" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/shadow_rect"
+                    android:visibility="visible">
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/edtPassword"
+                        style="@style/editext_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@+id/txtshowpass"
                         android:background="@android:color/transparent"
                         android:drawableStart="@drawable/password"
-                        style="@style/editext_style"
 
                         android:drawablePadding="9dp"
                         android:inputType="textPassword"

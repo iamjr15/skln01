@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.method.PasswordTransformationMethod
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.databinding.DataBindingUtil
@@ -66,7 +67,15 @@ class LoginActivity : BaseActivity() {
             mBinding!!.rrloginid.visibility = View.GONE
             mBinding!!.tvForgotPassword.text = resources.getString(R.string.forgot_pass)
 
+            mBinding!!.edtTutorPassword.visibility = View.GONE
+            mBinding!!.edtPassword.visibility = View.VISIBLE
+
+
         } else {
+
+            mBinding!!.edtTutorPassword.visibility = View.VISIBLE
+            mBinding!!.edtPassword.visibility = View.GONE
+
 
             mBinding!!.tvForgotPassword.text = resources.getString(R.string.forgot_passid)
             mBinding!!.tvHintemamil.visibility = View.GONE
@@ -85,42 +94,89 @@ class LoginActivity : BaseActivity() {
     fun login() {
 
 
-        val email: Editable
         if (mBinding!!.radiostudent.isChecked) {
-            email = mBinding!!.edtemail.text!!
 
+            if (!validateStudentField()) {
+                return
+
+            }
         } else {
-            email = mBinding!!.edtloginid.text!!
+            if (!validateTutorFields()) {
+                return
 
+            }
         }
 
 
-        if (email == null) {
-            mBinding!!.edtemail.error = resources.getString(R.string.enter_email)
-            mBinding!!.edtemail.requestFocus()
-            return
-        }
 
-        if (!isValidEmailId(email.toString())) {
-            mBinding!!.edtemail.error = resources.getString(R.string.enter_validemail)
-            mBinding!!.edtemail.requestFocus()
-            return
-        }
-
-
-        val password = getString(mBinding!!.edtPassword.text)
-        if (TextUtils.isEmpty(password)) {
-            mBinding!!.edtPassword.error = resources.getString(R.string.enter_password)
-            mBinding!!.edtPassword.requestFocus()
-            // showSnackError(R.string.enter_password)
-            return
-        }
         showLoading()
         hideSoftKeyboard()
 
         validateUserCredentials()
 
     }
+
+    fun validateStudentField(): Boolean {
+        val email: Editable
+
+
+        email = mBinding!!.edtemail.text!!
+
+        if (email == null) {
+            mBinding!!.edtemail.error = resources.getString(R.string.enter_email)
+            mBinding!!.edtemail.requestFocus()
+            return false
+        }
+
+        if (!isValidEmailId(email.toString())) {
+            mBinding!!.edtemail.error = resources.getString(R.string.enter_validemail)
+            mBinding!!.edtemail.requestFocus()
+            return false
+        }
+
+
+        val password = getString(mBinding!!.edtPassword.text)
+
+        if (TextUtils.isEmpty(password)) {
+            mBinding!!.edtPassword.error = resources.getString(R.string.enter_password)
+            mBinding!!.edtPassword.requestFocus()
+            // showSnackError(R.string.enter_password)
+            return false
+        }
+        return true
+    }
+
+    fun validateTutorFields(): Boolean {
+        val email: Editable
+
+
+        email = mBinding!!.edtloginid.text!!
+
+        if (email == null) {
+            mBinding!!.edtloginid.error = resources.getString(R.string.enter_email)
+            mBinding!!.edtloginid.requestFocus()
+            return false
+        }
+
+        if (!isValidEmailId(email.toString())) {
+            mBinding!!.edtloginid.error = resources.getString(R.string.enter_validemail)
+            mBinding!!.edtloginid.requestFocus()
+            return false
+        }
+
+
+        val password = getString(mBinding!!.edtTutorPassword.text)
+
+        if (TextUtils.isEmpty(password)) {
+            mBinding!!.edtTutorPassword.error = resources.getString(R.string.enter_password)
+            mBinding!!.edtTutorPassword.requestFocus()
+            // showSnackError(R.string.enter_password)
+            return false
+        }
+        return true
+
+    }
+
 
     private fun validateUserCredentials() {
 
@@ -129,7 +185,7 @@ class LoginActivity : BaseActivity() {
                     mBinding!!.edtPassword.text.toString().trim())
         } else {
             credential = EmailAuthProvider.getCredential(mBinding!!.edtloginid.text.toString().trim(),
-                    mBinding!!.edtPassword.text.toString().trim())
+                    mBinding!!.edtTutorPassword.text.toString().trim())
         }
 
 
@@ -148,13 +204,13 @@ class LoginActivity : BaseActivity() {
                 }
     }
 
-    private fun updatePasswordVisibility(editText: AppCompatEditText) {
+    private fun updatePasswordVisibility(editText: AppCompatEditText, txtshowpass: TextView) {
         if (editText.transformationMethod is PasswordTransformationMethod) {
             editText.transformationMethod = null
-            mBinding!!.txtshowpass.setText(R.string.hide)
+            txtshowpass.setText(R.string.hide)
         } else {
             editText.transformationMethod = PasswordTransformationMethod()
-            mBinding!!.txtshowpass.setText(R.string.show)
+            txtshowpass.setText(R.string.show)
 
         }
         editText.setSelection(editText.length())
@@ -241,7 +297,12 @@ class LoginActivity : BaseActivity() {
     }
 
     fun updatepasswordVisibility() {
-        updatePasswordVisibility(mBinding!!.edtPassword)
+        updatePasswordVisibility(mBinding!!.edtPassword, mBinding!!.txtshowpass)
+
+    }
+
+    fun updatetutorpasswordVisibility() {
+        updatePasswordVisibility(mBinding!!.edtTutorPassword, mBinding!!.txtshowedtpass)
 
     }
 
