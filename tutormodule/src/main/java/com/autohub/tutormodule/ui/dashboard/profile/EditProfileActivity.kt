@@ -493,19 +493,10 @@ class EditProfileActivity : BaseActivity() {
             buf.close()
             val picRef = mStorageReference!!.child("tutor/" + firebaseAuth.currentUser!!.uid + ".jpg")
             val uploadTask = picRef.putBytes(bytes)
-            uploadTask.addOnSuccessListener { taskSnapshot ->
-                profilePictureUri = taskSnapshot.uploadSessionUri.toString()
-
-
+            uploadTask.addOnSuccessListener {
                 picRef.downloadUrl.addOnSuccessListener {
-
-                    val advurl = URL(it.toString())
-
-
+                    profilePictureUri = it.toString()
                 }
-
-
-
                 hideLoading()
             }.addOnFailureListener { e ->
                 hideLoading()
@@ -519,7 +510,6 @@ class EditProfileActivity : BaseActivity() {
             e.printStackTrace()
             hideLoading()
         }
-
     }
 
 
