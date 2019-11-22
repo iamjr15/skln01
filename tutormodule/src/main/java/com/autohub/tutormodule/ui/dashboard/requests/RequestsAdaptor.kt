@@ -12,7 +12,6 @@ import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ItemTutorRequestBinding
 import com.autohub.tutormodule.ui.utils.AppUtils
 
-
 class RequestsAdaptor(var context: Context, val listener: Listener)
     : RecyclerView.Adapter<RequestsAdaptor.Holder>() {
 

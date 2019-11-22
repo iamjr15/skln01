@@ -9,12 +9,22 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lineGrayColor"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"/>
+
         <com.autohub.skln.widgets.EmptyViewRecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:itemCount="4"
-            tools:listitem="@layout/item_tutor_request" />
+            tools:listitem="@layout/item_tutor_request"
+            android:layout_marginTop="8dp" />
 
 
         <RelativeLayout
