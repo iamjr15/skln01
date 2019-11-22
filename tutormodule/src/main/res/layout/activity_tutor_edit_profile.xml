@@ -54,7 +54,7 @@
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:layout_gravity="center_vertical"
-                                android:layout_margin="16dp"
+                                android:layout_margin="4dp"
                                 android:onClick="@{() -> callback.onBackClick()}"
                                 android:padding="8dp"
                                 android:src="@drawable/backarrow"
@@ -79,7 +79,7 @@
                             android:layout_width="105dp"
                             android:layout_height="105dp"
                             android:layout_gravity="center_horizontal"
-                            android:onClick="@{() -> callback.onAddPicture()}">
+                            android:onClick="@{() -> callback.requestPermissions()}">
 
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/profile_picture"

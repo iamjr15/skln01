@@ -1,7 +1,9 @@
 package com.autohub.tutormodule.ui.dashboard.profile
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -10,6 +12,8 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.models.User
@@ -31,7 +35,6 @@ import com.google.firebase.storage.StorageReference
 import gun0912.tedbottompicker.TedBottomPicker
 import kotlinx.android.synthetic.main.activity_tutor_edit_profile.*
 import java.io.*
-import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -48,6 +51,7 @@ class EditProfileActivity : BaseActivity() {
     private var selectedGradesList = ArrayList<String>()
     private var gradesList = ArrayList<GradeData>()
     private var profilePictureUri: String = ""
+    private var PermissionsRequest: Int = 12
 
     private val mWatcherWrapper = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -360,11 +364,42 @@ class EditProfileActivity : BaseActivity() {
                 .show()
     }
 
+    fun requestPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA) &&
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
+                        PermissionsRequest)
+            }
+        } else {
+            onAddPicture()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            PermissionsRequest -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                                && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                                && grantResults[2] == PackageManager.PERMISSION_GRANTED)) {
+                    onAddPicture()
+                }
+            }
+        }
+    }
+
     fun onAddPicture() {
 
         TedBottomPicker.with(this)
                 .show { uri ->
-
                     GlideApp.with(this)
                             .load(uri)
                             .placeholder(com.autohub.skln.R.drawable.default_pic)
@@ -458,20 +493,7 @@ class EditProfileActivity : BaseActivity() {
             val picRef = mStorageReference!!.child("tutor/" + firebaseAuth.currentUser!!.uid + ".jpg")
             val uploadTask = picRef.putBytes(bytes)
             uploadTask.addOnSuccessListener { taskSnapshot ->
-
-
                 profilePictureUri = taskSnapshot.uploadSessionUri.toString()
-
-
-                picRef.downloadUrl.addOnSuccessListener {
-                    val advurl = URL(it.toString())
-                    println("================= URL PATH" + advurl.toString())
-
-                }
-
-
-
-
                 hideLoading()
             }.addOnFailureListener { e ->
                 hideLoading()
