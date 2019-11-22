@@ -35,6 +35,7 @@ import com.google.firebase.storage.StorageReference
 import gun0912.tedbottompicker.TedBottomPicker
 import kotlinx.android.synthetic.main.activity_tutor_edit_profile.*
 import java.io.*
+import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -494,6 +495,17 @@ class EditProfileActivity : BaseActivity() {
             val uploadTask = picRef.putBytes(bytes)
             uploadTask.addOnSuccessListener { taskSnapshot ->
                 profilePictureUri = taskSnapshot.uploadSessionUri.toString()
+
+
+                picRef.downloadUrl.addOnSuccessListener {
+
+                    val advurl = URL(it.toString())
+
+
+                }
+
+
+
                 hideLoading()
             }.addOnFailureListener { e ->
                 hideLoading()
