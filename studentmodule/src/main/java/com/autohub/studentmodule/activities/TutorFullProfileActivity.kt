@@ -47,9 +47,14 @@ class TutorFullProfileActivity : BaseActivity() {
         mBinding!!.bio.setShowingLine(2)
         mBinding!!.bio.addShowMoreText(getString(R.string.readmore))
         mBinding!!.bio.addShowLessText(getString(R.string.readless))
-        mBinding!!.bio.text = mUserViewModel!!.bioData
-        mBinding!!.bio.setShowLessTextColor(ContextCompat.getColor(this, R.color.readmorecolor))
-        mBinding!!.bio.setShowMoreColor(ContextCompat.getColor(this, R.color.readmorecolor))
+        try {
+            mBinding!!.bio.text = mUserViewModel!!.bioData
+            mBinding!!.bio.setShowLessTextColor(ContextCompat.getColor(this, R.color.readmorecolor))
+            mBinding!!.bio.setShowMoreColor(ContextCompat.getColor(this, R.color.readmorecolor))
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+
 
     }
 
@@ -156,6 +161,8 @@ class TutorFullProfileActivity : BaseActivity() {
         if (subjects.isEmpty()) {
             val rdbtn = RadioButton(this)
             rdbtn.id = View.generateViewId()
+            rdbtn.setTextColor(resources.getColor(R.color.black))
+
             //rdbtn.text = "Radio " + rdbtn.id
             rdbtn.text = mUserViewModel!!.user.subjectsToTeach
             mBinding!!.classtyperadio.addView(rdbtn)
@@ -163,6 +170,7 @@ class TutorFullProfileActivity : BaseActivity() {
 
         for (element in subjects) {
             val rdbtn = RadioButton(this)
+            rdbtn.setTextColor(resources.getColor(R.color.black))
             rdbtn.id = View.generateViewId()
             rdbtn.text = element
             mBinding!!.subjectradio.addView(rdbtn)

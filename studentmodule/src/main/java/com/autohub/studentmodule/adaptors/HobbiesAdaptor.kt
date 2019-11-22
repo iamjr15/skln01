@@ -41,7 +41,7 @@ class HobbiesAdaptor(var context: Context, var mItemClickListener: ItemClickList
             {
                 hobbiesData = it
                 img.setImageResource(it.icon)
-                txt.text = it.hobbyName
+                txt.text = it.hobbyName + "."
 
                 val unwrappedDrawable = ContextCompat.getDrawable(context, com.autohub.skln.R.drawable.acadmic_rowbg_drawable)
                 val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)

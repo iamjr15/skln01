@@ -75,7 +75,7 @@
     <style name="loginlabels">
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
     </style>
     <!-- Text style for "enter_emai" -->
     <!-- Add this snippet to styles.xml. -->
@@ -127,6 +127,8 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:singleLine">true</item>
         <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+
     </style>
 
     <!-- Text style for "student_/_" -->
@@ -137,6 +139,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:gravity">center</item>
         <item name="android:singleLine">true</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
     </style>
 
     <!-- Text style for "first_name" -->
@@ -145,6 +148,8 @@
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
     </style>
 
     <!-- Text style for "tutors_/_i" -->
@@ -155,6 +160,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:gravity">center</item>
         <item name="android:singleLine">true</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
     </style>
 
     <style name="hey_student_style">
@@ -234,6 +240,8 @@
     <style name="login_header">
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">29sp</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+
     </style>
 
     <!-- Text style for "_tutors/in" -->
@@ -312,7 +320,8 @@
     <style name="_not_regis">
         <item name="android:textColor">#ff000000</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+
     </style>
 
     <!-- Text style for "you_haven'" -->
@@ -348,7 +357,7 @@
 
         <item name="android:textColor">#ff0044ff</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
 
 
     </style>

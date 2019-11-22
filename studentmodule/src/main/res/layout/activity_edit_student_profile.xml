@@ -176,16 +176,14 @@
                     </RelativeLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/studente_edt_labels"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="22dp"
                         android:layout_marginRight="14dp"
-                        android:fontFamily="@font/montserrat_semi_bold"
-                        android:text="@string/name"
-                        android:textAllCaps="true"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
+
+                        android:text="@string/name" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -218,11 +216,8 @@
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="14dp"
-                        android:fontFamily="@font/montserrat_semi_bold"
-                        android:text="@string/passwordlabel"
-                        android:textAllCaps="true"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        style="@style/studente_edt_labels"
+                        android:text="@string/passwordlabel" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -278,11 +273,8 @@
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="14dp"
-                        android:fontFamily="@font/montserrat_semi_bold"
-                        android:text="@string/contact_numberlabel"
-                        android:textAllCaps="true"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        style="@style/studente_edt_labels"
+                        android:text="@string/contact_numberlabel" />
 
                     <LinearLayout
                         android:id="@+id/llPhoneNumber"
@@ -338,11 +330,8 @@
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="14dp"
-                        android:fontFamily="@font/montserrat_semi_bold"
-                        android:text="@string/current_gradelabel"
-                        android:textAllCaps="true"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        style="@style/studente_edt_labels"
+                        android:text="@string/current_gradelabel" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -380,11 +369,8 @@
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="14dp"
-                        android:fontFamily="@font/montserrat_semi_bold"
-                        android:text="@string/favourite_subjectlabel"
-                        android:textAllCaps="true"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        style="@style/studente_edt_labels"
+                        android:text="@string/favourite_subjectlabel" />
 
                     <LinearLayout
                         android:id="@+id/favoriteSubjCard"
@@ -422,11 +408,8 @@
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="14dp"
-                        android:fontFamily="@font/montserrat_semi_bold"
-                        android:text="@string/least_favourite_subjectlabel"
-                        android:textAllCaps="true"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        style="@style/studente_edt_labels"
+                        android:text="@string/least_favourite_subjectlabel" />
 
                     <LinearLayout
                         android:id="@+id/leastFavuSubjCard"
@@ -464,11 +447,8 @@
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="14dp"
-                        android:fontFamily="@font/montserrat_semi_bold"
-                        android:text="@string/favourite_hobbylable"
-                        android:textAllCaps="true"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        style="@style/studente_edt_labels"
+                        android:text="@string/favourite_hobbylable" />
 
                     <LinearLayout
                         android:id="@+id/favHobbyCard"
@@ -513,8 +493,7 @@
                         android:background="@drawable/selector_black"
                         android:onClick="@{() -> callback.makeSaveRequest()}"
                         android:text="@string/updatebtn"
-                        android:textColor="@color/white"
-                        android:textSize="21sp" />
+                        style="@style/update" />
 
                 </LinearLayout>
 

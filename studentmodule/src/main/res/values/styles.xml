@@ -179,6 +179,18 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+
+    <!-- Text style for "name" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="studente_edt_labels">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+
+    </style>
+
+
     <!-- Text style for "john_d." -->
     <!-- Add this snippet to styles.xml. -->
     <style name="bodystye">
@@ -189,7 +201,15 @@
         <item name="android:fontFamily">@font/montserrat_semi_bold</item>
 
     </style>
+    <!-- Text style for "update" -->
+    <!-- Add this snippet to styles.xml. -->
+    <style name="update">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
 
+    </style>
     <!-- Text style for "schedule" -->
     <!-- Add this snippet to styles.xml. -->
     <style name="tabtext">
@@ -207,6 +227,8 @@
         <item name="android:textSize">18sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+
     </style>
     <!-- Text style for "hey,__jack" -->
     <!-- Add this snippet to styles.xml. -->
@@ -320,7 +342,7 @@
     <!-- Add this snippet to styles.xml. -->
     <style name="explorebuttontextstyle">
         <item name="android:textColor">#ffffffff</item>
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">8sp</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:fontFamily">@font/montserrat_semi_bold</item>
 

@@ -150,7 +150,6 @@
                             android:layout_height="36dp"
                             android:background="@drawable/border_rectangle"
                             android:button="@null"
-                            android:fontFamily="@font/montserrat_regular"
                             android:text="@string/male"
                             android:textColor="@drawable/logintext_selector" />
 
@@ -161,7 +160,6 @@
                             android:layout_height="36dp"
                             android:background="@drawable/border_rectangle"
                             android:button="@null"
-                            android:fontFamily="@font/montserrat_regular"
                             android:text="@string/female"
                             android:textColor="@drawable/logintext_selector" />
                     </RadioGroup>

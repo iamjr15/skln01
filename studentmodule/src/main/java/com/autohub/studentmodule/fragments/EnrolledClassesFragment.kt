@@ -1,6 +1,7 @@
 package com.autohub.studentmodule.fragments
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.studentmodule.adaptors.EnrolledClassesAdaptor
 import com.autohub.studentmodule.databinding.FragmentEnrolledClassesBinding
+import com.autohub.studentmodule.listners.HomeListners
 import com.autohub.studentmodule.models.BatchesModel
 import com.google.firebase.firestore.SetOptions
 import java.text.ParseException
@@ -26,6 +28,7 @@ class EnrolledClassesFragment : BaseFragment() {
     private var mBinding: FragmentEnrolledClassesBinding? = null
 
     private lateinit var enrolledClassesList: MutableList<BatchesModel>
+    private lateinit var homeListner: HomeListners
 
     private val erolldClassDeleteClickListener = ItemClickListener<BatchesModel> {
 
@@ -68,6 +71,13 @@ class EnrolledClassesFragment : BaseFragment() {
 
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        homeListner = context as HomeListners
+
+
+    }
+
     private fun removeUserIdFromBatch(batchmodel: BatchesModel) {
 
 
@@ -83,6 +93,7 @@ class EnrolledClassesFragment : BaseFragment() {
                                         mapOf("enrolledStudentsId" to enrollstudentIds), SetOptions.merge()
                                 ).addOnCompleteListener {
                                     fetchEnrolledClasses()
+                                    homeListner.updateScheduleFragment()
 
                                 }
 
@@ -203,13 +214,9 @@ class EnrolledClassesFragment : BaseFragment() {
         }
     }
 
-/*uTCToLocal("EEE, d MMM yyyy HH:mm:ss z",
-                "EEE, d MMM yyyy HH:mm:ss z", remainderTime).toString())*/
 
     fun uTCToLocal(dateFormatInPut: String, dateFomratOutPut: String, datesToConvert: String): String? {
 
-
-        val dateToReturn = datesToConvert
 
         val sdf = SimpleDateFormat(dateFormatInPut)
 

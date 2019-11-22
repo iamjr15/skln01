@@ -304,6 +304,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_marginTop="7dp"
+                        android:fontFamily="@font/montserrat_bold"
                         android:gravity="center"
                         android:paddingLeft="14dp"
                         android:paddingRight="14dp"
@@ -345,7 +346,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:layout_weight="2"
                     android:orientation="horizontal"
                     android:padding="8dp">
 
@@ -353,7 +354,7 @@
                         style="@style/teaching_e"
                         android:layout_width="0dp"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:fontFamily="@font/montserrat_semi_bold"
                         android:text="@string/teaching_experience"
                         android:textAllCaps="true"
@@ -362,12 +363,13 @@
                     <TextView
                         android:id="@+id/teaching_experience"
                         style="@style/valuestyles"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
 
-                        android:layout_gravity="end|center_vertical"
+                        android:layout_weight=".8"
                         android:fontFamily="@font/montserrat_semi_bold"
-                        android:gravity="end"
+                        android:gravity="center"
                         android:text="@{model.teachingExp}"
                         tools:text="1-2YRS" />
                 </LinearLayout>
@@ -387,10 +389,10 @@
 
                     <TextView
                         style="@style/teaching_e"
+
                         android:layout_width="0dp"
                         android:layout_gravity="center"
-
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:fontFamily="@font/montserrat_semi_bold"
                         android:text="@string/occupation"
                         android:textAllCaps="true" />
@@ -398,10 +400,10 @@
                     <TextView
                         android:id="@+id/occupation"
                         style="@style/valuestyles"
+                        android:layout_width="0dp"
                         android:layout_gravity="end|center_vertical"
-                        android:fontFamily="@font/montserrat_semi_bold"
-                        android:gravity="end"
-
+                        android:layout_weight=".8"
+                        android:gravity="center"
                         android:text="@{model.occupation}"
                         tools:text="1-2YRS" />
                 </LinearLayout>
@@ -423,7 +425,7 @@
                         style="@style/teaching_e"
                         android:layout_width="0dp"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:fontFamily="@font/montserrat_semi_bold"
 
                         android:text="@string/qualification"
@@ -432,10 +434,10 @@
                     <TextView
                         android:id="@+id/qualification"
                         style="@style/valuestyles"
+                        android:layout_width="0dp"
                         android:layout_gravity="end|center_vertical"
-                        android:fontFamily="@font/montserrat_semi_bold"
-                        android:gravity="end"
-
+                        android:layout_weight=".8"
+                        android:gravity="center"
                         android:text="@{model.qualification}"
                         tools:text="1-2YRS" />
                 </LinearLayout>
@@ -457,7 +459,7 @@
                         style="@style/teaching_e"
                         android:layout_width="0dp"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:fontFamily="@font/montserrat_semi_bold"
 
                         android:text="@string/area_of_qualification"
@@ -467,10 +469,11 @@
                     <TextView
                         android:id="@+id/area_of_qualification"
                         style="@style/valuestyles"
+                        android:layout_width="0dp"
                         android:layout_gravity="end|center_vertical"
-
+                        android:layout_weight=".8"
                         android:fontFamily="@font/montserrat_semi_bold"
-                        android:gravity="end"
+                        android:gravity="center"
                         android:text="@{model.areaQualification}"
                         android:textSize="11sp"
                         tools:ignore="SmallSp"
@@ -511,7 +514,7 @@
                         style="@style/teaching_e"
                         android:layout_width="0dp"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:fontFamily="@font/montserrat_semi_bold"
                         android:text="@string/class_type"
 
@@ -521,9 +524,11 @@
                     <TextView
                         android:id="@+id/class_type"
                         style="@style/teaching_e"
+                        android:layout_width="0dp"
                         android:layout_gravity="end|center_vertical"
+                        android:layout_weight=".8"
                         android:fontFamily="@font/montserrat_semi_bold"
-                        android:gravity="end"
+                        android:gravity="center"
 
                         android:text="@{model.classType}"
                         android:textSize="11sp"
@@ -548,7 +553,7 @@
                         style="@style/teaching_e"
                         android:layout_width="0dp"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:fontFamily="@font/montserrat_semi_bold"
 
                         android:text="@string/number_of_classes"
@@ -558,10 +563,11 @@
                     <TextView
                         android:id="@+id/number_of_classes"
                         style="@style/teaching_e"
+                        android:layout_width="0dp"
                         android:layout_gravity="end|center_vertical"
+                        android:layout_weight=".8"
                         android:fontFamily="@font/montserrat_semi_bold"
-                        android:gravity="end"
-
+                        android:gravity="center"
                         android:text="@{model.noOfClasses}"
                         android:textSize="11sp"
                         tools:ignore="SmallSp"
@@ -586,7 +592,7 @@
                         style="@style/teaching_e"
                         android:layout_width="0dp"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:fontFamily="@font/montserrat_semi_bold"
 
                         android:text="@string/max_student_capacity"
@@ -596,10 +602,11 @@
                     <TextView
                         android:id="@+id/max_student_capacity"
                         style="@style/teaching_e"
+                        android:layout_width="0dp"
                         android:layout_gravity="end|center_vertical"
+                        android:layout_weight=".8"
                         android:fontFamily="@font/montserrat_semi_bold"
-                        android:gravity="end"
-
+                        android:gravity="center"
                         android:text="@{model.maxStudentsCapacity}"
                         android:textSize="11sp"
                         tools:ignore="SmallSp"
@@ -685,26 +692,34 @@
                     android:layout_marginTop="12dp"
                     android:background="@color/lineGrayColor" />
 
-
-                <Button
-                    android:id="@+id/request_this_class"
-                    style="@style/request_th"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/requestclassbutton_drawable"
-                    android:gravity="center"
-                    android:onClick="@{() -> callback.onRequestClick()}"
-
-                    android:text="@string/request_this_class"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    style="@style/youwont_"
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:text="@string/you_wo_nt_be_charged_yet" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <Button
+
+                        android:id="@+id/request_this_class"
+                        style="@style/request_th"
+
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/requestclassbutton_drawable"
+                        android:gravity="center"
+                        android:onClick="@{() -> callback.onRequestClick()}"
+
+                        android:text="@string/request_this_class"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        style="@style/youwont_"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/request_this_class"
+                        android:layout_marginTop="14dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="@string/you_wo_nt_be_charged_yet" />
+
+                </RelativeLayout>
 
 
                 <LinearLayout
@@ -725,12 +740,15 @@
                         android:text="@string/_0_reviews" />
 
                     <TextView
-                        style="@style/Heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:drawableStart="@drawable/ic_star_full"
                         android:drawablePadding="4dp"
+                        android:fontFamily="@font/montserrat_semi_bold"
                         android:text="@string/_0_0"
-                        android:textColor="#FFDF00" />
+                        android:textColor="#FFDF00"
+                        android:textSize="13sp" />
 
                     <ImageView
                         android:layout_width="wrap_content"

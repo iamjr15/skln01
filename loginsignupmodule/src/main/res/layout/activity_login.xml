@@ -55,7 +55,6 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/loginborder_rectangle"
                         android:button="@null"
-                        android:fontFamily="@font/montserrat_regular"
                         android:text="@string/studentp"
                         android:textColor="@drawable/logintext_selector" />
 
@@ -66,7 +65,6 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/loginborder_rectangle"
                         android:button="@null"
-                        android:fontFamily="@font/montserrat_regular"
 
                         android:text="@string/tutor_institute"
                         android:textColor="@drawable/logintext_selector" />

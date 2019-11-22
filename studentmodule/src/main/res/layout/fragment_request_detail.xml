@@ -233,8 +233,10 @@
         <Button
             android:id="@+id/delete_request"
             style="@style/subjecttextstyle"
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="58dp"
+            android:layout_marginEnd="58dp"
             android:background="@drawable/rectangle175_drawable"
             android:gravity="center"
             android:minWidth="220dp"

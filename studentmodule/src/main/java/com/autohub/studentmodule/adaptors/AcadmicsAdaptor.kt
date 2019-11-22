@@ -44,7 +44,7 @@ class AcadmicsAdaptor(var context: Context, var mItemClickListener: ItemClickLis
             {
                 acadmicdata = it
                 img.setImageResource(it.icon)
-                txt.text = it.classname
+                txt.text = it.classname + "."
 
                 val unwrappedDrawable = ContextCompat.getDrawable(context, com.autohub.skln.R.drawable.acadmic_rowbg_drawable)
                 val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)

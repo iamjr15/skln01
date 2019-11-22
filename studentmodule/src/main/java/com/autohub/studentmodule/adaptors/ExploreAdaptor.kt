@@ -51,7 +51,7 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
                 txtdistance.text = "${it.distance} Km"
 
                 user = it
-                tutorname.text = """${it.personInfo!!.firstName} ${it.personInfo!!.lastName}"""
+                tutorname.text = CommonUtils.capitalize("""${it.personInfo!!.firstName} ${it.personInfo!!.lastName}""")
 
                 // $price/for 3 class per Month
 

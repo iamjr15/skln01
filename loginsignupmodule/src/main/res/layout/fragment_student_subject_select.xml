@@ -38,13 +38,14 @@
                     android:layout_width="127dp"
                     android:layout_height="123dp"
                     android:background="@drawable/selectclass_bg"
-                    android:paddingStart="17dp"
                     tools:ignore="RtlSymmetry">
 
                     <ImageView
                         android:id="@+id/img"
-                        android:layout_width="41dp"
-                        android:layout_height="41dp"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="17dp"
                         android:paddingTop="11dp"
                         tools:ignore="ContentDescription" />
 
@@ -71,7 +72,9 @@
                         android:id="@+id/rrgreen"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@+id/img">
+                        android:layout_below="@+id/img"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp">
 
                         <TextView
                             android:id="@+id/txt"
@@ -79,6 +82,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
+                            android:ellipsize="end"
+                            android:maxLines="2"
                             android:textSize="19sp"
 
                             tools:text="class 1." />
@@ -98,13 +103,14 @@
                 android:layout_marginTop="13dp"
                 android:background="@drawable/selectclass_bg"
                 android:onClick="@{() -> callback.onSelectSecond()}"
-                android:paddingStart="17dp"
                 tools:ignore="RtlSymmetry">
 
                 <ImageView
                     android:id="@+id/imgsecond"
-                    android:layout_width="41dp"
-                    android:layout_height="41dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="17dp"
                     android:paddingTop="11dp"
                     tools:ignore="ContentDescription" />
 
@@ -132,7 +138,9 @@
                     android:id="@+id/rrgreensecond"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/imgsecond">
+                    android:layout_below="@+id/imgsecond"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp">
 
                     <TextView
                         android:id="@+id/txtsecond"
@@ -140,6 +148,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:maxLines="2"
                         android:textSize="19sp"
 
                         tools:text="class 2." />
