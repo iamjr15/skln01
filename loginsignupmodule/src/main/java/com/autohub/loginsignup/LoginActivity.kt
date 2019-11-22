@@ -27,7 +27,6 @@ import com.google.firebase.auth.EmailAuthProvider
  */
 class LoginActivity : BaseActivity() {
     private var mBinding: ActivityLoginBinding? = null
-    private val mAccountType = AppConstants.TYPE_STUDENT
     private lateinit var manager: SplitInstallManager
     private lateinit var credential: AuthCredential
 
@@ -67,16 +66,13 @@ class LoginActivity : BaseActivity() {
             mBinding!!.rrloginid.visibility = View.GONE
             mBinding!!.tvForgotPassword.text = resources.getString(R.string.forgot_pass)
 
-            mBinding!!.edtTutorPassword.visibility = View.GONE
-            mBinding!!.edtPassword.visibility = View.VISIBLE
+            mBinding!!.rrtutorpass.visibility = View.GONE
+            mBinding!!.rrstudentpass.visibility = View.VISIBLE
 
 
         } else {
-
-            mBinding!!.edtTutorPassword.visibility = View.VISIBLE
-            mBinding!!.edtPassword.visibility = View.GONE
-
-
+            mBinding!!.rrtutorpass.visibility = View.VISIBLE
+            mBinding!!.rrstudentpass.visibility = View.GONE
             mBinding!!.tvForgotPassword.text = resources.getString(R.string.forgot_passid)
             mBinding!!.tvHintemamil.visibility = View.GONE
             mBinding!!.rremail.visibility = View.GONE

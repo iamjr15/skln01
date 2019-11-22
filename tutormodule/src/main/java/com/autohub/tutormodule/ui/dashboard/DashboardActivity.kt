@@ -1,7 +1,5 @@
 package com.autohub.tutormodule.ui.dashboard
 
-import android.app.Activity
-import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
@@ -13,7 +11,6 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.autohub.skln.BaseActivity
 import com.autohub.skln.models.batches.BatchesModel
-import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.ui.dashboard.home.HomeBaseFragment
 import com.autohub.tutormodule.ui.dashboard.listner.ClassRequestListener
@@ -168,5 +165,17 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
 
     override fun refreshSchedule() {
         scheduleFragment.fetchTutorData()
+    }
+
+    override fun onBackPressed() {
+
+        if (mViewPager.currentItem == 0) {
+
+            super.onBackPressed()
+        } else {
+            mViewPager.currentItem = 0
+
+        }
+
     }
 }

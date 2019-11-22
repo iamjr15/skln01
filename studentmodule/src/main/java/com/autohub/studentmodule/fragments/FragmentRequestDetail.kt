@@ -177,4 +177,6 @@ class FragmentRequestDetail : BaseFragment() {
         intent.data = Uri.parse(number)
         startActivity(intent)
     }
+
+
 }
