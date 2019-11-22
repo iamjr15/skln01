@@ -733,12 +733,7 @@ class EditStudentProfileActivity : BaseActivity() {
             buf.close()
 
             val path = "student/"
-            /* if (mProfileType.equals("student", ignoreCase = true)) {
-                 path = "student/"
-             }*/
 
-            /* val ref = FirebaseStorage.getInstance().reference.child("tutor/" +
-                firebaseAuth.currentUser!!.uid + ".jpg")*/
             val pathString = path + firebaseAuth.currentUser!!.uid + ".jpg"
             val picRef = FirebaseStorage.getInstance().reference.child(pathString)
             val uploadTask = picRef.putBytes(bytes)

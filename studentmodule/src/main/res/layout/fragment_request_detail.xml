@@ -94,7 +94,7 @@
                             android:id="@+id/name"
                             style="@style/bodystye"
                             android:layout_margin="8dp"
-                            android:text="@{tutorViewModel.fullName}"
+                            android:text="@{tutorViewModel.firstAndLastNameLetter}"
                             android:textAllCaps="true"
                             android:textSize="13sp"
                             tools:text="Muhammad Imran" />
@@ -187,8 +187,8 @@
                 android:layout_marginRight="32dp"
                 android:background="@drawable/rectangle21_drawable"
                 android:paddingStart="64dp"
-                android:paddingLeft="64dp"
-                android:paddingRight="64dp"
+                android:paddingLeft="61dp"
+                android:paddingRight="62dp"
                 android:text="@string/see_location_on_map"
                 android:textSize="14sp" />
 
@@ -204,8 +204,8 @@
                 android:layout_marginTop="18dp"
                 android:layout_marginRight="32dp"
                 android:background="@drawable/rectangle172_drawable"
-                android:paddingStart="64dp"
-                android:paddingLeft="64dp"
+                android:paddingStart="55dp"
+                android:paddingLeft="56dp"
                 android:paddingRight="64dp"
                 android:text="@string/contact_skill_master"
                 android:textAlignment="center"
