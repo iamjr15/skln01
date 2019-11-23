@@ -1,9 +1,12 @@
 package com.autohub.tutormodule.ui.dashboard
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -30,6 +33,7 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
     private lateinit var scheduleFragment: ScheduleFragment
     private var profileFragment: ProfileFragment = ProfileFragment()
     private lateinit var sectionsPagerAdapter: SectionsPagerAdapter
+    private var PermissionsRequest: Int = 13
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +47,7 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
         mViewPager.adapter = sectionsPagerAdapter
         mViewPager.offscreenPageLimit = 3
 
-
+        requestPermissions()
         mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(i: Int, v: Float, i1: Int) {
 
@@ -98,6 +102,19 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
         }
 
     }
+
+    fun requestPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CALL_PHONE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE),
+                        PermissionsRequest)
+            }
+        }
+    }
+
 
     private fun setTextViewDrawableColor(textView: TextView, color: Int) {
         for (drawable in textView.compoundDrawables) {
