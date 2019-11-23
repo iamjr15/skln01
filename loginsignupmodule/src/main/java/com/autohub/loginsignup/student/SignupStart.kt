@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.app.ActivityCompat
@@ -24,7 +27,22 @@ import com.google.android.gms.location.LocationListener
 /**
  * Created by Vt Netzwelt
  */
-class SignupStart : BaseActivity() {
+class SignupStart : BaseActivity(), TextView.OnEditorActionListener {
+    override fun onEditorAction(p0: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
+        try {
+
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                onNextClick()
+
+                return true
+            }
+            return false
+        } catch (e: Exception) {
+            showSnackError(e.toString())
+        }
+        return false
+    }
+
     private var mBinding: TutorSignupStartBinding? = null
     private var mCity: String? = null
     private var mLocation: Location? = null
@@ -66,6 +84,7 @@ class SignupStart : BaseActivity() {
         }
 
         Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 0.0f, 20.0f)
+        mBinding!!.edtPassword.setOnEditorActionListener(this)
 
         if (!checkGooglePlayServices() && !isLocationPermissionGranted) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 2321)
@@ -118,11 +137,11 @@ class SignupStart : BaseActivity() {
 
     private fun makeSaveRequest() {
         val userMap = HashMap<String, Any>()
-        userMap[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString()
-        userMap[KEY_LAST_NAME] = mBinding!!.edtLastName.text.toString()
+        userMap[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text!!.toString().trim()
+        userMap[KEY_LAST_NAME] = mBinding!!.edtLastName.text!!.toString().trim()
         userMap[KEY_EMAIL] = mBinding!!.edtemail.text.toString()
         userMap[KEY_SEX] = if (mBinding!!.radioMale.isChecked) MALE else FEMALE
-        userMap[KEY_PASSWORD] = getString(mBinding!!.edtPassword.text)
+        userMap[KEY_PASSWORD] = getString(mBinding!!.edtPassword.text).trim()
         userMap[KEY_CITY] = mCity!!
         userMap[KEY_LONGITUDE] = mLocation!!.longitude
         userMap[KEY_LATITUDE] = mLocation!!.latitude

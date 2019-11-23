@@ -35,7 +35,6 @@ import com.google.firebase.storage.StorageReference
 import gun0912.tedbottompicker.TedBottomPicker
 import kotlinx.android.synthetic.main.activity_tutor_edit_profile.*
 import java.io.*
-import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
 

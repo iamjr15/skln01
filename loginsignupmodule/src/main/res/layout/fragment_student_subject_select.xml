@@ -35,8 +35,8 @@
 
                 <RelativeLayout
                     android:id="@+id/rr"
-                    android:layout_width="127dp"
-                    android:layout_height="123dp"
+                    android:layout_width="@dimen/box127dp"
+                    android:layout_height="@dimen/box123dp"
                     android:background="@drawable/selectclass_bg"
                     tools:ignore="RtlSymmetry">
 
@@ -97,8 +97,8 @@
             <RelativeLayout
                 android:id="@+id/rr2"
 
-                android:layout_width="127dp"
-                android:layout_height="123dp"
+                android:layout_width="@dimen/box127dp"
+                android:layout_height="@dimen/box123dp"
                 android:layout_marginStart="55dp"
                 android:layout_marginTop="13dp"
                 android:background="@drawable/selectclass_bg"

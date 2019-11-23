@@ -113,5 +113,8 @@
     <string name="profileupdatesuccessfully_msg">Profile has been Updated succesfully!</string>
     <string name="selectSeubject_msg">Please select a subject.</string>
     <string name="selectclasstype_msg">Please select a class type.</string>
+    <string name="selecthobbie_validation">Select some hobbies to pursue.</string>
+    <string name="leastfavt_validation">Select your least favourite subjects.</string>
+    <string name="favt_validation">Select your favourite subjects.</string>
 
 </resources>
