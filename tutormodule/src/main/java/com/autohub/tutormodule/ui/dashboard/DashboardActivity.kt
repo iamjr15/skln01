@@ -28,7 +28,8 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
     private lateinit var homeBaseFragment: HomeBaseFragment
     private lateinit var requestBaseFragment: RequestBaseFragment
     private lateinit var scheduleFragment: ScheduleFragment
-    private lateinit var profileFragment: ProfileFragment
+    private var profileFragment: ProfileFragment = ProfileFragment()
+    private lateinit var sectionsPagerAdapter: SectionsPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,7 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
         mTabs.add(tab_item_schedule)
         mTabs.add(tab_item_request)
         mTabs.add(tab_item_profile)
-        val sectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+        sectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
         mViewPager = findViewById(R.id.container)
         mViewPager.adapter = sectionsPagerAdapter
         mViewPager.offscreenPageLimit = 3
@@ -106,6 +107,11 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        refreshProfile()
+    }
+
     inner class SectionsPagerAdapter internal constructor(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getItem(position: Int): Fragment {
@@ -142,7 +148,7 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
     }
 
     override fun showAddBatchFragment(showAddBatch: Boolean, batch: BatchesModel) {
-        homeBaseFragment.showAddBatchFragment(showAddBatch,batch)
+        homeBaseFragment.showAddBatchFragment(showAddBatch, batch)
     }
 
     override fun showStudentsListFragment() {
@@ -165,6 +171,12 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
 
     override fun refreshSchedule() {
         scheduleFragment.fetchTutorData()
+    }
+
+    private fun refreshProfile() {
+        if (profileFragment != null && profileFragment.isAdded) {
+            profileFragment.fetchTutorData()
+        }
     }
 
     override fun onBackPressed() {
