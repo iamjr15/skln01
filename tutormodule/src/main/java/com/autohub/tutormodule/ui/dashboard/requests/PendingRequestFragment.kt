@@ -1,7 +1,9 @@
 package com.autohub.tutormodule.ui.dashboard.requests
 
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.UserModel
@@ -59,16 +63,28 @@ class PendingRequestFragment : BaseFragment() {
             deleteRequest()
         }
 
+        mBinding.contactStudent.isEnabled = false
         mBinding.contactStudent.setOnClickListener {
             if (studentData.personInfo?.phoneNumber?.isEmpty()!!) {
                 showSnackError("No Contact Number Available!!")
             } else {
-                val callIntent = Intent(Intent.ACTION_CALL)
-                callIntent.data = Uri.parse("tel:" + studentData.personInfo?.phoneNumber)
-                startActivity(callIntent)
+                requestPermissions()
+
             }
         }
     }
+
+    fun requestPermissions() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED
+        ) {
+            showSnackError("You need to grant phone call permission first!!")
+        } else {
+            val callIntent = Intent(Intent.ACTION_CALL)
+            callIntent.data = Uri.parse("tel:" + studentData.personInfo?.phoneNumber)
+            startActivity(callIntent)
+        }
+    }
+
 
     private fun deleteRequest() {
         showLoading()
@@ -95,6 +111,7 @@ class PendingRequestFragment : BaseFragment() {
                     .addOnSuccessListener {
                         Log.d(" ", "DocumentSnapshot successfully updated!")
                         fetchBatches(true)
+                        mBinding.contactStudent.isEnabled = true
                     }
                     .addOnFailureListener { e ->
                         hideLoading()

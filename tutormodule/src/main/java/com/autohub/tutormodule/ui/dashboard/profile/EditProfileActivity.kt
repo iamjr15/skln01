@@ -142,7 +142,7 @@ class EditProfileActivity : BaseActivity() {
                             }
                         }
                     }
-                    mBinding.subjectToTaught.text = selectedSubjectsList.joinToString(",")
+                    mBinding.subjectToTaught.text = selectedSubjectsList.joinToString(" , ")
 
                 }
                 .addOnFailureListener { e ->
@@ -176,7 +176,7 @@ class EditProfileActivity : BaseActivity() {
                     for (i in tutorGrades.indices) {
                         for (j in 0 until gradesList.size) {
                             if (gradesList[j].id.equals(tutorGrades[i].gradeId)) {
-                                selectedGradesList.add(gradesList[j].name!!)
+                                selectedGradesList.add("Class " + gradesList[j].grade!!)
                             }
                         }
                     }

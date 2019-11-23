@@ -63,7 +63,7 @@ class ProfileFragment : BaseFragment() {
                     if (tutorData?.qualification?.belongToInstitute == true) {
                         mBinding.type.text = tutorData?.qualification?.instituteNeme
                     } else {
-                        mBinding.type.text = tutorData?.qualification?.currentOccupation
+                        mBinding.type.text = "Individual tutor"
                     }
 
                     mBinding.id.text = tutorData?.tutorCode

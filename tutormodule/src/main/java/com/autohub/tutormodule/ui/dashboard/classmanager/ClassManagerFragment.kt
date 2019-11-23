@@ -43,8 +43,8 @@ class ClassManagerFragment : BaseFragment() {
         mBinding.callback = this
 
         val adapter = ViewPagerAdapter(childFragmentManager)
-        adapter.addData(getFragmentClassRequests(ClassManagerListFragment()), "Classes Today")
-        adapter.addData(getFragmentClassRequests(ClassManagerListFragment()), "All classes")
+        adapter.addData(getFragmentClassRequests(ClassManagerListFragment("Today")), "Classes Today")
+        adapter.addData(getFragmentClassRequests(ClassManagerListFragment("All")), "All classes")
 
         mBinding.tabs.setupWithViewPager(mBinding.viewpager)
         mBinding.viewpager.adapter = adapter
