@@ -563,6 +563,7 @@ class EditStudentProfileActivity : BaseActivity() {
         val useracadmicinfo = HashMap<String, Any>()
 
         if (!mBinding!!.password.text.toString().equals("")) {
+
             useracadmicinfo[KEY_PASSWORD] = getString(mBinding!!.password.text)
 
         }
@@ -673,7 +674,14 @@ class EditStudentProfileActivity : BaseActivity() {
             mBinding!!.password.requestFocus()
             return false
 
-        }*/ else if (!mBinding!!.codePicker.isValidFullNumber) {
+        }*/
+        else if (!mBinding!!.password.text.toString().equals("")) {
+            if (mBinding!!.password.text.toString().length < 6) {
+                showSnackError(getString(R.string.weakPass))
+                return false
+
+            }
+        } else if (!mBinding!!.codePicker.isValidFullNumber) {
             showSnackError(resources.getString(R.string.enter_valid_number))
             return false
 

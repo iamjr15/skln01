@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="com.autohub.skln.utills.CommonUtils" />
+
         <variable
             name="model"
             type="com.autohub.skln.models.batches.BatchRequestViewModel" />
@@ -43,7 +45,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
 
-                android:text="@{model.batchRequestModel.grade.name}"
+                android:text="@{CommonUtils.getRomanCLass(model.batchRequestModel.grade.name)}"
                 tools:text="XI" />
 
             <androidx.appcompat.widget.AppCompatTextView

@@ -420,6 +420,8 @@
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
         <item name="android:scrollHorizontally">true</item>
+
+
     </style>
 
 

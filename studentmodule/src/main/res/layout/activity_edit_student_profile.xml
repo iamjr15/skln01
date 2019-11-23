@@ -202,7 +202,7 @@
                             android:layout_height="48dp"
                             android:layout_gravity="center|start"
                             android:background="@null"
-
+                            android:fontFamily="@font/montserrat_light"
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp"
                             android:singleLine="true" />
@@ -242,10 +242,11 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="4dp"
-
                                 android:layout_toLeftOf="@+id/show_hide_password"
-                                android:background="@null"
 
+                                android:background="@null"
+                                android:fontFamily="@font/montserrat_light"
+                                android:inputType="textPassword"
                                 android:paddingStart="16dp"
                                 android:singleLine="true"
                                 tools:ignore="RtlSymmetry" />
@@ -351,15 +352,17 @@
                             android:layout_gravity="center"
                             android:background="@null"
                             android:drawableEnd="@drawable/arrow_right"
-                            android:drawableRight="@drawable/arrow_right"
 
+                            android:fontFamily="@font/montserrat_semi_bold"
                             android:gravity="center|start"
 
                             android:onClick="@{() -> callback.showGrade()}"
                             android:paddingStart="16dp"
+
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp"
                             android:textAllCaps="true"
+                            android:textColor="@color/black"
                             tools:text="8th grade" />
 
                     </LinearLayout>
@@ -394,11 +397,13 @@
                             android:background="@null"
                             android:drawableEnd="@drawable/arrow_right"
                             android:drawablePadding="8dp"
+                            android:fontFamily="@font/montserrat_semi_bold"
                             android:gravity="center|start"
                             android:paddingStart="16dp"
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp"
                             android:textAllCaps="true"
+                            android:textColor="@color/black"
                             tools:text="math" />
 
                     </LinearLayout>
@@ -433,11 +438,13 @@
                             android:background="@null"
                             android:drawableEnd="@drawable/arrow_right"
                             android:drawablePadding="8dp"
+                            android:fontFamily="@font/montserrat_semi_bold"
                             android:gravity="center|start"
                             android:paddingStart="16dp"
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp"
                             android:textAllCaps="true"
+                            android:textColor="@color/black"
                             tools:text="physics" />
 
                     </LinearLayout>
@@ -472,11 +479,13 @@
                             android:background="@null"
                             android:drawableEnd="@drawable/arrow_right"
                             android:drawablePadding="8dp"
+                            android:fontFamily="@font/montserrat_semi_bold"
                             android:gravity="center|start"
                             android:paddingStart="16dp"
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp"
                             android:textAllCaps="true"
+                            android:textColor="@color/black"
                             tools:text="math" />
 
                     </LinearLayout>

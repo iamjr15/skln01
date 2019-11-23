@@ -122,8 +122,8 @@ class TutorViewModel(private var mUser: TutorData) : BaseObservable() {
     val userId: String
         get() = mUser.id!!
 
-    fun gettDistance(): Double? {
-        return mUser.distance
+    fun gettDistance(): String? {
+        return "${mUser.distance} km"
     }
 
     fun setClasses(classesToTeach: String) {

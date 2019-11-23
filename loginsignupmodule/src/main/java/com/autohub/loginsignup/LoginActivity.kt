@@ -139,6 +139,13 @@ class LoginActivity : BaseActivity() {
             // showSnackError(R.string.enter_password)
             return false
         }
+
+        if (password.length < 6) {
+            mBinding!!.edtPassword.error = resources.getString(R.string.passwordweak)
+            mBinding!!.edtPassword.requestFocus()
+            // showSnackError(R.string.enter_password)
+            return false
+        }
         return true
     }
 
@@ -165,6 +172,13 @@ class LoginActivity : BaseActivity() {
 
         if (TextUtils.isEmpty(password)) {
             mBinding!!.edtTutorPassword.error = resources.getString(R.string.enter_password)
+            mBinding!!.edtTutorPassword.requestFocus()
+            // showSnackError(R.string.enter_password)
+            return false
+        }
+
+        if (password.length < 6) {
+            mBinding!!.edtTutorPassword.error = resources.getString(R.string.passwordweak)
             mBinding!!.edtTutorPassword.requestFocus()
             // showSnackError(R.string.enter_password)
             return false

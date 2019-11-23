@@ -13,7 +13,7 @@ import java.util.HashSet;
 
 
 /**
- *Modified by Vt Netzwelt
+ * Modified by Vt Netzwelt
  */
 public class CommonUtils {
     private static final HashMap<String, String> ROMAN_CLASSES = new HashMap<>();
@@ -79,7 +79,7 @@ public class CommonUtils {
         return function.apply(set);
     }
 
-    public  interface Function<T> {
+    public interface Function<T> {
         boolean apply(T data);
     }
 

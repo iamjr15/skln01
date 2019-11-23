@@ -4,4 +4,7 @@
     <dimen name="box123dp">123dp</dimen>
     <dimen name="margin31dp">31dp</dimen>
     <dimen name="margin23dp">23dp</dimen>
+
+    <dimen name="margin260dp">260dp</dimen>
+    <dimen name="margin420dp">420dp</dimen>
 </resources>
