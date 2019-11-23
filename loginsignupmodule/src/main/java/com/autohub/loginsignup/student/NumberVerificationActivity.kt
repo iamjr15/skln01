@@ -101,7 +101,7 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
     fun onResendClick() {
         if (mBinding!!.codePicker.isValidFullNumber) {
             PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                    mBinding!!.codePicker.fullNumberWithPlus,
+                    phoneNum!!,
                     60,
                     TimeUnit.SECONDS,
                     this,
@@ -130,7 +130,7 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         hideLoading()
-                        userMap!![KEY_PHONE_NUMBER] = mBinding!!.codePicker.fullNumberWithPlus
+                        userMap!![KEY_PHONE_NUMBER] = phoneNum!!
 
 
 

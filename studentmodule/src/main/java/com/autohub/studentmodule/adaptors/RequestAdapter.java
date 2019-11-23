@@ -9,8 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.autohub.skln.listeners.ItemClickListener;
-import com.autohub.studentmodule.databinding.ItemRequestBinding;
 import com.autohub.skln.models.batches.BatchRequestViewModel;
+import com.autohub.studentmodule.databinding.ItemRequestBinding;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -10,19 +10,32 @@
         android:orientation="vertical"
         tools:context=".BaseActivity">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/swiperefresh"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-
-            <com.autohub.skln.widgets.EmptyViewRecyclerView
-                android:id="@+id/recycler_view"
+            <View
+                android:id="@+id/topview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:itemCount="4"
-                tools:listitem="@layout/item_request" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                android:layout_height="1dp"
+                android:background="@color/lineGrayColor" />
+
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/swiperefresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <com.autohub.skln.widgets.EmptyViewRecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_request" />
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
 
 
         <RelativeLayout

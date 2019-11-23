@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvSelectText"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="360dp"
+            android:layout_marginTop="@dimen/margin360dp"
             app:dotsColor="@android:color/darker_gray"
             app:dotsCornerRadius="4dp"
             app:dotsSize="8dp"

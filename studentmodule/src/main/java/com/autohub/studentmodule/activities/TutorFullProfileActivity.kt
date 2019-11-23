@@ -180,6 +180,7 @@ class TutorFullProfileActivity : BaseActivity() {
     private fun addClassTypeRadioButtons(classtype: ArrayList<String>?) {
         if (classtype!!.size <= 0) {
             isClassTyperequire = false
+            mBinding!!.txtclasstypelabel.visibility = View.GONE
         }
 
         for (element in classtype) {

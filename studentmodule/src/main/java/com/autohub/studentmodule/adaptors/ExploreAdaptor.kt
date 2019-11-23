@@ -55,7 +55,7 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
 
                 // $price/for 3 class per Month
 
-                txtclassprice.text = """$ ${it.packageInfo!!.price} / ${it.packageInfo!!.occurances} CLASSES / PER ${it.packageInfo!!.rateOption}"""
+                txtclassprice.text = """$ ${it.packageInfo!!.price} / ${it.packageInfo!!.occurances} CLASSES PER ${it.packageInfo!!.rateOption}"""
 
                 if (it.classToTeach!! != "") {
                     val splitarray = it.classToTeach!!.split(",")
@@ -70,7 +70,6 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
                             }
                         }
                         txtgrades.text = stringBuilder.toString()
-
 
                     } else {
                         txtgrades.text = it.classToTeach
