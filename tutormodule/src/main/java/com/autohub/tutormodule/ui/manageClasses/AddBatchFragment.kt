@@ -19,6 +19,7 @@ import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorAddBatchBinding
 import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
+import com.autohub.tutormodule.ui.utils.AppUtils
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,6 +42,7 @@ class AddBatchFragment : BaseFragment() {
     private var selectedClassPosition: Int = 0
     private var counter = 0
     lateinit var tutorData: TutorData
+    lateinit var batch: BatchesModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_tutor_add_batch, container, false)
@@ -50,16 +52,48 @@ class AddBatchFragment : BaseFragment() {
         mBinding = FragmentTutorAddBatchBinding.bind(view)
         mBinding.callback = this
 
+        fetchData()
+
+
         if (!this.arguments?.isEmpty!!) {
             isAddBatch = this.arguments!!.getBoolean("showAddBatch")
         }
 
         if (!isAddBatch) {
             mBinding.textHeading.text = resources.getString(R.string.edit_schedule)
+            batch = this.arguments!!.getParcelable("batch")!!
+            setData()
         } else {
             mBinding.textHeading.text = resources.getString(R.string.add_batch)
+            batch = BatchesModel()
         }
-        fetchTutorData()
+
+        mBinding.done.setOnClickListener {
+            if (isVerified()) {
+                if (!isAddBatch) {
+                    addBatch()
+                } else {
+                    addBatch()
+                }
+            }
+        }
+    }
+
+
+    private fun setData() {
+        mBinding.batchName.setText(batch.title.toString())
+
+        mBinding.startTime.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
+                "EEE, d MMM yyyy kk:mm:ss z",
+                batch.timing?.startTime!!.toDate().toString()).toString()
+
+
+        mBinding.endTime.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
+                "EEE, d MMM yyyy kk:mm:ss z",
+                batch.timing?.endTime!!.toDate().toString()).toString()
+
+        mBinding.selectClass.text = batch.grade?.name?.replace("_", " ")
+        mBinding.selectSubject.text = batch.subject?.name
     }
 
     override fun onAttach(context: Context) {
@@ -82,58 +116,51 @@ class AddBatchFragment : BaseFragment() {
     fun showClasses() {
         val items = ArrayList<String>()
 
-        firebaseStore.collection(getString(R.string.db_root_grades)).get().addOnSuccessListener { documentSnapshot ->
-            hideLoading()
-            val data = documentSnapshot.toObjects(GradeData::class.java)
-            gradesList = ArrayList(data.sortedWith(compareBy { it.grade?.toInt() }))
-
-            for (i in 0 until gradesList.size) {
-                items.add("Class " + gradesList[i].grade!!)
-            }
-            showDialog(items, mBinding.selectClass, "Select Class", selectedClass)
-
-        }.addOnFailureListener { e ->
-            hideLoading()
-            showSnackError(e.message)
+        for (i in 0 until gradesList.size) {
+            items.add("Class " + gradesList[i].grade!!)
         }
-
     }
 
     fun showSubjects() {
-        showLoading()
         val items = ArrayList<String>()
 
-        firebaseStore.collection(getString(R.string.db_root_subjects)).get().addOnSuccessListener { documentSnapshot ->
-            hideLoading()
-            subjectList = documentSnapshot.toObjects(SubjectData::class.java) as ArrayList<SubjectData>
-            for (i in 0 until subjectList.size) {
-                items.add(subjectList[i].name!!)
-            }
-            showDialog(items, mBinding.selectSubject, "Select Subject", selectedSub)
+        for (i in 0 until subjectList.size) {
+            items.add(subjectList[i].name!!)
+        }
+    }
+
+
+    private fun fetchData() {
+        showLoading()
+        firebaseStore.collection(getString(R.string.db_root_grades)).get().addOnSuccessListener { documentSnapshot ->
+            val data = documentSnapshot.toObjects(GradeData::class.java)
+            gradesList = ArrayList(data.sortedWith(compareBy { it.grade?.toInt() }))
 
         }.addOnFailureListener { e ->
-            hideLoading()
             showSnackError(e.message)
         }
-    }
 
-    fun openBatchOptions() {
-        if (isVerified()) {
-            saveBatchData()
+
+        firebaseStore.collection(getString(R.string.db_root_subjects)).get().addOnSuccessListener { documentSnapshot ->
+            subjectList = documentSnapshot.toObjects(SubjectData::class.java) as ArrayList<SubjectData>
+
+        }.addOnFailureListener { e ->
+            showSnackError(e.message)
         }
-    }
 
-    private fun fetchTutorData() {
+
         firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
+                    hideLoading()
                     tutorData = documentSnapshot.toObject(TutorData::class.java)!!
                 }
                 .addOnFailureListener { e ->
+                    hideLoading()
                     showSnackError(e.message)
                 }
     }
 
-    private fun saveBatchData() {
+    private fun addBatch() {
         showLoading()
         val batchesModel = BatchesModel()
 
@@ -144,8 +171,8 @@ class AddBatchFragment : BaseFragment() {
         calendarStartDate.add(Calendar.MINUTE, mBinding.startTime.text.toString().split(":")[1].toInt())
 
         val calendarEndDate = Calendar.getInstance()
-        calendarEndDate.add(Calendar.HOUR, mBinding.startTime.text.toString().split(":")[0].toInt())
-        calendarEndDate.add(Calendar.MINUTE, mBinding.startTime.text.toString().split(":")[1].toInt())
+        calendarEndDate.add(Calendar.HOUR, mBinding.endTime.text.toString().split(":")[0].toInt())
+        calendarEndDate.add(Calendar.MINUTE, mBinding.endTime.text.toString().split(":")[1].toInt())
 
         batchesModel.id = UUID.randomUUID().toString()
         batchesModel.timing?.startTime = Timestamp(calendarStartDate.time)
@@ -174,27 +201,47 @@ class AddBatchFragment : BaseFragment() {
                 mBinding.selectSubject.text.toString().toCharArray()[1].toString().toUpperCase() +
                 (((Math.random() * 9000) + 1000).toInt())
 
-        firebaseStore.collection(getString(R.string.db_root_batches)).add(batchesModel).addOnSuccessListener {
-            hideLoading()
-            showSnackError("Batch Added successfully!!")
-
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "Hi ,Below is your Batch Code for " +
-                        mBinding.selectSubject.text.toString().toUpperCase() + " Batch.\n\n" + batchesModel.batchCode)
-                type = "text/plain"
+        if (!isAddBatch) {
+            firebaseStore.collection(getString(R.string.db_root_batches)).document(batch.documentId!!).update(
+                    "title", batchesModel.title,
+                    "timing.startTime", batchesModel.timing?.startTime,
+                    "timing.startTime", batchesModel.timing?.endTime,
+                    "grade.name", "Class_" + gradesList[selectedClassPosition].grade,
+                    "grade.id", gradesList[selectedClassPosition].id,
+                    "subject.name", batchesModel.subject?.name,
+                    "subject.id", subjectList[selectedSubPosition].id).addOnSuccessListener {
+                hideLoading()
+                showSnackError("Batch updated successfully!!")
+            }.addOnFailureListener { e ->
+                hideLoading()
+                showSnackError(e.toString())
             }
+        } else {
+            firebaseStore.collection(getString(R.string.db_root_batches)).add(batchesModel).addOnSuccessListener {
+                hideLoading()
+                showSnackError("Batch Added successfully!!")
 
-            val shareIntent = Intent.createChooser(sendIntent, "Share Batch Code.")
-            startActivity(shareIntent)
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, "Hi ,Below is your Batch Code for " +
+                            mBinding.selectSubject.text.toString().toUpperCase() + " Batch.\n\n" + batchesModel.batchCode)
+                    type = "text/plain"
+                }
 
-            homeListener.showBatchOptionsFragment(batchesModel)
-            homeListener.refreshSchedule()
-        }.addOnFailureListener { e ->
-            hideLoading()
-            showSnackError(e.toString())
+                val shareIntent = Intent.createChooser(sendIntent, "Share Batch Code.")
+                startActivity(shareIntent)
+
+                homeListener.showBatchOptionsFragment(batchesModel)
+                homeListener.refreshSchedule()
+            }.addOnFailureListener { e ->
+                hideLoading()
+                showSnackError(e.toString())
+            }
         }
+
+
     }
+
 
     fun onDaySelected(view: View) {
         if ((view as TextView).currentTextColor == resources.getColor(R.color.black)) {

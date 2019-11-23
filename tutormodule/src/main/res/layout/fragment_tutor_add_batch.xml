@@ -439,7 +439,6 @@
                 android:background="@drawable/selector_green"
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:gravity="center"
-                android:onClick="@{() -> callback.openBatchOptions()}"
                 android:padding="15dp"
                 android:text="@string/done"
                 android:textAllCaps="true"

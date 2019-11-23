@@ -40,7 +40,7 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
         val sectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
         mViewPager = findViewById(R.id.container)
         mViewPager.adapter = sectionsPagerAdapter
-        mViewPager.offscreenPageLimit = 1
+        mViewPager.offscreenPageLimit = 3
 
 
         mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -141,8 +141,8 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
         homeBaseFragment.showBatchOptionsFragment(batch)
     }
 
-    override fun showAddBatchFragment(showAddBatch: Boolean) {
-        homeBaseFragment.showAddBatchFragment(showAddBatch)
+    override fun showAddBatchFragment(showAddBatch: Boolean, batch: BatchesModel) {
+        homeBaseFragment.showAddBatchFragment(showAddBatch,batch)
     }
 
     override fun showStudentsListFragment() {

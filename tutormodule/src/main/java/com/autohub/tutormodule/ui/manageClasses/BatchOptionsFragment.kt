@@ -47,7 +47,7 @@ class BatchOptionsFragment : BaseFragment() {
     }
 
     fun openEditScheduleScreen() {
-        homeListener.showAddBatchFragment(false)
+        homeListener.showAddBatchFragment(false, batchData)
 
     }
 

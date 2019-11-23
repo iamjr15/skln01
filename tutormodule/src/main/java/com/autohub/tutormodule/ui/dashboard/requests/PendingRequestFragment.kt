@@ -75,6 +75,7 @@ class PendingRequestFragment : BaseFragment() {
         firebaseStore.collection(getString(R.string.db_root_batch_requests)).document(arguments?.getString("documentId")!!)
                 .update("status", "rejected")
                 .addOnSuccessListener {
+                    hideLoading()
                     Log.d(" ", "DocumentSnapshot successfully updated!")
                     showSnackError("Your request is rejected successfully!!")
                 }
