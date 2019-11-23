@@ -148,7 +148,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         }
 
 
-        getIntentData()
+        // getIntentData()
 
     }
 
@@ -171,15 +171,15 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     }
 
 
-    fun getIntentData() {
-        if (intent.hasExtra("isFromAddClass")) {
-            if (intent.extras!!.getBoolean("isFromAddClass", false)) {
-                mViewPager!!.currentItem = 1
+    /* fun getIntentData() {
+         if (intent.hasExtra("isFromAddClass")) {
+             if (intent.extras!!.getBoolean("isFromAddClass", false)) {
+                 mViewPager!!.currentItem = 1
 
-            }
-        }
+             }
+         }
 
-    }
+     }*/
 
 
     private fun getAppData() {

@@ -40,9 +40,9 @@ class AddClassActivity : BaseActivity() {
     fun onOkClick() {
 
 
-        val extras = Bundle()
-        extras.putSerializable("isFromAddClass", true)
-        ActivityUtils.launchActivity(this, StudentHomeActivity::class.java, extras)
+        /*  val extras = Bundle()
+          extras.putSerializable("isFromAddClass", true)*/
+        ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
         finishAffinity()
 
 
