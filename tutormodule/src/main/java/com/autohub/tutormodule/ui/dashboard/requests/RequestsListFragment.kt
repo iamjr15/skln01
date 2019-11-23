@@ -41,26 +41,42 @@ class RequestsListFragment : BaseFragment(), Listener {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.setEmptyView(binding.emptyView)
         mAdapter = RequestsAdaptor(requireContext(), this)
+
+        binding.swipeRefresh.setOnRefreshListener {
+            fillData( true)
+        }
         binding.recyclerView.adapter = mAdapter
+        fillData(false)
+
+    }
+
+    private fun fillData(isRefresh: Boolean) {
 
         if (!arguments?.isEmpty!!) {
             if (arguments?.getString(AppConstants.KEY_TYPE) == "Latest") {
-                fetchData(AppConstants.STATUS_PENDING)
+                fetchData(AppConstants.STATUS_PENDING,isRefresh)
             } else {
-                fetchData("")
+                fetchData("",isRefresh)
             }
         }
     }
 
-    private fun fetchData(status: String) {
+    private fun fetchData(status: String, isRefresh: Boolean) {
+
         firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID())
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
+                    if(isRefresh){
+                        binding.swipeRefresh.isRefreshing = false
+                    }
                     val tutorData = documentSnapshot.toObject(TutorData::class.java)!!
                     fetchDetails(tutorData.id, status, documentSnapshot.id)
 
                 }
                 .addOnFailureListener { e ->
+                    if(isRefresh){
+                        binding.swipeRefresh.isRefreshing = false
+                    }
                     showSnackError(e.message)
                 }
 
