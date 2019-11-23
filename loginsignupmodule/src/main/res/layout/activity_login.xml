@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="false"
     tools:context="com.autohub.loginsignup.LoginActivity">
 
     <data>
@@ -11,7 +12,6 @@
     </data>
 
     <RelativeLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white">
@@ -181,8 +181,8 @@
                         android:layout_toStartOf="@+id/txtshowedtpass"
                         android:background="@android:color/transparent"
                         android:drawableStart="@drawable/password"
-
                         android:drawablePadding="9dp"
+
                         android:inputType="textPassword"
                         android:paddingLeft="12dp"
                         android:paddingRight="12dp"

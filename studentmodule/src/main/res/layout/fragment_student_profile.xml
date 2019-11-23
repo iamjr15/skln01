@@ -26,7 +26,7 @@
             <RelativeLayout
                 android:id="@+id/rrheader"
                 android:layout_width="match_parent"
-                android:layout_height="182dp">
+                android:layout_height="206dp">
 
                 <TextView
                     android:id="@+id/txtprofile"
@@ -43,7 +43,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="42dp"
+                    android:layout_height="66dp"
 
                     android:layout_alignParentBottom="true"
                     android:background="@color/white" />

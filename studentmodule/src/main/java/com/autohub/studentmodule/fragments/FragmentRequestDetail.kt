@@ -142,7 +142,7 @@ class FragmentRequestDetail : BaseFragment() {
                                     mBinding!!.tutorViewModel = TutorViewModel(tutor!!)
                                     mTutor = tutor
                                     loadPicture()
-                                    mBinding!!.rate.text = "fees : $${tutor.packageInfo!!.price} / ${tutor.packageInfo!!.frequency}"
+                                    mBinding!!.rate.text = "fees : $${tutor.packageInfo!!.price} / ${tutor.packageInfo!!.rateOption}"
                                 }
                                 .addOnFailureListener { e ->
                                     showSnackError(e.message)

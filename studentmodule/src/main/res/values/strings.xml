@@ -116,5 +116,6 @@
     <string name="selecthobbie_validation">Select some hobbies to pursue.</string>
     <string name="leastfavt_validation">Select your least favourite subjects.</string>
     <string name="favt_validation">Select your favourite subjects.</string>
+    <string name="weakPass">Weak password.You have to enter at least 6 digit in password field!</string>
 
 </resources>

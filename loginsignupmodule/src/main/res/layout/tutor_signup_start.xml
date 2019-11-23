@@ -31,16 +31,13 @@
             android:layout_below="@+id/tvSignup"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="23dp"
-            android:background="@drawable/cardshadowbg_login"
-
-            >
+            android:background="@drawable/cardshadowbg_login">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvTutorOrStudent"
                 style="@style/signup_students_p"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:background="@drawable/signup_back_rect"
                 android:gravity="center"
                 android:paddingStart="28dp"
@@ -263,6 +260,7 @@
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/edtPassword"
                             style="@style/editext_style"
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"

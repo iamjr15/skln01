@@ -154,7 +154,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:ellipsize="end"
                                 android:gravity="center"
-                                android:maxWidth="152dp"
+                                android:maxWidth="148dp"
                                 android:singleLine="true"
                                 android:text="@{model.getClassesWithAffix}"
 
@@ -489,16 +489,42 @@
                     android:layout_marginTop="4dp"
                     android:background="@color/lineGrayColor" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp">
 
-                <com.autohub.skln.widgets.UnderLineTextView
-                    style="@style/class_deta"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="25dp"
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true">
 
-                    android:text="@string/class_details"
-                    android:textAllCaps="true"
-                    android:textColor="@color/blue"
-                    android:textSize="15sp" />
+                        <TextView
+                            android:id="@+id/txtclassdetail"
+                            style="@style/class_deta"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/class_details"
+                            android:textAllCaps="true"
+                            android:textColor="@color/blue"
+                            android:textSize="15sp" />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/txtclassdetail"
+                            android:layout_alignLeft="@+id/txtclassdetail"
+                            android:layout_alignRight="@+id/txtclassdetail"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginRight="4dp"
+                            android:background="@color/blue" />
+
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
 
                 <View
                     android:layout_width="match_parent"
@@ -622,14 +648,52 @@
                     android:layout_marginTop="4dp"
                     android:background="@color/lineGrayColor" />
 
-                <com.autohub.skln.widgets.UnderLineTextView
-                    style="@style/class_deta"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/request_this_class_small"
-                    android:textAllCaps="true"
-                    android:textColor="@color/blue"
-                    android:textSize="15sp" />
+                <!--   <com.autohub.skln.widgets.UnderLineTextView
+                       style="@style/class_deta"
+                       android:layout_gravity="center_horizontal"
+                       android:layout_marginTop="5dp"
+                       android:text="@string/request_this_class_small"
+                       android:textAllCaps="true"
+                       android:textColor="@color/blue"
+                       android:textSize="15sp" />-->
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true">
+
+                        <TextView
+                            android:id="@+id/txtreqdetail"
+                            style="@style/class_deta"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/request_this_class_small"
+                            android:textAllCaps="true"
+                            android:textColor="@color/blue"
+                            android:textSize="15sp" />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/txtreqdetail"
+                            android:layout_alignLeft="@+id/txtreqdetail"
+                            android:layout_alignRight="@+id/txtreqdetail"
+                            android:layout_marginLeft="26dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginRight="26dp"
+                            android:background="@color/blue" />
+
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/teaching_e"
