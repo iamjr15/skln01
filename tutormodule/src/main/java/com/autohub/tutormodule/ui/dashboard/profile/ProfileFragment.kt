@@ -46,7 +46,7 @@ class ProfileFragment : BaseFragment() {
         }
     }
 
-    private fun fetchTutorData() {
+    fun fetchTutorData() {
         showLoading()
         firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
