@@ -38,6 +38,8 @@ class AddBatchFragment : BaseFragment() {
     private var gradesList = ArrayList<GradeData>()
     private var subjectList = ArrayList<SubjectData>()
 
+    private var selectedDaysNames = ArrayList<String>()
+
     private var selectedSubPosition: Int = 0
     private var selectedClassPosition: Int = 0
     private var counter = 0
@@ -94,6 +96,10 @@ class AddBatchFragment : BaseFragment() {
 
         mBinding.selectClass.text = batch.grade?.name?.replace("_", " ")
         mBinding.selectSubject.text = batch.subject?.name
+
+        if (batch.selectedDays != null) {
+            addSelectionToDays()
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -119,6 +125,7 @@ class AddBatchFragment : BaseFragment() {
         for (i in 0 until gradesList.size) {
             items.add("Class " + gradesList[i].grade!!)
         }
+        showDialog(items, mBinding.selectClass, "Select Class", selectedClass)
     }
 
     fun showSubjects() {
@@ -127,6 +134,7 @@ class AddBatchFragment : BaseFragment() {
         for (i in 0 until subjectList.size) {
             items.add(subjectList[i].name!!)
         }
+        showDialog(items, mBinding.selectSubject, "Select Subject", selectedSub)
     }
 
 
@@ -192,6 +200,7 @@ class AddBatchFragment : BaseFragment() {
         batchesModel.teacher?.instituteName = tutorData.academicInfo?.instituteNeme
         batchesModel.teacher?.accountPicture = tutorData.personInfo?.accountPicture
         batchesModel.teacher?.bioData = tutorData.personInfo?.biodata
+        batchesModel.selectedDays = selectedDaysNames
 
         batchesModel.batchCode = tutorData.personInfo?.firstName.toString().toCharArray()[0].toString().toUpperCase() +
                 tutorData.personInfo?.lastName.toString().toCharArray()[0].toString().toUpperCase() +
@@ -202,6 +211,7 @@ class AddBatchFragment : BaseFragment() {
                 (((Math.random() * 9000) + 1000).toInt())
 
         if (!isAddBatch) {
+            batchesModel.documentId = batch.documentId;
             firebaseStore.collection(getString(R.string.db_root_batches)).document(batch.documentId!!).update(
                     "title", batchesModel.title,
                     "timing.startTime", batchesModel.timing?.startTime,
@@ -209,7 +219,8 @@ class AddBatchFragment : BaseFragment() {
                     "grade.name", "Class_" + gradesList[selectedClassPosition].grade,
                     "grade.id", gradesList[selectedClassPosition].id,
                     "subject.name", batchesModel.subject?.name,
-                    "subject.id", subjectList[selectedSubPosition].id).addOnSuccessListener {
+                    "subject.name", batchesModel.subject?.name,
+                    "selectedDays", batchesModel.selectedDays).addOnSuccessListener {
                 hideLoading()
                 showSnackError("Batch updated successfully!!")
             }.addOnFailureListener { e ->
@@ -217,7 +228,9 @@ class AddBatchFragment : BaseFragment() {
                 showSnackError(e.toString())
             }
         } else {
-            firebaseStore.collection(getString(R.string.db_root_batches)).add(batchesModel).addOnSuccessListener {
+            firebaseStore.collection(getString(R.string.db_root_batches)).add(batchesModel).
+                    addOnSuccessListener {
+                batchesModel.documentId = it.id
                 hideLoading()
                 showSnackError("Batch Added successfully!!")
 
@@ -252,6 +265,7 @@ class AddBatchFragment : BaseFragment() {
                 view.setTextColor(resources.getColor(com.autohub.skln.R.color.white))
             }
             counter++
+            selectedDaysNames.add(view.text.toString())
         } else {
             view.background = resources.getDrawable(R.drawable.bg_round_black, null)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -260,6 +274,7 @@ class AddBatchFragment : BaseFragment() {
                 view.setTextColor(resources.getColor(R.color.black))
             }
             counter--
+            selectedDaysNames.remove(view.text.toString())
         }
     }
 
@@ -329,7 +344,32 @@ class AddBatchFragment : BaseFragment() {
             return true
 
         }
+    }
 
+    private fun addSelectionToDays() {
+        for (i in 0 until batch.selectedDays.size) {
+            if (batch.selectedDays[i].contains(AppConstants.DAY_MON)) {
+                onDaySelected(mBinding.mon)
+            }
+            if (batch.selectedDays[i].contains(AppConstants.DAY_TUE)) {
+                onDaySelected(mBinding.tue)
+            }
+            if (batch.selectedDays[i].contains(AppConstants.DAY_WED)) {
+                onDaySelected(mBinding.wed)
+            }
+            if (batch.selectedDays[i].contains(AppConstants.DAY_THU)) {
+                onDaySelected(mBinding.thu)
+            }
+            if (batch.selectedDays[i].contains(AppConstants.DAY_FRI)) {
+                onDaySelected(mBinding.fri)
+            }
+            if (batch.selectedDays[i].contains(AppConstants.DAY_SAT)) {
+                onDaySelected(mBinding.sat)
+            }
+            if (batch.selectedDays[i].contains(AppConstants.DAY_SUN)) {
+                onDaySelected(mBinding.sun)
+            }
+        }
     }
 
 

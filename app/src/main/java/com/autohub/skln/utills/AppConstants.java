@@ -135,4 +135,13 @@ public interface AppConstants {
     String STATUS_PENDING = "pending";
     String STATUS_ACTIVE = "active";
     String STATUS_CANCELLED = "cancelled";
+
+
+    String DAY_MON = "Mon";
+    String DAY_TUE = "Tue";
+    String DAY_WED = "Wed";
+    String DAY_THU = "Thu";
+    String DAY_FRI = "Fri";
+    String DAY_SAT = "Sat";
+    String DAY_SUN = "Sun";
 }

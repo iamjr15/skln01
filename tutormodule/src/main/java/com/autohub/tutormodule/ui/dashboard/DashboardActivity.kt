@@ -52,10 +52,10 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
 
                 if (position == 3) {
                     setStatusBarColor(R.drawable.tutor_profile_header)
-
                 } else {
                     setStatusBarColor(R.drawable.white_header)
                 }
+
                 for (i in mTabs.indices) {
                     if (position == i) {
                         mTabs[i].setTextColor(ContextCompat.getColor(this@DashboardActivity, R.color.black))

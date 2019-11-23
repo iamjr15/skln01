@@ -20,7 +20,8 @@ data class BatchesModel(var documentId: String? = "",
                         var title: String? = "",
                         var type: String? = "",
                         var enrolledStudentsId: ArrayList<String> = ArrayList(),
-                        var imagesList: ArrayList<String> = ArrayList()) : Parcelable {
+                        var imagesList: ArrayList<String> = ArrayList(),
+                        var selectedDays: ArrayList<String> = ArrayList()) : Parcelable {
 
 
     constructor(parcel: Parcel) : this(
