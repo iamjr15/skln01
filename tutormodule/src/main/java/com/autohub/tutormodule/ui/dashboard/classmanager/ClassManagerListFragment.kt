@@ -22,6 +22,7 @@ class ClassManagerListFragment : BaseFragment(), Listener {
     private var mBinding: FragmentClassManagerListBinding? = null
     private var adaptor: ClassesAdaptor? = null
     private lateinit var homeListener: HomeListener
+    private lateinit var recyclerViewData: MutableList<BatchesModel>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -47,11 +48,12 @@ class ClassManagerListFragment : BaseFragment(), Listener {
     private fun fetchBatches() {
         firebaseStore.collection(getString(R.string.db_root_batches))
                 .get().addOnSuccessListener { documentSnapshot ->
-                    val data = documentSnapshot.toObjects(BatchesModel::class.java)
-                    for (i in 0 until data.size) {
-                        data[i].documentId = documentSnapshot.documents[i].id
+                    recyclerViewData = ArrayList()
+                    recyclerViewData = documentSnapshot.toObjects(BatchesModel::class.java)
+                    for (i in 0 until recyclerViewData.size) {
+                        recyclerViewData[i].documentId = documentSnapshot.documents[i].id
                     }
-                    adaptor?.setData(data)
+                    adaptor?.setData(recyclerViewData)
                 }
                 .addOnFailureListener { e ->
                     showSnackError(e.message)
@@ -59,7 +61,19 @@ class ClassManagerListFragment : BaseFragment(), Listener {
     }
 
     override fun openEditSchedule(batch: BatchesModel) {
-        homeListener.showAddBatchFragment(false, batch)
+        homeListener.showBatchOptionsFragment(batch)
+    }
+
+    override fun updateStatusOfBatches(status: String, batchesModel: BatchesModel, position: Int) {
+        showLoading()
+        firebaseStore.collection(getString(R.string.db_root_batches)).document(batchesModel.documentId!!)
+                .update("status", status).addOnSuccessListener { documentSnapshot ->
+                    hideLoading()
+                }
+                .addOnFailureListener { e ->
+                    hideLoading()
+                    showSnackError(e.message)
+                }
     }
 
 }

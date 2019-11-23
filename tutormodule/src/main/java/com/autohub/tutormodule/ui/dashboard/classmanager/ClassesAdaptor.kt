@@ -2,15 +2,17 @@ package com.autohub.tutormodule.ui.dashboard.classmanager
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.autohub.skln.models.batches.BatchesModel
+import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ItemTutorManageClassesBinding
 import com.autohub.tutormodule.ui.utils.AppUtils
 
-class ClassesAdaptor(var context: Context,var listener: Listener) : RecyclerView.Adapter<ClassesAdaptor.Holder>() {
+class ClassesAdaptor(var context: Context, var listener: Listener) : RecyclerView.Adapter<ClassesAdaptor.Holder>() {
 
     private var batchesList: List<BatchesModel> = ArrayList()
     lateinit var mBinding: ItemTutorManageClassesBinding
@@ -36,9 +38,29 @@ class ClassesAdaptor(var context: Context,var listener: Listener) : RecyclerView
                         "EEE, d MMM yyyy HH:mm:ss z",
                         batchesList[position].timing?.endTime!!.toDate().toString()).toString()
 
-        holder.itemView.setOnClickListener {
-         listener.openEditSchedule(batchesList[position])
+        if (batchesList[position].status.equals(AppConstants.STATUS_ACTIVE)) {
+            mBinding.toggleButton.isChecked = true
+
+        } else {
+            mBinding.toggleButton.isChecked = false
         }
+
+        mBinding.toggleButton.setOnClickListener {
+
+            if (mBinding.toggleButton.isChecked){
+                listener.updateStatusOfBatches(AppConstants.STATUS_CANCELLED, batchesList[position], position)
+
+            }else{
+                listener.updateStatusOfBatches(AppConstants.STATUS_ACTIVE, batchesList[position], position)
+
+            }
+        }
+
+
+        holder.itemView.setOnClickListener {
+            listener.openEditSchedule(batchesList[position])
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -58,7 +80,8 @@ class ClassesAdaptor(var context: Context,var listener: Listener) : RecyclerView
 
 }
 
-interface Listener{
+interface Listener {
     fun openEditSchedule(batch: BatchesModel)
+    fun updateStatusOfBatches(status: String, batchesModel: BatchesModel, position: Int)
 
 }
