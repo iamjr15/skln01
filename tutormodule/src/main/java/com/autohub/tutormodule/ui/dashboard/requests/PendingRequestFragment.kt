@@ -1,6 +1,8 @@
 package com.autohub.tutormodule.ui.dashboard.requests
 
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -55,6 +57,16 @@ class PendingRequestFragment : BaseFragment() {
 
         mBinding.deleteRequest.setOnClickListener {
             deleteRequest()
+        }
+
+        mBinding.contactStudent.setOnClickListener {
+            if (studentData.personInfo?.phoneNumber?.isEmpty()!!) {
+                showSnackError("No Contact Number Available!!")
+            } else {
+                val callIntent = Intent(Intent.ACTION_CALL)
+                callIntent.data = Uri.parse("tel:" + studentData.personInfo?.phoneNumber)
+                startActivity(callIntent)
+            }
         }
     }
 
@@ -116,9 +128,7 @@ class PendingRequestFragment : BaseFragment() {
                     hideLoading()
                     val data = documentSnapshot.toObject(BatchesModel::class.java)
                     data?.enrolledStudentsId?.add(arguments?.getString("studentId")!!)
-                    firebaseStore.collection(getString(R.string.db_root_batches)).
-                            document(selectedBatch.documentId!!).
-                            update("enrolledStudentsId", data?.enrolledStudentsId)
+                    firebaseStore.collection(getString(R.string.db_root_batches)).document(selectedBatch.documentId!!).update("enrolledStudentsId", data?.enrolledStudentsId)
                             .addOnSuccessListener {
                                 Log.d("success", "enrollStudentToBatch")
                                 showSnackError("Your request is accepted successfully!!")

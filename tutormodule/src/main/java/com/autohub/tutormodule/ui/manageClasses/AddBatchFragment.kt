@@ -2,6 +2,7 @@ package com.autohub.tutormodule.ui.manageClasses
 
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -119,7 +120,6 @@ class AddBatchFragment : BaseFragment() {
     fun openBatchOptions() {
         if (isVerified()) {
             saveBatchData()
-
         }
     }
 
@@ -178,6 +178,15 @@ class AddBatchFragment : BaseFragment() {
             hideLoading()
             showSnackError("Batch Added successfully!!")
 
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "Hi ,Below is your Batch Code for " +
+                        mBinding.selectSubject.text.toString().toUpperCase() + " Batch.\n\n" + batchesModel.batchCode)
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, "Share Batch Code.")
+            startActivity(shareIntent)
 
             homeListener.showBatchOptionsFragment(batchesModel)
             homeListener.refreshSchedule()

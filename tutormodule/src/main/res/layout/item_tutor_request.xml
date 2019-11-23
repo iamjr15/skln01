@@ -63,7 +63,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="12dp"
-                android:src="@drawable/arrow_right" />
+                android:src="@drawable/arrow_next" />
 
         </LinearLayout>
 

@@ -173,7 +173,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <Button
-                    android:id="@+id/contact_std"
+                    android:id="@+id/contact_student"
                     style="@style/Heading"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -195,7 +195,7 @@
                     style="@style/Heading"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/contact_std"
+                    android:layout_below="@id/contact_student"
                     android:layout_gravity="center"
                     android:layout_marginLeft="32dp"
                     android:layout_marginTop="16dp"
