@@ -31,10 +31,10 @@ class ClassesAdaptor(var context: Context, var listener: Listener) : RecyclerVie
         mBinding.className.text = batchesList[position].grade?.name?.replace("_", " ") + " | " + batchesList[position].subject?.name
         mBinding.studentsCount.text = batchesList[position].enrolledStudentsId.size.toString() + " students"
 
-        mBinding.time.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
+        mBinding.time.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
                 "EEE, d MMM yyyy HH:mm:ss z",
                 batchesList[position].timing?.startTime!!.toDate().toString()).toString() + " - " +
-                AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
+                AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
                         "EEE, d MMM yyyy HH:mm:ss z",
                         batchesList[position].timing?.endTime!!.toDate().toString()).toString()
 

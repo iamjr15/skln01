@@ -85,12 +85,12 @@ class AddBatchFragment : BaseFragment() {
     private fun setData() {
         mBinding.batchName.setText(batch.title.toString())
 
-        mBinding.startTime.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
+        mBinding.startTime.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
                 "EEE, d MMM yyyy kk:mm:ss z",
                 batch.timing?.startTime!!.toDate().toString()).toString()
 
 
-        mBinding.endTime.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
+        mBinding.endTime.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
                 "EEE, d MMM yyyy kk:mm:ss z",
                 batch.timing?.endTime!!.toDate().toString()).toString()
 
