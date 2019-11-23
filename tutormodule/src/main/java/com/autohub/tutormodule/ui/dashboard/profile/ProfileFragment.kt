@@ -60,7 +60,11 @@ class ProfileFragment : BaseFragment() {
                     mBinding.name.text = tutorData?.personInfo?.firstName + " " +
                             tutorData?.personInfo?.lastName?.get(0) + "."
 
-                    mBinding.type.text = tutorData?.qualification?.classType?.joinToString(",")
+                    if (tutorData?.qualification?.belongToInstitute == true) {
+                        mBinding.type.text = tutorData?.qualification?.instituteNeme
+                    } else {
+                        mBinding.type.text = tutorData?.qualification?.currentOccupation
+                    }
 
                     mBinding.id.text = tutorData?.tutorCode
                     GlideApp.with(this)
