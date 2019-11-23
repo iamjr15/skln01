@@ -55,9 +55,10 @@ class HomeBaseFragment : BaseFragment() {
     }
 
 
-    fun showAddBatchFragment(showAddBatch: Boolean) {
+    fun showAddBatchFragment(showAddBatch: Boolean, batch: BatchesModel) {
         val bundle = Bundle()
         bundle.putBoolean("showAddBatch", showAddBatch)
+        bundle.putParcelable("batch", batch)
         val addBatchFragment = AddBatchFragment()
         addBatchFragment.arguments = bundle
         childFragmentManager

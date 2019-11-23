@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.autohub.skln.fragment.BaseFragment
+import com.autohub.skln.models.batchRequests.SubjectData
 import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorBatchOptionsBinding
@@ -25,11 +26,11 @@ class BatchOptionsFragment : BaseFragment() {
         mBinding = FragmentTutorBatchOptionsBinding.bind(view)
         mBinding.callback = this
 
-        val batchData = arguments?.getParcelable<BatchesModel>("batch")
+        batchData = arguments?.getParcelable("batch")!!
 
-        mBinding.batchCode.text = batchData?.batchCode
-        mBinding.batchName.text = batchData?.title
-        mBinding.className.text = batchData?.grade?.name + " | " + batchData?.subject?.name
+        mBinding.batchCode.text = batchData.batchCode
+        mBinding.batchName.text = batchData.title
+        mBinding.className.text = batchData.grade?.name + " | " + batchData.subject?.name
     }
 
 
@@ -47,7 +48,7 @@ class BatchOptionsFragment : BaseFragment() {
     }
 
     fun openEditScheduleScreen() {
-        homeListener.showAddBatchFragment(false)
+        homeListener.showAddBatchFragment(false, batchData)
 
     }
 

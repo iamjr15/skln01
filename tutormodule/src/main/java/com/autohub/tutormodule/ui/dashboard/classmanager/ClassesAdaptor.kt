@@ -10,7 +10,7 @@ import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ItemTutorManageClassesBinding
 import com.autohub.tutormodule.ui.utils.AppUtils
 
-class ClassesAdaptor(var context: Context) : RecyclerView.Adapter<ClassesAdaptor.Holder>() {
+class ClassesAdaptor(var context: Context,var listener: Listener) : RecyclerView.Adapter<ClassesAdaptor.Holder>() {
 
     private var batchesList: List<BatchesModel> = ArrayList()
     lateinit var mBinding: ItemTutorManageClassesBinding
@@ -20,7 +20,6 @@ class ClassesAdaptor(var context: Context) : RecyclerView.Adapter<ClassesAdaptor
                 LayoutInflater.from(parent.context),
                 R.layout.item_tutor_manage_classes, parent, false
         )
-
         return Holder(mBinding)
     }
 
@@ -36,6 +35,10 @@ class ClassesAdaptor(var context: Context) : RecyclerView.Adapter<ClassesAdaptor
                 AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z YYYY",
                         "EEE, d MMM yyyy HH:mm:ss z",
                         batchesList[position].timing?.endTime!!.toDate().toString()).toString()
+
+        holder.itemView.setOnClickListener {
+         listener.openEditSchedule(batchesList[position])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -53,5 +56,9 @@ class ClassesAdaptor(var context: Context) : RecyclerView.Adapter<ClassesAdaptor
         }
     }
 
+}
+
+interface Listener{
+    fun openEditSchedule(batch: BatchesModel)
 
 }

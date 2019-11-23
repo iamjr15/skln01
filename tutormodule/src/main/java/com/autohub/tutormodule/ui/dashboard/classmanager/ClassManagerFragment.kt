@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.autohub.skln.fragment.BaseFragment
+import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.skln.utills.ViewPagerAdapter
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentClassManagerBinding
@@ -55,7 +56,7 @@ class ClassManagerFragment : BaseFragment() {
     }
 
     fun openAddBatchScreen() {
-        homeListener.showAddBatchFragment(true)
+        homeListener.showAddBatchFragment(true, BatchesModel())
     }
 
 }
