@@ -113,7 +113,7 @@ class AddBatchFragment : BaseFragment() {
         val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
-            (view as TextView).text = SimpleDateFormat("HH:mm", Locale.ENGLISH).format(cal.time)
+            (view as TextView).text = SimpleDateFormat("HH:mm", Locale.US).format(cal.time)
         }
         TimePickerDialog(context, R.style.DialogTheme, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
     }

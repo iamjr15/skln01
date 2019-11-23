@@ -99,7 +99,7 @@ class ScheduleFragment : BaseFragment() {
         val adapter = ScheduleCalenderAdapter(dates)
         mBinding.calendarView.adapter = adapter
 
-        val timeStamp = SimpleDateFormat("MMM,dd,EEE", Locale.ENGLISH).format(Calendar.getInstance().time)
+        val timeStamp = SimpleDateFormat("MMM,dd,EEE", Locale.US).format(Calendar.getInstance().time)
         for (i in dates.indices) {
             if (dates[i].contains(timeStamp)) {
                 mBinding.seekBar.progress = (i * 0.27).toInt()
@@ -113,9 +113,9 @@ class ScheduleFragment : BaseFragment() {
 
     private fun getDates(dateString1: String, dateString2: String): List<String> {
         val dates = ArrayList<String>()
-        val df1 = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+        val df1 = SimpleDateFormat("dd-MM-yyyy", Locale.US)
 
-        val format = SimpleDateFormat("MMM,dd,EEE", Locale.ENGLISH)
+        val format = SimpleDateFormat("MMM,dd,EEE", Locale.US)
 
         lateinit var date1: Date
         lateinit var date2: Date

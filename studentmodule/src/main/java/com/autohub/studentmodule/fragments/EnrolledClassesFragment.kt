@@ -231,7 +231,7 @@ class EnrolledClassesFragment : BaseFragment() {
         }
 
 
-        val originalFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss z YYYY", Locale.ENGLISH)
+        val originalFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss z YYYY", Locale.US)
         val targetFormat = SimpleDateFormat("h:mm a")
         val date = originalFormat.parse(gmt.toString())
         val formattedDate = targetFormat.format(date)

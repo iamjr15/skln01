@@ -29,11 +29,11 @@ object AppUtils {
     fun uTCToLocal(dateFormatInPut: String, dateFomratOutPut: String, datesToConvert: String): String? {
         val dateToReturn = datesToConvert
 
-        val sdf = SimpleDateFormat(dateFormatInPut)
+        val sdf = SimpleDateFormat(dateFormatInPut, Locale.US)
 
         var gmt: Date? = null
 
-        val sdfOutPutToSend = SimpleDateFormat(dateFomratOutPut)
+        val sdfOutPutToSend = SimpleDateFormat(dateFomratOutPut,Locale.US)
         sdfOutPutToSend.timeZone = TimeZone.getDefault()
         try {
             gmt = sdf.parse(datesToConvert)
@@ -42,7 +42,7 @@ object AppUtils {
             e.printStackTrace()
         }
 
-        val originalFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss z YYYY", Locale.ENGLISH)
+        val originalFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss z YYYY", Locale.US)
         val targetFormat = SimpleDateFormat("kk:mm")
         val date = originalFormat.parse(gmt.toString())
         val formattedDate = targetFormat.format(date)

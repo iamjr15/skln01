@@ -123,11 +123,11 @@ public class LocationProvider implements GoogleApiClient.ConnectionCallbacks, Go
         float distanceTo = currentLocation.distanceTo(toLocation);
         Log.d(">>>Distance", distanceTo + "");
         if (distanceTo < 500) {
-            return String.format(Locale.ENGLISH, "%.1f %s", distanceTo, "m");
+            return String.format(Locale.US, "%.1f %s", distanceTo, "m");
         }
         float distance = distanceTo / 1000.0f;
         Log.d(">>>Distance", distanceTo + " , " + distance);
-        return String.format(Locale.ENGLISH, "%.1f %s", distance, "Km");
+        return String.format(Locale.US, "%.1f %s", distance, "Km");
     }
 
 
@@ -154,7 +154,7 @@ public class LocationProvider implements GoogleApiClient.ConnectionCallbacks, Go
         protected String doInBackground(Void... voids) {
             final StringBuilder builder = new StringBuilder();
 
-            Geocoder geocoder = new Geocoder(context.get(), Locale.ENGLISH);
+            Geocoder geocoder = new Geocoder(context.get(), Locale.US);
             try {
                 List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                 if (addresses.size() > 0) {
