@@ -45,6 +45,8 @@ class EditStudentProfileActivity : BaseActivity() {
     private var isSeniorSelected = true
     private var PermissionsRequest: Int = 12
 
+    private var imageuri: Uri? = null
+
     var imageURL = ""
 
     private var mBinding: ActivityEditStudentProfileBinding? = null
@@ -494,21 +496,36 @@ class EditStudentProfileActivity : BaseActivity() {
     fun makeSaveRequest() {
 
         if (isVerified()) {
+            showLoading()
 
-            if (!mBinding!!.password.text.toString().equals("")) {
-                firebaseAuth.currentUser!!.updatePassword(mBinding!!.password.text.toString()).addOnCompleteListener {
-                    Toast.makeText(this,
-                            getString(R.string.passwordchangemessage), Toast.LENGTH_SHORT).show()
-                }
+            if (imageuri != null) {
+                uploadImage(imageuri!!)
+            } else {
+                updateContentData()
             }
 
-            saveDetailsinFireBase()
+
+            /*  */
 
         }
     }
 
+
+    fun updateContentData() {
+
+        if (!mBinding!!.password.text.toString().equals("")) {
+            firebaseAuth.currentUser!!.updatePassword(mBinding!!.password.text.toString()).addOnCompleteListener {
+                Toast.makeText(this,
+                        getString(R.string.passwordchangemessage), Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        saveDetailsinFireBase()
+
+    }
+
+
     fun saveDetailsinFireBase() {
-        showLoading()
 /*
 *  0 favt, 1 lestfav, 2 hobbies
 * */
@@ -740,7 +757,8 @@ class EditStudentProfileActivity : BaseActivity() {
                             .skipMemoryCache(true)
 
                             .into(mBinding!!.profilePicture)
-                    uploadImage(uri)
+
+                    imageuri = uri
 
                 }
 
@@ -752,12 +770,11 @@ class EditStudentProfileActivity : BaseActivity() {
             val croppedUri = data.getParcelableExtra<Uri>("_cropped_uri_")
             /* mBinding!!.profilePicture.setImageURI(croppedUri)
              mBinding!!.profilePicture.tag = croppedUri!!.path*/
-            uploadImage(croppedUri)
+            // uploadImage(croppedUri)
         }
     }
 
     private fun uploadImage(uri: Uri) {
-        showLoading()
         val file = File(uri.path!!)
         val size = file.length().toInt()
         val bytes = ByteArray(size)
@@ -765,14 +782,11 @@ class EditStudentProfileActivity : BaseActivity() {
             val buf = BufferedInputStream(FileInputStream(file))
             buf.read(bytes, 0, bytes.size)
             buf.close()
-
             val path = "student/"
-
             val pathString = path + firebaseAuth.currentUser!!.uid + ".jpg"
             val picRef = FirebaseStorage.getInstance().reference.child(pathString)
             val uploadTask = picRef.putBytes(bytes)
             uploadTask.addOnSuccessListener {
-                hideLoading()
                 saveUserPhotoOnFirestore(pathString)
             }.addOnFailureListener { e ->
                 hideLoading()
@@ -790,9 +804,7 @@ class EditStudentProfileActivity : BaseActivity() {
 
     private fun saveUserPhotoOnFirestore(pathString: String) {
 
-
         val root = getString(R.string.db_root_students)
-
         imageURL = pathString
 
         /*accountPicture*/
@@ -804,10 +816,9 @@ class EditStudentProfileActivity : BaseActivity() {
                 )
                 , SetOptions.merge())
                 .addOnSuccessListener {
-
-                    //  setUserProfileImage(imageURL)
+                    updateContentData()
                 }
-                .addOnFailureListener { }
+                .addOnFailureListener { hideLoading() }
     }
 
 }
