@@ -45,7 +45,5 @@ class StudentHey : BaseActivity() {
         startActivity(i)
     }
 
-    /* override fun attachBaseContext(newBase: Context) {
-         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-     }*/
+
 }

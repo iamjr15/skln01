@@ -71,8 +71,7 @@ class FragmentHome : BaseFragment() {
     }
 
     fun setupProfile() {
-        /* val ref = FirebaseStorage.getInstance().reference.child("student/" +
-                 firebaseAuth.currentUser!!.uid + ".jpg")*/
+
         var userimagePath = (context as StudentHomeActivity).userimagePath!!
 
         if (userimagePath != null && !userimagePath.equals("")) {

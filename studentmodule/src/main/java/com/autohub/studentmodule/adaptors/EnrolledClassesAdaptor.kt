@@ -44,63 +44,11 @@ class EnrolledClassesAdaptor(var context: Context, var erolldClassDeleteClickLis
                 time.text = it.batchTiming
 
 
-//7:30 PM - 9 PM | TUE, THU, FRI
             }
-
 
         }
 
 
-        /*  holder.exploreRowBinding.setItemClickListener(mItemClickListener)
-          userList[position].let {
-              with(holder.exploreRowBinding)
-              {
-
-                  if (mCurrentLocation != null) {
-                      txtdistance.setText("${it.distance.toString()} Km")
-                  }
-
-                  user = it
-                  tutorname.setText(it.firstName + " " + it.lastName)
-                  txtclassprice.setText(it.rate + " / " + it.noOfClasses + " PER " + it.paymentDuration)
-
-
-                  var splitarray = it.classesToTeach.split(",")
-                  if (splitarray.size > 0) {
-                      var stringBuilder = StringBuilder(splitarray.size)
-                      for (i in splitarray.indices) {
-                          if (i == splitarray.size - 1) {
-                              stringBuilder.append(splitarray.get(i) + CommonUtils.getClassSuffix(splitarray.get(i).toInt()))
-
-                          } else {
-                              stringBuilder.append(splitarray.get(i) + CommonUtils.getClassSuffix(splitarray.get(i).toInt()) + " - ")
-                          }
-                      }
-                      txtgrades.setText(stringBuilder.toString())
-
-
-                  } else {
-                      txtgrades.setText(it.classesToTeach)
-
-                  }
-
-
-
-                  txtclasstype.setText(it.classType)
-                  txtsubjects.setText(it.subjectsToTeach.replace(",", " | "))
-
-                  if (!TextUtils.isEmpty(it.pictureUrl)) {
-                      val pathReference1 = FirebaseStorage.getInstance().reference.child(it.pictureUrl)
-                      val options = RequestOptions()
-                      options.transforms(MultiTransformation(CenterCrop(), RoundedCornersTransformation(context, CommonUtils.convertDpToPixel(6f, context).toInt(), 0)))
-                      options.placeholder(R.drawable.dummyexploreimage)
-                      Glide.with(context).load(pathReference1)
-                              .apply(options).into(imgprofile)
-
-                  }
-
-              }
-          }*/
 
     }
 

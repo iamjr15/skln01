@@ -36,7 +36,10 @@ class SchedulesAdaptor(var context: Context)
             {
                 batchName.text = it.title
                 time.text = it.batchTiming
+                activeButton.text = it.status
+
                 if (it.status == AppConstants.STATUS_ACTIVE) {
+
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         cardView.setBackgroundColor(context.resources.getColor(R.color.skyblue, null))
                     } else {
@@ -45,14 +48,7 @@ class SchedulesAdaptor(var context: Context)
                     activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_green_round, null)
                 }
 
-                if (it.status == AppConstants.STATUS_ACTIVE) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        cardView.setBackgroundColor(context.resources.getColor(R.color.skyblue, null))
-                    } else {
-                        cardView.setBackgroundColor(context.resources.getColor(R.color.skyblue))
-                    }
-                    activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_green_round, null)
-                }
+
 
                 if (it.status == AppConstants.STATUS_CANCELLED) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

@@ -180,7 +180,6 @@ class EditStudentProfileActivity : BaseActivity() {
                     }
 
 
-                    // Do something useful withe the position of the selected radio button
                 }
                 .show()
     }
@@ -348,24 +347,24 @@ class EditStudentProfileActivity : BaseActivity() {
         val items = ArrayList<String>()
         items.add(SUBJECT_ENGLISH)//
         items.add(SUBJECT_MATHS)//
-        items.add(SUBJECT_COMPUTER_SCIENCE)//
+        items.add(SUBJECT_COMPUTER_SCIENCE)
         if (seniorClass) {
-            items.add(SUBJECT_ACCOUNTANCY)//
-            items.add(SUBJECT_BIOLOGY)//
-            items.add(SUBJECT_BUSINESS)//
-            items.add(SUBJECT_CHEMISTRY)//
-            items.add(SUBJECT_ECONOMICS)//
-            items.add(SUBJECT_PHYSICS)//
+            items.add(SUBJECT_ACCOUNTANCY)
+            items.add(SUBJECT_BIOLOGY)
+            items.add(SUBJECT_BUSINESS)
+            items.add(SUBJECT_CHEMISTRY)
+            items.add(SUBJECT_ECONOMICS)
+            items.add(SUBJECT_PHYSICS)
         } else {
-            items.add(SUBJECT_SOCIAL_STUDIES)//
-            items.add(SUBJECT_LANGUAGES)//
-            items.add(SUBJECT_SCIENCE)//
+            items.add(SUBJECT_SOCIAL_STUDIES)
+            items.add(SUBJECT_LANGUAGES)
+            items.add(SUBJECT_SCIENCE)
         }
 
         if (isFirst) {
-            items.add(SUBJECT_SOCIAL_STUDIES)//
-            items.add(SUBJECT_LANGUAGES)//
-            items.add(SUBJECT_SCIENCE)//
+            items.add(SUBJECT_SOCIAL_STUDIES)
+            items.add(SUBJECT_LANGUAGES)
+            items.add(SUBJECT_SCIENCE)
         }
 
         for (i in subjectDataList.indices) {
@@ -385,7 +384,7 @@ class EditStudentProfileActivity : BaseActivity() {
             try {
                 GlideApp.with(this)
                         .load(ref)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true)
                         .placeholder(com.autohub.skln.R.drawable.default_pic)
                         .into(mBinding!!.profilePicture)
@@ -504,8 +503,6 @@ class EditStudentProfileActivity : BaseActivity() {
                 updateContentData()
             }
 
-
-            /*  */
 
         }
     }
@@ -807,7 +804,6 @@ class EditStudentProfileActivity : BaseActivity() {
         val root = getString(R.string.db_root_students)
         imageURL = pathString
 
-        /*accountPicture*/
 
 
         firebaseStore.collection(root).document(appPreferenceHelper.getuserID()).set(

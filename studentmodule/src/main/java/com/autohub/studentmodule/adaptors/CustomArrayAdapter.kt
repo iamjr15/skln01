@@ -17,7 +17,6 @@ class CustomArrayAdapter(context: Context,
 
     private fun getCustomView(position: Int, parent: ViewGroup): View {
 
-        // Inflating the layout for the custom Spinner
         val inflater = LayoutInflater.from(context)
         val layout = inflater.inflate(R.layout.spinner_row, parent, false)
 
@@ -28,13 +27,11 @@ class CustomArrayAdapter(context: Context,
         return layout
     }
 
-    // It gets a View that displays in the drop down popup the data at the specified position
     override fun getDropDownView(position: Int, convertView: View?,
                                  parent: ViewGroup): View {
         return getCustomView(position, parent)
     }
 
-    // It gets a View that displays the data at the specified position
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return getCustomView(position, parent)
     }

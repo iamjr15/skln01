@@ -37,7 +37,6 @@ class EnrolledClassesFragment : BaseFragment() {
     }
 
     private fun deleteBatch(it: BatchesModel?) {
-        // remove batch from Student profile and remove from enrolled classes
         removeBatchFromProfile(it)
     }
 

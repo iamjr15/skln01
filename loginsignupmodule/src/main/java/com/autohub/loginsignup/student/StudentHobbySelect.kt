@@ -78,9 +78,6 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
             }
 
 
-            //  listData.add(SubjectsModel(id = "jhjshjfbscdf", name = "keyboard"))
-
-
             insertHobbiesData(listData)
 
         }.addOnFailureListener {
@@ -310,13 +307,6 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
     }
 
 
-    /*   override fun attachBaseContext(newBase: Context) {
-           super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-       }*/
 
-/*    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-
-    }*/
 
 }

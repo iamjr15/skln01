@@ -52,9 +52,6 @@ class ExploreBaseFragment : Fragment() {
                 .replace(com.autohub.studentmodule.R.id.explorecontainer, fragment).commit()
 
 
-        /*    getChildFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.explorecontainer, exploreTutorsFragment!!).commit()*/
     }
 
 

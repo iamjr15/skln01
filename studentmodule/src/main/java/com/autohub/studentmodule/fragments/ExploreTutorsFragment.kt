@@ -268,7 +268,6 @@ class ExploreTutorsFragment : BaseFragment() {
 
                     }
 
-
                     /*
                     * Add Distance from Student Location
                     * */

@@ -147,6 +147,9 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
             mViewPager!!.currentItem = 3
         }
 
+
+        getIntentData()
+
     }
 
 
@@ -165,6 +168,17 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
                 }
                 .addOnFailureListener { e -> showSnackError(e.message) }
+    }
+
+
+    fun getIntentData() {
+        if (intent.hasExtra("isFromAddClass")) {
+            if (intent.extras!!.getBoolean("isFromAddClass", false)) {
+                mViewPager!!.currentItem = 1
+
+            }
+        }
+
     }
 
 

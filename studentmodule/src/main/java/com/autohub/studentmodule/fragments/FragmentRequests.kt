@@ -92,6 +92,12 @@ class FragmentRequests : BaseFragment() {
                     requests.add(BatchRequestViewModel(request, mUserType, document.id))
                     Log.d(">>>Explore", "Data Is " + request.subject)
                 }
+
+
+                println("========================= REQUEST DATA" + requests.toString())
+
+
+
                 mAdapter!!.setData(requests)
             } else {
                 Log.d(">>>Explore", "Error getting documents: ", task.exception)

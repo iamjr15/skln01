@@ -38,8 +38,14 @@ class AddClassActivity : BaseActivity() {
     }
 
     fun onOkClick() {
-        ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
+
+
+        val extras = Bundle()
+        extras.putSerializable("isFromAddClass", true)
+        ActivityUtils.launchActivity(this, StudentHomeActivity::class.java, extras)
         finishAffinity()
+
+
     }
 
     private fun getBatchCodeDetails() {

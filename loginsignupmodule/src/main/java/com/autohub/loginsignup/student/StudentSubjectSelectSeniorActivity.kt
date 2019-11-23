@@ -291,7 +291,6 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
     inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<StudentSubjectSelectSeniorFragment>) :
             FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-        // 2
         override fun getItem(position: Int): Fragment {
             return fragmentsList[position]
         }
@@ -300,15 +299,10 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
             return 0.6f
         }
 
-        // 3
         override fun getCount(): Int {
             return fragmentsList.size
         }
     }
-
-    /* override fun attachBaseContext(newBase: Context) {
-         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-     }*/
 
 
 }

@@ -182,7 +182,6 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
         val personalInfoHashMap = HashMap<String, Any>()
 
         userMap!![KEY_LOCATION] = GeoPoint((userMap!![KEY_LATITUDE].toString()).toDouble(), (userMap!![KEY_LONGITUDE].toString()).toDouble())
-        //  userMap!![KEY_USER_ID] = firebaseAuth.currentUser!!.uid
         personalInfoHashMap[KEY_PERSONALINFO] = userMap!!
 
 

@@ -234,8 +234,6 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
             showSnackError(it.message)
         }
-
-
     }
 
 
@@ -248,7 +246,6 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
             }
         }
 
-        println("===================$stringBuilder")
 
         if (stringBuilder.isEmpty()) {
             showSnackError(com.autohub.loginsignup.R.string.choose_subjects)
@@ -264,7 +261,6 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
                 mapOf(
                         KEY_ACADEMICINFO to user
                 )
-
                 , SetOptions.merge())
                 .addOnSuccessListener {
                     hideLoading()
@@ -303,7 +299,5 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         }
     }
 
-    /* override fun attachBaseContext(newBase: Context) {
-         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-     }*/
+
 }

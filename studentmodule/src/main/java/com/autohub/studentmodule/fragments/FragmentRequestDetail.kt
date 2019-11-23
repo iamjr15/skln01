@@ -93,9 +93,7 @@ class FragmentRequestDetail : BaseFragment() {
     private fun loadPicture() {
         if (mTutor == null) return
         val path = mTutor!!.personInfo!!.accountPicture
-        /* if (mRequestViewModel.getUserType().equalsIgnoreCase("tutor")) {
-            path = mStudent.pictureUrl;
-        }*/
+
 
         try {
 
