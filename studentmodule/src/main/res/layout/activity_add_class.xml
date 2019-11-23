@@ -70,7 +70,7 @@
                         android:id="@+id/txtadded"
 
                         style="@style/you_have_b"
-                        android:layout_width="292dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/addedinclass" />
 
