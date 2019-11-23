@@ -43,7 +43,7 @@ class ExploreBaseFragment : Fragment() {
 
     fun showRequestDetailFragment(bundle: Bundle) {
         exploreTutorsFragment = null
-
+        bundle.putBoolean("isMyRequest", false)
         val fragment = FragmentRequestDetail()
         fragment.arguments = bundle
 

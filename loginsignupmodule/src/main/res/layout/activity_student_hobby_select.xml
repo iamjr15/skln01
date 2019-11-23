@@ -34,7 +34,7 @@
             android:layout_below="@+id/tvSignup"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="@dimen/margin23dp"
             android:background="@drawable/cardshadowbg_login">
 
             <TextView
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/pbSignupProgress"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="@dimen/margin31dp"
             android:gravity="center_horizontal"
             android:text="@string/select_hobby_text_1" />
 

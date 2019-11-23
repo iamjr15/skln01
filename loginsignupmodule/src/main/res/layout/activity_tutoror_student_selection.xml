@@ -48,10 +48,11 @@
             android:layout_marginEnd="26dp"
             android:background="@drawable/border_circular_rect"
             android:onClick="@{()->callback.onTutorClick()}"
+            android:paddingLeft="4dp"
             android:paddingTop="21dp"
+            android:paddingEnd="4dp"
             android:paddingBottom="21dp"
-            android:text="@string/tutor_institutes"
-            android:textSize="29sp" />
+            android:text="@string/tutor_institutes" />
 
         <Button
             android:id="@+id/btnStudent"
@@ -68,7 +69,6 @@
             android:onClick="@{()->callback.onStudentClick()}"
             android:paddingTop="21dp"
             android:paddingBottom="21dp"
-            android:text="@string/student_p"
-            android:textSize="29sp" />
+            android:text="@string/student_p" />
     </RelativeLayout>
 </layout>

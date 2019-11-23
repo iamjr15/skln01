@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -57,64 +58,74 @@
 
 
                      app:cardCornerRadius="5dp">-->
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="84dp"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
-                    android:background="@drawable/cardshadowbg_drawable">
-
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/profile_picture"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="15dp"
-
-                        android:src="@drawable/default_pic" />
+                    android:layout_marginBottom="24dp"
+                    app:cardElevation="15dp">
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_toStartOf="@id/profile_picture">
+                        android:layout_width="match_parent"
+                        android:layout_height="84dp"
+                        android:layout_alignParentBottom="true"
 
-                        <TextView
-                            android:id="@+id/name"
+                        >
 
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/profile_picture"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="15dp"
+
+                            android:src="@drawable/default_pic" />
+
+                        <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:singleLine="true"
-                            android:textColor="@color/black"
-                            android:textSize="22sp"
-                            tools:text="Muhamamd I." />
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_toStartOf="@id/profile_picture">
+
+                            <TextView
+                                android:id="@+id/name"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_bold"
+                                android:singleLine="true"
+                                android:textColor="@color/black"
+                                android:textSize="22sp"
+                                tools:text="Muhamamd I." />
 
 
-                        <TextView
-                            android:id="@+id/grade"
+                            <TextView
+                                android:id="@+id/grade"
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/name"
-                            android:layout_marginTop="5dp"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:singleLine="true"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            tools:text="grade 8th" />
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/name"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/montserrat_bold"
+                                android:singleLine="true"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                tools:text="grade 8th" />
+
+
+                        </RelativeLayout>
 
 
                     </RelativeLayout>
 
+                </androidx.cardview.widget.CardView>
 
-                </RelativeLayout>
                 <!-- </androidx.cardview.widget.CardView>-->
 
             </RelativeLayout>
@@ -129,7 +140,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="8dp"
                     android:background="@color/lineGrayColor" />
 
                 <TextView
@@ -139,11 +150,11 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
+                    android:fontFamily="@font/montserrat_semi_bold"
                     android:gravity="center"
                     android:onClick="@{()->calback.onEditProfileClick()}"
                     android:paddingStart="16dp"
                     android:paddingTop="12dp"
-                    android:fontFamily="@font/montserrat_semi_bold"
 
                     android:paddingEnd="16dp"
                     android:paddingBottom="12dp"
@@ -163,12 +174,12 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
+                    android:fontFamily="@font/montserrat_semi_bold"
                     android:gravity="center"
                     android:onClick="@{()->calback.onEditPersonalDetailClick()}"
                     android:paddingStart="16dp"
                     android:paddingTop="12dp"
                     android:paddingEnd="16dp"
-                    android:fontFamily="@font/montserrat_semi_bold"
                     android:paddingBottom="12dp"
                     android:text="@string/send_feedback"
                     android:textAllCaps="true"
@@ -192,12 +203,12 @@
                 android:layout_marginBottom="32dp"
                 android:drawableStart="@drawable/ic_logout"
                 android:drawablePadding="8dp"
-                android:gravity="center_vertical"
+                android:fontFamily="@font/montserrat_bold"
 
+                android:gravity="center_vertical"
                 android:text="@string/logout"
                 android:textAllCaps="true"
-                android:textSize="12sp"
-                android:fontFamily="@font/montserrat_bold" />
+                android:textSize="12sp" />
 
         </RelativeLayout>
 

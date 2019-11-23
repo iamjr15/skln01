@@ -1,0 +1,8 @@
+<resources>
+
+    <dimen name="box127dp">127dp</dimen>
+    <dimen name="box123dp">123dp</dimen>
+    <dimen name="margin31dp">31dp</dimen>
+    <dimen name="margin23dp">23dp</dimen>
+
+</resources>

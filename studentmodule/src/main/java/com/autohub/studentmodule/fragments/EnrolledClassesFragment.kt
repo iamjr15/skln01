@@ -187,12 +187,11 @@ class EnrolledClassesFragment : BaseFragment() {
                         }
 
             } else {
-                updateEmptyview()
                 enrolledClassesList.clear()
                 adaptor!!.setData(enrolledClassesList)
-
-
                 mBinding!!.swiperefresh.isRefreshing = false
+                updateEmptyview()
+
 
             }
         }.addOnFailureListener()

@@ -118,6 +118,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:layout_marginLeft="4dp"
                                     android:layout_toEndOf="@+id/rateimage"
                                     android:text="@{model.rating}"
                                     tools:text="4.2" />
@@ -151,8 +152,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
+                                android:ellipsize="end"
                                 android:gravity="center"
-                                android:maxWidth="200dp"
+                                android:maxWidth="152dp"
+                                android:singleLine="true"
                                 android:text="@{model.getClassesWithAffix}"
 
                                 tools:text="8th - 12th" />
@@ -190,7 +193,7 @@
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/_rating"
-                                android:layout_width="82dp"
+                                android:layout_width="86dp"
 
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/txtexperience"
@@ -269,7 +272,7 @@
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/_rating"
-                                android:layout_width="80dp"
+                                android:layout_width="82dp"
 
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/txtclasstype"
@@ -681,6 +684,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginRight="8dp"
+                    android:gravity="center"
                     android:text="@{model.getCostPerDuration}"
                     android:textAllCaps="true"
                     android:textColor="@color/blue"

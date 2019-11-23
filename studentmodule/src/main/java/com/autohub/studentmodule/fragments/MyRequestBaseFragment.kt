@@ -32,6 +32,7 @@ class MyRequestBaseFragment : Fragment() {
 
     fun showRequestDetailFragment(bundle: Bundle) {
         fragmentClassRequests = null
+        bundle.putBoolean("isMyRequest", true)
 
         val fragment = FragmentRequestDetail()
         fragment.arguments = bundle

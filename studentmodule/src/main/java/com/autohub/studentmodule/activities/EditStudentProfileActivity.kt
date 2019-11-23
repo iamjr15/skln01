@@ -56,7 +56,6 @@ class EditStudentProfileActivity : BaseActivity() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_edit_student_profile)
         mBinding!!.callback = this
         fetchSubjects()
-
     }
 
     /*
@@ -168,8 +167,15 @@ class EditStudentProfileActivity : BaseActivity() {
                         hobbiesIdBuilder.append("," + subjectDataList[index].id)
                     }
 
-                    selectedHobbiesid = hobbiesIdBuilder.toString().removeRange(0..0)
-                    mBinding!!.favHobby.text = hobbiesBuilder.toString().removeRange(0..0)
+
+
+                    if (selectedHobbies.size > 0) {
+                        selectedHobbiesid = hobbiesIdBuilder.toString().removeRange(0..0)
+                        mBinding!!.favHobby.text = hobbiesBuilder.toString().removeRange(0..0)
+                    } else {
+                        selectedHobbiesid = ""
+                        mBinding!!.favHobby.text = ""
+                    }
 
 
                     // Do something useful withe the position of the selected radio button
@@ -290,8 +296,14 @@ class EditStudentProfileActivity : BaseActivity() {
                             leastsujectsbuilder.append(", " + favleastsubjectsDataList[index].name)
                             leastsujectsidsbuilder.append("," + favleastsubjectsDataList[index].id)
                         }
-                        leastselectedId = leastsujectsidsbuilder.toString().removeRange(0..0)
-                        mBinding!!.leastFavuSubj.text = leastsujectsbuilder.toString().removeRange(0..0)
+                        if (selectedSub.size > 0) {
+                            leastselectedId = leastsujectsidsbuilder.toString().removeRange(0..0)
+                            mBinding!!.leastFavuSubj.text = leastsujectsbuilder.toString().removeRange(0..0)
+                        } else {
+                            leastselectedId = ""
+                            mBinding!!.leastFavuSubj.text = ""
+                        }
+
 
                     } else {
                         for (i in favleastsubjectsDataList.indices) {
@@ -306,8 +318,17 @@ class EditStudentProfileActivity : BaseActivity() {
                             favsujectsbuilder.append(", " + favleastsubjectsDataList[index].name)
                             favsujectsidsbuilder.append("," + favleastsubjectsDataList[index].id)
                         }
-                        favtselectedId = favsujectsidsbuilder.toString().removeRange(0..0)
-                        mBinding!!.favoriteSubj.text = favsujectsbuilder.toString().removeRange(0..0)
+
+
+                        if (selectedSub.size > 0) {
+                            favtselectedId = favsujectsidsbuilder.toString().removeRange(0..0)
+                            mBinding!!.favoriteSubj.text = favsujectsbuilder.toString().removeRange(0..0)
+                        } else {
+                            favtselectedId = ""
+                            mBinding!!.favoriteSubj.text = ""
+                        }
+
+
                     }
                 }
                 .show()
@@ -523,12 +544,12 @@ class EditStudentProfileActivity : BaseActivity() {
     fun saveData(selectedGradeId: String) {
 
         val userpersonalinfo = HashMap<String, Any>()
-        if (mBinding!!.edtFirstName.text.toString().split(" ").size > 1) {
-            userpersonalinfo[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[0]
-            userpersonalinfo[KEY_LAST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[1]
-        } else {
-            userpersonalinfo[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString()
-        }
+        /* if (mBinding!!.edtFirstName.text.toString().split(" ").size > 1) {
+             userpersonalinfo[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[0]
+             userpersonalinfo[KEY_LAST_NAME] = mBinding!!.edtFirstName.text.toString().split(" ")[1]
+         } else {*/
+        userpersonalinfo[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text.toString().trim()
+        // }
 /*
 * Need to create seprate module for Phone number editing.
 * And also need to link this changed values with old firebase User Id
@@ -642,7 +663,7 @@ class EditStudentProfileActivity : BaseActivity() {
 
 
     private fun isVerified(): Boolean {
-        if (mBinding!!.edtFirstName.text.isEmpty() || mBinding!!.edtFirstName.text.toString().length < 2) {
+        if (mBinding!!.edtFirstName.text.isEmpty() || mBinding!!.edtFirstName.text.toString().trim().length < 2) {
 
             showSnackError(resources.getString(R.string.enter_name))
             mBinding!!.edtFirstName.requestFocus()
@@ -657,13 +678,20 @@ class EditStudentProfileActivity : BaseActivity() {
             return false
 
         } else if (mBinding!!.leastFavuSubj.text.toString() == "") {
-            return true
+            showSnackError(getString(R.string.leastfavt_validation))
+
+            return false
 
         } else if (mBinding!!.favoriteSubj.text.toString() == "") {
-            return true
+            showSnackError(getString(R.string.favt_validation))
+
+            return false
 
         } else if (mBinding!!.favHobby.text.toString() == "") {
-            return true
+            showSnackError(getString(R.string.selecthobbie_validation))
+
+
+            return false
 
         }
         return true

@@ -27,7 +27,6 @@ class ForgetPasswordActivity : BaseActivity() {
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
                             Toast.makeText(this, "Password Reset Email Send", Toast.LENGTH_SHORT).show()
-                            onBackPressed()
                         }
                     }.addOnFailureListener {
                         showSnackError(it.message)
