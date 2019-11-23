@@ -28,9 +28,9 @@ class BatchOptionsFragment : BaseFragment() {
 
         batchData = arguments?.getParcelable("batch")!!
 
-        mBinding.batchCode.text = batchData.batchCode
+        mBinding.batchCode.text = "Batch CODE : " + batchData.batchCode
         mBinding.batchName.text = batchData.title
-        mBinding.className.text = batchData.grade?.name + " | " + batchData.subject?.name
+        mBinding.className.text = batchData.grade?.name?.replace("_", " ") + " | " + batchData.subject?.name
     }
 
 

@@ -3,6 +3,7 @@ package com.autohub.tutormodule.ui.dashboard.classmanager
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +14,16 @@ import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentClassManagerListBinding
 import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
+import java.text.SimpleDateFormat
+import java.time.DayOfWeek
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * A simple [Fragment] subclass.
  */
 
-class ClassManagerListFragment : BaseFragment(), Listener {
+class ClassManagerListFragment(val type: String) : BaseFragment(), Listener {
     private var mBinding: FragmentClassManagerListBinding? = null
     private var adaptor: ClassesAdaptor? = null
     private lateinit var homeListener: HomeListener
@@ -53,7 +58,21 @@ class ClassManagerListFragment : BaseFragment(), Listener {
                     for (i in 0 until recyclerViewData.size) {
                         recyclerViewData[i].documentId = documentSnapshot.documents[i].id
                     }
-                    adaptor?.setData(recyclerViewData)
+
+                    if (type == "Today") {
+                        val calendar = Calendar.getInstance()
+                        val arrayList: MutableList<BatchesModel> = ArrayList()
+                        for (i in 0 until recyclerViewData.size)
+                            if (recyclerViewData[i].selectedDays.contains(SimpleDateFormat("EE", Locale.ENGLISH).format(calendar.time.time))) {
+                                arrayList.add(recyclerViewData[i])
+                            }
+
+                        adaptor?.setData(arrayList)
+
+                    } else {
+                        adaptor?.setData(recyclerViewData)
+
+                    }
                 }
                 .addOnFailureListener { e ->
                     showSnackError(e.message)

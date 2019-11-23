@@ -63,6 +63,7 @@ class PendingRequestFragment : BaseFragment() {
             deleteRequest()
         }
 
+        mBinding.contactStudent.isEnabled = false
         mBinding.contactStudent.setOnClickListener {
             if (studentData.personInfo?.phoneNumber?.isEmpty()!!) {
                 showSnackError("No Contact Number Available!!")
@@ -110,6 +111,7 @@ class PendingRequestFragment : BaseFragment() {
                     .addOnSuccessListener {
                         Log.d(" ", "DocumentSnapshot successfully updated!")
                         fetchBatches(true)
+                        mBinding.contactStudent.isEnabled = true
                     }
                     .addOnFailureListener { e ->
                         hideLoading()
