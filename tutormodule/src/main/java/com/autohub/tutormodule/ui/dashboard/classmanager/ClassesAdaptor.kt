@@ -36,7 +36,8 @@ class ClassesAdaptor(var context: Context, var listener: Listener) : RecyclerVie
                 batchesList[position].timing?.startTime!!.toDate().toString()).toString() + " - " +
                 AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
                         "EEE, d MMM yyyy HH:mm:ss z",
-                        batchesList[position].timing?.endTime!!.toDate().toString()).toString()
+                        batchesList[position].timing?.endTime!!.toDate().toString()).toString() +" | "+
+                batchesList[position].selectedDays.joinToString(" , ")
 
         if (batchesList[position].status.equals(AppConstants.STATUS_ACTIVE)) {
             mBinding.toggleButton.isChecked = true
