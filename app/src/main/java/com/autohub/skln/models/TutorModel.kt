@@ -1,4 +1,3 @@
 package com.autohub.skln.models
 
-data class TutorModel(var ss: String) {
-}
+data class TutorModel(var ss: String)

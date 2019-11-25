@@ -17,8 +17,7 @@ data class PersonalInformation(var city: String? = "",
             parcel.readValue(Double::class.java.classLoader) as? Double,
             parcel.readString(),
             parcel.readString(),
-            parcel.readString()) {
-    }
+            parcel.readString())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(city)

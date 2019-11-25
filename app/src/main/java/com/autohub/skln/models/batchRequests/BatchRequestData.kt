@@ -17,8 +17,7 @@ class BatchRequestData(var documentId: String? = null,
             parcel.readParcelable(GradeData::class.java.classLoader),
             parcel.readParcelable(StudentData::class.java.classLoader),
             parcel.readParcelable(SubjectData::class.java.classLoader),
-            parcel.readParcelable(TeacherData::class.java.classLoader)) {
-    }
+            parcel.readParcelable(TeacherData::class.java.classLoader))
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(documentId)

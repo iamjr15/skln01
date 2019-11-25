@@ -3,6 +3,7 @@ apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jetbrains.dokka-android'
 
 android {
     compileSdkVersion 29
@@ -29,7 +30,10 @@ android {
         targetCompatibility = "8"
         sourceCompatibility = "8"
     }
-
+    dokka {
+        outputFormat = 'html'
+        outputDirectory = "$buildDir/javadoc"
+    }
 
     dynamicFeatures = [":loginsignupmodule", ":studentmodule", ":tutormodule"]
 
@@ -45,13 +49,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    api 'de.hdodenhof:circleimageview:3.0.0'
+    api 'de.hdodenhof:circleimageview:3.0.1'
     api 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
 
 
     api 'com.google.firebase:firebase-storage:19.1.0'
     api 'com.google.firebase:firebase-firestore:21.3.0'
-    api 'com.google.firebase:firebase-auth:19.1.0'
+    api 'com.google.firebase:firebase-auth:19.2.0'
     api 'com.firebaseui:firebase-ui-storage:5.0.0'
     api 'com.google.firebase:firebase-core:17.2.1'
     api 'com.crashlytics.sdk.android:crashlytics:2.10.1'
@@ -59,10 +63,10 @@ dependencies {
     api 'com.hbb20:ccp:2.2.9'
     api 'com.github.GoodieBag:Pinview:v1.4'
 
-    api 'com.github.bumptech.glide:glide:4.9.0'
+    api 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     kapt "com.github.bumptech.glide:compiler:4.9.0"
-    api 'de.hdodenhof:circleimageview:3.0.0'
+    api 'de.hdodenhof:circleimageview:3.0.1'
     api 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
 
     api 'com.google.android.gms:play-services-location:17.0.0'

@@ -19,37 +19,37 @@ class UserViewModelold(private var mUser: User) : BaseObservable() {
 
 
     val fullName: String
-        get() = mUser!!.firstName + " " + mUser!!.lastName
+        get() = mUser.firstName + " " + mUser.lastName
 
     val firstAndLastNameLetter: String
-        get() = mUser!!.firstName + " " + (mUser!!.lastName.substring(0, 1) + ".".toUpperCase())
+        get() = mUser.firstName + " " + (mUser.lastName.substring(0, 1) + ".".toUpperCase())
 
     val firstName: String
-        get() = mUser!!.firstName
+        get() = mUser.firstName
 
     val lastName: String
-        get() = CommonUtils.getString(mUser!!.lastName)
+        get() = CommonUtils.getString(mUser.lastName)
 
     val classesWithAffix: String
-        get() = mUser!!.classesWithAffix.replace(",", "-")
+        get() = mUser.classesWithAffix.replace(",", "-")
 
     val classesToTeach: String
-        get() = CommonUtils.getString(mUser!!.classesToTeach)
+        get() = CommonUtils.getString(mUser.classesToTeach)
 
     val classType: String
-        get() = CommonUtils.getString(mUser!!.classType)
+        get() = CommonUtils.getString(mUser.classType)
 
     val classFrequency: String
-        get() = CommonUtils.getString(mUser!!.classFrequency)
+        get() = CommonUtils.getString(mUser.classFrequency)
 
     val maxStudentsCapacity: String
-        get() = CommonUtils.getString(mUser!!.maxStudentsCapacity)
+        get() = CommonUtils.getString(mUser.maxStudentsCapacity)
 
     val subjectsToTeach: String
-        get() = CommonUtils.getString(mUser!!.subjectsToTeach.trim { it <= ' ' }).replace(",", " | ")
+        get() = CommonUtils.getString(mUser.subjectsToTeach.trim { it <= ' ' }).replace(",", " | ")
 
     val subjectsToTeachAsArray: Array<String>
-        get() = mUser!!.subjectsToTeach.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        get() = mUser.subjectsToTeach.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 
     val subjectOrHobbiesToTeach: String
         get() = if (TextUtils.isEmpty(subjectsToTeach)) {
@@ -57,41 +57,41 @@ class UserViewModelold(private var mUser: User) : BaseObservable() {
         } else subjectsToTeach
 
     val hobbiesToTeach: String
-        get() = CommonUtils.getString(mUser!!.hobbiesToTeach)
+        get() = CommonUtils.getString(mUser.hobbiesToTeach)
 
     val occupation: String
-        get() = CommonUtils.getString(mUser!!.occupation)
+        get() = CommonUtils.getString(mUser.occupation)
 
     val teachingExp: String
-        get() = CommonUtils.getString(mUser!!.experience)
+        get() = CommonUtils.getString(mUser.experience)
 
     val noOfClasses: String
-        get() = CommonUtils.getString(mUser!!.noOfClasses) + " / " + mUser!!.classFrequency
+        get() = CommonUtils.getString(mUser.noOfClasses) + " / " + mUser.classFrequency
 
     val qualification: String
-        get() = CommonUtils.getString(mUser!!.qualification)
+        get() = CommonUtils.getString(mUser.qualification)
 
     val areaQualification: String
-        get() = CommonUtils.getString(mUser!!.areaQualification)
+        get() = CommonUtils.getString(mUser.areaQualification)
 
     val board: String
-        get() = CommonUtils.getString(mUser!!.board)
+        get() = CommonUtils.getString(mUser.board)
 
     var bioData: String
-        get() = CommonUtils.getString(mUser!!.bioData)
+        get() = CommonUtils.getString(mUser.bioData)
         set(bio) {
-            mUser!!.bioData = bio
+            mUser.bioData = bio
         }
 
 
     val costPerClasses: String
-        get() = String.format("RS %1\$s/%2\$s Classes per %3\$s", mUser!!.rate, mUser!!.noOfClasses, mUser!!.paymentDuration)
+        get() = String.format("RS %1\$s/%2\$s Classes per %3\$s", mUser.rate, mUser.noOfClasses, mUser.paymentDuration)
 
     /* String.format("RS %1$s / %2$s", mUser.rate, mUser.paymentDuration);*/ val costPerDuration: String
-        get() = "$ " + mUser!!.rate + "/ " + mUser!!.noOfClasses + " classes " + mUser!!.paymentDuration
+        get() = "$ " + mUser.rate + "/ " + mUser.noOfClasses + " classes " + mUser.paymentDuration
 
     val city: String
-        get() = CommonUtils.getString(mUser!!.city)
+        get() = CommonUtils.getString(mUser.city)
 
     var user: User
         get() = mUser
@@ -101,14 +101,14 @@ class UserViewModelold(private var mUser: User) : BaseObservable() {
         }
 
     val userId: String
-        get() = mUser!!.id
+        get() = mUser.id
 
     fun gettDistance(): Double? {
-        return mUser!!.distance
+        return mUser.distance
     }
 
     fun setClasses(classesToTeach: String) {
-        mUser!!.classesToTeach = classesToTeach
+        mUser.classesToTeach = classesToTeach
         notifyChange()
     }
 }
