@@ -21,7 +21,7 @@
         <activity
             android:name="ForgetPasswordActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".TutororStudentSelection"
             android:screenOrientation="portrait"
@@ -49,11 +49,11 @@
         <activity
             android:name=".student.StudentClassSelect"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".student.StudentSubjectSelect"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".student.StudentSubjectSelectSeniorActivity"
             android:screenOrientation="portrait"
@@ -61,7 +61,7 @@
         <activity
             android:name=".student.StudentHobbySelect"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

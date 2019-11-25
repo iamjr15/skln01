@@ -24,7 +24,7 @@ class StudentHey : BaseActivity() {
         mBinding!!.callback = this
         firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
-                    val firstName = ((documentSnapshot.data!!.get("personInfo") as HashMap<*, *>).get(KEY_FIRST_NAME)) as String
+                    val firstName = ((documentSnapshot.data!!["personInfo"] as HashMap<*, *>)[KEY_FIRST_NAME]) as String
                     if (firstName != null) {
                         mBinding!!.studentName!!.text = firstName
                     }
@@ -35,8 +35,7 @@ class StudentHey : BaseActivity() {
     }
 
     fun onNextClick() {
-        val i: Intent
-        i = if (mIsSeniorClass)
+        val i: Intent = if (mIsSeniorClass)
             Intent(this, StudentSubjectSelectSeniorActivity::class.java)
         else
             Intent(this, StudentSubjectSelect::class.java)

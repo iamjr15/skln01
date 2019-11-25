@@ -75,4 +75,6 @@
     <string name="student_verify">Student Verified!</string>
     <string name="tutor_verify">Tutor Verified!</string>
     <string name="foregot_passwordemail_send">Password Reset Email Send</string>
+    <string name="send_email_btn">send email</string>
+    <string name="enter_your_email_address_associated_with_your_account_and_we_will_send_you_reset_password_link">Enter your email address associated with your account and we will send you reset password link.</string>
 </resources>

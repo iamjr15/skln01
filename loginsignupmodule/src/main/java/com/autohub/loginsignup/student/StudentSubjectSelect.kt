@@ -30,7 +30,7 @@ import com.google.firebase.firestore.WriteBatch
 class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
     private var selectedSubjects: ArrayList<SubjectsModel> = ArrayList()
-    lateinit var subjectDataList: ArrayList<SubjectsModel>
+    private lateinit var subjectDataList: ArrayList<SubjectsModel>
 
 
     override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: Any) {
@@ -84,7 +84,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
     }
 
     private fun fetchSubjects() {
-        var listData: ArrayList<SubjectsModel> = arrayListOf()
+        val listData: ArrayList<SubjectsModel> = arrayListOf()
         firebaseStore.collection("subjects").get().addOnCompleteListener {
 
             if (it.isSuccessful) {
@@ -118,12 +118,12 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
         subjectDataList = ArrayList()
 
-        subjectsDataMap[SUBJECT_SCIENCE] = SubjectsData(com.autohub.loginsignup.R.color.science, com.autohub.skln.R.drawable.microscope, false, SUBJECT_SCIENCE)
-        subjectsDataMap[SUBJECT_ENGLISH] = SubjectsData(com.autohub.loginsignup.R.color.english, com.autohub.skln.R.drawable.noun, false, SUBJECT_ENGLISH)
-        subjectsDataMap[SUBJECT_MATHS] = SubjectsData(com.autohub.loginsignup.R.color.math, com.autohub.skln.R.drawable.geometry, false, SUBJECT_MATHS)
-        subjectsDataMap[SUBJECT_SOCIAL_STUDIES] = SubjectsData(com.autohub.loginsignup.R.color.socialstudies, com.autohub.skln.R.drawable.strike, false, SUBJECT_SOCIAL_STUDIES)
-        subjectsDataMap[SUBJECT_LANGUAGES] = SubjectsData(com.autohub.loginsignup.R.color.language, com.autohub.skln.R.drawable.language, false, SUBJECT_LANGUAGES)
-        subjectsDataMap[SUBJECT_COMPUTER_SCIENCE] = SubjectsData(com.autohub.loginsignup.R.color.computerscience, com.autohub.skln.R.drawable.informatic, false, SUBJECT_COMPUTER_SCIENCE)
+        subjectsDataMap[SUBJECT_SCIENCE] = SubjectsData(R.color.science, com.autohub.skln.R.drawable.microscope, false, SUBJECT_SCIENCE)
+        subjectsDataMap[SUBJECT_ENGLISH] = SubjectsData(R.color.english, com.autohub.skln.R.drawable.noun, false, SUBJECT_ENGLISH)
+        subjectsDataMap[SUBJECT_MATHS] = SubjectsData(R.color.math, com.autohub.skln.R.drawable.geometry, false, SUBJECT_MATHS)
+        subjectsDataMap[SUBJECT_SOCIAL_STUDIES] = SubjectsData(R.color.socialstudies, com.autohub.skln.R.drawable.strike, false, SUBJECT_SOCIAL_STUDIES)
+        subjectsDataMap[SUBJECT_LANGUAGES] = SubjectsData(R.color.language, com.autohub.skln.R.drawable.language, false, SUBJECT_LANGUAGES)
+        subjectsDataMap[SUBJECT_COMPUTER_SCIENCE] = SubjectsData(R.color.computerscience, com.autohub.skln.R.drawable.informatic, false, SUBJECT_COMPUTER_SCIENCE)
 
 
         for (i in listData.indices) {
@@ -142,7 +142,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
     }
 
 
-    fun showView() {
+    private fun showView() {
         val countList: ArrayList<String> = ArrayList()
         countList.add("1")
         countList.add("2")
@@ -151,7 +151,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         mFavoriteOrLeast = intent.getBooleanExtra("favorite_or_least", true)
 
         if (mFavoriteOrLeast) {
-            val spannable = SpannableStringBuilder(resources.getString(com.autohub.loginsignup.R.string.select_favorite_subject))
+            val spannable = SpannableStringBuilder(resources.getString(R.string.select_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.BLUE), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE)
@@ -160,7 +160,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         } else {
             Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 60.0f, 80.0f)
 
-            val spannable = SpannableStringBuilder(resources.getString(com.autohub.loginsignup.R.string.select_least_favorite_subject))
+            val spannable = SpannableStringBuilder(resources.getString(R.string.select_least_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.RED), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE)
@@ -191,9 +191,9 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
         showLoading()
 
-        var batch: WriteBatch = firebaseStore.batch()
+        val batch: WriteBatch = firebaseStore.batch()
         for (i in selectedSubjects) {
-            var map: HashMap<String, String> = HashMap()
+            val map: HashMap<String, String> = HashMap()
 
             if (mFavoriteOrLeast) {
                 map["category"] = "favorite"
@@ -236,7 +236,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
     }
 
 
-    fun saveData() {
+    private fun saveData() {
         val stringBuilder = StringBuilder()
         if (selectedSubjects.size > 0) {
             stringBuilder.append(selectedSubjects[0].id)
@@ -247,7 +247,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
 
         if (stringBuilder.isEmpty()) {
-            showSnackError(com.autohub.loginsignup.R.string.choose_subjects)
+            showSnackError(R.string.choose_subjects)
             return
         }
         val user = HashMap<String, Any>()
@@ -256,7 +256,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
         else
             user[KEY_STDT_LEAST_FAV_CLASSES] = stringBuilder.toString().split(",")
 
-        firebaseStore.collection(getString(com.autohub.loginsignup.R.string.db_root_students)).document(appPreferenceHelper.getuserID()).set(
+        firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).set(
                 mapOf(
                         KEY_ACADEMICINFO to user
                 )

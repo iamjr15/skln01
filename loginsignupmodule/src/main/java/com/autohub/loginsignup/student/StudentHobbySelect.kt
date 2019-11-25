@@ -28,7 +28,7 @@ import java.util.*
  */
 class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
     private lateinit var manager: SplitInstallManager
-    lateinit var hobbyDataList: ArrayList<SubjectsModel>
+    private lateinit var hobbyDataList: ArrayList<SubjectsModel>
 
 
     override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: Any) {
@@ -66,7 +66,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
 
 
     private fun fetchobbies() {
-        var listData: ArrayList<SubjectsModel> = arrayListOf()
+        val listData: ArrayList<SubjectsModel> = arrayListOf()
         firebaseStore.collection("subjects").whereEqualTo("grades.hobbies", true).get().addOnCompleteListener {
 
             if (it.isSuccessful) {
@@ -88,7 +88,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
     private fun insertHobbiesData(listData: ArrayList<SubjectsModel>) {
         hobbyDataList = ArrayList()
 
-        var hobbiesDataMap: HashMap<String, SubjectsData> = HashMap()
+        val hobbiesDataMap: HashMap<String, SubjectsData> = HashMap()
 
         hobbiesDataMap[HOBBY_GUITAR] = SubjectsData(R.color.guitar, com.autohub.skln.R.drawable.guitar, false, HOBBY_GUITAR)
         hobbiesDataMap[HOBBY_KEYBOARD] = SubjectsData(R.color.keyboard, com.autohub.skln.R.drawable.piano, false, HOBBY_KEYBOARD)
@@ -129,7 +129,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
 
     }
 
-    fun showView() {
+    private fun showView() {
         val countList: ArrayList<String> = ArrayList()
         countList.add("1")
         countList.add("2")
@@ -199,9 +199,9 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
 
 
         showLoading()
-        var batch: WriteBatch = firebaseStore.batch()
+        val batch: WriteBatch = firebaseStore.batch()
         for (i in selectedHobbies) {
-            var map: HashMap<String, String> = HashMap()
+            val map: HashMap<String, String> = HashMap()
             map["category"] = "hobby"
             map["isFavourite"] = "false"
             map["isLeastFavourite"] = "false"
@@ -235,7 +235,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
         saveData()
     }
 
-    fun saveData() {
+    private fun saveData() {
         val stringBuilder = StringBuilder()
         if (selectedHobbies.size > 0) {
             stringBuilder.append(selectedHobbies[0].id)

@@ -131,8 +131,6 @@ class FragmentRequestDetail : BaseFragment() {
                                     showSnackError(e.message)
                                 }
                     }
-
-
                 }
     }
 

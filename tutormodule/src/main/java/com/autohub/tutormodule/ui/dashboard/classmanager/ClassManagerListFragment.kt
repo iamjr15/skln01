@@ -3,7 +3,6 @@ package com.autohub.tutormodule.ui.dashboard.classmanager
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentClassManagerListBinding
 import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
 import java.text.SimpleDateFormat
-import java.time.DayOfWeek
 import java.util.*
 import kotlin.collections.ArrayList
 

@@ -112,11 +112,9 @@ class LoginActivity : BaseActivity() {
 
     }
 
-    fun validateStudentField(): Boolean {
-        val email: Editable
+    private fun validateStudentField(): Boolean {
+        val email: Editable = mBinding!!.edtemail.text!!
 
-
-        email = mBinding!!.edtemail.text!!
 
         if (email == null) {
             mBinding!!.edtemail.error = resources.getString(R.string.enter_email)
@@ -149,11 +147,9 @@ class LoginActivity : BaseActivity() {
         return true
     }
 
-    fun validateTutorFields(): Boolean {
-        val email: Editable
+    private fun validateTutorFields(): Boolean {
+        val email: Editable = mBinding!!.edtloginid.text!!
 
-
-        email = mBinding!!.edtloginid.text!!
 
         if (email == null) {
             mBinding!!.edtloginid.error = resources.getString(R.string.enter_email)
@@ -190,11 +186,11 @@ class LoginActivity : BaseActivity() {
 
     private fun validateUserCredentials() {
 
-        if (mBinding!!.radiostudent.isChecked) {
-            credential = EmailAuthProvider.getCredential(mBinding!!.edtemail.text.toString().trim(),
+        credential = if (mBinding!!.radiostudent.isChecked) {
+            EmailAuthProvider.getCredential(mBinding!!.edtemail.text.toString().trim(),
                     mBinding!!.edtPassword.text.toString().trim())
         } else {
-            credential = EmailAuthProvider.getCredential(mBinding!!.edtloginid.text.toString().trim(),
+            EmailAuthProvider.getCredential(mBinding!!.edtloginid.text.toString().trim(),
                     mBinding!!.edtTutorPassword.text.toString().trim())
         }
 
