@@ -147,7 +147,6 @@ class SignupStart : BaseActivity(), TextView.OnEditorActionListener {
         userMap[KEY_LATITUDE] = mLocation!!.latitude
 
 
-//        userMap[KEY_LONGITUDE] = mLocation!!.longitude
         val extras = Bundle()
         extras.putSerializable(KEY_USERMAP, userMap)
         ActivityUtils.launchActivity(this@SignupStart, NumberVerificationActivity::class.java, extras)

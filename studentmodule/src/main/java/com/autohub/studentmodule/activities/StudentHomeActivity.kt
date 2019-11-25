@@ -53,11 +53,11 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
     override fun onAcadmicsSelect(user: UserModel, subjectName: String) {
 
-        if (explorebaseFragment.exploreTutorsFragment == null) {
-            explorebaseFragment.showExploreFragment(subjectName)
+        if (explorebaseFragment!!.exploreTutorsFragment == null) {
+            explorebaseFragment!!.showExploreFragment(subjectName)
 
         } else {
-            explorebaseFragment.exploreTutorsFragment?.updateExploreData(user, subjectName)
+            explorebaseFragment!!.exploreTutorsFragment?.updateExploreData(user, subjectName)
 
         }
         mViewPager!!.currentItem = 2
@@ -66,7 +66,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
     private val mTabs = ArrayList<TextView>()
     private var mViewPager: ViewPager? = null
-    private lateinit var explorebaseFragment: ExploreBaseFragment
+    private var explorebaseFragment: ExploreBaseFragment? = null
     private lateinit var homefragment: FragmentHome
     private lateinit var myClassesFragment: MyClassesFragment
     private lateinit var fragmentProfile: StudentProfileFragment
@@ -96,8 +96,8 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
             }
 
             override fun onPageSelected(position: Int) {
-                if (explorebaseFragment.exploreTutorsFragment == null) {
-                    explorebaseFragment.showExploreFragment()
+                if (explorebaseFragment != null && explorebaseFragment!!.exploreTutorsFragment == null) {
+                    explorebaseFragment!!.showExploreFragment()
                 }
 
                 if (position == 4) {
@@ -129,8 +129,8 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         }
 
         tab_item_explore.setOnClickListener {
-            if (explorebaseFragment.exploreTutorsFragment == null) {
-                explorebaseFragment.showExploreFragment()
+            if (explorebaseFragment!!.exploreTutorsFragment == null) {
+                explorebaseFragment!!.showExploreFragment()
             }
             setStatusBarColor(R.drawable.white_header)
 
@@ -171,15 +171,15 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     }
 
 
-    /* fun getIntentData() {
-         if (intent.hasExtra("isFromAddClass")) {
-             if (intent.extras!!.getBoolean("isFromAddClass", false)) {
-                 mViewPager!!.currentItem = 1
+    fun getIntentData() {
+        if (intent.hasExtra("isFromAddClass")) {
+            if (intent.extras!!.getBoolean("isFromAddClass", false)) {
+                mViewPager!!.currentItem = 1
 
-             }
-         }
+            }
+        }
 
-     }*/
+    }
 
 
     private fun getAppData() {
@@ -237,7 +237,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
                 }
                 2 -> {
                     explorebaseFragment = ExploreBaseFragment()
-                    return explorebaseFragment
+                    return explorebaseFragment!!
                 }
                 3 -> {
                     fragmentClassRequests = MyRequestBaseFragment()
@@ -263,7 +263,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
             if (resultCode == Activity.RESULT_OK && data != null) {
                 val bundle = data.extras
-                explorebaseFragment.showRequestDetailFragment(bundle!!)
+                explorebaseFragment!!.showRequestDetailFragment(bundle!!)
                 setStatusBarColor(com.autohub.skln.R.drawable.bg_purple_blue)
             }
 
@@ -288,7 +288,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
     fun updateUserProfileImage() {
         fragmentProfile.setProfileImage()
-        explorebaseFragment.exploreTutorsFragment!!.setupProfile()
+        explorebaseFragment!!.exploreTutorsFragment!!.setupProfile()
         homefragment.setupProfile()
     }
 
@@ -297,7 +297,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
             fragmentClassRequests.showRequestFragmentClass()
 
         } else {
-            explorebaseFragment.showExploreFragment()
+            explorebaseFragment!!.showExploreFragment()
 
         }
 
@@ -308,8 +308,8 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
         if (mViewPager!!.currentItem == 0) {
             super.onBackPressed()
-        } else if (explorebaseFragment.exploreTutorsFragment == null) {
-            explorebaseFragment.showExploreFragment()
+        } else if (explorebaseFragment!!.exploreTutorsFragment == null) {
+            explorebaseFragment!!.showExploreFragment()
 
         } else if (fragmentClassRequests.fragmentClassRequests == null) {
             fragmentClassRequests.showRequestFragmentClass()

@@ -72,4 +72,7 @@
     <string name="forgot_passwodheader">forgot password</string>
     <string name="passwordweak">Weak password.You have to enter at least 6 digit in password field!</string>
     <string name="tutors_institute_tutorsignup">Tutors/Institute</string>
+    <string name="student_verify">Student Verified!</string>
+    <string name="tutor_verify">Tutor Verified!</string>
+    <string name="foregot_passwordemail_send">Password Reset Email Send</string>
 </resources>
