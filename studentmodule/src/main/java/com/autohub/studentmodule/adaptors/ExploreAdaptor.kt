@@ -53,8 +53,6 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
                 user = it
                 tutorname.text = CommonUtils.capitalize("""${it.personInfo!!.firstName} ${it.personInfo!!.lastName}""")
 
-                // $price/for 3 class per Month
-
                 txtclassprice.text = """$ ${it.packageInfo!!.price} / ${it.packageInfo!!.occurances} CLASSES PER ${it.packageInfo!!.rateOption}"""
 
                 if (it.classToTeach!! != "") {
@@ -93,7 +91,6 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
                 txtsubjects.text = it.subjectsToTeach!!.replace(",", " | ")
 
                 if (!TextUtils.isEmpty(it.personInfo!!.accountPicture)) {
-//                    val pathReference1 = FirebaseStorage.getInstance().reference.child(it.personInfo!!.accountPicture!!)
                     val options = RequestOptions()
                     options.transforms(MultiTransformation(CenterCrop(), RoundedCornersTransformation(context, CommonUtils.convertDpToPixel(6f, context).toInt(), 0)))
                     options.placeholder(R.drawable.dummyexploreimage)

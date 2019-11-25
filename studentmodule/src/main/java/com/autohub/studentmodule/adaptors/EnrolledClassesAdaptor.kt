@@ -42,8 +42,6 @@ class EnrolledClassesAdaptor(var context: Context, var erolldClassDeleteClickLis
                 className.text = it.grade.name + " | " + it.subject!!.name
                 studentsCount.text = it.enrolledStudentsId!!.size.toString() + " students"
                 time.text = it.batchTiming
-
-
             }
 
         }
