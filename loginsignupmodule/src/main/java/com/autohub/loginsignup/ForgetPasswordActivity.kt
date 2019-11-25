@@ -26,7 +26,7 @@ class ForgetPasswordActivity : BaseActivity() {
             FirebaseAuth.getInstance().sendPasswordResetEmail(mBinding!!.edtemail.text.toString().trim())
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
-                            Toast.makeText(this, "Password Reset Email Send", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, getString(R.string.foregot_passwordemail_send), Toast.LENGTH_SHORT).show()
                         }
                     }.addOnFailureListener {
                         showSnackError(it.message)

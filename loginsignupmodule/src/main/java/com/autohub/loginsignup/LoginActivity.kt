@@ -231,11 +231,11 @@ class LoginActivity : BaseActivity() {
 
 
         if (mBinding!!.radiostudent.isChecked) {
-            Toast.makeText(this, "Student Verified!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.student_verify), Toast.LENGTH_SHORT).show()
             loadAndLaunchModule(STUDENT_FEATURE, "studentmodule")
             appPreferenceHelper.setStudentSignupComplete(true)
         } else {
-            Toast.makeText(this, "Tutor Verified!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.tutor_verify), Toast.LENGTH_SHORT).show()
             loadAndLaunchModule(TUTOR_FEATURE, "tutormodule")
             appPreferenceHelper.tutorSignUpComplete = true
 

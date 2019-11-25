@@ -112,8 +112,7 @@ class ExploreTutorsFragment : BaseFragment() {
     }
 
     fun setupProfile() {
-        /*  val ref = FirebaseStorage.getInstance().reference.child("student/" +
-                  firebaseAuth.currentUser!!.uid + ".jpg")*/
+
         var userimagePath = (context as StudentHomeActivity).userimagePath!!
 
         if (userimagePath != null && !userimagePath.equals("")) {
@@ -348,9 +347,9 @@ class ExploreTutorsFragment : BaseFragment() {
         }
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                var place = Autocomplete.getPlaceFromIntent(data!!)              // this.onPlaceSelected(place);
+                var place = Autocomplete.getPlaceFromIntent(data!!)
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                var status = Autocomplete.getStatusFromIntent(data!!)                //  this.onError(status)
+                var status = Autocomplete.getStatusFromIntent(data!!)
             }
         }
     }

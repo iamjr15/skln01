@@ -109,19 +109,6 @@ class FragmentRequestDetail : BaseFragment() {
 
     }
 
-/*    private fun fetchStudent() {
-        val root = getString(R.string.db_root_students)
-        firebaseStore.collection(root).document(mRequestViewModel!!.request.studentId).get()
-                .addOnSuccessListener { documentSnapshot ->
-                    val student = documentSnapshot.toObject(User::class.java)
-                    if (mRequestViewModel!!.userType.equals("tutor", ignoreCase = true)) {
-                        mBinding!!.userViewModel = UserViewModelold(student!!)
-                    }
-                    mStudent = student
-                    loadPicture()
-                }
-                .addOnFailureListener { e -> showSnackError(e.message) }
-    }*/
 
     private fun fetchTutor() {
         // get Document id from tutor id first
@@ -134,9 +121,7 @@ class FragmentRequestDetail : BaseFragment() {
                         firebaseStore.collection(root).document(it.id).get()
                                 .addOnSuccessListener { documentSnapshot ->
                                     val tutor = documentSnapshot.toObject(TutorData::class.java)
-                                    /* if (mRequestViewModel!!.userType.equals("student", ignoreCase = true)) {
-                                         mBinding!!.userViewModel = TutorViewModel(tutor!!)
-                                     }*/
+
                                     mBinding!!.tutorViewModel = TutorViewModel(tutor!!)
                                     mTutor = tutor
                                     loadPicture()
@@ -159,8 +144,7 @@ class FragmentRequestDetail : BaseFragment() {
         val dbRoot = getString(R.string.db_root_batchRequests)
         firebaseStore.collection(dbRoot).document(batchRequestViewModel!!.mRequestId!!).set(map, SetOptions.merge()).addOnSuccessListener {
             hideLoading()
-            // mRequestViewModel!!.request.requestStatus = requestStatus
-            // setUpUi()
+
             homeListner.onClassRequestDeleted(isMyRequest)
 
         }.addOnFailureListener { hideLoading() }
