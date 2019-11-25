@@ -14,7 +14,7 @@ import com.autohub.studentmodule.models.BatchesModel
  * Created by Vt Netzwelt
  */
 
-class EnrolledClassesAdaptor(var context: Context, var erolldClassDeleteClickListener: ItemClickListener<BatchesModel>)
+class EnrolledClassesAdaptor(var context: Context, private var erolldClassDeleteClickListener: ItemClickListener<BatchesModel>)
     : RecyclerView.Adapter<EnrolledClassesAdaptor.Holder>() {
 
     private var userList: List<BatchesModel> = ArrayList()

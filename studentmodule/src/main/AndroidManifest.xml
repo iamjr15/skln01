@@ -12,7 +12,6 @@
     </dist:module>
 
     <application tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.AddClassSuccessActivity"></activity>
         <activity
             android:name=".activities.AddClassActivity"
             android:screenOrientation="portrait"

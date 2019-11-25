@@ -16,7 +16,7 @@ import com.autohub.studentmodule.databinding.FragmentMyClassesBinding
 class MyClassesFragment : Fragment() {
     private var mBinding: FragmentMyClassesBinding? = null
 
-    lateinit var scheduleFragment: ScheduleFragment
+    private lateinit var scheduleFragment: ScheduleFragment
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +37,6 @@ class MyClassesFragment : Fragment() {
         mBinding!!.tabs.setupWithViewPager(mBinding!!.viewpager)
         mBinding!!.viewpager.adapter = adapter
     }
-
 
 
     fun updateSchedules() {

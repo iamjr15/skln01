@@ -17,7 +17,6 @@ data class BatchesModel(var batchCode: String? = "", var grade: Grade = Grade(),
 
     data class Grade(var id: String? = "", var name: String? = "")
     data class Student(var id: String? = "", var name: String? = "")
-    data class StudentsEnrolled(var student: ArrayList<Student> = ArrayList())
     data class Subject(var id: String? = "", var name: String? = "")
     data class Timing(var endTime: Timestamp? = null, var occurances: String? = "", var startTime: Timestamp? = null)
     data class Teacher(var id: String? = "", var name: String? = "", var accountPicture: String? = "",

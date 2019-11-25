@@ -19,7 +19,7 @@ import com.autohub.studentmodule.databinding.AcadmisRowBinding
  */
 
 
-class AcadmicsAdaptor(var context: Context, var mItemClickListener: ItemClickListener<AcadmicsData>)
+class AcadmicsAdaptor(var context: Context, private var mItemClickListener: ItemClickListener<AcadmicsData>)
     : RecyclerView.Adapter<AcadmicsAdaptor.Holder>() {
 
     private var acadmicDataList: List<AcadmicsData> = ArrayList()

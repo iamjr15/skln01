@@ -31,9 +31,7 @@ import kotlin.collections.ArrayList
 
 class StudentHomeActivity : BaseActivity(), HomeListners {
     override fun updateScheduleFragment() {
-        if (myClassesFragment != null) {
-            myClassesFragment.updateSchedules()
-        }
+        myClassesFragment.updateSchedules()
     }
 
 
@@ -156,10 +154,10 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     user = documentSnapshot.toObject(UserModel::class.java)!!
-                    val geopoints = ((documentSnapshot.data!!.get("personInfo") as HashMap<*, *>).get("location")) as GeoPoint
+                    val geopoints = ((documentSnapshot.data!!["personInfo"] as HashMap<*, *>)["location"]) as GeoPoint
                     user!!.personInfo!!.latitude = geopoints.latitude
                     user!!.personInfo!!.longitude = geopoints.longitude
-                    user = user
+                    this.user = user
                     userimagePath = user!!.personInfo!!.accountPicture
                     user!!.id = documentSnapshot.id
                     hideLoading()
@@ -170,7 +168,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     }
 
 
-    fun getIntentData() {
+    private fun getIntentData() {
         if (intent.hasExtra("isFromAddClass")) {
             if (intent.extras!!.getBoolean("isFromAddClass", false)) {
                 mViewPager!!.currentItem = 1
@@ -285,7 +283,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
     }
 
-    fun updateUserProfileImage() {
+    private fun updateUserProfileImage() {
         fragmentProfile.setProfileImage()
         explorebaseFragment!!.exploreTutorsFragment!!.setupProfile()
         homefragment.setupProfile()
@@ -305,16 +303,11 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
     override fun onBackPressed() {
 
-        if (mViewPager!!.currentItem == 0) {
-            super.onBackPressed()
-        } else if (explorebaseFragment!!.exploreTutorsFragment == null) {
-            explorebaseFragment!!.showExploreFragment()
-
-        } else if (fragmentClassRequests.fragmentClassRequests == null) {
-            fragmentClassRequests.showRequestFragmentClass()
-        } else {
-            mViewPager!!.currentItem = 0
-
+        when {
+            mViewPager!!.currentItem == 0 -> super.onBackPressed()
+            explorebaseFragment!!.exploreTutorsFragment == null -> explorebaseFragment!!.showExploreFragment()
+            fragmentClassRequests.fragmentClassRequests == null -> fragmentClassRequests.showRequestFragmentClass()
+            else -> mViewPager!!.currentItem = 0
         }
 
     }

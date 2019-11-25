@@ -23,7 +23,7 @@ import com.bumptech.glide.request.RequestOptions
  * Created by Vt Netzwelt
  */
 
-class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickListener<TutorData>)
+class ExploreAdaptor(var context: Context, private var mItemClickListener: ItemClickListener<TutorData>)
     : RecyclerView.Adapter<ExploreAdaptor.Holder>() {
 
     private var userList: List<TutorData> = ArrayList()
@@ -77,10 +77,10 @@ class ExploreAdaptor(var context: Context, var mItemClickListener: ItemClickList
 
 
                 if (it.qualification!!.classType!!.size > 0) {
-                    var list = it.qualification!!.classType!!
-                    var classtypebuilder = StringBuilder()
+                    val list = it.qualification!!.classType!!
+                    val classtypebuilder = StringBuilder()
                     for (i in list) {
-                        classtypebuilder.append("/" + i)
+                        classtypebuilder.append("/$i")
                     }
 
                     txtclasstype.text = classtypebuilder.toString().removeRange(0..0)

@@ -117,7 +117,7 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
             val spannable = SpannableStringBuilder(resources.getString(R.string.select_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.BLUE), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
-            this.mBinding!!.tvSelectText!!.setText(spannable, TextView.BufferType.SPANNABLE)
+            this.mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE)
             Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 40.0f, 60.0f)
 
         } else {
@@ -126,7 +126,7 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
             val spannable = SpannableStringBuilder(resources.getString(R.string.select_least_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.RED), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
-            mBinding!!.tvSelectText!!.setText(spannable, TextView.BufferType.SPANNABLE)
+            mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE)
         }
 
         getFragments(countList)

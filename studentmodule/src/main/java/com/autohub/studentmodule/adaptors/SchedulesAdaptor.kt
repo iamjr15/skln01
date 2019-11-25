@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.autohub.skln.utills.AppConstants
@@ -43,7 +44,8 @@ class SchedulesAdaptor(var context: Context)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         cardView.setBackgroundColor(context.resources.getColor(R.color.skyblue, null))
                     } else {
-                        cardView.setBackgroundColor(context.resources.getColor(R.color.skyblue))
+                        cardView.setBackgroundColor(ContextCompat.getColor(context, R.color.skyblue))
+
                     }
                     activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_green_round, null)
                 }
@@ -54,7 +56,10 @@ class SchedulesAdaptor(var context: Context)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         cardView.setBackgroundColor(context.resources.getColor(R.color.yellow, null))
                     } else {
-                        cardView.setBackgroundColor(context.resources.getColor(R.color.yellow))
+
+                        cardView.setBackgroundColor(ContextCompat.getColor(context, R.color.yellow))
+
+
                     }
                     activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_black_round, null)
                 }
