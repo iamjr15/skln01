@@ -76,7 +76,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/blue_rect"
                 android:backgroundTint="@color/magentaPink"
-                android:onClick="@{() -> callback.onpendingrequestClick()}"
+                android:onClick="@{() -> callback.onPendingRequestClick()}"
                 android:orientation="vertical"
                 android:padding="11dp"
                 app:layout_constraintBottom_toTopOf="@+id/manage_classes"

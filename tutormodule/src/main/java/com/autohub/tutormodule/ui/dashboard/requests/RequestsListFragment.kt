@@ -50,6 +50,8 @@ class RequestsListFragment : BaseFragment(), Listener {
 
     }
 
+    /*Fetch batch data on the basis of status of status of requests
+    * */
     private fun fillData(isRefresh: Boolean) {
 
         if (!arguments?.isEmpty!!) {

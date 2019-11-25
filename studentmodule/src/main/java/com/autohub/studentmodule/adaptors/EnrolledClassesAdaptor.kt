@@ -23,8 +23,7 @@ class EnrolledClassesAdaptor(var context: Context, var erolldClassDeleteClickLis
         val enrolledClasesBinding: EnrolledclassesRowBinding =
                 DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.enrolledclasses_row, parent, false
-                )
+                        R.layout.enrolledclasses_row, parent, false)
 
         return Holder(enrolledClasesBinding)
     }
@@ -42,14 +41,8 @@ class EnrolledClassesAdaptor(var context: Context, var erolldClassDeleteClickLis
                 className.text = it.grade.name + " | " + it.subject.name
                 studentsCount.text = it.enrolledStudentsId.size.toString() + " students"
                 time.text = it.batchTiming
-
-
             }
-
         }
-
-
-
     }
 
     override fun getItemCount(): Int {
