@@ -15,7 +15,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.skln.models.TutorGrades
@@ -39,7 +38,6 @@ import com.google.android.gms.location.LocationListener
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
@@ -58,7 +56,7 @@ class ExploreTutorsFragment : BaseFragment() {
     private lateinit var exploreFilter: ExploreFilter
     private var userLatLang: Location? = null
     var grades = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
-    var tutorsGradeList: ArrayList<TutorGrades> = ArrayList()
+    private var tutorsGradeList: ArrayList<TutorGrades> = ArrayList()
     var tutorsSubjectList: ArrayList<TutorSubjectsModel> = ArrayList()
 
     fun updateExploreData(user: UserModel, subjectName: String) {
@@ -66,7 +64,8 @@ class ExploreTutorsFragment : BaseFragment() {
         firebaseStore.collection("grades").whereEqualTo("id", studentClass).get().addOnSuccessListener {
             it.forEach {
                 mBinding!!.txtgrade.setText("grade ${it.getString("grade")!!}")
-                exploreFilter = ExploreFilter(it.getString("grade")!!, subjectName, user.personInfo!!.latitude!!, user.personInfo!!.longitude!!, filterType = ACADMIC_SELECTION_FILTER)
+                exploreFilter = ExploreFilter(it.getString("grade")!!,
+                        subjectName, user.personInfo!!.latitude!!, user.personInfo!!.longitude!!, filterType = ACADMIC_SELECTION_FILTER)
                 getTutors(exploreFilter)
             }
         }
@@ -113,9 +112,9 @@ class ExploreTutorsFragment : BaseFragment() {
 
     fun setupProfile() {
 
-        var userimagePath = (context as StudentHomeActivity).userimagePath!!
+        val userimagePath: String? = (context as StudentHomeActivity).userimagePath
 
-        if (userimagePath != null && !userimagePath.equals("")) {
+        if (userimagePath != null && userimagePath != "") {
 
             val ref = FirebaseStorage.getInstance().reference.child(userimagePath)
             GlideApp.with(this)
@@ -164,12 +163,12 @@ class ExploreTutorsFragment : BaseFragment() {
         mBinding!!.turorsrecycleview.adapter = exploreAdaptor
 
         val customAdapter = CustomArrayAdapter(requireContext(), grades)
-        with(mBinding!!.spinner!!) {
+        with(mBinding!!.spinner) {
             adapter = customAdapter
         }
 
 
-        mBinding!!.spinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        mBinding!!.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
 
                 mBinding!!.txtgrade.setText("grade ${grades[position]}")
@@ -184,14 +183,14 @@ class ExploreTutorsFragment : BaseFragment() {
             }
         }
         mBinding!!.txtgrade.setOnClickListener {
-            mBinding!!.spinner!!.performClick()
+            mBinding!!.spinner.performClick()
         }
 
         setupProfile()
-        mBinding!!.swiperefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+        mBinding!!.swiperefresh.setOnRefreshListener {
 
             getTutors(exploreFilter)
-        })
+        }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -228,22 +227,22 @@ class ExploreTutorsFragment : BaseFragment() {
                     Log.e("document", document.toString())
                     val user = document.toObject(TutorData::class.java)
 
-                    if (document.data.get("location") != null) {
-                        val geopoints = ((document.data.get("location") as HashMap<*, *>).get("geopoint")) as GeoPoint
+                    if (document.data["location"] != null) {
+                        val geopoints = ((document.data["location"] as HashMap<*, *>)["geopoint"]) as GeoPoint
                         user.location!!.latitude = geopoints.latitude
                         user.location!!.longitude = geopoints.longitude
                     }
 
 
-                    var subjects: StringBuilder = StringBuilder()
-                    var grades: StringBuilder = StringBuilder()
+                    val subjects: StringBuilder = StringBuilder()
+                    val grades: StringBuilder = StringBuilder()
                     /*
                     * Add tutors Subjects
                     * */
                     for (i in tutorsSubjectList) {
                         if (i.teacherId.equals(user.id) && (context as StudentHomeActivity).subjectDataList.size > 0) {
-                            subjects.append("," + (context as StudentHomeActivity).subjectDataList
-                                    .get((context as StudentHomeActivity).subjectDataList.map { it.id }.indexOf(i.subjectId)).name)
+                            subjects.append("," + (context as StudentHomeActivity)
+                                    .subjectDataList[(context as StudentHomeActivity).subjectDataList.map { it.id }.indexOf(i.subjectId)].name)
                         }
                     }
                     /*
@@ -251,18 +250,17 @@ class ExploreTutorsFragment : BaseFragment() {
                      * */
                     for (i in tutorsGradeList) {
                         if (i.teacherId.equals(user.id) && (context as StudentHomeActivity).gradesDataList.size > 0) {
-                            grades.append("," + (context as StudentHomeActivity).gradesDataList
-                                    .get((context as StudentHomeActivity).gradesDataList.map { it.id }.indexOf(i.gradeId)).grade)
+                            grades.append("," + (context as StudentHomeActivity).gradesDataList[(context as StudentHomeActivity).gradesDataList.map { it.id }.indexOf(i.gradeId)].grade)
                         }
                     }
 
 
-                    if (!subjects.isEmpty()) {
+                    if (subjects.isNotEmpty()) {
                         user.subjectsToTeach = subjects.toString().removeRange(0..0)
 
                     }
 
-                    if (!grades.isEmpty()) {
+                    if (grades.isNotEmpty()) {
                         user.classToTeach = grades.toString().removeRange(0..0)
 
                     }
@@ -270,7 +268,7 @@ class ExploreTutorsFragment : BaseFragment() {
                     /*
                     * Add Distance from Student Location
                     * */
-                    var studentdata = (context as StudentHomeActivity).user
+                    val studentdata = (context as StudentHomeActivity).user
 
                     if (studentdata != null) {
                         user.distance = String.format("%.2f", CommonUtils.distance(studentdata.personInfo!!.latitude!!,
@@ -345,13 +343,7 @@ class ExploreTutorsFragment : BaseFragment() {
                         Toast.LENGTH_SHORT).show()
             }
         }
-        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                var place = Autocomplete.getPlaceFromIntent(data!!)
-            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                var status = Autocomplete.getStatusFromIntent(data!!)
-            }
-        }
+
     }
 
 
@@ -370,7 +362,7 @@ class ExploreTutorsFragment : BaseFragment() {
         const val AUTOCOMPLETE_REQUEST_CODE = 1
     }
 
-    fun fetchTutorSubjects() {
+    private fun fetchTutorSubjects() {
         tutorsGradeList = ArrayList()
 
 
@@ -388,7 +380,7 @@ class ExploreTutorsFragment : BaseFragment() {
         }
     }
 
-    fun fetchTutorGrades() {
+    private fun fetchTutorGrades() {
         tutorsSubjectList = ArrayList()
         firebaseStore.collection("tutorSubjects").get().addOnCompleteListener {
 
@@ -405,9 +397,9 @@ class ExploreTutorsFragment : BaseFragment() {
     }
 
 
-    fun showExploreTutors() {
+    private fun showExploreTutors() {
 
-        var user = (context as StudentHomeActivity).user!!
+        val user = (context as StudentHomeActivity).user!!
 
         val location = Location(LocationManager.GPS_PROVIDER)
         location.latitude = user.personInfo!!.latitude!!

@@ -72,9 +72,9 @@ class FragmentHome : BaseFragment() {
 
     fun setupProfile() {
 
-        var userimagePath = (context as StudentHomeActivity).userimagePath!!
+        val userimagePath: String? = (context as StudentHomeActivity).userimagePath!!
 
-        if (userimagePath != null && !userimagePath.equals("")) {
+        if (userimagePath != null && userimagePath != "") {
 
             val ref = FirebaseStorage.getInstance().reference.child(userimagePath)
             GlideApp.with(this)
@@ -108,7 +108,7 @@ class FragmentHome : BaseFragment() {
     }
 
     private fun setSubjects(user: UserModel) {
-        var grade = "0"
+        var grade: String
 
         firebaseStore.collection("grades").whereEqualTo("id", user.academicInfo!!.selectedClass).get().addOnSuccessListener {
 

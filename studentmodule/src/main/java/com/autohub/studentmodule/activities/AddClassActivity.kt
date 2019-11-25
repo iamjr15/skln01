@@ -29,38 +29,40 @@ class AddClassActivity : BaseActivity() {
     }
 
     fun onAddclick() {
-        if (mBinding!!.edtcode.text.toString().equals("")) {
+        if (mBinding!!.edtcode.text.toString() == "") {
             showSnackError(getString(R.string.addbatchcode))
             return
         }
         showLoading()
         getBatchCodeDetails()
+
+
     }
 
     fun onOkClick() {
-        /*  val extras = Bundle()
-          extras.putSerializable("isFromAddClass", true)*/
-        ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
+        val extras = Bundle()
+        extras.putSerializable("isFromAddClass", true)
+        ActivityUtils.launchActivity(this, StudentHomeActivity::class.java, extras)
         finishAffinity()
 
 
     }
 
     private fun getBatchCodeDetails() {
-        var batchCode = mBinding!!.edtcode.text.toString().trim()
+        val batchCode = mBinding!!.edtcode.text.toString().trim()
         firebaseStore.collection(getString(R.string.db_root_batches)).whereEqualTo(KEY_BATCHCODE
                 , batchCode).get().addOnCompleteListener { task ->
             if (task.isSuccessful && task.result!!.size() > 0) {
-                var batchTitle = ""
-                var batchCode = ""
+                var batchTitle: String
+                var batchCode: String
                 for (document in task.result!!) {
                     val batchesModel = document.toObject(BatchesModel::class.java)
-                    if (batchesModel.enrolledStudentsId.contains(firebaseAuth.currentUser!!.uid)) {
+                    if (batchesModel.enrolledStudentsId!!.contains(firebaseAuth.currentUser!!.uid)) {
                         batchesModel.documentId = document.id
-                        batchTitle = batchesModel.title
-                        batchCode = batchesModel.batchCode
+                        batchTitle = batchesModel.title!!
+                        batchCode = batchesModel.batchCode!!
 
-                        mBinding!!.txtadded.text = "you have been added into - ${batchTitle} Successfully."
+                        mBinding!!.txtadded.text = "you have been added into - $batchTitle Successfully."
                         mBinding!!.lladdclass.visibility = View.GONE
                         mBinding!!.lladdclasssucess.visibility = View.VISIBLE
                         // add batch code as array in your profile for future use
@@ -94,7 +96,7 @@ class AddClassActivity : BaseActivity() {
                         ), SetOptions.merge()).addOnSuccessListener {
                     hideLoading()
                     Toast.makeText(this,
-                            "Your have been added into - ${batchTitle} Successfully.", Toast.LENGTH_SHORT).show()
+                            "Your have been added into - $batchTitle Successfully.", Toast.LENGTH_SHORT).show()
 
                 }
 

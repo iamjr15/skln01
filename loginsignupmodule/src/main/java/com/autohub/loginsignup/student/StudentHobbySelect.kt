@@ -4,13 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
 import com.autohub.SubjectsModel
 import com.autohub.loginsignup.LoginActivity
 import com.autohub.loginsignup.R
 import com.autohub.loginsignup.databinding.ActivityStudentHobbySelectBinding
 import com.autohub.loginsignup.listners.ClassSelectionListner
+import com.autohub.loginsignup.student.adaptor.PagerAdapter
 import com.autohub.loginsignup.student.fragments.HobbiesFragment
 import com.autohub.loginsignup.student.models.SubjectsData
 import com.autohub.loginsignup.utility.Utilities
@@ -38,24 +37,24 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
                 if (isSecondSelected) {
                     if (selectedHobbies.contains(selectedClass)) {
                         selectedHobbies.remove(selectedClass)
-                        fragmentsList[i].updateFragment(isSecond = true, selected = false)
+                        (fragmentsList[i] as HobbiesFragment).updateFragment(isSecond = true, selected = false)
 
                     } else {
                         selectedHobbies.add(selectedClass as SubjectsModel)
 
-                        fragmentsList[i].updateFragment(isSecond = true, selected = true)
+                        (fragmentsList[i] as HobbiesFragment).updateFragment(isSecond = true, selected = true)
 
                     }
 
                 } else {
                     if (selectedHobbies.contains(selectedClass)) {
                         selectedHobbies.remove(selectedClass)
-                        fragmentsList[i].updateFragment(isSecond = false, selected = false)
+                        (fragmentsList[i] as HobbiesFragment).updateFragment(isSecond = false, selected = false)
 
                     } else {
                         selectedHobbies.add(selectedClass as SubjectsModel)
 
-                        fragmentsList[i].updateFragment(isSecond = false, selected = true)
+                        (fragmentsList[i] as HobbiesFragment).updateFragment(isSecond = false, selected = true)
 
                     }
                 }
@@ -115,7 +114,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
 
     private var selectedHobbies: ArrayList<SubjectsModel> = ArrayList()
     private var mBinding: ActivityStudentHobbySelectBinding? = null
-    private var fragmentsList: ArrayList<HobbiesFragment> = ArrayList()
+    private var fragmentsList: ArrayList<Fragment> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -286,25 +285,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
     }
 
 
-    inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<HobbiesFragment>) :
-            FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-        // 2
-        override fun getItem(position: Int): Fragment {
-            return fragmentsList[position]
-
-
-        }
-
-        override fun getPageWidth(position: Int): Float {
-            return 0.6f
-        }
-
-        // 3
-        override fun getCount(): Int {
-            return fragmentsList.size
-        }
-    }
 
 
 }

@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.studentmodule.adaptors.EnrolledClassesAdaptor
@@ -44,7 +43,7 @@ class EnrolledClassesFragment : BaseFragment() {
         firebaseStore.collection("students").document(appPreferenceHelper.getuserID()).get().addOnSuccessListener {
             hideLoading()
             if (it["batchCodes"] != null) {
-                var batches: ArrayList<String> = it["batchCodes"] as ArrayList<String>
+                val batches: ArrayList<String> = it["batchCodes"] as ArrayList<String>
                 if (batches.contains(batchmodel!!.batchCode)) {
                     batches.removeAt(batches.indexOf(batchmodel.batchCode))
                     firebaseStore.collection("students").document(appPreferenceHelper.getuserID()).set(
@@ -82,7 +81,7 @@ class EnrolledClassesFragment : BaseFragment() {
 
                     it.forEach {
                         if (it["enrolledStudentsId"] != null) {
-                            var enrollstudentIds: ArrayList<String> = it["enrolledStudentsId"] as ArrayList<String>
+                            val enrollstudentIds: ArrayList<String> = it["enrolledStudentsId"] as ArrayList<String>
                             if (enrollstudentIds.contains(firebaseAuth.currentUser!!.uid)) {
                                 enrollstudentIds.removeAt(enrollstudentIds.indexOf(firebaseAuth.currentUser!!.uid))
                                 firebaseStore.collection("batches").document(batchmodel.documentId!!).set(
@@ -121,19 +120,19 @@ class EnrolledClassesFragment : BaseFragment() {
         fetchEnrolledClasses()
 
 
-        mBinding!!.swiperefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+        mBinding!!.swiperefresh.setOnRefreshListener {
             fetchEnrolledClasses()
-        })
+        }
 
     }
 
 
-    fun fetchEnrolledClasses() {
+    private fun fetchEnrolledClasses() {
 
         firebaseStore.collection("students").document(appPreferenceHelper.getuserID()).get().addOnSuccessListener {
             hideLoading()
             if (it["batchCodes"] != null && (it["batchCodes"] as ArrayList<String>).size > 0) {
-                var userBatchesCode: ArrayList<String> = it["batchCodes"] as ArrayList<String>
+                val userBatchesCode: ArrayList<String> = it["batchCodes"] as ArrayList<String>
 
                 firebaseStore.collection("batches").whereArrayContains("enrolledStudentsId", firebaseAuth.currentUser!!.uid)
                         .get().addOnCompleteListener { task ->
@@ -149,14 +148,14 @@ class EnrolledClassesFragment : BaseFragment() {
 
 
                                     try {
-                                        var endTime = uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
-                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.endTime!!.toDate().toString()
+                                        val endTime = uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
+                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing!!.endTime!!.toDate().toString()
                                         )
-                                        var startTime = uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
-                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.startTime!!.toDate().toString()
+                                        val startTime = uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
+                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing!!.startTime!!.toDate().toString()
                                         ).toString()
                                         batchesModel.batchTiming =
-                                                startTime + " - " + endTime
+                                                "$startTime - $endTime"
                                     } catch (e: Exception) {
                                         e.printStackTrace()
                                     }

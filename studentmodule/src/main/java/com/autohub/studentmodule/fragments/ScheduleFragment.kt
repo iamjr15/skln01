@@ -58,8 +58,8 @@ class ScheduleFragment : BaseFragment() {
 
     fun fetchBatches() {
         firebaseStore.collection("students").document(appPreferenceHelper.getuserID()).get().addOnSuccessListener {
-            if (it["batchCodes"] != null && (it["batchCodes"] as ArrayList<String>).size > 0) {
-                var userBatchesCode: ArrayList<String> = it["batchCodes"] as ArrayList<String>
+            if (it["batchCodes"] != null && (it["batchCodes"] as ArrayList<*>).size > 0) {
+                val userBatchesCode: ArrayList<String> = it["batchCodes"] as ArrayList<String>
 
                 firebaseStore.collection(getString(R.string.db_root_batches)).whereArrayContains("enrolledStudentsId", firebaseAuth.currentUser!!.uid)
                         .get().addOnCompleteListener { task ->
@@ -67,17 +67,17 @@ class ScheduleFragment : BaseFragment() {
                             if (task.isSuccessful) {
                                 scheduleData.clear()
                                 for (document in task.result!!) {
-                                    val batchesModel = document.toObject(com.autohub.studentmodule.models.BatchesModel::class.java)
+                                    val batchesModel = document.toObject(BatchesModel::class.java)
 
                                     try {
-                                        var endTime = uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
-                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.endTime!!.toDate().toString()
+                                        val endTime = uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
+                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing!!.endTime!!.toDate().toString()
                                         )
-                                        var startTime = uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
-                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.startTime!!.toDate().toString()
+                                        val startTime = uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
+                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing!!.startTime!!.toDate().toString()
                                         ).toString()
                                         batchesModel.batchTiming =
-                                                startTime + " - " + endTime
+                                                "$startTime - $endTime"
                                     } catch (e: Exception) {
                                         e.printStackTrace()
                                     }
@@ -138,12 +138,10 @@ class ScheduleFragment : BaseFragment() {
         mBinding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                if (i < 10) {
-                    mBinding.calendarView.scrollToPosition(0)
-                } else if (i > 90) {
-                    mBinding.calendarView.scrollToPosition(dates.size - 1)
-                } else if ((i * 3) < (dates.size - 1)) {
-                    mBinding.calendarView.scrollToPosition((i * 3))
+                when {
+                    i < 10 -> mBinding.calendarView.scrollToPosition(0)
+                    i > 90 -> mBinding.calendarView.scrollToPosition(dates.size - 1)
+                    (i * 3) < (dates.size - 1) -> mBinding.calendarView.scrollToPosition((i * 3))
                 }
             }
 

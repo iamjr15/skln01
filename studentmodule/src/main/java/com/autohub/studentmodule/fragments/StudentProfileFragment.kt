@@ -30,7 +30,6 @@ class StudentProfileFragment : BaseFragment() {
     private var mStorageReference: StorageReference? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_student_profile, container, false)
     }
 
@@ -52,9 +51,9 @@ class StudentProfileFragment : BaseFragment() {
 
 
     fun setProfileImage() {
-        var userimagePath = (context as StudentHomeActivity).userimagePath!!
+        val userimagePath: String? = (context as StudentHomeActivity).userimagePath!!
 
-        if (userimagePath != null && !userimagePath.equals("")) {
+        if (userimagePath != null && userimagePath != "") {
 
             val ref = FirebaseStorage.getInstance().reference.child(userimagePath)
             GlideApp.with(this)
@@ -67,11 +66,11 @@ class StudentProfileFragment : BaseFragment() {
     }
 
 
-    fun setupProfile() {
+    private fun setupProfile() {
 
         firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
-                    var user: UserModel = documentSnapshot.toObject(UserModel::class.java)!!
+                    val user: UserModel = documentSnapshot.toObject(UserModel::class.java)!!
                     (context as StudentHomeActivity).userimagePath = user.personInfo!!.accountPicture
 
                     setProfileImage()

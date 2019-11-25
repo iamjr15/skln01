@@ -27,7 +27,6 @@ class StudentSubjectSelectFragmnet : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         datalist = arguments?.getParcelableArrayList<SubjectsModel>("data") as ArrayList<SubjectsModel>
         position = arguments?.getInt("position", 0)!!
         return inflater.inflate(R.layout.fragment_student_subject_select, container, false)

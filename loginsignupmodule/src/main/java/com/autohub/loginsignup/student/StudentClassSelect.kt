@@ -5,11 +5,10 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
 import com.autohub.loginsignup.R
 import com.autohub.loginsignup.databinding.ActivityStudentClassSelectBinding
 import com.autohub.loginsignup.listners.ClassSelectionListner
+import com.autohub.loginsignup.student.adaptor.PagerAdapter
 import com.autohub.loginsignup.student.fragments.StudentClassFragment
 import com.autohub.loginsignup.student.models.Classdata
 import com.autohub.loginsignup.utility.Utilities
@@ -28,9 +27,9 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         this.selectedClass = selectedClass as String
         for (i in fragmentsList.indices) {
             if (position != i) {
-                fragmentsList[i].updateFragment(true)
+                (fragmentsList[i] as StudentClassFragment).updateFragment(true)
             } else {
-                fragmentsList[i].updateFragment(isSecondSelect = isSecondSelected)
+                (fragmentsList[i] as StudentClassFragment).updateFragment(isSecondSelect = isSecondSelected)
             }
         }
     }
@@ -38,7 +37,7 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
 
     private var mBinding: ActivityStudentClassSelectBinding? = null
     private var classdatalist: ArrayList<Classdata> = ArrayList()
-    private var fragmentsList: ArrayList<StudentClassFragment> = ArrayList()
+    private var fragmentsList: ArrayList<Fragment> = ArrayList()
     private var selectedClass: String = ""
 
 
@@ -103,24 +102,6 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         classdatalist.add(Classdata(R.color.tweleve, R.drawable.tweleve, false, CLASS_12))
     }
 
-
-    inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<StudentClassFragment>) :
-            FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-
-        // 2
-        override fun getItem(position: Int): Fragment {
-            return fragmentsList[position]
-        }
-
-        override fun getPageWidth(position: Int): Float {
-            return 0.6f
-        }
-
-        // 3
-        override fun getCount(): Int {
-            return fragmentsList.size
-        }
-    }
 
     fun onNextClick() {
 

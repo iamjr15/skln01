@@ -37,8 +37,6 @@ class TutorFullProfileActivity : BaseActivity() {
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_tutor_full_profile)
         mBinding!!.callback = this
-
-
         getIntentData()
 
         mBinding!!.model = mUserViewModel
@@ -96,7 +94,7 @@ class TutorFullProfileActivity : BaseActivity() {
 
     }
 
-    private fun makeRequest(subject: String, classtype: String) {
+    private fun makeRequest(subject: String) {
         showLoading()
         val studentId = firebaseAuth.currentUser!!.uid
         val tutorId = mUserViewModel!!.userId
@@ -120,7 +118,7 @@ class TutorFullProfileActivity : BaseActivity() {
                                 }
 
 //hdsjhsa
-                                var batchRequest = BatchRequestModel(id = studentId + "_" + subjectId + "_" + gradeId
+                                val batchRequest = BatchRequestModel(id = studentId + "_" + subjectId + "_" + gradeId
                                         , status = KEY_REQUESTSTATUS_PENDING,
                                         teacher = BatchRequestModel.Teacher(tutorId, mUserViewModel!!.fullName),
                                         student = BatchRequestModel.Student(studentId, mCurrentUser!!.personInfo!!.firstName!! + " " +
@@ -161,7 +159,7 @@ class TutorFullProfileActivity : BaseActivity() {
         if (subjects.isEmpty()) {
             val rdbtn = RadioButton(this)
             rdbtn.id = View.generateViewId()
-            rdbtn.setTextColor(resources.getColor(R.color.black))
+            rdbtn.setTextColor(ContextCompat.getColor(this, R.color.black))
 
             //rdbtn.text = "Radio " + rdbtn.id
             rdbtn.text = mUserViewModel!!.user.subjectsToTeach
@@ -170,7 +168,7 @@ class TutorFullProfileActivity : BaseActivity() {
 
         for (element in subjects) {
             val rdbtn = RadioButton(this)
-            rdbtn.setTextColor(resources.getColor(R.color.black))
+            rdbtn.setTextColor(ContextCompat.getColor(this, R.color.black))
             rdbtn.id = View.generateViewId()
             rdbtn.text = element
             mBinding!!.subjectradio.addView(rdbtn)
@@ -196,7 +194,6 @@ class TutorFullProfileActivity : BaseActivity() {
     }
 
     fun onRequestClick() {
-
         when {
             mBinding!!.subjectradio.checkedRadioButtonId == -1 -> showSnackError(getString(R.string.selectSeubject_msg))
             mBinding!!.classtyperadio.checkedRadioButtonId == -1 -> {
@@ -204,7 +201,6 @@ class TutorFullProfileActivity : BaseActivity() {
                     setRequireData()
                 } else {
                     showSnackError(getString(R.string.selectclasstype_msg))
-
                 }
             }
             else -> {
@@ -215,15 +211,14 @@ class TutorFullProfileActivity : BaseActivity() {
         }
     }
 
-    fun setRequireData() {
-        var selectedsubjectRadio = (findViewById(mBinding!!.subjectradio.checkedRadioButtonId)) as RadioButton
+    private fun setRequireData() {
+        val selectedsubjectRadio = (findViewById(mBinding!!.subjectradio.checkedRadioButtonId)) as RadioButton
 
         if (isClassTyperequire) {
 
-            var selectedclasstypeRadio = (findViewById(mBinding!!.classtyperadio.checkedRadioButtonId)) as RadioButton
-            makeRequest(selectedsubjectRadio.text.toString(), selectedclasstypeRadio.text.toString())
+            makeRequest(selectedsubjectRadio.text.toString())
         } else {
-            makeRequest(selectedsubjectRadio.text.toString(), "")
+            makeRequest(selectedsubjectRadio.text.toString())
 
         }
 

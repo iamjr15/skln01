@@ -16,7 +16,7 @@ import com.autohub.studentmodule.databinding.HobbiesRowBinding
  * Created by Vt Netzwelt
  */
 
-class HobbiesAdaptor(var context: Context, var mItemClickListener: ItemClickListener<HobbiesData>)
+class HobbiesAdaptor(var context: Context, private var mItemClickListener: ItemClickListener<HobbiesData>)
     : RecyclerView.Adapter<HobbiesAdaptor.Holder>() {
 
     private var hobbiesDatalist: List<HobbiesData> = ArrayList()
