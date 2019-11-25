@@ -96,7 +96,6 @@ class FragmentHome : BaseFragment() {
                     (context as StudentHomeActivity).userimagePath = user.personInfo!!.accountPicture
 
                     user.id = documentSnapshot.id
-                    //                        User user = User.prepareUser(documentSnapshot);
                     mBinding!!.heyUser.text = String.format("Hey, \n%s.", user.personInfo!!.firstName)
                     setSubjects(user)
                     setHobbies(user)
@@ -104,7 +103,6 @@ class FragmentHome : BaseFragment() {
 
                     setupProfile()
 
-                    //                        mUserViewModel.setUser(user);
                 }
                 .addOnFailureListener { e -> showSnackError(e.message) }
     }

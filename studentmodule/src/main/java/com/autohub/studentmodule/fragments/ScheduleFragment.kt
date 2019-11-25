@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.adaptors.ScheduleCalenderAdapter
 import com.autohub.studentmodule.adaptors.SchedulesAdaptor
 import com.autohub.studentmodule.databinding.FragmentScheduleBinding
 import com.autohub.studentmodule.models.BatchesModel
+import com.autohub.studentmodule.utils.AppUtil.uTCToLocal
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,7 +31,6 @@ class ScheduleFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_schedule, container, false)
     }
 
@@ -50,9 +49,9 @@ class ScheduleFragment : BaseFragment() {
         fetchBatches()
         initializeCalendarView(dates)
 
-        mBinding.swiperefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+        mBinding.swiperefresh.setOnRefreshListener {
             fetchBatches()
-        })
+        }
 
 
     }
@@ -206,30 +205,5 @@ class ScheduleFragment : BaseFragment() {
         return dates
     }
 
-    fun uTCToLocal(dateFormatInPut: String, dateFomratOutPut: String, datesToConvert: String): String? {
-
-
-        val dateToReturn = datesToConvert
-
-        val sdf = SimpleDateFormat(dateFormatInPut)
-
-        var gmt: Date? = null
-
-        val sdfOutPutToSend = SimpleDateFormat(dateFomratOutPut)
-        sdfOutPutToSend.timeZone = TimeZone.getDefault()
-        try {
-            gmt = sdf.parse(datesToConvert)
-
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-
-
-        val originalFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US)
-        val targetFormat = SimpleDateFormat("h:mm a")
-        val date = originalFormat.parse(gmt.toString())
-        val formattedDate = targetFormat.format(date)
-        return formattedDate
-    }
 
 }

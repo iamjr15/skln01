@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.listeners.ItemClickListener
 import com.autohub.skln.models.Request
@@ -65,9 +64,9 @@ class FragmentRequests : BaseFragment() {
         binding!!.recyclerView.adapter = mAdapter
         getRequests()
 
-        binding!!.swiperefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+        binding!!.swiperefresh.setOnRefreshListener {
             getRequests()
-        })
+        }
 
     }
 
@@ -90,17 +89,13 @@ class FragmentRequests : BaseFragment() {
                 for (document in task.result!!) {
                     val request = document.toObject(BatchRequestModel::class.java)
                     requests.add(BatchRequestViewModel(request, mUserType, document.id))
-                    Log.d(">>>Explore", "Data Is " + request.subject)
+                    Log.d(">>>FragmentRequests", "Data Is " + request.subject)
                 }
-
-
-                println("========================= REQUEST DATA" + requests.toString())
-
 
 
                 mAdapter!!.setData(requests)
             } else {
-                Log.d(">>>Explore", "Error getting documents: ", task.exception)
+                Log.d(">>>FragmentRequests", "Error getting documents: ", task.exception)
             }
 
             binding!!.swiperefresh.isRefreshing = false
@@ -109,7 +104,7 @@ class FragmentRequests : BaseFragment() {
         }.addOnFailureListener { e ->
             binding!!.swiperefresh.isRefreshing = false
 
-            Log.e(">>>Explore", "Error getting documents: ", e)
+            Log.e(">>>FragmentRequests", "Error getting documents: ", e)
         }
     }
 }

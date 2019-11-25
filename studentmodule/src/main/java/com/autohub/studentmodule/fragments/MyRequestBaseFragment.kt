@@ -16,7 +16,6 @@ class MyRequestBaseFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_my_request_base, container, false)
         showRequestFragmentClass()
         return view
@@ -42,8 +41,5 @@ class MyRequestBaseFragment : Fragment() {
                 .replace(R.id.explorecontainer, fragment).commit()
 
 
-        /*    getChildFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.explorecontainer, exploreTutorsFragment!!).commit()*/
     }
 }

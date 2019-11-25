@@ -48,7 +48,6 @@ class StudentProfileFragment : BaseFragment() {
             ActivityUtils.launchActivity(requireContext(), OnBoardActivity::class.java)
             requireActivity().finishAffinity()
         }
-        // mBinding!!.profilePicture.setOnClickListener { onAddPicture() }
     }
 
 
@@ -99,9 +98,6 @@ class StudentProfileFragment : BaseFragment() {
 
         val intent = Intent(context, EditStudentProfileActivity::class.java)
         activity!!.startActivityForResult(intent, StudentHomeActivity.EDITPROFILE_REQUEST)
-
-//        ActivityUtils.launchActivity(requireContext(), EditStudentProfileActivity::class.java)
-
     }
 
     fun onEditPersonalDetailClick() {

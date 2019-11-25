@@ -169,8 +169,6 @@ class EditStudentProfileActivity : BaseActivity() {
                         hobbiesIdBuilder.append("," + subjectDataList[index].id)
                     }
 
-
-
                     if (selectedHobbies.size > 0) {
                         selectedHobbiesid = hobbiesIdBuilder.toString().removeRange(0..0)
                         mBinding!!.favHobby.text = hobbiesBuilder.toString().removeRange(0..0)

@@ -14,11 +14,8 @@ import com.autohub.studentmodule.adaptors.EnrolledClassesAdaptor
 import com.autohub.studentmodule.databinding.FragmentEnrolledClassesBinding
 import com.autohub.studentmodule.listners.HomeListners
 import com.autohub.studentmodule.models.BatchesModel
+import com.autohub.studentmodule.utils.AppUtil.uTCToLocal
 import com.google.firebase.firestore.SetOptions
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 /**
@@ -105,14 +102,12 @@ class EnrolledClassesFragment : BaseFragment() {
 
                 }
     }
-    // user!!.batchCodes
 
 
     private var adaptor: EnrolledClassesAdaptor? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(com.autohub.studentmodule.R.layout.fragment_enrolled_classes, container, false)
     }
 
@@ -168,11 +163,7 @@ class EnrolledClassesFragment : BaseFragment() {
 
                                     if (userBatchesCode.contains(batchesModel.batchCode)) {
                                         enrolledClassesList.add(batchesModel)
-
-
                                     }
-
-
                                 }
                                 updateEmptyview()
                                 adaptor!!.setData(enrolledClassesList)
@@ -210,37 +201,6 @@ class EnrolledClassesFragment : BaseFragment() {
         } else {
             mBinding!!.rrempty.visibility = View.VISIBLE
         }
-    }
-
-
-    fun uTCToLocal(dateFormatInPut: String, dateFomratOutPut: String, datesToConvert: String): String? {
-
-
-        val sdf = SimpleDateFormat(dateFormatInPut)
-
-        var gmt: Date? = null
-
-        val sdfOutPutToSend = SimpleDateFormat(dateFomratOutPut)
-        sdfOutPutToSend.timeZone = TimeZone.getDefault()
-        try {
-            gmt = sdf.parse(datesToConvert)
-
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-
-
-        val originalFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US)
-        val targetFormat = SimpleDateFormat("h:mm a")
-        val date = originalFormat.parse(gmt.toString())
-        val formattedDate = targetFormat.format(date)
-
-
-
-
-
-
-        return formattedDate
     }
 
 
