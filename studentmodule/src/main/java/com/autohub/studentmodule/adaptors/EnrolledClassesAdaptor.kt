@@ -39,8 +39,8 @@ class EnrolledClassesAdaptor(var context: Context, var erolldClassDeleteClickLis
             with(holder.enrolledClasesBinding)
             {
                 batchName.text = it.title
-                className.text = it.grade.name + " | " + it.subject.name
-                studentsCount.text = it.enrolledStudentsId.size.toString() + " students"
+                className.text = it.grade.name + " | " + it.subject!!.name
+                studentsCount.text = it.enrolledStudentsId!!.size.toString() + " students"
                 time.text = it.batchTiming
 
 

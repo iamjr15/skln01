@@ -37,8 +37,6 @@ class TutorFullProfileActivity : BaseActivity() {
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_tutor_full_profile)
         mBinding!!.callback = this
-
-
         getIntentData()
 
         mBinding!!.model = mUserViewModel
@@ -196,7 +194,6 @@ class TutorFullProfileActivity : BaseActivity() {
     }
 
     fun onRequestClick() {
-
         when {
             mBinding!!.subjectradio.checkedRadioButtonId == -1 -> showSnackError(getString(R.string.selectSeubject_msg))
             mBinding!!.classtyperadio.checkedRadioButtonId == -1 -> {
@@ -204,7 +201,6 @@ class TutorFullProfileActivity : BaseActivity() {
                     setRequireData()
                 } else {
                     showSnackError(getString(R.string.selectclasstype_msg))
-
                 }
             }
             else -> {

@@ -35,12 +35,14 @@ class AddClassActivity : BaseActivity() {
         }
         showLoading()
         getBatchCodeDetails()
+
+
     }
 
     fun onOkClick() {
-        /*  val extras = Bundle()
-          extras.putSerializable("isFromAddClass", true)*/
-        ActivityUtils.launchActivity(this, StudentHomeActivity::class.java)
+        val extras = Bundle()
+        extras.putSerializable("isFromAddClass", true)
+        ActivityUtils.launchActivity(this, StudentHomeActivity::class.java, extras)
         finishAffinity()
 
 
@@ -55,10 +57,10 @@ class AddClassActivity : BaseActivity() {
                 var batchCode = ""
                 for (document in task.result!!) {
                     val batchesModel = document.toObject(BatchesModel::class.java)
-                    if (batchesModel.enrolledStudentsId.contains(firebaseAuth.currentUser!!.uid)) {
+                    if (batchesModel.enrolledStudentsId!!.contains(firebaseAuth.currentUser!!.uid)) {
                         batchesModel.documentId = document.id
-                        batchTitle = batchesModel.title
-                        batchCode = batchesModel.batchCode
+                        batchTitle = batchesModel.title!!
+                        batchCode = batchesModel.batchCode!!
 
                         mBinding!!.txtadded.text = "you have been added into - ${batchTitle} Successfully."
                         mBinding!!.lladdclass.visibility = View.GONE

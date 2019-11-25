@@ -10,12 +10,11 @@ import android.text.style.UnderlineSpan
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
 import com.autohub.SubjectsModel
 import com.autohub.loginsignup.R
 import com.autohub.loginsignup.databinding.ActivityStudentSubjectSelectBinding
 import com.autohub.loginsignup.listners.ClassSelectionListner
+import com.autohub.loginsignup.student.adaptor.PagerAdapter
 import com.autohub.loginsignup.student.fragments.StudentSubjectSelectFragmnet
 import com.autohub.loginsignup.student.models.SubjectsData
 import com.autohub.loginsignup.utility.Utilities
@@ -42,22 +41,22 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
                 if (isSecondSelected) {
                     if (selectedSubjects.contains(selectedClass)) {
                         selectedSubjects.remove(selectedClass)
-                        fragmentsList[i].updateFragment(isSecond = true, selected = false)
+                        (fragmentsList[i] as StudentSubjectSelectFragmnet).updateFragment(isSecond = true, selected = false)
 
                     } else {
                         selectedSubjects.add(selectedClass as SubjectsModel)
-                        fragmentsList[i].updateFragment(isSecond = true, selected = true)
+                        (fragmentsList[i] as StudentSubjectSelectFragmnet).updateFragment(isSecond = true, selected = true)
                     }
 
                 } else {
                     if (selectedSubjects.contains(selectedClass)) {
                         selectedSubjects.remove(selectedClass)
-                        fragmentsList[i].updateFragment(isSecond = false, selected = false)
+                        (fragmentsList[i] as StudentSubjectSelectFragmnet).updateFragment(isSecond = false, selected = false)
 
                     } else {
                         selectedSubjects.add(selectedClass as SubjectsModel)
 
-                        fragmentsList[i].updateFragment(isSecond = false, selected = true)
+                        (fragmentsList[i] as StudentSubjectSelectFragmnet).updateFragment(isSecond = false, selected = true)
 
                     }
                 }
@@ -72,7 +71,7 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
 
     private var mBinding: ActivityStudentSubjectSelectBinding? = null
     private var subjectsDataMap: HashMap<String, SubjectsData> = HashMap()
-    private var fragmentsList: ArrayList<StudentSubjectSelectFragmnet> = ArrayList()
+    private var fragmentsList: ArrayList<Fragment> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -278,25 +277,6 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
                     showSnackError(e.message)
                 }
 
-    }
-
-
-    inner class PagerAdapter(fragmentManager: FragmentManager, private var fragmentsList: ArrayList<StudentSubjectSelectFragmnet>) :
-            FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-
-        // 2
-        override fun getItem(position: Int): Fragment {
-            return fragmentsList[position]
-        }
-
-        override fun getPageWidth(position: Int): Float {
-            return 0.6f
-        }
-
-        // 3
-        override fun getCount(): Int {
-            return fragmentsList.size
-        }
     }
 
 

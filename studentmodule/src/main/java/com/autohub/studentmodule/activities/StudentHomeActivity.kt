@@ -33,7 +33,6 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     override fun updateScheduleFragment() {
         if (myClassesFragment != null) {
             myClassesFragment.updateSchedules()
-
         }
     }
 
@@ -148,7 +147,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         }
 
 
-        // getIntentData()
+        getIntentData()
 
     }
 

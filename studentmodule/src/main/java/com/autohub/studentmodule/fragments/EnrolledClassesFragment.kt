@@ -150,10 +150,10 @@ class EnrolledClassesFragment : BaseFragment() {
 
                                     try {
                                         var endTime = uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
-                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.endTime!!.toDate().toString()
+                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing!!.endTime!!.toDate().toString()
                                         )
                                         var startTime = uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
-                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing.startTime!!.toDate().toString()
+                                                "EEE, d MMM yyyy HH:mm:ss z", batchesModel.timing!!.startTime!!.toDate().toString()
                                         ).toString()
                                         batchesModel.batchTiming =
                                                 startTime + " - " + endTime
