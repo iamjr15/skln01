@@ -103,7 +103,9 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
 
     }
 
-    fun requestPermissions() {
+    /* Check CALL_PHONE permission. If not granted , request for it
+    * */
+    private fun requestPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CALL_PHONE)) {
@@ -160,14 +162,21 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
         }
     }
 
+    /*Open batch options fragment
+     */
     override fun showBatchOptionsFragment(batch: BatchesModel) {
         homeBaseFragment.showBatchOptionsFragment(batch)
     }
 
+    /*
+    Open add batch or edit schedule fragment
+    */
     override fun showAddBatchFragment(showAddBatch: Boolean, batch: BatchesModel) {
         homeBaseFragment.showAddBatchFragment(showAddBatch, batch)
     }
 
+    /*Open fragment showing list of students
+    * */
     override fun showStudentsListFragment() {
         homeBaseFragment.showStudentsListFragment()
     }
@@ -175,13 +184,15 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
 
     override fun pendingRequestSelect() {
         mViewPager.currentItem = 2
-
     }
 
     override fun managerSelected() {
         homeBaseFragment.showManagerFragment()
     }
 
+    /*
+    Open pending request fragment showing details of pending requests
+    */
     override fun showPendingRequestScreen(studentId: String, documentId: String) {
         requestBaseFragment.showPendingRequestScreen(studentId, documentId)
     }

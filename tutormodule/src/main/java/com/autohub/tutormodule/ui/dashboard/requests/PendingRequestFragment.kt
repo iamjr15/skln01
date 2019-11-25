@@ -51,6 +51,7 @@ class PendingRequestFragment : BaseFragment() {
 
         fetchStudentData()
 
+        /* Open dropdown on the click of accept button showing list of batches */
         mBinding.addBatch.setOnClickListener {
             showSingleSelectionDialog(batchNames, mBinding.addBatch, getString(R.string.select_batch), selectedBatch)
         }
@@ -74,7 +75,8 @@ class PendingRequestFragment : BaseFragment() {
         }
     }
 
-    fun requestPermissions() {
+    /* Check if CALL_PHONE permission is granted.if not, show alert */
+    private fun requestPermissions() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED
         ) {
             showSnackError("You need to grant phone call permission first!!")
@@ -120,6 +122,7 @@ class PendingRequestFragment : BaseFragment() {
         }
     }
 
+    /* Fetch list of batches and add in a dropdown. */
     private fun fetchBatches(enrollStudent: Boolean) {
         firebaseStore.collection(getString(R.string.db_root_batches)).whereEqualTo("teacher.id", tutorData.id).get()
                 .addOnSuccessListener { documentSnapshot ->
@@ -139,6 +142,7 @@ class PendingRequestFragment : BaseFragment() {
                 }
     }
 
+    /* Enroll student in the selected batch. */
     private fun enrollStudentToBatch(selectedBatch: BatchRequestModel) {
 
         firebaseStore.collection(getString(R.string.db_root_batches)).document(selectedBatch.documentId!!)

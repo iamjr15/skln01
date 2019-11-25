@@ -42,6 +42,8 @@ class ScheduleFragment : BaseFragment() {
 
         mBinding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
+            /*Change position of recycler view with change in seek bar
+            * */
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
                 if (i < 10) {
                     mBinding.calendarView.scrollToPosition(0)
@@ -69,6 +71,8 @@ class ScheduleFragment : BaseFragment() {
 
     }
 
+    /*Fetch data of tutor
+    * */
     fun fetchTutorData() {
         firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
@@ -82,6 +86,8 @@ class ScheduleFragment : BaseFragment() {
                 }
     }
 
+    /*Fetch batches on the basis of tutor id
+        * */
     private fun fetchBatches() {
         firebaseStore.collection(getString(R.string.db_root_batches)).whereEqualTo("teacher.id", tutorData.id)
                 .get().addOnSuccessListener { documentSnapshot ->
