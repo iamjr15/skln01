@@ -9,27 +9,27 @@ import androidx.recyclerview.widget.RecyclerView
 import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
-import com.autohub.tutormodule.databinding.ScheduleRowBinding
+import com.autohub.tutormodule.databinding.ItemScheduleViewBinding
 import com.autohub.tutormodule.ui.utils.AppUtils
 
 class ScheduleAdaptor(var context: Context)
     : RecyclerView.Adapter<ScheduleAdaptor.Holder>() {
 
     private var batchList: List<BatchesModel> = ArrayList()
-    lateinit var exploreRowBinding: ScheduleRowBinding
+    lateinit var mBinding: ItemScheduleViewBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        exploreRowBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
-                R.layout.schedule_row, parent, false)
+        mBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context),
+                R.layout.item_schedule_view, parent, false)
 
-        return Holder(exploreRowBinding)
+        return Holder(mBinding)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        exploreRowBinding.batchName.text = batchList[position].title+" - "+ AppUtils.getClassName(batchList[position].grade?.name?.split("_")?.get(1)?.trim()!!)
+        mBinding.batchName.text = batchList[position].title+" - "+ AppUtils.getClassName(batchList[position].grade?.name?.split("_")?.get(1)?.trim()!!)
 
-        exploreRowBinding.time.text = AppUtils.uTCToLocal(
+        mBinding.time.text = AppUtils.uTCToLocal(
                 "EEE MMM dd HH:mm:ss z yyyy",
                 "EEE, d MMM yyyy HH:mm:ss z",
                 batchList[position].timing?.startTime!!.toDate().toString()).toString() + " - " +
@@ -37,24 +37,24 @@ class ScheduleAdaptor(var context: Context)
                         "EEE, d MMM yyyy HH:mm:ss z",
                         batchList[position].timing?.endTime!!.toDate().toString()).toString()
 
-        exploreRowBinding.activeButton.text = batchList[position].status
+        mBinding.activeButton.text = batchList[position].status
 
         if (batchList[position].status == AppConstants.STATUS_ACTIVE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                exploreRowBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.skyblue, null))
+                mBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.skyblue, null))
             } else {
-                exploreRowBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.skyblue))
+                mBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.skyblue))
             }
-            exploreRowBinding.activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_green_round, null)
+            mBinding.activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_green_round, null)
         }
 
         if (batchList[position].status == AppConstants.STATUS_CANCELLED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                exploreRowBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.yellow, null))
+                mBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.yellow, null))
             } else {
-                exploreRowBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.yellow))
+                mBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.yellow))
             }
-            exploreRowBinding.activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_black_round, null)
+            mBinding.activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_black_round, null)
         }
     }
 
@@ -67,8 +67,8 @@ class ScheduleAdaptor(var context: Context)
         notifyDataSetChanged()
     }
 
-    inner class Holder(exploreRowBinding: ScheduleRowBinding) :
-            RecyclerView.ViewHolder(exploreRowBinding.root) {
+    inner class Holder(mBinding: ItemScheduleViewBinding) :
+            RecyclerView.ViewHolder(mBinding.root) {
         fun bind() {
         }
     }
