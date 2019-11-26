@@ -58,7 +58,7 @@ class StudentsListFragment : BaseFragment() {
                     val students = documentSnapshot.toObjects(UserModel::class.java)
                     for (i in 0 until students.size) {
                         for (j in 0 until grades.size) {
-                            if (students[i].academicInfo?.selectedClass == grades[j].id) {
+                            if (students[i].academicInfo?.selectedGrad == grades[j].id) {
                                 students[i].className = grades[j].grade?.trim()
                             }
                         }

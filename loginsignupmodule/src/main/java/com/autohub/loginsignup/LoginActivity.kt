@@ -141,7 +141,6 @@ class LoginActivity : BaseActivity() {
         if (password.length < 6) {
             mBinding!!.edtPassword.error = resources.getString(R.string.passwordweak)
             mBinding!!.edtPassword.requestFocus()
-            // showSnackError(R.string.enter_password)
             return false
         }
         return true
@@ -224,8 +223,6 @@ class LoginActivity : BaseActivity() {
 
 
     private fun moveNext() {
-
-
         if (mBinding!!.radiostudent.isChecked) {
             Toast.makeText(this, getString(R.string.student_verify), Toast.LENGTH_SHORT).show()
             loadAndLaunchModule(STUDENT_FEATURE, "studentmodule")

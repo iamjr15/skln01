@@ -29,7 +29,7 @@ class OnBoardActivity : BaseActivity() {
 
     }
 /*
-* Check is the user is Authorized
+* Check is the user Authorized
 * studentSignUpComplete is true then user is already logged in as Student
 * tutorSignUpComplete is true then user is already logged in as Tutor
 * else he is Authorized but not complete signup process

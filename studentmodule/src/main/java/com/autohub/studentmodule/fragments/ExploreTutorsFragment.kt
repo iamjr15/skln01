@@ -40,7 +40,6 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.firebase.firestore.GeoPoint
-import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -60,7 +59,7 @@ class ExploreTutorsFragment : BaseFragment() {
     var tutorsSubjectList: ArrayList<TutorSubjectsModel> = ArrayList()
 
     fun updateExploreData(user: UserModel, subjectName: String) {
-        val studentClass = user.academicInfo!!.selectedClass
+        val studentClass = user.academicInfo!!.selectedGrad
         firebaseStore.collection("grades").whereEqualTo("id", studentClass).get().addOnSuccessListener {
             it.forEach {
                 mBinding!!.txtgrade.setText("grade ${it.getString("grade")!!}")
@@ -116,9 +115,8 @@ class ExploreTutorsFragment : BaseFragment() {
 
         if (userimagePath != null && userimagePath != "") {
 
-            val ref = FirebaseStorage.getInstance().reference.child(userimagePath)
             GlideApp.with(this)
-                    .load(ref)
+                    .load(userimagePath)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
                     .skipMemoryCache(true)
                     .placeholder(com.autohub.skln.R.drawable.default_pic)

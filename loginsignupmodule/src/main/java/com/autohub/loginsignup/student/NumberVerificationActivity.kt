@@ -112,7 +112,9 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
         }
     }
 
-
+    /*
+    * Check is entered OTP valid or not
+    * */
     fun onNextClick() {
         if (mVerificationId == null || mBinding!!.pinView.value.length != mBinding!!.pinView.pinLength) {
             showSnackError(R.string.enter_correct_otp)

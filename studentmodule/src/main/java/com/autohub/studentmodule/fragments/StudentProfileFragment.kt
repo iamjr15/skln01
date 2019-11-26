@@ -55,9 +55,8 @@ class StudentProfileFragment : BaseFragment() {
 
         if (userimagePath != null && userimagePath != "") {
 
-            val ref = FirebaseStorage.getInstance().reference.child(userimagePath)
             GlideApp.with(this)
-                    .load(ref)
+                    .load(userimagePath)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
                     .skipMemoryCache(true)
                     .placeholder(com.autohub.skln.R.drawable.default_pic)
@@ -80,7 +79,7 @@ class StudentProfileFragment : BaseFragment() {
                                 user.personInfo?.lastName!!.substring(0, 1))
                     }
 
-                    val studentClass = user.academicInfo!!.selectedClass
+                    val studentClass = user.academicInfo!!.selectedGrad
                     firebaseStore.collection("grades").whereEqualTo("id", studentClass).get().addOnSuccessListener {
 
                         it.forEach {

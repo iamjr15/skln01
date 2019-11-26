@@ -98,7 +98,7 @@ class TutorFullProfileActivity : BaseActivity() {
         showLoading()
         val studentId = firebaseAuth.currentUser!!.uid
         val tutorId = mUserViewModel!!.userId
-        val gradeId = mCurrentUser!!.academicInfo!!.selectedClass
+        val gradeId = mCurrentUser!!.academicInfo!!.selectedGrad
         var grade = ""
         var subjectId = ""
         firebaseStore.collection(getString(R.string.db_root_grades))
