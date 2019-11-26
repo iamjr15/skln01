@@ -48,12 +48,9 @@ class ScheduleFragment : BaseFragment() {
         mBinding.schedulerecycleview.adapter = adaptor
         fetchBatches()
         initializeCalendarView(dates)
-
         mBinding.swiperefresh.setOnRefreshListener {
             fetchBatches()
         }
-
-
     }
 
     fun fetchBatches() {

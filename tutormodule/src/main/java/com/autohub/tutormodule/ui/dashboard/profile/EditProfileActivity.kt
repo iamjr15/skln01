@@ -592,7 +592,7 @@ class EditProfileActivity : BaseActivity() {
             showSnackError("Please select your qualification.")
             return false
 
-        }else if (bio.text.isEmpty()) {
+        } else if (bio.text.isEmpty()) {
             showSnackError("Please add Bio.")
             return false
 
