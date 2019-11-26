@@ -2,7 +2,6 @@ package com.autohub.tutormodule.ui.dashboard.classmanager
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -46,13 +45,13 @@ class ClassesAdaptor(var context: Context, var listener: Listener) : RecyclerVie
             mBinding.toggleButton.isChecked = false
         }
 
-        mBinding.toggleButton.setOnClickListener {
+        mBinding.toggleButton.setOnCheckedChangeListener { buttonView, isChecked ->
 
-            if (mBinding.toggleButton.isChecked){
-                listener.updateStatusOfBatches(AppConstants.STATUS_CANCELLED, batchesList[position], position)
+            if (isChecked){
+                listener.updateStatusOfBatches(AppConstants.STATUS_ACTIVE, batchesList[position], position)
 
             }else{
-                listener.updateStatusOfBatches(AppConstants.STATUS_ACTIVE, batchesList[position], position)
+                listener.updateStatusOfBatches(AppConstants.STATUS_CANCELLED, batchesList[position], position)
 
             }
         }

@@ -77,8 +77,6 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
             }
         })
 
-
-
         for (tab in mTabs) {
             tab.setOnClickListener { mViewPager.currentItem = mTabs.indexOf(tab) }
         }
