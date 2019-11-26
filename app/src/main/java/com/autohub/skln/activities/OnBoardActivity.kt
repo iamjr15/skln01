@@ -28,7 +28,12 @@ class OnBoardActivity : BaseActivity() {
 
 
     }
-
+/*
+* Check is the user is Authorized
+* studentSignUpComplete is true then user is already logged in as Student
+* tutorSignUpComplete is true then user is already logged in as Tutor
+* else he is Authorized but not complete signup process
+* */
 
     private fun checkPrefrences() {
         if (firebaseAuth.currentUser != null) {
@@ -71,7 +76,7 @@ class OnBoardActivity : BaseActivity() {
     }
 
     /*
-    * Load the Signup Login Module and Lauch the Login in Activity in the Module
+    * Load the Signup Login Module and Launch the Login in Activity in the Module
     * */
     private fun loadAndLaunchModule(name: String, feature_name: String) {
         if (manager.installedModules.contains(feature_name)) {
@@ -100,10 +105,8 @@ class OnBoardActivity : BaseActivity() {
     companion object {
         private const val LOGIN_SIGNUP_FEATURE = "com.autohub.loginsignup.TutororStudentSelection"
         private const val LOGIN__FEATURE = "com.autohub.loginsignup.LoginActivity"
-
         private const val STUDENTHOMEACTIVITY_PATH = "com.autohub.studentmodule.activities.StudentHomeActivity"
         private const val STUDENTCLASSACTIVITY_PATH = "com.autohub.loginsignup.student.StudentClassSelect"
-
         private const val TUTOR_HOME_ACTIVITY_PATH = "com.autohub.tutormodule.ui.dashboard.DashboardActivity"
 
     }
