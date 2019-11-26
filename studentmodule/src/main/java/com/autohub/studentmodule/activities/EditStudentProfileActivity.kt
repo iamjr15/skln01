@@ -95,6 +95,12 @@ class EditStudentProfileActivity : BaseActivity() {
         }
     }
 
+
+    /*
+    * Fetch all Student Selected Subjects(Favt, LeastFavt, Hobbies)
+    * Filter All Subjects with Student Selected subjects and showing on UI
+    *
+    * */
     private fun fetchStudentSubjects() {
 
 
@@ -496,7 +502,9 @@ class EditStudentProfileActivity : BaseActivity() {
 
     }
 
-
+    /*
+    * show userProfile pic
+    * */
     private fun setUserProfileImage(user: String?) {
         if (user != null && user != "") {
             try {
@@ -582,11 +590,13 @@ class EditStudentProfileActivity : BaseActivity() {
 
     }
 
-
+    /*
+    *
+    * 0 favt, 1 lestfav, 2 hobbies
+    *
+    * */
     private fun saveDetailsinFireBase() {
-/*
-*  0 favt, 1 lestfav, 2 hobbies
-* */
+
         deleteOldStudentSubject()
         Handler().postDelayed({
             createBatchesForSubject(favtselectedId.split(","), 0)
@@ -603,6 +613,9 @@ class EditStudentProfileActivity : BaseActivity() {
 
     }
 
+    /*
+    * Delete all studentSubjects
+    * * */
     private fun deleteOldStudentSubject() {
         firebaseStore.collection(getString(R.string.db_root_studentSubjects))
                 .whereEqualTo(KEY_STUDENTID, firebaseAuth.currentUser!!.uid).get()
@@ -616,6 +629,12 @@ class EditStudentProfileActivity : BaseActivity() {
                 }
     }
 
+
+    /*
+    *
+    * save user personal and Academics info in DataBase
+    *
+    * */
     private fun saveData(selectedGradeId: String) {
 
         val userpersonalinfo = HashMap<String, Any>()
@@ -679,6 +698,8 @@ class EditStudentProfileActivity : BaseActivity() {
     }
 /*
 * value = 0 favt, value = 1 lestfav, value = 2 hobbies
+* Save all selected subjects in studentSubject Collection
+*
 * */
 
     private fun createBatchesForSubject(selectedSubjects: List<String>, value: Int) {
@@ -823,6 +844,9 @@ class EditStudentProfileActivity : BaseActivity() {
 
     }
 
+    /*
+    * Upload user image on Firebase Storage and get the Download URL
+    * */
     private fun uploadImage(uri: Uri) {
         val file = File(uri.path!!)
         val size = file.length().toInt()
@@ -857,6 +881,12 @@ class EditStudentProfileActivity : BaseActivity() {
 
     }
 
+
+    /*
+    *
+    * Save userImage download URL in user personal info
+    *
+    * */
     private fun saveUserPhotoOnFirestore(pathString: String) {
 
         val root = getString(R.string.db_root_students)
