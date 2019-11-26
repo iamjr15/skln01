@@ -34,6 +34,11 @@ class StudentHey : BaseActivity() {
         mIsSeniorClass = intent.getBooleanExtra("is_senior", false)
     }
 
+
+    /*
+    * mIsSeniorClass true means we need to show Subjects for 11-12 class
+    * mIsSeniorClass false means we need to show Subjects for 1-10 class
+    * */
     fun onNextClick() {
         val i: Intent = if (mIsSeniorClass)
             Intent(this, StudentSubjectSelectSeniorActivity::class.java)

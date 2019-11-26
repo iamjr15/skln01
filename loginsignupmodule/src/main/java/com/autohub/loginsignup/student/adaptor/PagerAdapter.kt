@@ -12,8 +12,6 @@ class PagerAdapter(fragmentManager: FragmentManager) :
         this.fragmentsList = fragmentsList
     }
 
-
-    // 2
     override fun getItem(position: Int): Fragment {
         return fragmentsList[position]
     }
@@ -22,7 +20,6 @@ class PagerAdapter(fragmentManager: FragmentManager) :
         return 0.6f
     }
 
-    // 3
     override fun getCount(): Int {
         return fragmentsList.size
     }

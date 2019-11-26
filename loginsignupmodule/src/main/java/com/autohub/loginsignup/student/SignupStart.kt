@@ -93,6 +93,11 @@ class SignupStart : BaseActivity(), TextView.OnEditorActionListener {
 
     }
 
+
+    /*
+    *Verify fields
+    *
+    * */
     fun onNextClick() {
         if (isValid(mBinding!!.edtFirstName, mBinding!!.edtLastName)) {
             val password = mBinding!!.edtPassword.text
@@ -135,6 +140,11 @@ class SignupStart : BaseActivity(), TextView.OnEditorActionListener {
     }
 
 
+    /*
+    * Save all user Data in Hash Map for future use
+    * and navigate user to OTP verification screen
+    *
+    * */
     private fun makeSaveRequest() {
         val userMap = HashMap<String, Any>()
         userMap[KEY_FIRST_NAME] = mBinding!!.edtFirstName.text!!.toString().trim()

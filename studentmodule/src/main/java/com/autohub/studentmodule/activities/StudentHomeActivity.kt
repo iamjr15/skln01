@@ -154,9 +154,14 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     user = documentSnapshot.toObject(UserModel::class.java)!!
-                    val geopoints = ((documentSnapshot.data!!["personInfo"] as HashMap<*, *>)["location"]) as GeoPoint
-                    user!!.personInfo!!.latitude = geopoints.latitude
-                    user!!.personInfo!!.longitude = geopoints.longitude
+
+                    if ((documentSnapshot.data!!["personInfo"] as HashMap<*, *>)["location"] != null) {
+                        val geopoints = ((documentSnapshot.data!!["personInfo"] as HashMap<*, *>)["location"]) as GeoPoint
+                        user!!.personInfo!!.latitude = geopoints.latitude
+                        user!!.personInfo!!.longitude = geopoints.longitude
+                    }
+
+
                     this.user = user
                     userimagePath = user!!.personInfo!!.accountPicture
                     user!!.id = documentSnapshot.id

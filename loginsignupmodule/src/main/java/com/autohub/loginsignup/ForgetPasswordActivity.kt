@@ -18,8 +18,11 @@ class ForgetPasswordActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_forget_password)
         mBinding!!.callback = this
-
     }
+
+    /*
+    * send Password Reset Mail to user
+    * */
 
     fun onForgotPassword() {
         if (validateField()) {
@@ -32,12 +35,15 @@ class ForgetPasswordActivity : BaseActivity() {
                         showSnackError(it.message)
 
                     }
-
         }
-
     }
 
 
+    /*
+    *
+    * validate email
+    *
+    * */
     private fun validateField(): Boolean {
         val email = mBinding!!.edtemail.text!!
 

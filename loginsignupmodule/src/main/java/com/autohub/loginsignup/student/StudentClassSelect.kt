@@ -49,7 +49,6 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 20.0f, 40.0f)
 
 
-        getGrades()
         insertClassData()
 
         val countList: ArrayList<String> = ArrayList()
@@ -65,10 +64,6 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
         mBinding!!.viewpager.offscreenPageLimit = 5
         mBinding!!.wormDotsIndicator.setViewPager(mBinding!!.viewpager)
 
-
-    }
-
-    private fun getGrades() {
 
     }
 
@@ -125,6 +120,7 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
 
     /*
     * add user slected class id on firebase
+    * Save user Document Id locally for future use
     * */
     private fun updatedataOnFirebase(selectedclassId: String) {
 
@@ -138,9 +134,6 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
                 .get().addOnSuccessListener {
                     it.forEach {
 
-                        /*
-                        * Save user Document Id locally for future use
-                        * */
 
                         appPreferenceHelper.setUserId(it.id)
 
