@@ -5,7 +5,7 @@ import android.os.Parcelable
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.GeoPoint
 
-data class BatchesModel(var documentId: String? = "",
+data class BatchesModel(var documentationId: String? = "",
                         var batchCode: String? = "",
                         var status: String? = "",
                         var grade: Grade? = Grade(),
@@ -198,7 +198,7 @@ data class BatchesModel(var documentId: String? = "",
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(documentId)
+        parcel.writeString(documentationId)
         parcel.writeString(batchCode)
         parcel.writeString(status)
         parcel.writeParcelable(grade, flags)

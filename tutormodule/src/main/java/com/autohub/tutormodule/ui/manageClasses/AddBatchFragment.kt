@@ -145,7 +145,7 @@ class AddBatchFragment : BaseFragment() {
         showDialog(items, mBinding.selectSubject, "Select Subject", selectedSub)
     }
 
-    /*Fetch gardes and students data and them in an array
+    /*Fetch grades and students data and them in an array
         * */
     private fun fetchData() {
         showLoading()
@@ -222,8 +222,9 @@ class AddBatchFragment : BaseFragment() {
                 (((Math.random() * 9000) + 1000).toInt())
 
         if (!isAddBatch) {
-            batchesModel.documentId = batch.documentId;
-            firebaseStore.collection(getString(R.string.db_root_batches)).document(batch.documentId!!).update(
+            batchesModel.documentationId = batch.documentationId
+            firebaseStore.collection(getString(R.string.db_root_batches)).document(batch.documentationId!!).
+                    update(
                     "title", batchesModel.title,
                     "timing.startTime", batchesModel.timing?.startTime,
                     "timing.startTime", batchesModel.timing?.endTime,
@@ -241,7 +242,7 @@ class AddBatchFragment : BaseFragment() {
         } else {
             firebaseStore.collection(getString(R.string.db_root_batches)).add(batchesModel).
                     addOnSuccessListener {
-                batchesModel.documentId = it.id
+                batchesModel.documentationId = it.id
                 hideLoading()
                 showSnackError("Batch Added successfully!!")
 

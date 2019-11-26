@@ -22,7 +22,7 @@ import kotlin.collections.ArrayList
  */
 
 class ClassManagerListFragment(val type: String) : BaseFragment(), Listener {
-    private var mBinding: FragmentClassManagerListBinding? = null
+    private lateinit var mBinding: FragmentClassManagerListBinding
     private var adaptor: ClassesAdaptor? = null
     private lateinit var homeListener: HomeListener
     private lateinit var recyclerViewData: MutableList<BatchesModel>
@@ -36,11 +36,14 @@ class ClassManagerListFragment(val type: String) : BaseFragment(), Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding = FragmentClassManagerListBinding.bind(view)
-        mBinding!!.classesrecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        mBinding.classesrecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         adaptor = ClassesAdaptor(requireContext(), this)
-        mBinding!!.classesrecycleview.adapter = adaptor
-        fetchBatches()
+        mBinding.classesrecycleview.adapter = adaptor
 
+        mBinding.swipeRefresh.setOnRefreshListener {
+            fetchBatches(true)
+        }
+        fetchBatches(false)
     }
 
     override fun onAttach(context: Context) {
@@ -48,13 +51,13 @@ class ClassManagerListFragment(val type: String) : BaseFragment(), Listener {
         homeListener = context as HomeListener
     }
 
-    private fun fetchBatches() {
+    private fun fetchBatches(refresh: Boolean) {
         firebaseStore.collection(getString(R.string.db_root_batches))
                 .get().addOnSuccessListener { documentSnapshot ->
                     recyclerViewData = ArrayList()
                     recyclerViewData = documentSnapshot.toObjects(BatchesModel::class.java)
                     for (i in 0 until recyclerViewData.size) {
-                        recyclerViewData[i].documentId = documentSnapshot.documents[i].id
+                        recyclerViewData[i].documentationId = documentSnapshot.documents[i].id
                     }
 
                     if (type == "Today") {
@@ -71,8 +74,15 @@ class ClassManagerListFragment(val type: String) : BaseFragment(), Listener {
                         adaptor?.setData(recyclerViewData)
 
                     }
+
+                    if (refresh){
+                        mBinding.swipeRefresh.isRefreshing = false
+                    }
                 }
                 .addOnFailureListener { e ->
+                    if (refresh){
+                        mBinding.swipeRefresh.isRefreshing = false
+                    }
                     showSnackError(e.message)
                 }
     }
@@ -83,8 +93,8 @@ class ClassManagerListFragment(val type: String) : BaseFragment(), Listener {
 
     override fun updateStatusOfBatches(status: String, batchesModel: BatchesModel, position: Int) {
         showLoading()
-        firebaseStore.collection(getString(R.string.db_root_batches)).document(batchesModel.documentId!!)
-                .update("status", status).addOnSuccessListener { documentSnapshot ->
+        firebaseStore.collection(getString(R.string.db_root_batches)).document(batchesModel.documentationId!!)
+                .update("status", status).addOnSuccessListener {
                     hideLoading()
                 }
                 .addOnFailureListener { e ->

@@ -36,6 +36,10 @@ class HomeFragment : BaseFragment() {
         fetchTutorData()
     }
 
+    /**
+     * Fetch pending requests data on the basis of teacher id and status(if status equals to pending)
+     * @param tutorData
+     */
     private fun fetchPendingRequests(tutorData: TutorData) {
         firebaseStore.collection(getString(R.string.db_root_batch_requests))
                 .whereEqualTo("teacher.id", tutorData.id)
@@ -44,11 +48,15 @@ class HomeFragment : BaseFragment() {
                     if (documentSnapshot.documents.size > 0) {
                         val data = documentSnapshot.toObjects(BatchesModel::class.java)
                         if (data != null && data.size > 0) {
+                            hideLoading()
                             mBinding.pendingRequestCount.text = data.size.toString()
                         }
+                    } else {
+                        hideLoading()
                     }
                 }
                 .addOnFailureListener { e ->
+                    hideLoading()
                     showSnackError(e.message)
                 }
     }
@@ -56,7 +64,6 @@ class HomeFragment : BaseFragment() {
     private fun fetchTutorData() {
         firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
-                    hideLoading()
                     val tutorData = documentSnapshot.toObject(TutorData::class.java)!!
                     mBinding.name.text = "Hey,\n" + tutorData.personInfo?.firstName
 
