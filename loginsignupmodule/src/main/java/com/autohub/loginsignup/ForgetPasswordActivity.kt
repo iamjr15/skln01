@@ -38,7 +38,7 @@ class ForgetPasswordActivity : BaseActivity() {
     }
 
 
-    fun validateField(): Boolean {
+    private fun validateField(): Boolean {
         val email = mBinding!!.edtemail.text!!
 
         if (email == null) {

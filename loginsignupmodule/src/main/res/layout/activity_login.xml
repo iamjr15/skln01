@@ -42,7 +42,6 @@
                     android:id="@+id/rrshaddowradio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="22dp"
                     android:background="@drawable/cardshadowbg_login">

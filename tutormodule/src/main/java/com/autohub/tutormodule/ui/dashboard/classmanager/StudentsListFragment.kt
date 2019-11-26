@@ -31,7 +31,6 @@ class StudentsListFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentStudentsListBinding.bind(view)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//        binding.recyclerView.setEmptyView(binding.rrempty)
         mAdapter = StudentListAdaptor(requireContext())
         binding.recyclerView.adapter = mAdapter
 
