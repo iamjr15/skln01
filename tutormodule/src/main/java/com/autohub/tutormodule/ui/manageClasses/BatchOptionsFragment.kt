@@ -1,6 +1,7 @@
 package com.autohub.tutormodule.ui.manageClasses
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,17 @@ class BatchOptionsFragment : BaseFragment() {
         mBinding.batchCode.text = "Batch CODE : " + batchData.batchCode
         mBinding.batchName.text = batchData.title
         mBinding.className.text = batchData.grade?.name?.replace("_", " ") + " | " + batchData.subject?.name
+
+        mBinding.batchCode.setOnClickListener {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "Hi ,Below is your Batch Code for " +
+                        batchData.title.toString().toUpperCase() + " Batch.\n\n" + batchData.batchCode)
+                type = "text/plain"
+            }
+            val shareIntent = Intent.createChooser(sendIntent, "Share Batch Code.")
+            startActivity(shareIntent)
+        }
     }
 
 

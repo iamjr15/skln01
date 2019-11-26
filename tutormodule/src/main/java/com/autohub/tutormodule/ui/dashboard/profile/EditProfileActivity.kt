@@ -208,8 +208,6 @@ class EditProfileActivity : BaseActivity() {
     }
 
     fun onClassToTeach() {
-//        showClassesToTeach()
-
         val items = ArrayList<String>()
         items.add("Class " + AppConstants.CLASS_1 + CommonUtils.getClassSuffix(AppConstants.CLASS_1.toInt()))
         items.add("Class " + AppConstants.CLASS_2 + CommonUtils.getClassSuffix(AppConstants.CLASS_2.toInt()))
@@ -239,7 +237,6 @@ class EditProfileActivity : BaseActivity() {
 
         val items = resources.getStringArray(R.array.experience_arrays).toList()
         showSingleSelectionDialog(items, mBinding.teachingExperience, getString(R.string.select_treaching_epereience), selectedExp)
-        //showExperience()
     }
 
     fun onSelectQualification() {
@@ -281,10 +278,9 @@ class EditProfileActivity : BaseActivity() {
 
 
         showMultiSelectionDialog(items, mBinding.targetedBoard, getString(R.string.select_targeted_board), selectedTargetBoard)
-//        showTargetBoard()
     }
 
-    fun showMultiSelectionDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>) {
+    private fun showMultiSelectionDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>) {
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
         val selectedvalues = ArrayList<String>()
@@ -355,8 +351,6 @@ class EditProfileActivity : BaseActivity() {
                     testview.text = namesArr[selectedPosition]
                     selectedItems.clear()
                     selectedItems.add(namesArr[selectedPosition])
-                    /*  mBinding.grade.text = namesArr[selectedPosition]
-                      user!!.studentClass = (selectedPosition + 1).toString()*/
                 }
                 .show()
     }
@@ -393,7 +387,7 @@ class EditProfileActivity : BaseActivity() {
         }
     }
 
-    fun onAddPicture() {
+    private fun onAddPicture() {
 
         TedBottomPicker.with(this)
                 .show { uri ->
@@ -410,42 +404,6 @@ class EditProfileActivity : BaseActivity() {
     }
 
 
-    /*  private fun showOccupation() {
-          var items = getResources().getStringArray(R.array.occupation_arrays).toList()
-
-          val namesArr = items.toTypedArray()
-          val booleans = BooleanArray(items.size)
-          val selectedOccupation = ArrayList<String>()
-
-          val title: String
-          title = "Choose Occupation"
-          AlertDialog.Builder(this)
-                  .setMultiChoiceItems(namesArr, booleans
-                  ) { _, i, b ->
-                      if (b) {
-                          selectedOccupation.add(items[i])
-                      } else {
-                          selectedOccupation.remove(items[i])
-                      }
-                  }
-                  .setTitle(title)
-                  .setPositiveButton("OK") { dialog, _ ->
-                      dialog.dismiss()
-                      var selectedSubString = ""
-                      for (i in selectedOccupation.indices) {
-                          selectedSubString += if (i == selectedOccupation.size - 1) {
-                              selectedOccupation[i]
-                          } else {
-                              selectedOccupation[i] + ","
-                          }
-                      }
-                      mBinding.selectOccupation.text = selectedSubString
-
-                  }
-                  .show()
-
-      }*/
-
     fun onBackClick() {
         onBackPressed()
     }
@@ -454,27 +412,6 @@ class EditProfileActivity : BaseActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
-    }
-
-    private fun setupProfile() {
-        val ref = FirebaseStorage.getInstance().reference.child("tutor/" +
-                "j9MtRdT5L0g62QiQ7z514z0hQz52"/*firebaseAuth.currentUser!!.uid*/ + ".jpg")
-        GlideApp.with(this)
-                .load(ref)
-                .placeholder(com.autohub.skln.R.drawable.default_pic)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                .skipMemoryCache(true)
-
-                .into(mBinding.profilePicture)
-    }
-
-    private fun setUpUserInfo() {
-        firebaseStore.collection(getString(R.string.db_root_tutors)).document("j9MtRdT5L0g62QiQ7z514z0hQz52"/*firebaseAuth.currentUser!!.uid*/).get()
-                .addOnSuccessListener { documentSnapshot ->
-                    val user = documentSnapshot.toObject(User::class.java)
-//                    mUserViewModel!!.user = user!!
-                }
-                .addOnFailureListener { e -> showSnackError(e.message) }
     }
 
 
@@ -493,10 +430,11 @@ class EditProfileActivity : BaseActivity() {
                 picRef.downloadUrl.addOnSuccessListener {
                     profilePictureUri = it.toString()
                 }
+                Toast.makeText(this, "Profile Picture uploaded successfully!", Toast.LENGTH_LONG).show()
                 hideLoading()
             }.addOnFailureListener { e ->
                 hideLoading()
-                Toast.makeText(this, "Upload Failed -> $e", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Upload Failed $e", Toast.LENGTH_LONG).show()
             }
 
         } catch (e: FileNotFoundException) {
@@ -505,31 +443,6 @@ class EditProfileActivity : BaseActivity() {
         } catch (e: IOException) {
             e.printStackTrace()
             hideLoading()
-        }
-    }
-
-
-    private fun editBio(bio: String) {
-        val user = HashMap<String, Any>()
-        user[AppConstants.KEY_BIODATA] = bio
-
-        FirebaseFirestore.getInstance().collection(getString(R.string.db_root_tutors)).document(FirebaseAuth.getInstance().currentUser!!.uid).set(user, SetOptions.merge())
-                .addOnSuccessListener {
-                    //                    mUserViewModel!!.bioData = bio
-                }
-                .addOnFailureListener { }
-    }
-
-
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1122 && resultCode == Activity.RESULT_OK && data != null) {
-            val croppedUri = data.getParcelableExtra<Uri>("_cropped_uri_")
-            val originalUri = data.getParcelableExtra<Uri>("_original_uri_")
-            Log.d(">>>RegisterAcRes", croppedUri!!.toString() + " , " + originalUri!!.toString())
-            mBinding.profilePicture.setImageURI(croppedUri)
-            mBinding.profilePicture.tag = croppedUri.path
-            // uploadImage(croppedUri)
         }
     }
 

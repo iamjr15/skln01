@@ -9,9 +9,6 @@
             name="callback"
             type="com.autohub.tutormodule.ui.dashboard.profile.EditProfileActivity" />
 
-        <!--        <variable-->
-        <!--            name="tutorViewModel"-->
-        <!--            type="com.autohub.skln.models.tutor.TutorData" />-->
     </data>
 
     <ScrollView
