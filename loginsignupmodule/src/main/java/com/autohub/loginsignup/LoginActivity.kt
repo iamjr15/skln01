@@ -21,6 +21,7 @@ import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuth
 
 /**
  * Created by Vt Netzwelt
@@ -193,7 +194,6 @@ class LoginActivity : BaseActivity() {
                     mBinding!!.edtTutorPassword.text.toString().trim())
         }
 
-
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener {
                     hideLoading()
@@ -245,19 +245,48 @@ class LoginActivity : BaseActivity() {
         if (mBinding!!.radiostudent.isChecked) {
             firebaseStore.collection(getString(R.string.db_root_students)).whereEqualTo(AppConstants.KEY_USER_ID, firebaseAuth.currentUser!!.uid)
                     .get().addOnSuccessListener {
-                        it.forEach {
-                            appPreferenceHelper.setUserId(it.id)
-                            moveNext()
+
+                        if (it.size() > 0) {
+                            it.forEach {
+                                appPreferenceHelper.setUserId(it.id)
+                                moveNext()
+                            }
+
+                        } else {
+
+                            showSnackError("Wrong Credentials!")
+                            FirebaseAuth.getInstance().signOut()
                         }
+
+
+                    }.addOnFailureListener()
+                    {
+                        showSnackError(it.message)
+
+                        FirebaseAuth.getInstance().signOut()
+
+
                     }
+
         } else {
             firebaseStore.collection(getString(R.string.db_root_tutors)).whereEqualTo(AppConstants.KEY_USER_ID, firebaseAuth.currentUser?.uid)
                     .get().addOnSuccessListener {
-                        it.forEach {
-                            appPreferenceHelper.setUserId(it.id)
-                            moveNext()
+                        if (it.size() > 0) {
+                            it.forEach {
+                                appPreferenceHelper.setUserId(it.id)
+                                moveNext()
+                            }
+                        } else {
+                            showSnackError("Wrong Credentials!")
+                            FirebaseAuth.getInstance().signOut()
                         }
+
+                    }.addOnFailureListener()
+                    {
+                        showSnackError(it.message)
+                        FirebaseAuth.getInstance().signOut()
                     }
+
         }
 
     }
