@@ -126,7 +126,7 @@ class StudentClassSelect : BaseActivity(), ClassSelectionListner {
     /*
     * add user slected class id on firebase
     * */
-    fun updatedataOnFirebase(selectedclassId: String) {
+    private fun updatedataOnFirebase(selectedclassId: String) {
 
         val isSeniorClass = selectedClass.equals(CLASS_11, ignoreCase = true) || selectedClass.equals(CLASS_12, ignoreCase = true)
 

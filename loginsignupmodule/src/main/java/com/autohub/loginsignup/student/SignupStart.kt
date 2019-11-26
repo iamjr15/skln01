@@ -54,7 +54,7 @@ class SignupStart : BaseActivity(), TextView.OnEditorActionListener {
         }
     }
 
-    fun passwordVisibility(editText: AppCompatEditText) {
+    private fun passwordVisibility(editText: AppCompatEditText) {
         if (editText.transformationMethod is PasswordTransformationMethod) {
             editText.transformationMethod = null
             mBinding!!.txtshowpass.setText(R.string.hide)

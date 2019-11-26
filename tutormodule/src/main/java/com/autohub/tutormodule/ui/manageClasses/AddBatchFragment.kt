@@ -61,6 +61,8 @@ class AddBatchFragment : BaseFragment() {
             isAddBatch = this.arguments!!.getBoolean("showAddBatch")
         }
 
+        /*Check if its add batch fragment or edit schedule and show title accordingly
+        * */
         if (!isAddBatch) {
             mBinding.textHeading.text = resources.getString(R.string.edit_schedule)
             batch = this.arguments!!.getParcelable("batch")!!
@@ -81,7 +83,8 @@ class AddBatchFragment : BaseFragment() {
         }
     }
 
-
+    /*Fill data in fields
+    * */
     private fun setData() {
         mBinding.batchName.setText(batch.title.toString())
 
@@ -107,6 +110,8 @@ class AddBatchFragment : BaseFragment() {
         homeListener = context as HomeListener
     }
 
+    /*Open time picker on click of start and end time
+    * */
     fun openTimePicker(view: View) {
         val cal = Calendar.getInstance()
 
@@ -118,7 +123,8 @@ class AddBatchFragment : BaseFragment() {
         TimePickerDialog(context, R.style.DialogTheme, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
     }
 
-
+    /*Open list of classes on click of select class
+    * */
     fun showClasses() {
         val items = ArrayList<String>()
 
@@ -128,6 +134,8 @@ class AddBatchFragment : BaseFragment() {
         showDialog(items, mBinding.selectClass, "Select Class", selectedClass)
     }
 
+    /*Open list of classes on click of select Subjects
+    * */
     fun showSubjects() {
         val items = ArrayList<String>()
 
@@ -137,7 +145,8 @@ class AddBatchFragment : BaseFragment() {
         showDialog(items, mBinding.selectSubject, "Select Subject", selectedSub)
     }
 
-
+    /*Fetch gardes and students data and them in an array
+        * */
     private fun fetchData() {
         showLoading()
         firebaseStore.collection(getString(R.string.db_root_grades)).get().addOnSuccessListener { documentSnapshot ->
@@ -168,6 +177,8 @@ class AddBatchFragment : BaseFragment() {
                 }
     }
 
+    /*Update existing batch or add new batch
+        * */
     private fun addBatch() {
         showLoading()
         val batchesModel = BatchesModel()
@@ -255,7 +266,8 @@ class AddBatchFragment : BaseFragment() {
 
     }
 
-
+    /*Update color of selected days and add them in an array
+    * */
     fun onDaySelected(view: View) {
         if ((view as TextView).currentTextColor == resources.getColor(R.color.black)) {
             view.background = resources.getDrawable(R.drawable.bg_round_blue, null)
@@ -317,6 +329,8 @@ class AddBatchFragment : BaseFragment() {
                 .show()
     }
 
+    /*Add validation to check if all fiels are filled
+        * */
     private fun isVerified(): Boolean {
         if (mBinding.batchName.text.isEmpty()) {
             showSnackError("Please add name of batch.")

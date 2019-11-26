@@ -104,7 +104,6 @@ class EditProfileActivity : BaseActivity() {
         mBinding.targetedBoard.text = tutor?.qualification?.targetBoard
         mBinding.bio.setText(tutor?.personInfo?.biodata)
 
-
         GlideApp.with(this)
                 .load(tutor?.personInfo?.accountPicture)
                 .placeholder(com.autohub.skln.R.drawable.default_pic)
@@ -149,8 +148,6 @@ class EditProfileActivity : BaseActivity() {
                     hideLoading()
                     showSnackError(e.message)
                 }
-
-
     }
 
 

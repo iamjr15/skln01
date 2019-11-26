@@ -18,9 +18,9 @@ class StudentListAdaptor(var context: Context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         mBinding = DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_student, parent, false
-                )
+                LayoutInflater.from(parent.context),
+                R.layout.item_student, parent, false
+        )
 
         return Holder(mBinding)
     }

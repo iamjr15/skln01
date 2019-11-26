@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.autohub.skln.fragment.BaseFragment
-import com.autohub.skln.models.batchRequests.SubjectData
 import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorBatchOptionsBinding

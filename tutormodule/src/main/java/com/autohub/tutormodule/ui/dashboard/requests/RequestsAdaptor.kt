@@ -36,6 +36,7 @@ class RequestsAdaptor(var context: Context, val listener: Listener)
             itemRequestBinding.next.visibility = View.INVISIBLE
         }
 
+        /* Open pending request screen only when request status is pending */
         holder.itemView.setOnClickListener {
             if (requestsList[position].status == AppConstants.STATUS_PENDING) {
                 listener.showPendingRequestFragment(requestsList[position].student?.id!!, requestsList[position].documentId!!)

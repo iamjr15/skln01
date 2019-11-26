@@ -30,7 +30,7 @@ import java.util.*
 class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner {
 
     private var selectedSubjects: ArrayList<SubjectsModel> = ArrayList()
-    lateinit var subjectDataList: ArrayList<SubjectsModel>
+    private lateinit var subjectDataList: ArrayList<SubjectsModel>
 
     override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: Any) {
 
@@ -85,7 +85,7 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
     }
 
     private fun fetchSubjects() {
-        var listData: ArrayList<SubjectsModel> = arrayListOf()
+        val listData: ArrayList<SubjectsModel> = arrayListOf()
         firebaseStore.collection("subjects").get().addOnCompleteListener {
 
             if (it.isSuccessful) {
@@ -101,7 +101,7 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
         }
     }
 
-    fun showView() {
+    private fun showView() {
 
         val countList: ArrayList<String> = ArrayList()
         countList.add("1")
@@ -117,7 +117,7 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
             val spannable = SpannableStringBuilder(resources.getString(R.string.select_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.BLUE), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 21, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
-            this.mBinding!!.tvSelectText!!.setText(spannable, TextView.BufferType.SPANNABLE)
+            this.mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE)
             Utilities.animateProgressbar(mBinding!!.pbSignupProgress, 40.0f, 60.0f)
 
         } else {
@@ -126,7 +126,7 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
             val spannable = SpannableStringBuilder(resources.getString(R.string.select_least_favorite_subject))
             spannable.setSpan(ForegroundColorSpan(Color.RED), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             spannable.setSpan(UnderlineSpan(), 12, 27, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
-            mBinding!!.tvSelectText!!.setText(spannable, TextView.BufferType.SPANNABLE)
+            mBinding!!.tvSelectText.setText(spannable, TextView.BufferType.SPANNABLE)
         }
 
         getFragments(countList)
@@ -198,9 +198,9 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
         }
         showLoading()
 
-        var batch: WriteBatch = firebaseStore.batch()
+        val batch: WriteBatch = firebaseStore.batch()
         for (i in selectedSubjects) {
-            var map: HashMap<String, String> = HashMap()
+            val map: HashMap<String, String> = HashMap()
 
             if (mFavoriteOrLeast) {
                 map["category"] = "favorite"
@@ -239,7 +239,7 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
     }
 
 
-    fun saveData() {
+    private fun saveData() {
         val stringBuilder = StringBuilder()
         if (selectedSubjects.size > 0) {
             stringBuilder.append(selectedSubjects[0].id)

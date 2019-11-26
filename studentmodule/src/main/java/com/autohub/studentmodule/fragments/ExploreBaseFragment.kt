@@ -28,7 +28,7 @@ class ExploreBaseFragment : Fragment() {
     fun showExploreFragment(subjectName: String = "") {
         exploreTutorsFragment = ExploreTutorsFragment()
 
-        if (!subjectName.equals("")) {
+        if (subjectName != "") {
             val bundle = Bundle()
             bundle.putString("data_key", subjectName)
             exploreTutorsFragment!!.arguments = bundle

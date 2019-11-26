@@ -80,7 +80,7 @@ class HomeFragment : BaseFragment() {
         homeListner = context as HomeListener
     }
 
-    fun onpendingrequestClick() {
+    fun onPendingRequestClick() {
         homeListner.pendingRequestSelect()
 
     }

@@ -14,7 +14,7 @@ import com.autohub.studentmodule.models.BatchesModel
  * Created by Vt Netzwelt
  */
 
-class EnrolledClassesAdaptor(var context: Context, var erolldClassDeleteClickListener: ItemClickListener<BatchesModel>)
+class EnrolledClassesAdaptor(var context: Context, private var erolldClassDeleteClickListener: ItemClickListener<BatchesModel>)
     : RecyclerView.Adapter<EnrolledClassesAdaptor.Holder>() {
 
     private var userList: List<BatchesModel> = ArrayList()
@@ -23,8 +23,7 @@ class EnrolledClassesAdaptor(var context: Context, var erolldClassDeleteClickLis
         val enrolledClasesBinding: EnrolledclassesRowBinding =
                 DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.enrolledclasses_row, parent, false
-                )
+                        R.layout.enrolledclasses_row, parent, false)
 
         return Holder(enrolledClasesBinding)
     }
@@ -43,11 +42,7 @@ class EnrolledClassesAdaptor(var context: Context, var erolldClassDeleteClickLis
                 studentsCount.text = it.enrolledStudentsId!!.size.toString() + " students"
                 time.text = it.batchTiming
             }
-
         }
-
-
-
     }
 
     override fun getItemCount(): Int {

@@ -23,8 +23,7 @@ object AppUtil {
         val originalFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US)
         val targetFormat = SimpleDateFormat("h:mm a")
         val date = originalFormat.parse(gmt.toString())
-        val formattedDate = targetFormat.format(date)
-        return formattedDate
+        return targetFormat.format(date)
     }
 
 }

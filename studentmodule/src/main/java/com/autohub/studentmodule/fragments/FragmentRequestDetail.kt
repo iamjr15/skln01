@@ -131,8 +131,6 @@ class FragmentRequestDetail : BaseFragment() {
                                     showSnackError(e.message)
                                 }
                     }
-
-
                 }
     }
 
@@ -158,7 +156,7 @@ class FragmentRequestDetail : BaseFragment() {
     }
 
     private fun opDialer() {
-        var number = "tel:" + mTutor!!.personInfo!!.phone
+        val number = "tel:" + mTutor!!.personInfo!!.phone
 
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse(number)
