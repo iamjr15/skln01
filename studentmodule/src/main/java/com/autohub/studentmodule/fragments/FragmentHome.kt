@@ -105,6 +105,10 @@ class FragmentHome : BaseFragment() {
                 .addOnFailureListener { e -> showSnackError(e.message) }
     }
 
+    /*
+    * get student subjects as per 1-10 or 11-12
+    *
+    * */
     private fun setSubjects(user: UserModel) {
         var grade: String
 
@@ -120,6 +124,9 @@ class FragmentHome : BaseFragment() {
 
     }
 
+    /*
+    * get Student Hobbies
+    * */
     private fun setHobbies(user: UserModel) {
         hobbiesAdaptor!!.setData(user.getHobbies())
     }

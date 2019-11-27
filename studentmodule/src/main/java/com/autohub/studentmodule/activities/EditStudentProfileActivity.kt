@@ -679,7 +679,6 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
         }
 
 //        useracadmicinfo[KEY_STDT_LEAST_FAV_CLASSES] = leastselectedId.split(",")
-//hdsjhsa
 
 
 //        useracadmicinfo[KEY_STDT_FAVORITE_CLASSES] = favtselectedId.split(",")
@@ -777,7 +776,10 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
         }
     }
 
-
+    /*
+    * Fields verification
+    *
+    * */
     private fun isVerified(): Boolean {
         if (mBinding!!.edtFirstName.text.isEmpty() || mBinding!!.edtFirstName.text.toString().trim().length < 2) {
 

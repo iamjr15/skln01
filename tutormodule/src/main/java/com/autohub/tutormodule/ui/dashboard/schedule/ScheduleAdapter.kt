@@ -10,10 +10,12 @@ import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ItemScheduleViewBinding
+import com.autohub.tutormodule.ui.utils.AppConstants.DateFormatInput
+import com.autohub.tutormodule.ui.utils.AppConstants.DateFormatOutput
 import com.autohub.tutormodule.ui.utils.AppUtils
 
-class ScheduleAdaptor(var context: Context)
-    : RecyclerView.Adapter<ScheduleAdaptor.Holder>() {
+class ScheduleAdapter(var context: Context)
+    : RecyclerView.Adapter<ScheduleAdapter.Holder>() {
 
     private var batchList: List<BatchesModel> = ArrayList()
     lateinit var mBinding: ItemScheduleViewBinding
@@ -27,14 +29,12 @@ class ScheduleAdaptor(var context: Context)
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        mBinding.batchName.text = batchList[position].title+" - "+ AppUtils.getClassName(batchList[position].grade?.name?.split("_")?.get(1)?.trim()!!)
+        mBinding.batchName.text = batchList[position].title + " - " + AppUtils.getClassName(batchList[position].grade?.name?.split("_")?.get(1)?.trim()!!)
 
         mBinding.time.text = AppUtils.uTCToLocal(
-                "EEE MMM dd HH:mm:ss z yyyy",
-                "EEE, d MMM yyyy HH:mm:ss z",
+                DateFormatInput, DateFormatOutput,
                 batchList[position].timing?.startTime!!.toDate().toString()).toString() + " - " +
-                AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
-                        "EEE, d MMM yyyy HH:mm:ss z",
+                AppUtils.uTCToLocal(DateFormatInput, DateFormatOutput,
                         batchList[position].timing?.endTime!!.toDate().toString()).toString()
 
         mBinding.activeButton.text = batchList[position].status

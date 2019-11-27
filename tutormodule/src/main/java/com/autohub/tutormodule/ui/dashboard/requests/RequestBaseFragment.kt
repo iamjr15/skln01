@@ -49,6 +49,15 @@ class RequestBaseFragment : BaseFragment() {
                 .replace(R.id.requestcontainer, fragment).commit()*/
 
     }
+
+    fun backPressed() {
+        if (childFragmentManager.backStackEntryCount > 1) {
+            childFragmentManager.popBackStack()
+
+        } else {
+            activity?.finish()
+        }
+    }
 }
 
 
