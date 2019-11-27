@@ -18,7 +18,8 @@ import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorAddBatchBinding
-import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
+import com.autohub.tutormodule.ui.dashboard.listener.HomeListener
+import com.autohub.tutormodule.ui.utils.AppConstants.DateFormatInput
 import com.autohub.tutormodule.ui.utils.AppUtils
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
@@ -88,12 +89,12 @@ class AddBatchFragment : BaseFragment() {
     private fun setData() {
         mBinding.batchName.setText(batch.title.toString())
 
-        mBinding.startTime.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
+        mBinding.startTime.text = AppUtils.uTCToLocal(DateFormatInput,
                 "EEE, d MMM yyyy kk:mm:ss z",
                 batch.timing?.startTime!!.toDate().toString()).toString()
 
 
-        mBinding.endTime.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
+        mBinding.endTime.text = AppUtils.uTCToLocal(DateFormatInput,
                 "EEE, d MMM yyyy kk:mm:ss z",
                 batch.timing?.endTime!!.toDate().toString()).toString()
 

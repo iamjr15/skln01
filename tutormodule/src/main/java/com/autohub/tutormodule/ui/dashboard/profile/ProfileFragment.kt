@@ -38,6 +38,8 @@ class ProfileFragment : BaseFragment() {
             startActivity(intent)
         }
 
+        /*Log out from app and clear preferences
+        * */
         mBinding.logout.setOnClickListener {
             val dialogBuilder = AlertDialog.Builder(requireContext())
 

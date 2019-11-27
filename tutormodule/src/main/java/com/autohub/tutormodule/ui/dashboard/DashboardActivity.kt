@@ -16,8 +16,8 @@ import com.autohub.skln.BaseActivity
 import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.ui.dashboard.home.HomeBaseFragment
-import com.autohub.tutormodule.ui.dashboard.listner.ClassRequestListener
-import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
+import com.autohub.tutormodule.ui.dashboard.listener.ClassRequestListener
+import com.autohub.tutormodule.ui.dashboard.listener.HomeListener
 import com.autohub.tutormodule.ui.dashboard.profile.ProfileFragment
 import com.autohub.tutormodule.ui.dashboard.requests.RequestBaseFragment
 import com.autohub.tutormodule.ui.dashboard.schedule.ScheduleFragment
@@ -83,7 +83,7 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
 
         tab_item_home.setOnClickListener {
             if (homeBaseFragment.homeFragment == null) {
-                homeBaseFragment.showHomefragment()
+                homeBaseFragment.showHomeFragment()
             }
             setStatusBarColor(R.drawable.white_header)
 
@@ -208,12 +208,13 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
     override fun onBackPressed() {
 
         if (mViewPager.currentItem == 0) {
+            homeBaseFragment.backPressed()
 
-            super.onBackPressed()
+        } else if (mViewPager.currentItem == 2) {
+            requestBaseFragment.backPressed()
+
         } else {
-            mViewPager.currentItem = 0
-
+            super.onBackPressed()
         }
-
     }
 }

@@ -12,7 +12,7 @@ import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.skln.utills.ViewPagerAdapter
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentClassManagerBinding
-import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
+import com.autohub.tutormodule.ui.dashboard.listener.HomeListener
 
 /**
  * A simple [Fragment] subclass.

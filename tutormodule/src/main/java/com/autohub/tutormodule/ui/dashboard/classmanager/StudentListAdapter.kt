@@ -10,8 +10,8 @@ import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ItemStudentBinding
 import com.autohub.tutormodule.ui.utils.AppUtils
 
-class StudentListAdaptor(var context: Context)
-    : RecyclerView.Adapter<StudentListAdaptor.Holder>() {
+class StudentListAdapter(var context: Context)
+    : RecyclerView.Adapter<StudentListAdapter.Holder>() {
 
     private var studentList: List<UserModel> = ArrayList()
     lateinit var mBinding: ItemStudentBinding
@@ -46,6 +46,4 @@ class StudentListAdaptor(var context: Context)
         fun bind() {
         }
     }
-
-
 }
