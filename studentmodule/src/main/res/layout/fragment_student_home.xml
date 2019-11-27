@@ -32,7 +32,7 @@
                         android:id="@+id/searchimage"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="34dp"
                         android:src="@drawable/search" />
@@ -96,7 +96,7 @@
                             style="@style/already_go"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="already go to a\nclass?" />
+                            android:text="@string/already_go_to_a_nclass" />
 
                         <TextView
                             style="@style/click_to_a"

@@ -118,7 +118,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginStart="4dp"
                                     android:layout_toEndOf="@+id/rateimage"
                                     android:text="@{model.rating}"
                                     tools:text="4.2" />
@@ -753,6 +753,7 @@
                     android:text="@{model.getCostPerDuration}"
                     android:textAllCaps="true"
                     android:textColor="@color/blue"
+                    tools:ignore="TooManyViews"
                     tools:text="$ 250 / 20 classes month" />
 
                 <View

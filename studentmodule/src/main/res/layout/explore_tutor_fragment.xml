@@ -95,11 +95,11 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textlocation"
                 style="@style/avenue"
-                android:fontFamily="@font/montserrat_bold"
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="9dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:textColor="@color/black"
                 tools:text="4th Avenue, Los Angeles" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -138,7 +138,7 @@
         </RelativeLayout>
 
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swiperefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

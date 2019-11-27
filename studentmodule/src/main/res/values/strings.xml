@@ -118,5 +118,6 @@
     <string name="favt_validation">Select your favourite subjects.</string>
     <string name="weakPass">Weak password.You have to enter at least 6 digit in password field!</string>
     <string name="areyousure_msg">Are you sure?</string>
+    <string name="already_go_to_a_nclass">already go to a class?</string>
 
 </resources>

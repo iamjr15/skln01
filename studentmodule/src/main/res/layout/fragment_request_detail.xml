@@ -196,9 +196,10 @@
                     android:background="@drawable/rectangle21_drawable"
                     android:paddingStart="64dp"
                     android:paddingLeft="61dp"
-                    android:paddingRight="62dp"
+                    android:paddingEnd="62dp"
                     android:text="@string/see_location_on_map"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tools:ignore="RtlHardcoded" />
 
                 <Button
 
@@ -217,7 +218,8 @@
                     android:paddingRight="64dp"
                     android:text="@string/contact_skill_master"
                     android:textAlignment="center"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tools:ignore="RtlHardcoded" />
 
 
                 <TextView
