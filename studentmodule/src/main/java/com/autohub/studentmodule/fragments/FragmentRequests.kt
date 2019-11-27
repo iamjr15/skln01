@@ -70,6 +70,10 @@ class FragmentRequests : BaseFragment() {
 
     }
 
+    /*
+      * Fetch user request Latest(pending) and All
+      *
+      * */
     private fun getRequests() {
         if (mUser == null || mUser!!.id == null) {
             Log.e(">>>>Nulll", (mUser == null).toString() + "")

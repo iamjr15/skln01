@@ -31,13 +31,11 @@ class LoginActivity : BaseActivity() {
     private lateinit var manager: SplitInstallManager
     private lateinit var credential: AuthCredential
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         manager = SplitInstallManagerFactory.create(this)
         mBinding!!.callback = this
-
 
         mBinding!!.usertype.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.radiostudent) {

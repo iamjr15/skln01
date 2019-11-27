@@ -56,6 +56,9 @@ class TutorFullProfileActivity : BaseActivity() {
 
     }
 
+    /*
+    * Get Tutor profile details
+    * */
     private fun getIntentData() {
         if (intent.extras != null) {
             val bundle = intent.extras
@@ -94,6 +97,11 @@ class TutorFullProfileActivity : BaseActivity() {
 
     }
 
+
+    /*
+    * Make class request for selected subject
+    *
+    * */
     private fun makeRequest(subject: String) {
         showLoading()
         val studentId = firebaseAuth.currentUser!!.uid
@@ -117,7 +125,6 @@ class TutorFullProfileActivity : BaseActivity() {
 
                                 }
 
-//hdsjhsa
                                 val batchRequest = BatchRequestModel(id = studentId + "_" + subjectId + "_" + gradeId
                                         , status = KEY_REQUESTSTATUS_PENDING,
                                         teacher = BatchRequestModel.Teacher(tutorId, mUserViewModel!!.fullName),
@@ -139,6 +146,13 @@ class TutorFullProfileActivity : BaseActivity() {
 
     }
 
+
+    /*
+    *
+    * Navigate user to Request Detail screen after requesting for a Batch
+    *
+    * */
+
     private fun makeBatchRequest(batchRequest: BatchRequestModel) {
 
         val dbRoot = getString(R.string.db_root_batchRequests)
@@ -155,6 +169,10 @@ class TutorFullProfileActivity : BaseActivity() {
         }.addOnFailureListener { hideLoading() }
     }
 
+
+    /*
+    * Dynamic radio button for showing Subjects
+    * */
     private fun addSubjectRadioButtons(subjects: List<String>) {
         if (subjects.isEmpty()) {
             val rdbtn = RadioButton(this)
@@ -175,6 +193,10 @@ class TutorFullProfileActivity : BaseActivity() {
         }
     }
 
+    /*
+    * Dynamic radio button for showing Class Types
+    * */
+
     private fun addClassTypeRadioButtons(classtype: ArrayList<String>?) {
         if (classtype!!.size <= 0) {
             isClassTyperequire = false
@@ -193,6 +215,10 @@ class TutorFullProfileActivity : BaseActivity() {
         finish()
     }
 
+    /*
+    *
+    * Validate radio button
+    * */
     fun onRequestClick() {
         when {
             mBinding!!.subjectradio.checkedRadioButtonId == -1 -> showSnackError(getString(R.string.selectSeubject_msg))

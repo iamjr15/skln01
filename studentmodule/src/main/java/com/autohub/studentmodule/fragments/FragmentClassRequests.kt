@@ -29,6 +29,7 @@ class FragmentClassRequests : BaseFragment() {
         fetchUser()
     }
 
+
     private fun fetchUser() {
         var root = getString(R.string.db_root_tutors)
         if (mType.equals("student", ignoreCase = true)) {

@@ -209,7 +209,6 @@ class StudentSubjectSelect : BaseActivity(), ClassSelectionListner {
             }
 
 
-            //hdsjhsa
 
             map["id"] = firebaseAuth.currentUser!!.uid + "_" + i.id
             map["studentId"] = firebaseAuth.currentUser!!.uid

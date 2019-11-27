@@ -32,10 +32,18 @@ class EnrolledClassesFragment : BaseFragment() {
 
     }
 
+
+    /*
+    * Delete the student from perticular Batch
+    * */
     private fun deleteBatch(it: BatchesModel?) {
         removeBatchFromProfile(it)
     }
 
+
+    /*
+   * Delete the Batch code from Student profile
+   * */
     private fun removeBatchFromProfile(batchmodel: BatchesModel?) {
         showLoading()
 
@@ -73,6 +81,9 @@ class EnrolledClassesFragment : BaseFragment() {
 
     }
 
+    /*
+    * Delete the studentId from enrolledStudentsId of perticular Batch
+    * */
     private fun removeUserIdFromBatch(batchmodel: BatchesModel) {
 
 
@@ -126,7 +137,10 @@ class EnrolledClassesFragment : BaseFragment() {
 
     }
 
-
+    /*
+    * Fetch all Batches in which user is enrolled
+    *
+    * */
     private fun fetchEnrolledClasses() {
 
         firebaseStore.collection("students").document(appPreferenceHelper.getuserID()).get().addOnSuccessListener {
@@ -185,10 +199,7 @@ class EnrolledClassesFragment : BaseFragment() {
             }
         }.addOnFailureListener()
         {
-
             mBinding!!.swiperefresh.isRefreshing = false
-
-
         }
 
 

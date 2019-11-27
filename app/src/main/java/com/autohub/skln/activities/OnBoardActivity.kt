@@ -10,6 +10,7 @@ import com.autohub.skln.databinding.ActivityOnBoardBinding
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
+import com.kbeanie.multipicker.api.CameraImagePicker
 
 /**
  * Created by Vt Netzwelt
@@ -19,6 +20,9 @@ class OnBoardActivity : BaseActivity() {
 
     private var mBinding: ActivityOnBoardBinding? = null
     private lateinit var manager: SplitInstallManager
+
+    private var cameraPicker: CameraImagePicker? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         manager = SplitInstallManagerFactory.create(this)
