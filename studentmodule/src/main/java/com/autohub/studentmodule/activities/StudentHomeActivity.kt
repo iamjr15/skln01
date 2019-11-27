@@ -30,6 +30,8 @@ import kotlin.collections.ArrayList
  */
 
 class StudentHomeActivity : BaseActivity(), HomeListners {
+
+
     override fun updateScheduleFragment() {
         myClassesFragment.updateSchedules()
     }
@@ -48,7 +50,10 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         setStatusBarColor(com.autohub.skln.R.drawable.bg_purple_blue)
     }
 
-
+    /*
+    * Navigate user to Explore screen with perticular subject selection
+    *
+    * */
     override fun onAcadmicsSelect(user: UserModel, subjectName: String) {
 
         if (explorebaseFragment!!.exploreTutorsFragment == null) {
@@ -150,7 +155,9 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
     }
 
-
+    /*
+    * Set all student Detail for future use in app
+    * */
     private fun getUserInfo() {
         firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
@@ -184,7 +191,9 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
     }
 
-
+    /*
+    * Fetch subject and Grades data for later use in app
+    * */
     private fun getAppData() {
         gradesDataList = ArrayList()
         subjectDataList = ArrayList()
@@ -258,6 +267,12 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         }
     }
 
+
+    /*
+    * if there is TUROR_REQUEST then we need to navigate on Request Detail screen
+    *
+    * */
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
@@ -289,6 +304,9 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
     }
 
+    /*
+    * Update user profile pic on all screens
+    * */
     private fun updateUserProfileImage() {
         fragmentProfile.setProfileImage()
         explorebaseFragment!!.exploreTutorsFragment!!.setupProfile()

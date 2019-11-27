@@ -100,7 +100,7 @@ class ExploreTutorsFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         mGpsUtils = GpsUtils(requireActivity())
 
-        fetchTutorSubjects()
+        fetchTutorGrades()
         if (checkGooglePlayServices() && isLocationPermissionGranted) {
             Log.d(">>>>Location", "Oncreate")
             LocationProvider.getInstance().start(requireContext(), mLocationListener)
@@ -208,6 +208,14 @@ class ExploreTutorsFragment : BaseFragment() {
         LocationProvider.getInstance().stopLocationUpdates()
     }
 
+    /*
+    * Fetch All tutors tutorsList
+    * Add tutors Subjects with subject name in tutorsList
+    * Add tutors Grades with grade name in tutorsList
+    * Add Distance in tutorsList from perticular Student Location
+    * Filter tutorList as per exploreFilter
+    *
+    * */
     private fun getTutors(exploreFilter: ExploreFilter) {
         firebaseStore.collection(getString(R.string.db_root_tutors)).get().addOnCompleteListener { task ->
             mBinding!!.swiperefresh.isRefreshing = false
@@ -309,13 +317,17 @@ class ExploreTutorsFragment : BaseFragment() {
         }
     }
 
+    /*
+    * Check filter
+    * Showing tutors with in 50km range of student and with student class and subjects
+    * */
     private fun checkFilterfoData(exploreFilter: ExploreFilter, tutorData: TutorData): Boolean {
 
         if (exploreFilter.filterType == ALL_SELECTION_FILTER) {
             return true
         } else if (exploreFilter.filterType == ACADMIC_SELECTION_FILTER) {
             /*
-            * Showing tutors with in 50km range of student and with student class and subjects
+            *
             * */
             if (tutorData.classToTeach!!.split(",").contains(exploreFilter.studentClass) &&
                     tutorData.subjectsToTeach!!.contains(exploreFilter.subjectName, true)
@@ -360,7 +372,10 @@ class ExploreTutorsFragment : BaseFragment() {
         const val AUTOCOMPLETE_REQUEST_CODE = 1
     }
 
-    private fun fetchTutorSubjects() {
+    /*
+    * Fetch all tutors selected grades for ExploreTutors filtration and UI/UX fields
+    * */
+    private fun fetchTutorGrades() {
         tutorsGradeList = ArrayList()
 
 
@@ -372,13 +387,17 @@ class ExploreTutorsFragment : BaseFragment() {
                     tutorsGradeList.add(user)
 
                 }
-                fetchTutorGrades()
+                fetchTutorSubjects()
 
             }
         }
     }
 
-    private fun fetchTutorGrades() {
+
+    /*
+* Fetch all tutors selected subjects for ExploreTutors filtration and UI/UX fields
+* */
+    private fun fetchTutorSubjects() {
         tutorsSubjectList = ArrayList()
         firebaseStore.collection("tutorSubjects").get().addOnCompleteListener {
 

@@ -93,7 +93,6 @@ class StudentProfileFragment : BaseFragment() {
     }
 
     fun onEditProfileClick() {
-
         val intent = Intent(context, EditStudentProfileActivity::class.java)
         activity!!.startActivityForResult(intent, StudentHomeActivity.EDITPROFILE_REQUEST)
     }
