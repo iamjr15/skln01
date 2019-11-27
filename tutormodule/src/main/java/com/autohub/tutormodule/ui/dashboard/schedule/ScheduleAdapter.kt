@@ -41,9 +41,9 @@ class ScheduleAdapter(var context: Context)
 
         if (batchList[position].status == AppConstants.STATUS_ACTIVE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                mBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.skyblue, null))
+                mBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.skyBlue, null))
             } else {
-                mBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.skyblue))
+                mBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.skyBlue))
             }
             mBinding.activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_green_round, null)
         }

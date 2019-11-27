@@ -62,9 +62,4 @@ class BatchOptionsFragment : BaseFragment() {
         homeListener.showAddBatchFragment(false, batchData)
 
     }
-
-
-    companion object {
-        fun newInstance(): BatchOptionsFragment = BatchOptionsFragment()
-    }
 }

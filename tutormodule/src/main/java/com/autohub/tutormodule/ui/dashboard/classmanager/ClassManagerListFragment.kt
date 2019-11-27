@@ -36,9 +36,9 @@ class ClassManagerListFragment(val type: String) : BaseFragment(), Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding = FragmentClassManagerListBinding.bind(view)
-        mBinding.classesrecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        mBinding.classesRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         adapter = ClassesAdapter(requireContext(), this)
-        mBinding.classesrecycleview.adapter = adapter
+        mBinding.classesRecyclerView.adapter = adapter
 
         mBinding.swipeRefresh.setOnRefreshListener {
             fetchBatches(true)

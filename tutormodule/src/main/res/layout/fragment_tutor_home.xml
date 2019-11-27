@@ -112,7 +112,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="13dp"
-                    android:src="@drawable/homearrow_right" />
+                    android:src="@drawable/home_arrow_right" />
 
             </RelativeLayout>
 
@@ -154,7 +154,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="13dp"
-                    android:src="@drawable/homearrow_right" />
+                    android:src="@drawable/home_arrow_right" />
 
             </RelativeLayout>
 
@@ -214,7 +214,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="13dp"
-                    android:src="@drawable/homearrow_right" />
+                    android:src="@drawable/home_arrow_right" />
 
             </RelativeLayout>
 

@@ -17,15 +17,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class HomeFragment : BaseFragment() {
     private lateinit var mBinding: FragmentTutorHomeBinding
-    private lateinit var homeListner: HomeListener
+    private lateinit var homeListener: HomeListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_tutor_home, container, false)
-
-    companion object {
-        fun newInstance(): HomeFragment = HomeFragment()
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -87,15 +82,15 @@ class HomeFragment : BaseFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        homeListner = context as HomeListener
+        homeListener = context as HomeListener
     }
 
     fun onPendingRequestClick() {
-        homeListner.pendingRequestSelect()
+        homeListener.pendingRequestSelect()
 
     }
 
     fun onManageClassClick() {
-        homeListner.managerSelected()
+        homeListener.managerSelected()
     }
 }

@@ -23,7 +23,7 @@ class RequestBaseFragment : BaseFragment() {
         fragmentRequests = RequestsFragment()
         childFragmentManager
                 .beginTransaction().addToBackStack(RequestsFragment::class.java.name)
-                .replace(R.id.requestcontainer, fragmentRequests!!).commit()
+                .replace(R.id.request_container, fragmentRequests!!).commit()
     }
 
     fun showPendingRequestScreen(studentId: String, documentId: String) {
@@ -35,19 +35,7 @@ class RequestBaseFragment : BaseFragment() {
         pendingRequestFragment.arguments = bundle
         childFragmentManager
                 .beginTransaction().addToBackStack(PendingRequestFragment::class.java.name)
-                .replace(R.id.requestcontainer, pendingRequestFragment).commit()
-    }
-
-    fun showRequestDetailFragment(bundle: Bundle) {
-        /*fragmentClassRequests = null
-
-        val fragment = FragmentRequestDetail()
-        fragment.arguments = bundle
-
-        childFragmentManager
-                .beginTransaction()
-                .replace(R.id.requestcontainer, fragment).commit()*/
-
+                .replace(R.id.request_container, pendingRequestFragment).commit()
     }
 
     fun backPressed() {

@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/welcome_onboard" />
+                    android:text="@string/welcome_on_board" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/hey_there_"
