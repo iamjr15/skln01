@@ -333,5 +333,6 @@
     <string name="no_student_found">No student found !</string>
     <string name="containsTutorData">tutorData</string>
     <string name="select_batch">Select Batch</string>
+    <string name="batch_code">Batch CODE :</string>
 
 </resources>

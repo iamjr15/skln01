@@ -1,5 +1,6 @@
 package com.autohub.tutormodule.ui.utils
 
+import com.autohub.tutormodule.ui.utils.AppConstants.DateFormatInput
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,14 +27,14 @@ object AppUtils {
     }
 
 
-    fun uTCToLocal(dateFormatInPut: String, dateFomratOutPut: String, datesToConvert: String): String? {
+    fun uTCToLocal(dateFormatInput: String, dateFormatOutput: String, datesToConvert: String): String? {
         val dateToReturn = datesToConvert
 
-        val sdf = SimpleDateFormat(dateFormatInPut, Locale.US)
+        val sdf = SimpleDateFormat(dateFormatInput, Locale.US)
 
         var gmt: Date? = null
 
-        val sdfOutPutToSend = SimpleDateFormat(dateFomratOutPut,Locale.US)
+        val sdfOutPutToSend = SimpleDateFormat(dateFormatOutput,Locale.US)
         sdfOutPutToSend.timeZone = TimeZone.getDefault()
         try {
             gmt = sdf.parse(datesToConvert)
@@ -42,11 +43,10 @@ object AppUtils {
             e.printStackTrace()
         }
 
-        val originalFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US)
+        val originalFormat = SimpleDateFormat(DateFormatInput, Locale.US)
         val targetFormat = SimpleDateFormat("kk:mm")
         val date = originalFormat.parse(gmt.toString())
-        val formattedDate = targetFormat.format(date)
 
-        return formattedDate
+        return targetFormat.format(date)
     }
 }

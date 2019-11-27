@@ -12,7 +12,7 @@ import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.ui.dashboard.classmanager.ClassManagerFragment
 import com.autohub.tutormodule.ui.dashboard.classmanager.StudentsListFragment
-import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
+import com.autohub.tutormodule.ui.dashboard.listener.HomeListener
 import com.autohub.tutormodule.ui.manageClasses.AddBatchFragment
 import com.autohub.tutormodule.ui.manageClasses.BatchOptionsFragment
 
@@ -30,7 +30,7 @@ class HomeBaseFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home_base, container, false)
-        showHomefragment()
+        showHomeFragment()
         return view
 
     }
@@ -40,13 +40,17 @@ class HomeBaseFragment : BaseFragment() {
         homeListener = context as HomeListener
     }
 
-    fun showHomefragment() {
+    /*Open home screen
+    * */
+    fun showHomeFragment() {
         homeFragment = HomeFragment()
         childFragmentManager
                 .beginTransaction().addToBackStack(HomeFragment::class.java.name)
                 .replace(R.id.homecontainer, homeFragment!!).commit()
     }
 
+    /*Open Class Manager screen
+   * */
     fun showManagerFragment() {
         homeFragment = null
         childFragmentManager
@@ -54,7 +58,8 @@ class HomeBaseFragment : BaseFragment() {
                 .replace(R.id.homecontainer, ClassManagerFragment()).commit()
     }
 
-
+    /*Open Add Batch screen
+       * */
     fun showAddBatchFragment(showAddBatch: Boolean, batch: BatchesModel) {
         val bundle = Bundle()
         bundle.putBoolean("showAddBatch", showAddBatch)
@@ -66,7 +71,8 @@ class HomeBaseFragment : BaseFragment() {
                 .replace(R.id.homecontainer, addBatchFragment).commit()
     }
 
-
+    /*Open Batch options screen
+          * */
     fun showBatchOptionsFragment(batch: BatchesModel) {
         val batchOptionsFragment = BatchOptionsFragment()
         val bundle = Bundle()
@@ -77,6 +83,8 @@ class HomeBaseFragment : BaseFragment() {
                 .replace(R.id.homecontainer, batchOptionsFragment).commit()
     }
 
+    /*Open screen showing students list
+          * */
     fun showStudentsListFragment() {
         val studentsListFragment = StudentsListFragment()
         childFragmentManager
@@ -84,6 +92,8 @@ class HomeBaseFragment : BaseFragment() {
                 .replace(R.id.homecontainer, studentsListFragment).commit()
     }
 
+    /*Called on back button pressed.Check number of fragments in stack and perform action.
+    * */
     fun backPressed() {
          if (childFragmentManager.backStackEntryCount > 1) {
             childFragmentManager.popBackStack()

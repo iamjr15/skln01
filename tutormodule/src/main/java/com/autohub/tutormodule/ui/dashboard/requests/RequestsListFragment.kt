@@ -14,13 +14,13 @@ import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentRequestsListBinding
-import com.autohub.tutormodule.ui.dashboard.listner.ClassRequestListener
+import com.autohub.tutormodule.ui.dashboard.listener.ClassRequestListener
 
 /**
  * A simple [Fragment] subclass.
  */
 class RequestsListFragment : BaseFragment(), Listener {
-    private lateinit var mAdapter: RequestsAdaptor
+    private lateinit var mAdapter: RequestsAdapter
     private lateinit var listener: ClassRequestListener
     private lateinit var binding: FragmentRequestsListBinding
 
@@ -40,7 +40,7 @@ class RequestsListFragment : BaseFragment(), Listener {
         binding = FragmentRequestsListBinding.bind(view)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.setEmptyView(binding.emptyView)
-        mAdapter = RequestsAdaptor(requireContext(), this)
+        mAdapter = RequestsAdapter(requireContext(), this)
 
         binding.swipeRefresh.setOnRefreshListener {
             fillData( true)

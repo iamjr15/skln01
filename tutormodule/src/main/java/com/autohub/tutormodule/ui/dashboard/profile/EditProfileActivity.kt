@@ -110,6 +110,8 @@ class EditProfileActivity : BaseActivity() {
 
     }
 
+    /*Fetch subjects on the basis of tutor id
+    * */
     private fun getTutorSubjects() {
         firebaseStore.collection(getString(R.string.db_root_tutor_subjects)).whereEqualTo("teacherId", tutorData?.id).get()
                 .addOnSuccessListener { documentSnapshot ->
@@ -122,6 +124,8 @@ class EditProfileActivity : BaseActivity() {
                 }
     }
 
+    /*Fetch subjects to teach on the basis of tutor id
+   * */
     private fun getTutorSubjectsToTeach(tutorSubjects: List<TutorGradesSubjects>) {
         firebaseStore.collection(getString(R.string.db_root_subjects)).get()
                 .addOnSuccessListener { documentSnapshot ->
@@ -145,6 +149,8 @@ class EditProfileActivity : BaseActivity() {
     }
 
 
+    /*Fetch grades on the basis of tutor id
+    * */
     private fun getTutorGrades() {
         firebaseStore.collection(getString(R.string.db_root_tutor_gardes)).whereEqualTo("teacherId", tutorData?.id).get()
                 .addOnSuccessListener { documentSnapshot ->
@@ -158,6 +164,8 @@ class EditProfileActivity : BaseActivity() {
                 }
     }
 
+    /*Fetch grades to teach on the basis of tutor id
+   * */
     private fun getTutorGradesToTeach(tutorGrades: List<TutorGradesSubjects>) {
         firebaseStore.collection(getString(R.string.db_root_grades)).get()
                 .addOnSuccessListener { documentSnapshot ->
@@ -181,6 +189,8 @@ class EditProfileActivity : BaseActivity() {
 
     }
 
+    /*Open dialog showing subjects on Select subjects to teach click
+    * */
     fun onSubjectTaughtClick() {
         val items = ArrayList<String>()
         items.add(AppConstants.SUBJECT_SCIENCE)
@@ -201,6 +211,8 @@ class EditProfileActivity : BaseActivity() {
 
     }
 
+    /*Open dialog showing classes on Select classes to teach click
+    * */
     fun onClassToTeach() {
         val items = ArrayList<String>()
         items.add("Class " + AppConstants.CLASS_1 + CommonUtils.getClassSuffix(AppConstants.CLASS_1.toInt()))
@@ -220,6 +232,8 @@ class EditProfileActivity : BaseActivity() {
         showMultiSelectionDialog(items, mBinding.classToTeach, getString(R.string.class_to_teach), selectedClass)
     }
 
+    /*Open dialog showing occupations on Select Occupation
+    * */
     fun onSelectOccupation() {
         val items = resources.getStringArray(R.array.occupation_arrays).toList()
 
@@ -227,12 +241,16 @@ class EditProfileActivity : BaseActivity() {
 
     }
 
+    /*Open dialog showing years on Select Experience
+   * */
     fun onSelectExperience() {
 
         val items = resources.getStringArray(R.array.experience_arrays).toList()
         showSingleSelectionDialog(items, mBinding.teachingExperience, getString(R.string.select_treaching_epereience), selectedExp)
     }
 
+    /*Open dialog showing Qualification on Select Qualification
+   * */
     fun onSelectQualification() {
         selectedQualificationAreas.clear()
         mBinding.areaOfQualification.text = ""
@@ -240,6 +258,8 @@ class EditProfileActivity : BaseActivity() {
         showSingleSelectionDialog(items, mBinding.qualification, getString(R.string.select_qualification), selectedQualification)
     }
 
+    /*Open dialog showing qualification areas on Select Qualification Area
+   * */
     fun onSelectQualificationArea() {
         lateinit var items: List<String>
         if (selectedQualification.size > 0) {
@@ -264,6 +284,8 @@ class EditProfileActivity : BaseActivity() {
 
     }
 
+    /*Open dialog showing boards on Select Target Board
+   * */
     fun onSelectTargetBoard() {
         val items = ArrayList<String>()
         items.add(AppConstants.BOARD_CBSE)
@@ -349,6 +371,8 @@ class EditProfileActivity : BaseActivity() {
                 .show()
     }
 
+    /*Request for camera, write and read external storage
+    * */
     fun requestPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
@@ -381,6 +405,8 @@ class EditProfileActivity : BaseActivity() {
         }
     }
 
+    /*Choose picture to upload
+    * */
     private fun onAddPicture() {
 
         TedBottomPicker.with(this)
@@ -408,7 +434,8 @@ class EditProfileActivity : BaseActivity() {
         finish()
     }
 
-
+   /*Upload picture on firestore storage and get url
+   * */
     private fun uploadImage(uri: Uri) {
         showLoading()
         val file = File(uri.path!!)
@@ -446,6 +473,8 @@ class EditProfileActivity : BaseActivity() {
         }
     }
 
+    /*Update tutor data on update button click
+    * */
     private fun updateTutorData() {
         showLoading()
 

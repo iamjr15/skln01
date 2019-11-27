@@ -12,7 +12,7 @@ import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GlideApp
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorHomeBinding
-import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
+import com.autohub.tutormodule.ui.dashboard.listener.HomeListener
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class HomeFragment : BaseFragment() {
@@ -61,6 +61,9 @@ class HomeFragment : BaseFragment() {
                 }
     }
 
+    /**
+     * Fetch Tutor data on the basis of document id and show details
+     */
     private fun fetchTutorData() {
         firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
@@ -95,10 +98,4 @@ class HomeFragment : BaseFragment() {
     fun onManageClassClick() {
         homeListner.managerSelected()
     }
-
-
-    fun updateBatches() {
-
-    }
-
 }

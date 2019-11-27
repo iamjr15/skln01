@@ -24,7 +24,7 @@ import java.util.*
 class ScheduleFragment : BaseFragment() {
 
     private lateinit var mBinding: FragmentTutorScheduleBinding
-    private lateinit var adaptor: ScheduleAdaptor
+    private lateinit var adapter: ScheduleAdapter
     private lateinit var tutorData: TutorData
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -64,8 +64,8 @@ class ScheduleFragment : BaseFragment() {
         })
 
         mBinding.schedulerecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        adaptor = ScheduleAdaptor(requireContext())
-        mBinding.schedulerecycleview.adapter = adaptor
+        adapter = ScheduleAdapter(requireContext())
+        mBinding.schedulerecycleview.adapter = adapter
         fetchTutorData()
         initializeCalendarView(dates)
 
@@ -92,7 +92,7 @@ class ScheduleFragment : BaseFragment() {
         firebaseStore.collection(getString(R.string.db_root_batches)).whereEqualTo("teacher.id", tutorData.id)
                 .get().addOnSuccessListener { documentSnapshot ->
                     val data = documentSnapshot.toObjects(BatchesModel::class.java)
-                    adaptor.setData(data)
+                    adapter.setData(data)
                 }
                 .addOnFailureListener { e ->
                     showSnackError(e.message)
@@ -111,7 +111,7 @@ class ScheduleFragment : BaseFragment() {
                 mBinding.seekBar.progress = (i * 0.27).toInt()
                 mBinding.calendarView.scrollToPosition(i)
                 adapter.selectedPosition = i
-                adaptor.notifyDataSetChanged()
+                this.adapter.notifyDataSetChanged()
             }
         }
     }
