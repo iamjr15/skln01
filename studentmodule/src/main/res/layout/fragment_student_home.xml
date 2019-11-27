@@ -96,7 +96,7 @@
                             style="@style/already_go"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/already_go_to_a_nclass" />
+                            android:text="already go to a\nclass?" />
 
                         <TextView
                             style="@style/click_to_a"
