@@ -140,7 +140,6 @@ class EnrolledClassesFragment : BaseFragment() {
     /*
     * Fetch all Batches in which user is enrolled
     *
-    *
     * */
     private fun fetchEnrolledClasses() {
 

@@ -34,7 +34,6 @@ import com.kbeanie.multipicker.api.ImagePicker
 import com.kbeanie.multipicker.api.Picker
 import com.kbeanie.multipicker.api.callbacks.ImagePickerCallback
 import com.kbeanie.multipicker.api.entity.ChosenImage
-import gun0912.tedbottompicker.TedBottomPicker
 import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -95,7 +94,6 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
             } else {
                 hideLoading()
             }
-
 
             fetchStudentSubjects()
 
@@ -176,8 +174,6 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
                                     leastsujectsidsbuilder.append("," + favleastsubjectsDataList[index].id)
                                 }
 
-
-                            } else {
 
                             }
 
@@ -815,10 +811,7 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
 
         } else if (mBinding!!.favHobby.text.toString() == "") {
             showSnackError(getString(R.string.selecthobbie_validation))
-
-
             return false
-
         }
         return true
 
@@ -968,18 +961,18 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
     * Show Dialog for adding pic from Camera/Gallery
     * */
     private fun addPicture() {
-        TedBottomPicker.with(this)
-                .show { uri ->
-                    GlideApp.with(this)
-                            .load(uri)
-                            .placeholder(com.autohub.skln.R.drawable.default_pic)
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                            .skipMemoryCache(true)
-                            .into(mBinding!!.profilePicture)
+        /* TedBottomPicker.with(this)
+                 .show { uri ->
+                     GlideApp.with(this)
+                             .load(uri)
+                             .placeholder(com.autohub.skln.R.drawable.default_pic)
+                             .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                             .skipMemoryCache(true)
+                             .into(mBinding!!.profilePicture)
 
-                    imageuri = uri
+                     imageuri = uri
 
-                }
+                 }*/
 
     }
 

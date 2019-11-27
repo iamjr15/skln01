@@ -1,11 +1,13 @@
 package com.autohub.studentmodule.fragments
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import com.autohub.skln.activities.OnBoardActivity
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.UserModel
@@ -21,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
+
 /**
  * Created by Vt Netzwelt
  */
@@ -30,7 +33,7 @@ class StudentProfileFragment : BaseFragment() {
     private var mStorageReference: StorageReference? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_student_profile, container, false)
+        return inflater.inflate(com.autohub.studentmodule.R.layout.fragment_student_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,14 +44,14 @@ class StudentProfileFragment : BaseFragment() {
         mStorageReference = FirebaseStorage.getInstance().reference
         setupProfile()
         mBinding!!.logout.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            appPreferenceHelper.setStudentSignupComplete(false)
-
-            ActivityUtils.launchActivity(requireContext(), OnBoardActivity::class.java)
-            requireActivity().finishAffinity()
+            showLogoutPopup()
         }
     }
 
+    /*
+    * Show User profile Image
+    *
+    * */
 
     fun setProfileImage() {
         val userimagePath: String? = (context as StudentHomeActivity).userimagePath!!
@@ -64,10 +67,36 @@ class StudentProfileFragment : BaseFragment() {
         }
     }
 
+    /*
+    * Logout confirmation dialog
+    * */
+    private fun showLogoutPopup() {
+        val alert = AlertDialog.Builder(activity!!)
+        alert.setMessage(getString(R.string.areyousure_msg))
+                .setPositiveButton("Logout", DialogInterface.OnClickListener { dialog, which ->
+                    logout() // Last step. Logout function
+                }).setNegativeButton("Cancel", null)
+
+        val alert1 = alert.create()
+        alert1.show()
+    }
+
+    /*
+    * Logout user and signout him from firebase too
+    *
+    * */
+    private fun logout() {
+        FirebaseAuth.getInstance().signOut()
+        appPreferenceHelper.setStudentSignupComplete(false)
+
+        ActivityUtils.launchActivity(requireContext(), OnBoardActivity::class.java)
+        requireActivity().finishAffinity()
+    }
+
 
     private fun setupProfile() {
 
-        firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
+        firebaseStore.collection(getString(com.autohub.studentmodule.R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val user: UserModel = documentSnapshot.toObject(UserModel::class.java)!!
                     (context as StudentHomeActivity).userimagePath = user.personInfo!!.accountPicture
