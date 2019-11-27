@@ -30,10 +30,6 @@ class ScheduleFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_tutor_schedule, container, false)
 
-    companion object {
-        fun newInstance(): ScheduleFragment = ScheduleFragment()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding = FragmentTutorScheduleBinding.bind(view)
@@ -45,12 +41,16 @@ class ScheduleFragment : BaseFragment() {
             /*Change position of recycler view with change in seek bar
             * */
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                if (i < 10) {
-                    mBinding.calendarView.scrollToPosition(0)
-                } else if (i > 90) {
-                    mBinding.calendarView.scrollToPosition(dates.size - 1)
-                } else if ((i * 3) < (dates.size - 1)) {
-                    mBinding.calendarView.scrollToPosition((i * 3))
+                when {
+                    i < 10 -> {
+                        mBinding.calendarView.scrollToPosition(0)
+                    }
+                    i > 90 -> {
+                        mBinding.calendarView.scrollToPosition(dates.size - 1)
+                    }
+                    (i * 3) < (dates.size - 1) -> {
+                        mBinding.calendarView.scrollToPosition((i * 3))
+                    }
                 }
             }
 
@@ -63,9 +63,9 @@ class ScheduleFragment : BaseFragment() {
             }
         })
 
-        mBinding.schedulerecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        mBinding.scheduleRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         adapter = ScheduleAdapter(requireContext())
-        mBinding.schedulerecycleview.adapter = adapter
+        mBinding.scheduleRecyclerView.adapter = adapter
         fetchTutorData()
         initializeCalendarView(dates)
 

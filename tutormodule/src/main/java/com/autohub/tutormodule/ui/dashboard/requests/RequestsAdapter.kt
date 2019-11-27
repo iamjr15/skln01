@@ -16,7 +16,7 @@ class RequestsAdapter(var context: Context, val listener: Listener)
     : RecyclerView.Adapter<RequestsAdapter.Holder>() {
 
     private var requestsList: List<BatchRequestData> = ArrayList()
-    lateinit var itemRequestBinding: ItemTutorRequestBinding
+    private lateinit var itemRequestBinding: ItemTutorRequestBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         itemRequestBinding = DataBindingUtil.inflate(

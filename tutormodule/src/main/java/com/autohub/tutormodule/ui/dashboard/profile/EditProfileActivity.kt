@@ -42,7 +42,7 @@ import kotlin.collections.ArrayList
 class EditProfileActivity : BaseActivity(), ImagePickerCallback {
 
     private lateinit var mBinding: ActivityTutorEditProfileBinding
-    private val MAX_SIZE = 240
+    private val maxSize = 240
     private var mStorageReference: StorageReference? = null
     private var tutorData: TutorData? = null
 
@@ -54,7 +54,7 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
     private var selectedGradesList = ArrayList<String>()
     private var gradesList = ArrayList<GradeData>()
     private var profilePictureUri: String = ""
-    private var PermissionsRequest: Int = 12
+    private var permissionRequest: Int = 12
 
     private lateinit var cameraPicker: CameraImagePicker
     private lateinit var imagePicker: ImagePicker
@@ -69,7 +69,7 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
         }
 
         override fun afterTextChanged(s: Editable?) {
-            val remaining = MAX_SIZE - s?.length!!
+            val remaining = maxSize - s?.length!!
             mBinding.count.text = String.format(Locale.getDefault(), "%d remaining", remaining)
             // editBio(s?.toString())
         }
@@ -165,7 +165,7 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
     /*Fetch grades on the basis of tutor id
     * */
     private fun getTutorGrades() {
-        firebaseStore.collection(getString(R.string.db_root_tutor_gardes)).whereEqualTo("teacherId", tutorData?.id).get()
+        firebaseStore.collection(getString(R.string.db_root_tutor_grades)).whereEqualTo("teacherId", tutorData?.id).get()
                 .addOnSuccessListener { documentSnapshot ->
                     hideLoading()
                     val tutorGrades = documentSnapshot.toObjects(TutorGradesSubjects::class.java)
@@ -250,7 +250,7 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
     fun onSelectOccupation() {
         val items = resources.getStringArray(R.array.occupation_arrays).toList()
 
-        showSingleSelectionDialog(items, mBinding.selectOccupation, getString(R.string.select_ocupation), selectedOccupation)
+        showSingleSelectionDialog(items, mBinding.selectOccupation, getString(R.string.select_occupation), selectedOccupation)
 
     }
 
@@ -259,7 +259,7 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
     fun onSelectExperience() {
 
         val items = resources.getStringArray(R.array.experience_arrays).toList()
-        showSingleSelectionDialog(items, mBinding.teachingExperience, getString(R.string.select_treaching_epereience), selectedExp)
+        showSingleSelectionDialog(items, mBinding.teachingExperience, getString(R.string.select_teaching_experience), selectedExp)
     }
 
     /*Open dialog showing Qualification on Select Qualification
@@ -276,15 +276,16 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
     fun onSelectQualificationArea() {
         lateinit var items: List<String>
         if (selectedQualification.size > 0) {
-            if (selectedQualification[0].equals("Graduate")) {
-                items = resources.getStringArray(R.array.area_qualifi_arrays_1).toList()
-
-            } else if (selectedQualification[0].equals("Post-Graduate")) {
-                items = resources.getStringArray(R.array.area_qualifi_arrays_2).toList()
-
-            } else {
-                items = resources.getStringArray(R.array.area_qualifi_arrays_1).toList()
-
+            items = when {
+                selectedQualification[0] == "Graduate" -> {
+                    resources.getStringArray(R.array.area_qualification_array).toList()
+                }
+                selectedQualification[0] == "Post-Graduate" -> {
+                    resources.getStringArray(R.array.area_qualifi_arrays_2).toList()
+                }
+                else -> {
+                    resources.getStringArray(R.array.area_qualification_array).toList()
+                }
             }
 
             showMultiSelectionDialog(items, mBinding.areaOfQualification, getString(R.string.select_area_of_qualification), selectedQualificationAreas)
@@ -312,12 +313,12 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
     private fun showMultiSelectionDialog(items: List<String>, textView: TextView, title: String, selectedItems: ArrayList<String>) {
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
-        val selectedvalues = ArrayList<String>()
+        val selectedValues = ArrayList<String>()
 
         for (i in selectedItems.indices) {
             if (items.contains(selectedItems[i])) {
                 booleans[items.indexOf(selectedItems[i])] = true
-                selectedvalues.add(selectedItems[i])
+                selectedValues.add(selectedItems[i])
             }
         }
 
@@ -325,37 +326,37 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
                 .setMultiChoiceItems(namesArr, booleans
                 ) { _, i, b ->
                     if (b) {
-                        selectedvalues.add(items[i])
+                        selectedValues.add(items[i])
                     } else {
-                        selectedvalues.remove(items[i])
+                        selectedValues.remove(items[i])
                     }
                 }
                 .setTitle(title)
                 .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                     var selectedSubString = ""
-                    for (i in selectedvalues.indices) {
-                        selectedSubString += if (i == selectedvalues.size - 1) {
-                            selectedvalues[i]
+                    for (i in selectedValues.indices) {
+                        selectedSubString += if (i == selectedValues.size - 1) {
+                            selectedValues[i]
                         } else {
-                            selectedvalues[i] + ","
+                            selectedValues[i] + ","
                         }
                     }
                     textView.text = selectedSubString.replace("Class", "")
                     selectedItems.clear()
-                    selectedItems.addAll(selectedvalues)
+                    selectedItems.addAll(selectedValues)
 
                 }
                 .show()
 
     }
 
-    private fun showSingleSelectionDialog(items: List<String>, textview: TextView, title: String, selectedItems: ArrayList<String>) {
+    private fun showSingleSelectionDialog(items: List<String>, textView: TextView, title: String, selectedItems: ArrayList<String>) {
         val namesArr = items.toTypedArray()
         var indexSelected = -1
         if (selectedItems.size > 0) {
             for (i in namesArr.indices) {
-                if (namesArr[i].equals(selectedItems[0])) {
+                if (namesArr[i] == selectedItems[0]) {
                     indexSelected = i
                     break
                 } else {
@@ -377,7 +378,7 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
                     if (selectedPosition < 0) {
                         selectedPosition = 0
                     }
-                    textview.text = namesArr[selectedPosition]
+                    textView.text = namesArr[selectedPosition]
                     selectedItems.clear()
                     selectedItems.add(namesArr[selectedPosition])
                 }
@@ -394,11 +395,11 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA) &&
                     ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
                     ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-
+                showSnackError("You need to grant permissions from settings.")
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
-                        PermissionsRequest)
+                        permissionRequest)
             }
         } else {
             onAddPicture()
@@ -408,7 +409,7 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
-            PermissionsRequest -> {
+            permissionRequest -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
                                 && grantResults[1] == PackageManager.PERMISSION_GRANTED
                                 && grantResults[2] == PackageManager.PERMISSION_GRANTED)) {
@@ -572,8 +573,8 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
         finish()
     }
 
-    /*Upload picture on firestore storage and get url
-    * */
+   /*Upload picture on fire store storage and get url
+   * */
     private fun uploadImage(uri: Uri) {
         showLoading()
         val file = File(uri.path!!)
@@ -688,31 +689,39 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
 
 
     private fun isVerified(): Boolean {
-        if (mBinding.classToTeach.text.isEmpty()) {
-            showSnackError("Please select classes you teach.")
-            return false
-        } else if (subject_to_taught.text.isEmpty()) {
-            showSnackError("Please select subjects you teach.")
-            return false
+        when {
+            mBinding.classToTeach.text.isEmpty() -> {
+                showSnackError("Please select classes you teach.")
+                return false
+            }
+            subject_to_taught.text.isEmpty() -> {
+                showSnackError("Please select subjects you teach.")
+                return false
 
-        } else if (select_occupation.text.isEmpty()) {
-            showSnackError("Please select your occupation.")
-            return false
+            }
+            select_occupation.text.isEmpty() -> {
+                showSnackError("Please select your occupation.")
+                return false
 
-        } else if (teaching_experience.text.isEmpty()) {
-            showSnackError("Please select your teaching experience.")
-            return false
+            }
+            teaching_experience.text.isEmpty() -> {
+                showSnackError("Please select your teaching experience.")
+                return false
 
-        } else if (qualification.text.isEmpty()) {
-            showSnackError("Please select your qualification.")
-            return false
+            }
+            qualification.text.isEmpty() -> {
+                showSnackError("Please select your qualification.")
+                return false
 
-        } else if (bio.text.isEmpty()) {
-            showSnackError("Please add Bio.")
-            return false
+            }
+            bio.text.isEmpty() -> {
+                showSnackError("Please add Bio.")
+                return false
 
-        } else {
-            return true
+            }
+            else -> {
+                return true
+            }
         }
     }
 }

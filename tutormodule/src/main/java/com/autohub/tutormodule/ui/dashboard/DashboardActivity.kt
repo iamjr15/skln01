@@ -33,7 +33,7 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
     private lateinit var scheduleFragment: ScheduleFragment
     private var profileFragment: ProfileFragment = ProfileFragment()
     private lateinit var sectionsPagerAdapter: SectionsPagerAdapter
-    private var PermissionsRequest: Int = 13
+    private var permissionRequest: Int = 13
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,10 +107,10 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CALL_PHONE)) {
-
+                 showSnackError("You need to grant Phone call permissions from settings.")
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE),
-                        PermissionsRequest)
+                        permissionRequest)
             }
         }
     }
@@ -207,14 +207,16 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
 
     override fun onBackPressed() {
 
-        if (mViewPager.currentItem == 0) {
-            homeBaseFragment.backPressed()
-
-        } else if (mViewPager.currentItem == 2) {
-            requestBaseFragment.backPressed()
-
-        } else {
-            super.onBackPressed()
+        when (mViewPager.currentItem) {
+            0 -> {
+                homeBaseFragment.backPressed()
+            }
+            2 -> {
+                requestBaseFragment.backPressed()
+            }
+            else -> {
+                super.onBackPressed()
+            }
         }
     }
 }

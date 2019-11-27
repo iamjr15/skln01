@@ -27,7 +27,7 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
                 <TextView
-                    style="@style/my_request"
+                    style="@style/text_style_bold"
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:text="@string/class_requests" />
@@ -35,12 +35,12 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
-                style="@style/bodystye"
+                style="@style/tab_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:elevation="0dp"
                 app:tabGravity="fill"
-                app:tabIndicatorColor="@color/tabindicator"
+                app:tabIndicatorColor="@color/tabIndicator"
                 app:tabIndicatorFullWidth="false"
                 app:tabIndicatorHeight="1dp"
                 app:tabMode="fixed"

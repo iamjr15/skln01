@@ -46,7 +46,7 @@ class HomeBaseFragment : BaseFragment() {
         homeFragment = HomeFragment()
         childFragmentManager
                 .beginTransaction().addToBackStack(HomeFragment::class.java.name)
-                .replace(R.id.homecontainer, homeFragment!!).commit()
+                .replace(R.id.home_container, homeFragment!!).commit()
     }
 
     /*Open Class Manager screen
@@ -55,7 +55,7 @@ class HomeBaseFragment : BaseFragment() {
         homeFragment = null
         childFragmentManager
                 .beginTransaction().addToBackStack(ClassManagerFragment::class.java.name)
-                .replace(R.id.homecontainer, ClassManagerFragment()).commit()
+                .replace(R.id.home_container, ClassManagerFragment()).commit()
     }
 
     /*Open Add Batch screen
@@ -68,7 +68,7 @@ class HomeBaseFragment : BaseFragment() {
         addBatchFragment.arguments = bundle
         childFragmentManager
                 .beginTransaction().addToBackStack(AddBatchFragment::class.java.name)
-                .replace(R.id.homecontainer, addBatchFragment).commit()
+                .replace(R.id.home_container, addBatchFragment).commit()
     }
 
     /*Open Batch options screen
@@ -80,7 +80,7 @@ class HomeBaseFragment : BaseFragment() {
         batchOptionsFragment.arguments = bundle
         childFragmentManager
                 .beginTransaction().addToBackStack(BatchOptionsFragment::class.java.name)
-                .replace(R.id.homecontainer, batchOptionsFragment).commit()
+                .replace(R.id.home_container, batchOptionsFragment).commit()
     }
 
     /*Open screen showing students list
@@ -89,7 +89,7 @@ class HomeBaseFragment : BaseFragment() {
         val studentsListFragment = StudentsListFragment()
         childFragmentManager
                 .beginTransaction().addToBackStack(StudentsListFragment::class.java.name)
-                .replace(R.id.homecontainer, studentsListFragment).commit()
+                .replace(R.id.home_container, studentsListFragment).commit()
     }
 
     /*Called on back button pressed.Check number of fragments in stack and perform action.

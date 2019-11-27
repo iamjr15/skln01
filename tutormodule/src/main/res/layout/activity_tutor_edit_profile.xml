@@ -47,14 +47,14 @@
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/backimage"
+                                android:id="@+id/back_image"
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_margin="4dp"
                                 android:onClick="@{() -> callback.onBackClick()}"
                                 android:padding="8dp"
-                                android:src="@drawable/backarrow"
+                                android:src="@drawable/back_arrow"
                                 android:tint="@color/black" />
 
                             <TextView
@@ -101,8 +101,7 @@
                                 android:layout_alignParentBottom="true"
                                 android:layout_marginEnd="4dp"
                                 android:layout_marginBottom="4dp"
-
-                                android:src="@drawable/ic_imageedit" />
+                                android:src="@drawable/ic_image_edit" />
                         </RelativeLayout>
                     </LinearLayout>
 
@@ -183,7 +182,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="@string/select_ocupation"
+                    android:text="@string/select_occupation"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
@@ -213,7 +212,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="@string/select_treaching_epereience"
+                    android:text="@string/select_teaching_experience"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
@@ -324,8 +323,7 @@
                     android:paddingEnd="8dp"
                     android:paddingBottom="16dp"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
-                    tools:text="CBSE" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"

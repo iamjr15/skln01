@@ -36,8 +36,7 @@
                 android:paddingTop="27dp"
                 android:paddingEnd="5dp"
                 android:paddingBottom="5dp"
-
-                android:src="@drawable/backarrow" />
+                android:src="@drawable/back_arrow" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_picture"

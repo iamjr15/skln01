@@ -97,8 +97,4 @@ class ProfileFragment : BaseFragment() {
                     showSnackError(e.message)
                 }
     }
-
-    companion object {
-        fun newInstance(): ProfileFragment = ProfileFragment()
-    }
 }

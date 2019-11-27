@@ -44,7 +44,7 @@ class AddBatchFragment : BaseFragment() {
     private var selectedSubPosition: Int = 0
     private var selectedClassPosition: Int = 0
     private var counter = 0
-    lateinit var tutorData: TutorData
+    private lateinit var tutorData: TutorData
     lateinit var batch: BatchesModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -297,7 +297,7 @@ class AddBatchFragment : BaseFragment() {
         var indexSelected = -1
         if (selectedItems.size > 0) {
             for (i in namesArr.indices) {
-                if (namesArr[i].equals(selectedItems[0])) {
+                if (namesArr[i] == selectedItems[0]) {
                     indexSelected = i
                     break
                 } else {
@@ -331,34 +331,42 @@ class AddBatchFragment : BaseFragment() {
                 .show()
     }
 
-    /*Add validation to check if all fiels are filled
+    /*Add validation to check if all fields are filled
         * */
     private fun isVerified(): Boolean {
-        if (mBinding.batchName.text.isEmpty()) {
-            showSnackError("Please add name of batch.")
-            return false
-        } else if (mBinding.startTime.text.isEmpty()) {
-            showSnackError("Please select Start Time.")
-            return false
+        when {
+            mBinding.batchName.text.isEmpty() -> {
+                showSnackError("Please add name of batch.")
+                return false
+            }
+            mBinding.startTime.text.isEmpty() -> {
+                showSnackError("Please select Start Time.")
+                return false
 
-        } else if (mBinding.endTime.text.isEmpty()) {
-            showSnackError("Please select End Time.")
-            return false
+            }
+            mBinding.endTime.text.isEmpty() -> {
+                showSnackError("Please select End Time.")
+                return false
 
-        } else if (mBinding.selectClass.text.isEmpty()) {
-            showSnackError("Please select Class.")
-            return false
+            }
+            mBinding.selectClass.text.isEmpty() -> {
+                showSnackError("Please select Class.")
+                return false
 
-        } else if (mBinding.selectSubject.text.isEmpty()) {
-            showSnackError("Please select Subject.")
-            return false
+            }
+            mBinding.selectSubject.text.isEmpty() -> {
+                showSnackError("Please select Subject.")
+                return false
 
-        } else if (counter == 0) {
-            showSnackError("Please select day(s).")
-            return false
-        } else {
-            return true
+            }
+            counter == 0 -> {
+                showSnackError("Please select day(s).")
+                return false
+            }
+            else -> {
+                return true
 
+            }
         }
     }
 
@@ -386,10 +394,5 @@ class AddBatchFragment : BaseFragment() {
                 onDaySelected(mBinding.sun)
             }
         }
-    }
-
-
-    companion object {
-        fun newInstance(): AddBatchFragment = AddBatchFragment()
     }
 }
