@@ -69,8 +69,6 @@ class LoginActivity : BaseActivity() {
 
             mBinding!!.rrtutorpass.visibility = View.GONE
             mBinding!!.rrstudentpass.visibility = View.VISIBLE
-
-
         } else {
             mBinding!!.rrtutorpass.visibility = View.VISIBLE
             mBinding!!.rrstudentpass.visibility = View.GONE

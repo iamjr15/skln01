@@ -208,12 +208,13 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
     override fun onBackPressed() {
 
         if (mViewPager.currentItem == 0) {
+            homeBaseFragment.backPressed()
 
-            super.onBackPressed()
+        } else if (mViewPager.currentItem == 2) {
+            requestBaseFragment.backPressed()
+
         } else {
-            mViewPager.currentItem = 0
-
+            super.onBackPressed()
         }
-
     }
 }

@@ -84,4 +84,13 @@ class HomeBaseFragment : BaseFragment() {
                 .replace(R.id.homecontainer, studentsListFragment).commit()
     }
 
+    fun backPressed() {
+         if (childFragmentManager.backStackEntryCount > 1) {
+            childFragmentManager.popBackStack()
+
+        } else {
+            activity?.finish()
+        }
+    }
+
 }
