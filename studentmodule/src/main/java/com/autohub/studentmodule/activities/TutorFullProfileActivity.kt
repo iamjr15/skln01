@@ -215,7 +215,6 @@ class TutorFullProfileActivity : BaseActivity() {
         finish()
     }
 
-
     /*
     *
     * Validate radio button

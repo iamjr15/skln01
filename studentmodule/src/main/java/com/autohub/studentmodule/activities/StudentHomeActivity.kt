@@ -296,12 +296,8 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
                     userimagePath = bundle.getString("imageUrl")
                     updateUserProfileImage()
                 }
-
             }
-
-
         }
-
     }
 
     /*
@@ -316,12 +312,10 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     override fun onClassRequestDeleted(isMyRequest: Boolean) {
         if (isMyRequest) {
             fragmentClassRequests.showRequestFragmentClass()
-
         } else {
             explorebaseFragment!!.showExploreFragment()
 
         }
-
     }
 
 
