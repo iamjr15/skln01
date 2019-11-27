@@ -1,9 +1,11 @@
 package com.autohub.tutormodule.ui.dashboard.profile
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -26,13 +28,18 @@ import com.autohub.tutormodule.databinding.ActivityTutorEditProfileBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import gun0912.tedbottompicker.TedBottomPicker
+import com.kbeanie.multipicker.api.CacheLocation
+import com.kbeanie.multipicker.api.CameraImagePicker
+import com.kbeanie.multipicker.api.ImagePicker
+import com.kbeanie.multipicker.api.Picker
+import com.kbeanie.multipicker.api.callbacks.ImagePickerCallback
+import com.kbeanie.multipicker.api.entity.ChosenImage
 import kotlinx.android.synthetic.main.activity_tutor_edit_profile.*
 import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class EditProfileActivity : BaseActivity() {
+class EditProfileActivity : BaseActivity(), ImagePickerCallback {
 
     private lateinit var mBinding: ActivityTutorEditProfileBinding
     private val MAX_SIZE = 240
@@ -41,11 +48,17 @@ class EditProfileActivity : BaseActivity() {
 
     private var selectedSubjectsList = ArrayList<String>()
     private var subjectsList = ArrayList<SubjectData>()
+    private var imageuri: Uri? = null
+
 
     private var selectedGradesList = ArrayList<String>()
     private var gradesList = ArrayList<GradeData>()
     private var profilePictureUri: String = ""
     private var PermissionsRequest: Int = 12
+
+    private lateinit var cameraPicker: CameraImagePicker
+    private lateinit var imagePicker: ImagePicker
+    private var isTakePicture: Boolean = false
 
     private val mWatcherWrapper = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -409,18 +422,143 @@ class EditProfileActivity : BaseActivity() {
     * */
     private fun onAddPicture() {
 
-        TedBottomPicker.with(this)
-                .show { uri ->
-                    GlideApp.with(this)
-                            .load(uri)
-                            .placeholder(com.autohub.skln.R.drawable.default_pic)
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                            .skipMemoryCache(true)
+        /*   TedBottomPicker.with(this)
+                   .show { uri ->
+                       GlideApp.with(this)
+                               .load(uri)
+                               .placeholder(com.autohub.skln.R.drawable.default_pic)
+                               .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                               .skipMemoryCache(true)
 
-                            .into(mBinding.profilePicture)
-                    uploadImage(uri)
+                               .into(mBinding.profilePicture)
+                       uploadImage(uri)
+
+                   }*/
+
+        onpenImagePickerDialog()
+    }
+
+
+    private fun onpenImagePickerDialog() {
+        val mBuilder = androidx.appcompat.app.AlertDialog.Builder(this)
+
+        val options = arrayOf("Gallery", "Camera")
+        mBuilder.setSingleChoiceItems(options, 0, null)
+        mBuilder.setTitle("Choose from")
+                .setPositiveButton("Ok") { dialog, which ->
+
+                    if ((dialog as AlertDialog).listView.checkedItemPosition == 0) {
+                        if (ActivityCompat.checkSelfPermission(this,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 200)
+                        } else {
+                            pickImageSingle()
+                        }
+                    } else {
+
+                        if (ActivityCompat.checkSelfPermission(this,
+                                        Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(this,
+                                    arrayOf(Manifest.permission.CAMERA), 100)
+
+                        } else {
+                            takePicture()
+                        }
+
+                    }
 
                 }
+
+        val mDialog = mBuilder.create()
+        mDialog.show()
+
+    }
+
+    private fun takePicture() {
+        isTakePicture = true
+        cameraPicker = CameraImagePicker(this)
+        cameraPicker.setDebugglable(true)
+        cameraPicker.setCacheLocation(CacheLocation.EXTERNAL_STORAGE_APP_DIR)
+        cameraPicker.setImagePickerCallback(this)
+        cameraPicker.shouldGenerateMetadata(true)
+        cameraPicker.shouldGenerateThumbnails(true)
+        cameraPicker.pickImage()
+    }
+
+    private fun pickImageSingle() {
+        isTakePicture = false
+        imagePicker = ImagePicker(this)
+        imagePicker.setFolderName("Random")
+        imagePicker.setRequestId(1234)
+        //imagePicker.ensureMaxSize(500, 500)
+        imagePicker.shouldGenerateMetadata(true)
+        imagePicker.shouldGenerateThumbnails(true)
+        imagePicker.setImagePickerCallback(this)
+        val bundle = Bundle()
+        bundle.putInt("android.intent.extras.CAMERA_FACING", 1)
+        imagePicker.pickImage()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == Picker.PICK_IMAGE_DEVICE) run {
+            if (imagePicker == null) {
+                imagePicker = ImagePicker(this)
+                imagePicker.setImagePickerCallback(this)
+            }
+            imagePicker.submit(data)
+        } else if (requestCode == Picker.PICK_IMAGE_CAMERA) run {
+            if (cameraPicker == null) {
+                cameraPicker = CameraImagePicker(this)
+                cameraPicker.setImagePickerCallback(this)
+                //cameraPicker.reinitialize(pickerPath);
+            }
+            cameraPicker.submit(data)
+        }
+
+    }
+
+
+    override fun onImagesChosen(list: MutableList<ChosenImage>?) {
+        val chosenImage = list!!.get(0)
+
+        if (chosenImage.originalPath.contains("content:")) {
+            if (isTakePicture) {
+                imageuri = Uri.fromFile(File(chosenImage.originalPath))
+
+            } else {
+                imageuri = Uri.parse(chosenImage.originalPath)
+
+            }
+        } else {
+            isTakePicture = true
+            imageuri = Uri.fromFile(File(chosenImage.originalPath))
+
+        }
+
+
+        GlideApp.with(this)
+                .load(imageuri)
+                .placeholder(com.autohub.skln.R.drawable.default_pic)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                .skipMemoryCache(true)
+                .into(mBinding.profilePicture)
+
+        if (imageuri != null) {
+            if (isTakePicture) {
+                uploadImage(imageuri!!)
+            } else {
+                uploadGalleryImage(imageuri!!)
+
+
+            }
+        }
+
+    }
+
+
+    override fun onError(p0: String?) {
     }
 
 
@@ -434,8 +572,8 @@ class EditProfileActivity : BaseActivity() {
         finish()
     }
 
-   /*Upload picture on firestore storage and get url
-   * */
+    /*Upload picture on firestore storage and get url
+    * */
     private fun uploadImage(uri: Uri) {
         showLoading()
         val file = File(uri.path!!)
@@ -447,6 +585,44 @@ class EditProfileActivity : BaseActivity() {
             buf.close()
             val picRef = mStorageReference!!.child("tutor/" + firebaseAuth.currentUser!!.uid + ".jpg")
             val uploadTask = picRef.putBytes(bytes)
+            uploadTask.addOnSuccessListener {
+                picRef.downloadUrl.addOnSuccessListener {
+                    profilePictureUri = it.toString()
+                }
+                Toast.makeText(this, "Profile Picture uploaded successfully!", Toast.LENGTH_LONG).show()
+                hideLoading()
+            }.addOnFailureListener { e ->
+                hideLoading()
+                Toast.makeText(this, "Upload Failed $e", Toast.LENGTH_LONG).show()
+            }
+
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+            hideLoading()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            hideLoading()
+        }
+    }
+
+
+    private fun uploadGalleryImage(uri: Uri) {
+        var size = 0
+        showLoading()
+
+        uri.let { returnUri ->
+            contentResolver.query(returnUri, null, null, null, null)
+        }?.use { cursor ->
+            size = cursor.getColumnIndex(OpenableColumns.SIZE)
+            cursor.moveToFirst()
+        }
+
+        try {
+            var inputStream = contentResolver.openInputStream(uri)
+            val path = "student/"
+            val pathString = path + firebaseAuth.currentUser!!.uid + ".jpg"
+            val picRef = FirebaseStorage.getInstance().reference.child(pathString)
+            val uploadTask = picRef.putStream(inputStream!!)
             uploadTask.addOnSuccessListener {
                 picRef.downloadUrl.addOnSuccessListener {
                     profilePictureUri = it.toString()

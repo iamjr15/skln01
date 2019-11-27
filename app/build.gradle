@@ -74,12 +74,9 @@ dependencies {
 
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    api 'gun0912.ted:tedbottompicker:2.0.1'
 
     api 'com.kbeanie:multipicker:1.1.31@aar'
     api 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
-
-
 
 
 }

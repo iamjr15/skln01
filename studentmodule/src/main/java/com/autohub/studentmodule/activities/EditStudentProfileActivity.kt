@@ -50,6 +50,7 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
     private lateinit var cameraPicker: CameraImagePicker
     private lateinit var imagePicker: ImagePicker
     private var isTakePicture: Boolean = false
+    private var isContent: Boolean = false
 
     private lateinit var subjectDataList: ArrayList<SubjectData>
     private lateinit var studentSubjectsDataList: ArrayList<StudentSubjectsModel>
@@ -579,7 +580,7 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
             showLoading()
 
             if (imageuri != null) {
-                if (isTakePicture) {
+                if (isTakePicture || !isContent) {
                     uploadImage(imageuri!!)
                 } else {
                     uploadGalleryImage(imageuri!!)
@@ -914,11 +915,14 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
                 imagePicker.setImagePickerCallback(this)
             }
             imagePicker.submit(data)
+            if (data == null) {
+
+            }
+
         } else if (requestCode == Picker.PICK_IMAGE_CAMERA) run {
             if (cameraPicker == null) {
                 cameraPicker = CameraImagePicker(this)
                 cameraPicker.setImagePickerCallback(this)
-                //cameraPicker.reinitialize(pickerPath);
             }
             cameraPicker.submit(data)
         }
@@ -927,9 +931,11 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
 
 
     override fun onImagesChosen(list: MutableList<ChosenImage>?) {
-        val chosenImage = list!!.get(0)
+        val chosenImage = list!![0]
 
         if (chosenImage.originalPath.contains("content:")) {
+            isContent = true
+
             if (isTakePicture) {
                 imageuri = Uri.fromFile(File(chosenImage.originalPath))
 
@@ -938,23 +944,17 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
 
             }
         } else {
+            isContent = false
             isTakePicture = true
             imageuri = Uri.fromFile(File(chosenImage.originalPath))
 
         }
-
-
-
         GlideApp.with(this)
                 .load(imageuri)
                 .placeholder(com.autohub.skln.R.drawable.default_pic)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
                 .skipMemoryCache(true)
                 .into(mBinding!!.profilePicture)
-
-        if (!isTakePicture) {
-
-        }
 
 
     }
