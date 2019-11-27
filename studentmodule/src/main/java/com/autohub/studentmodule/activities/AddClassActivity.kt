@@ -28,6 +28,9 @@ class AddClassActivity : BaseActivity() {
         mBinding!!.callback = this
     }
 
+    /*
+    * BatchCode field validation
+    * */
     fun onAddclick() {
         if (mBinding!!.edtcode.text.toString() == "") {
             showSnackError(getString(R.string.addbatchcode))
@@ -48,6 +51,10 @@ class AddClassActivity : BaseActivity() {
 
     }
 
+    /*
+    * Check whether Batch code exist in Firebase
+    * if batch code existed check wether it contains contains user id in enrolledStudentsId field
+    * */
     private fun getBatchCodeDetails() {
         val batchCode = mBinding!!.edtcode.text.toString().trim()
         firebaseStore.collection(getString(R.string.db_root_batches)).whereEqualTo(KEY_BATCHCODE
@@ -71,8 +78,6 @@ class AddClassActivity : BaseActivity() {
                     } else {
                         showSnackError(getString(R.string.youarenotenrolled_msg))
                     }
-
-
                 }
 
 
@@ -88,6 +93,9 @@ class AddClassActivity : BaseActivity() {
 
     }
 
+    /*
+    * Add Batch code in students collection for later use
+    * */
     private fun addBatchCodeInStudent(batchTitle: String, batchCode: String) {
         firebaseStore.collection(getString(R.string.db_root_students))
                 .document(appPreferenceHelper.getuserID()).set(
