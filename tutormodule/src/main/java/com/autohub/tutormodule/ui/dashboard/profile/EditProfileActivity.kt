@@ -1,8 +1,6 @@
 package com.autohub.tutormodule.ui.dashboard.profile
 
 import android.Manifest
-import android.app.Activity
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -16,7 +14,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
-import com.autohub.skln.models.User
 import com.autohub.skln.models.batchRequests.GradeData
 import com.autohub.skln.models.batchRequests.SubjectData
 import com.autohub.skln.models.tutor.TutorData
@@ -27,9 +24,6 @@ import com.autohub.skln.utills.GlideApp
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ActivityTutorEditProfileBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import gun0912.tedbottompicker.TedBottomPicker
@@ -173,7 +167,7 @@ class EditProfileActivity : BaseActivity() {
                     for (i in tutorGrades.indices) {
                         for (j in 0 until gradesList.size) {
                             if (gradesList[j].id.equals(tutorGrades[i].gradeId)) {
-                                selectedGradesList.add("Class " + gradesList[j].grade!!)
+                                selectedGradesList.add(gradesList[j].grade!! + CommonUtils.getClassSuffix(gradesList[j].grade!!.toInt()))
                             }
                         }
                     }
@@ -280,7 +274,7 @@ class EditProfileActivity : BaseActivity() {
         showMultiSelectionDialog(items, mBinding.targetedBoard, getString(R.string.select_targeted_board), selectedTargetBoard)
     }
 
-    private fun showMultiSelectionDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>) {
+    private fun showMultiSelectionDialog(items: List<String>, textView: TextView, title: String, selectedItems: ArrayList<String>) {
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
         val selectedvalues = ArrayList<String>()
@@ -312,7 +306,7 @@ class EditProfileActivity : BaseActivity() {
                             selectedvalues[i] + ","
                         }
                     }
-                    testview.text = selectedSubString
+                    textView.text = selectedSubString.replace("Class", "")
                     selectedItems.clear()
                     selectedItems.addAll(selectedvalues)
 
@@ -321,7 +315,7 @@ class EditProfileActivity : BaseActivity() {
 
     }
 
-    private fun showSingleSelectionDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>) {
+    private fun showSingleSelectionDialog(items: List<String>, textview: TextView, title: String, selectedItems: ArrayList<String>) {
         val namesArr = items.toTypedArray()
         var indexSelected = -1
         if (selectedItems.size > 0) {
@@ -348,7 +342,7 @@ class EditProfileActivity : BaseActivity() {
                     if (selectedPosition < 0) {
                         selectedPosition = 0
                     }
-                    testview.text = namesArr[selectedPosition]
+                    textview.text = namesArr[selectedPosition]
                     selectedItems.clear()
                     selectedItems.add(namesArr[selectedPosition])
                 }
@@ -448,39 +442,45 @@ class EditProfileActivity : BaseActivity() {
 
     fun makeSaveRequest() {
         if (isVerified()) {
-            showLoading()
-
-            val tutor = TutorData()
-
-            tutor.qualification?.currentOccupation = mBinding.selectOccupation.text.toString()
-            tutor.qualification?.experience = mBinding.teachingExperience.text.toString()
-            tutor.qualification?.qualification = mBinding.qualification.text.toString()
-            tutor.qualification?.qualificationArea = mBinding.areaOfQualification.text.toString()
-            tutor.qualification?.targetBoard = mBinding.targetedBoard.text.toString()
-            tutor.personInfo?.biodata = mBinding.bio.text.toString()
-            if (profilePictureUri.trim().isNotEmpty()) {
-                tutor.personInfo?.accountPicture = profilePictureUri
-            } else {
-                profilePictureUri = tutorData?.personInfo?.accountPicture!!
-            }
-
-            Log.e("tutor", tutor.toString())
-            firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).update(
-                    "qualification.currentOccupation", tutor.qualification?.currentOccupation,
-                    "qualification.experience", tutor.qualification?.experience,
-                    "qualification.qualification", tutor.qualification?.qualification,
-                    "qualification.qualificationArea", tutor.qualification?.qualificationArea,
-                    "qualification.targetBoard", tutor.qualification?.targetBoard,
-                    "personInfo.biodata", tutor.personInfo?.biodata,
-                    "personInfo.accountPicture", tutor.personInfo?.accountPicture).addOnSuccessListener {
-                hideLoading()
-                showSnackError("Your profile is updated successfully!!")
-            }.addOnFailureListener { e ->
-                hideLoading()
-                showSnackError(e.toString())
-            }
+            updateTutorData()
         }
     }
+
+    private fun updateTutorData() {
+        showLoading()
+
+        val tutor = TutorData()
+
+        tutor.qualification?.currentOccupation = mBinding.selectOccupation.text.toString()
+        tutor.qualification?.experience = mBinding.teachingExperience.text.toString()
+        tutor.qualification?.qualification = mBinding.qualification.text.toString()
+        tutor.qualification?.qualificationArea = mBinding.areaOfQualification.text.toString()
+        tutor.qualification?.targetBoard = mBinding.targetedBoard.text.toString()
+        tutor.personInfo?.biodata = mBinding.bio.text.toString()
+        if (profilePictureUri.trim().isNotEmpty()) {
+            tutor.personInfo?.accountPicture = profilePictureUri
+        } else {
+            profilePictureUri = tutorData?.personInfo?.accountPicture!!
+        }
+
+        Log.e("tutor", tutor.toString())
+        firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).update(
+                "qualification.currentOccupation", tutor.qualification?.currentOccupation,
+                "qualification.experience", tutor.qualification?.experience,
+                "qualification.qualification", tutor.qualification?.qualification,
+                "qualification.qualificationArea", tutor.qualification?.qualificationArea,
+                "qualification.targetBoard", tutor.qualification?.targetBoard,
+                "personInfo.biodata", tutor.personInfo?.biodata,
+                "personInfo.accountPicture", tutor.personInfo?.accountPicture).addOnSuccessListener {
+            hideLoading()
+            showSnackError("Your profile is updated successfully!!")
+        }.addOnFailureListener { e ->
+            hideLoading()
+            showSnackError(e.toString())
+        }
+
+    }
+
 
     private fun isVerified(): Boolean {
         if (mBinding.classToTeach.text.isEmpty()) {
