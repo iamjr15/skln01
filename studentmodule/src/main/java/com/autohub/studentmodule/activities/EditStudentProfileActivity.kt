@@ -34,6 +34,7 @@ import com.kbeanie.multipicker.api.ImagePicker
 import com.kbeanie.multipicker.api.Picker
 import com.kbeanie.multipicker.api.callbacks.ImagePickerCallback
 import com.kbeanie.multipicker.api.entity.ChosenImage
+import io.fabric.sdk.android.services.common.CommonUtils
 import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -268,7 +269,7 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
 
             for (subjectData in subjectDataList) {
                 if (subjectData.isHobbySelected!!) {
-                    subjectData.name?.let { selectedItems.add(it) }
+                    subjectData.name.let { selectedItems.add(it) }
                 }
             }
         }
@@ -378,7 +379,7 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
         if (favtselectedId != "" && !isLeastFav) {
             for (favtdata in favleastsubjectsDataList) {
                 if (favtdata.isFavSelected!!) {
-                    favtdata.name?.let { selectedItems.add(it) }
+                    favtdata.name.let { selectedItems.add(it) }
                 }
             }
         }
@@ -387,7 +388,7 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
         if (leastselectedId != "" && isLeastFav) {
             for (leastfav in favleastsubjectsDataList) {
                 if (leastfav.isleastelected!!) {
-                    leastfav.name?.let { selectedItems.add(it) }
+                    leastfav.name.let { selectedItems.add(it) }
                 }
             }
         }
@@ -1043,7 +1044,7 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
 
         uri.let { returnUri ->
             contentResolver.query(returnUri, null, null, null, null)
-        }?.use { cursor ->
+        }.use { cursor ->
             size = cursor.getColumnIndex(OpenableColumns.SIZE)
             cursor.moveToFirst()
         }
