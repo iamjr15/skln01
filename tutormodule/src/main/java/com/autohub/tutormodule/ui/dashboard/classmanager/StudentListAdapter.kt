@@ -10,17 +10,17 @@ import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ItemStudentBinding
 import com.autohub.tutormodule.ui.utils.AppUtils
 
-class StudentListAdaptor(var context: Context)
-    : RecyclerView.Adapter<StudentListAdaptor.Holder>() {
+class StudentListAdapter(var context: Context)
+    : RecyclerView.Adapter<StudentListAdapter.Holder>() {
 
     private var studentList: List<UserModel> = ArrayList()
     lateinit var mBinding: ItemStudentBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         mBinding = DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.item_student, parent, false
-                )
+                LayoutInflater.from(parent.context),
+                R.layout.item_student, parent, false
+        )
 
         return Holder(mBinding)
     }
@@ -46,6 +46,4 @@ class StudentListAdaptor(var context: Context)
         fun bind() {
         }
     }
-
-
 }

@@ -8,7 +8,7 @@
 
     <string name="enter_x">Please enter %s</string>
     <string name="enter_password">Please enter password</string>
-    <string name="welcome_onboard">welcome\nonboard.</string>
+    <string name="welcome_on_board">welcome\nonboard.</string>
     <string name="heythere">Hey there !</string>
     <string name="letsget_start">Let\'s get started.</string>
 
@@ -22,4 +22,6 @@
     <string name="loginsignupfeature">loginsignupmodule</string>
     <string name="title_studentmodule">Student</string>
     <string name="title_tutormodule">tutor</string>
+
+
 </resources>

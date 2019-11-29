@@ -127,7 +127,7 @@ public interface AppConstants {
     String KEY_REQUESTSTATUS_PENDING = "pending";
 
 
-    String KEY_SELECTED_CLASS = "selectedClass";
+    String KEY_SELECTED_CLASS = "selectedGrad";
 
 
     // bundel keys

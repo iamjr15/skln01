@@ -48,14 +48,16 @@ class ScheduleFragment : BaseFragment() {
         mBinding.schedulerecycleview.adapter = adaptor
         fetchBatches()
         initializeCalendarView(dates)
-
         mBinding.swiperefresh.setOnRefreshListener {
             fetchBatches()
         }
-
-
     }
 
+    /*
+    * Fetch all Batches in which user is enrolled
+    *
+    *
+    * */
     fun fetchBatches() {
         firebaseStore.collection("students").document(appPreferenceHelper.getuserID()).get().addOnSuccessListener {
             if (it["batchCodes"] != null && (it["batchCodes"] as ArrayList<*>).size > 0) {

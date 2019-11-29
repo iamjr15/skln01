@@ -112,7 +112,9 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
         }
     }
 
-
+    /*
+    * Check is entered OTP valid or not
+    * */
     fun onNextClick() {
         if (mVerificationId == null || mBinding!!.pinView.value.length != mBinding!!.pinView.pinLength) {
             showSnackError(R.string.enter_correct_otp)
@@ -149,10 +151,10 @@ class NumberVerificationActivity : BaseActivity(), TextView.OnEditorActionListen
                 }
     }
 
-    private fun unLinkCredentials() {
+    /*private fun unLinkCredentials() {
         firebaseAuth.currentUser!!.unlink(firebaseAuth.currentUser!!.providerId)
                 .addOnCompleteListener(this) { linkWithCredentials() }
-    }
+    }*/
 
     /*
     * Link user email and password with firebase userID

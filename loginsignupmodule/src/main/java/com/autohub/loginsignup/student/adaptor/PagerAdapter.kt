@@ -6,14 +6,12 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 
 class PagerAdapter(fragmentManager: FragmentManager) :
         FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-    var fragmentsList: ArrayList<Fragment> = ArrayList()
+    private var fragmentsList: ArrayList<Fragment> = ArrayList()
 
     constructor(fragmentManager: FragmentManager, fragmentsList: ArrayList<Fragment>) : this(fragmentManager) {
         this.fragmentsList = fragmentsList
     }
 
-
-    // 2
     override fun getItem(position: Int): Fragment {
         return fragmentsList[position]
     }
@@ -22,7 +20,6 @@ class PagerAdapter(fragmentManager: FragmentManager) :
         return 0.6f
     }
 
-    // 3
     override fun getCount(): Int {
         return fragmentsList.size
     }

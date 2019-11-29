@@ -12,20 +12,15 @@ import com.autohub.skln.utills.AppConstants
 import com.autohub.skln.utills.GlideApp
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorHomeBinding
-import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
+import com.autohub.tutormodule.ui.dashboard.listener.HomeListener
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class HomeFragment : BaseFragment() {
     private lateinit var mBinding: FragmentTutorHomeBinding
-    private lateinit var homeListner: HomeListener
+    private lateinit var homeListener: HomeListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_tutor_home, container, false)
-
-    companion object {
-        fun newInstance(): HomeFragment = HomeFragment()
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,6 +31,10 @@ class HomeFragment : BaseFragment() {
         fetchTutorData()
     }
 
+    /**
+     * Fetch pending requests data on the basis of teacher id and status(if status equals to pending)
+     * @param tutorData
+     */
     private fun fetchPendingRequests(tutorData: TutorData) {
         firebaseStore.collection(getString(R.string.db_root_batch_requests))
                 .whereEqualTo("teacher.id", tutorData.id)
@@ -44,19 +43,25 @@ class HomeFragment : BaseFragment() {
                     if (documentSnapshot.documents.size > 0) {
                         val data = documentSnapshot.toObjects(BatchesModel::class.java)
                         if (data != null && data.size > 0) {
+                            hideLoading()
                             mBinding.pendingRequestCount.text = data.size.toString()
                         }
+                    } else {
+                        hideLoading()
                     }
                 }
                 .addOnFailureListener { e ->
+                    hideLoading()
                     showSnackError(e.message)
                 }
     }
 
+    /**
+     * Fetch Tutor data on the basis of document id and show details
+     */
     private fun fetchTutorData() {
         firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
-                    hideLoading()
                     val tutorData = documentSnapshot.toObject(TutorData::class.java)!!
                     mBinding.name.text = "Hey,\n" + tutorData.personInfo?.firstName
 
@@ -77,21 +82,15 @@ class HomeFragment : BaseFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        homeListner = context as HomeListener
+        homeListener = context as HomeListener
     }
 
     fun onPendingRequestClick() {
-        homeListner.pendingRequestSelect()
+        homeListener.pendingRequestSelect()
 
     }
 
     fun onManageClassClick() {
-        homeListner.managerSelected()
+        homeListener.managerSelected()
     }
-
-
-    fun updateBatches() {
-
-    }
-
 }

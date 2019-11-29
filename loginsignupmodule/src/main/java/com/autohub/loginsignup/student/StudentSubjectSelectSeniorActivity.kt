@@ -30,7 +30,7 @@ import java.util.*
 class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner {
 
     private var selectedSubjects: ArrayList<SubjectsModel> = ArrayList()
-    lateinit var subjectDataList: ArrayList<SubjectsModel>
+    private lateinit var subjectDataList: ArrayList<SubjectsModel>
 
     override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: Any) {
 
@@ -85,7 +85,7 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
     }
 
     private fun fetchSubjects() {
-        var listData: ArrayList<SubjectsModel> = arrayListOf()
+        val listData: ArrayList<SubjectsModel> = arrayListOf()
         firebaseStore.collection("subjects").get().addOnCompleteListener {
 
             if (it.isSuccessful) {
@@ -101,7 +101,7 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
         }
     }
 
-    fun showView() {
+    private fun showView() {
 
         val countList: ArrayList<String> = ArrayList()
         countList.add("1")
@@ -198,21 +198,21 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
         }
         showLoading()
 
-        var batch: WriteBatch = firebaseStore.batch()
+        val batch: WriteBatch = firebaseStore.batch()
         for (i in selectedSubjects) {
-            var map: HashMap<String, String> = HashMap()
+            val map: HashMap<String, Any> = HashMap()
 
             if (mFavoriteOrLeast) {
                 map["category"] = "favorite"
-                map["isFavourite"] = "true"
-                map["isLeastFavourite"] = "false"
-                map["isHobby"] = "false"
+                map["isFavourite"] = true
+                map["isLeastFavourite"] = false
+                map["isHobby"] = false
             } else {
                 map["category"] = "leastfavorite"
 
-                map["isFavourite"] = "false"
-                map["isLeastFavourite"] = "true"
-                map["isHobby"] = "false"
+                map["isFavourite"] = false
+                map["isLeastFavourite"] = true
+                map["isHobby"] = false
             }
 
             map["id"] = firebaseAuth.currentUser!!.uid + "_" + i.id
@@ -229,7 +229,15 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
 
         batch.commit().addOnCompleteListener {
             if (it.isSuccessful) {
-                saveData()
+                hideLoading()
+                val i: Intent
+                if (mFavoriteOrLeast) {
+                    i = Intent(this@StudentSubjectSelectSeniorActivity, StudentSubjectSelectSeniorActivity::class.java)
+                    i.putExtra("favorite_or_least", false)
+                } else {
+                    i = Intent(this@StudentSubjectSelectSeniorActivity, StudentHobbySelect::class.java)
+                }
+                startActivity(i)
             }
 
         }.addOnFailureListener {
@@ -239,7 +247,7 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
     }
 
 
-    fun saveData() {
+    private fun saveData() {
         val stringBuilder = StringBuilder()
         if (selectedSubjects.size > 0) {
             stringBuilder.append(selectedSubjects[0].id)

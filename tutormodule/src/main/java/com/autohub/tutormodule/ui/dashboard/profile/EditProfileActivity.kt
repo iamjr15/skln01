@@ -1,11 +1,11 @@
 package com.autohub.tutormodule.ui.dashboard.profile
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -16,7 +16,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.autohub.skln.BaseActivity
-import com.autohub.skln.models.User
 import com.autohub.skln.models.batchRequests.GradeData
 import com.autohub.skln.models.batchRequests.SubjectData
 import com.autohub.skln.models.tutor.TutorData
@@ -27,31 +26,39 @@ import com.autohub.skln.utills.GlideApp
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ActivityTutorEditProfileBinding
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import gun0912.tedbottompicker.TedBottomPicker
+import com.kbeanie.multipicker.api.CacheLocation
+import com.kbeanie.multipicker.api.CameraImagePicker
+import com.kbeanie.multipicker.api.ImagePicker
+import com.kbeanie.multipicker.api.Picker
+import com.kbeanie.multipicker.api.callbacks.ImagePickerCallback
+import com.kbeanie.multipicker.api.entity.ChosenImage
 import kotlinx.android.synthetic.main.activity_tutor_edit_profile.*
 import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class EditProfileActivity : BaseActivity() {
+class EditProfileActivity : BaseActivity(), ImagePickerCallback {
 
     private lateinit var mBinding: ActivityTutorEditProfileBinding
-    private val MAX_SIZE = 240
+    private val maxSize = 240
     private var mStorageReference: StorageReference? = null
     private var tutorData: TutorData? = null
 
     private var selectedSubjectsList = ArrayList<String>()
     private var subjectsList = ArrayList<SubjectData>()
+    private var imageuri: Uri? = null
+
 
     private var selectedGradesList = ArrayList<String>()
     private var gradesList = ArrayList<GradeData>()
     private var profilePictureUri: String = ""
-    private var PermissionsRequest: Int = 12
+    private var permissionRequest: Int = 12
+
+    private lateinit var cameraPicker: CameraImagePicker
+    private lateinit var imagePicker: ImagePicker
+    private var isTakePicture: Boolean = false
 
     private val mWatcherWrapper = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -62,7 +69,7 @@ class EditProfileActivity : BaseActivity() {
         }
 
         override fun afterTextChanged(s: Editable?) {
-            val remaining = MAX_SIZE - s?.length!!
+            val remaining = maxSize - s?.length!!
             mBinding.count.text = String.format(Locale.getDefault(), "%d remaining", remaining)
             // editBio(s?.toString())
         }
@@ -116,6 +123,8 @@ class EditProfileActivity : BaseActivity() {
 
     }
 
+    /*Fetch subjects on the basis of tutor id
+    * */
     private fun getTutorSubjects() {
         firebaseStore.collection(getString(R.string.db_root_tutor_subjects)).whereEqualTo("teacherId", tutorData?.id).get()
                 .addOnSuccessListener { documentSnapshot ->
@@ -128,6 +137,8 @@ class EditProfileActivity : BaseActivity() {
                 }
     }
 
+    /*Fetch subjects to teach on the basis of tutor id
+   * */
     private fun getTutorSubjectsToTeach(tutorSubjects: List<TutorGradesSubjects>) {
         firebaseStore.collection(getString(R.string.db_root_subjects)).get()
                 .addOnSuccessListener { documentSnapshot ->
@@ -151,8 +162,10 @@ class EditProfileActivity : BaseActivity() {
     }
 
 
+    /*Fetch grades on the basis of tutor id
+    * */
     private fun getTutorGrades() {
-        firebaseStore.collection(getString(R.string.db_root_tutor_gardes)).whereEqualTo("teacherId", tutorData?.id).get()
+        firebaseStore.collection(getString(R.string.db_root_tutor_grades)).whereEqualTo("teacherId", tutorData?.id).get()
                 .addOnSuccessListener { documentSnapshot ->
                     hideLoading()
                     val tutorGrades = documentSnapshot.toObjects(TutorGradesSubjects::class.java)
@@ -164,6 +177,8 @@ class EditProfileActivity : BaseActivity() {
                 }
     }
 
+    /*Fetch grades to teach on the basis of tutor id
+   * */
     private fun getTutorGradesToTeach(tutorGrades: List<TutorGradesSubjects>) {
         firebaseStore.collection(getString(R.string.db_root_grades)).get()
                 .addOnSuccessListener { documentSnapshot ->
@@ -173,7 +188,7 @@ class EditProfileActivity : BaseActivity() {
                     for (i in tutorGrades.indices) {
                         for (j in 0 until gradesList.size) {
                             if (gradesList[j].id.equals(tutorGrades[i].gradeId)) {
-                                selectedGradesList.add("Class " + gradesList[j].grade!!)
+                                selectedGradesList.add(gradesList[j].grade!! + CommonUtils.getClassSuffix(gradesList[j].grade!!.toInt()))
                             }
                         }
                     }
@@ -187,6 +202,8 @@ class EditProfileActivity : BaseActivity() {
 
     }
 
+    /*Open dialog showing subjects on Select subjects to teach click
+    * */
     fun onSubjectTaughtClick() {
         val items = ArrayList<String>()
         items.add(AppConstants.SUBJECT_SCIENCE)
@@ -207,9 +224,9 @@ class EditProfileActivity : BaseActivity() {
 
     }
 
+    /*Open dialog showing classes on Select classes to teach click
+    * */
     fun onClassToTeach() {
-//        showClassesToTeach()
-
         val items = ArrayList<String>()
         items.add("Class " + AppConstants.CLASS_1 + CommonUtils.getClassSuffix(AppConstants.CLASS_1.toInt()))
         items.add("Class " + AppConstants.CLASS_2 + CommonUtils.getClassSuffix(AppConstants.CLASS_2.toInt()))
@@ -228,20 +245,25 @@ class EditProfileActivity : BaseActivity() {
         showMultiSelectionDialog(items, mBinding.classToTeach, getString(R.string.class_to_teach), selectedClass)
     }
 
+    /*Open dialog showing occupations on Select Occupation
+    * */
     fun onSelectOccupation() {
         val items = resources.getStringArray(R.array.occupation_arrays).toList()
 
-        showSingleSelectionDialog(items, mBinding.selectOccupation, getString(R.string.select_ocupation), selectedOccupation)
+        showSingleSelectionDialog(items, mBinding.selectOccupation, getString(R.string.select_occupation), selectedOccupation)
 
     }
 
+    /*Open dialog showing years on Select Experience
+   * */
     fun onSelectExperience() {
 
         val items = resources.getStringArray(R.array.experience_arrays).toList()
-        showSingleSelectionDialog(items, mBinding.teachingExperience, getString(R.string.select_treaching_epereience), selectedExp)
-        //showExperience()
+        showSingleSelectionDialog(items, mBinding.teachingExperience, getString(R.string.select_teaching_experience), selectedExp)
     }
 
+    /*Open dialog showing Qualification on Select Qualification
+   * */
     fun onSelectQualification() {
         selectedQualificationAreas.clear()
         mBinding.areaOfQualification.text = ""
@@ -249,18 +271,21 @@ class EditProfileActivity : BaseActivity() {
         showSingleSelectionDialog(items, mBinding.qualification, getString(R.string.select_qualification), selectedQualification)
     }
 
+    /*Open dialog showing qualification areas on Select Qualification Area
+   * */
     fun onSelectQualificationArea() {
         lateinit var items: List<String>
         if (selectedQualification.size > 0) {
-            if (selectedQualification[0].equals("Graduate")) {
-                items = resources.getStringArray(R.array.area_qualifi_arrays_1).toList()
-
-            } else if (selectedQualification[0].equals("Post-Graduate")) {
-                items = resources.getStringArray(R.array.area_qualifi_arrays_2).toList()
-
-            } else {
-                items = resources.getStringArray(R.array.area_qualifi_arrays_1).toList()
-
+            items = when {
+                selectedQualification[0] == "Graduate" -> {
+                    resources.getStringArray(R.array.area_qualification_array).toList()
+                }
+                selectedQualification[0] == "Post-Graduate" -> {
+                    resources.getStringArray(R.array.area_qualifi_arrays_2).toList()
+                }
+                else -> {
+                    resources.getStringArray(R.array.area_qualification_array).toList()
+                }
             }
 
             showMultiSelectionDialog(items, mBinding.areaOfQualification, getString(R.string.select_area_of_qualification), selectedQualificationAreas)
@@ -273,6 +298,8 @@ class EditProfileActivity : BaseActivity() {
 
     }
 
+    /*Open dialog showing boards on Select Target Board
+   * */
     fun onSelectTargetBoard() {
         val items = ArrayList<String>()
         items.add(AppConstants.BOARD_CBSE)
@@ -281,18 +308,17 @@ class EditProfileActivity : BaseActivity() {
 
 
         showMultiSelectionDialog(items, mBinding.targetedBoard, getString(R.string.select_targeted_board), selectedTargetBoard)
-//        showTargetBoard()
     }
 
-    fun showMultiSelectionDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>) {
+    private fun showMultiSelectionDialog(items: List<String>, textView: TextView, title: String, selectedItems: ArrayList<String>) {
         val namesArr = items.toTypedArray()
         val booleans = BooleanArray(items.size)
-        val selectedvalues = ArrayList<String>()
+        val selectedValues = ArrayList<String>()
 
         for (i in selectedItems.indices) {
             if (items.contains(selectedItems[i])) {
                 booleans[items.indexOf(selectedItems[i])] = true
-                selectedvalues.add(selectedItems[i])
+                selectedValues.add(selectedItems[i])
             }
         }
 
@@ -300,37 +326,37 @@ class EditProfileActivity : BaseActivity() {
                 .setMultiChoiceItems(namesArr, booleans
                 ) { _, i, b ->
                     if (b) {
-                        selectedvalues.add(items[i])
+                        selectedValues.add(items[i])
                     } else {
-                        selectedvalues.remove(items[i])
+                        selectedValues.remove(items[i])
                     }
                 }
                 .setTitle(title)
                 .setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                     var selectedSubString = ""
-                    for (i in selectedvalues.indices) {
-                        selectedSubString += if (i == selectedvalues.size - 1) {
-                            selectedvalues[i]
+                    for (i in selectedValues.indices) {
+                        selectedSubString += if (i == selectedValues.size - 1) {
+                            selectedValues[i]
                         } else {
-                            selectedvalues[i] + ","
+                            selectedValues[i] + ","
                         }
                     }
-                    testview.text = selectedSubString
+                    textView.text = selectedSubString.replace("Class", "")
                     selectedItems.clear()
-                    selectedItems.addAll(selectedvalues)
+                    selectedItems.addAll(selectedValues)
 
                 }
                 .show()
 
     }
 
-    private fun showSingleSelectionDialog(items: List<String>, testview: TextView, title: String, selectedItems: ArrayList<String>) {
+    private fun showSingleSelectionDialog(items: List<String>, textView: TextView, title: String, selectedItems: ArrayList<String>) {
         val namesArr = items.toTypedArray()
         var indexSelected = -1
         if (selectedItems.size > 0) {
             for (i in namesArr.indices) {
-                if (namesArr[i].equals(selectedItems[0])) {
+                if (namesArr[i] == selectedItems[0]) {
                     indexSelected = i
                     break
                 } else {
@@ -352,15 +378,15 @@ class EditProfileActivity : BaseActivity() {
                     if (selectedPosition < 0) {
                         selectedPosition = 0
                     }
-                    testview.text = namesArr[selectedPosition]
+                    textView.text = namesArr[selectedPosition]
                     selectedItems.clear()
                     selectedItems.add(namesArr[selectedPosition])
-                    /*  mBinding.grade.text = namesArr[selectedPosition]
-                      user!!.studentClass = (selectedPosition + 1).toString()*/
                 }
                 .show()
     }
 
+    /*Request for camera, write and read external storage
+    * */
     fun requestPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
@@ -369,11 +395,11 @@ class EditProfileActivity : BaseActivity() {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA) &&
                     ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
                     ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-
+                showSnackError("You need to grant permissions from settings.")
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
-                        PermissionsRequest)
+                        permissionRequest)
             }
         } else {
             onAddPicture()
@@ -383,7 +409,7 @@ class EditProfileActivity : BaseActivity() {
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
-            PermissionsRequest -> {
+            permissionRequest -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
                                 && grantResults[1] == PackageManager.PERMISSION_GRANTED
                                 && grantResults[2] == PackageManager.PERMISSION_GRANTED)) {
@@ -393,58 +419,149 @@ class EditProfileActivity : BaseActivity() {
         }
     }
 
-    fun onAddPicture() {
+    /*Choose picture to upload
+    * */
+    private fun onAddPicture() {
 
-        TedBottomPicker.with(this)
-                .show { uri ->
-                    GlideApp.with(this)
-                            .load(uri)
-                            .placeholder(com.autohub.skln.R.drawable.default_pic)
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                            .skipMemoryCache(true)
+        /*   TedBottomPicker.with(this)
+                   .show { uri ->
+                       GlideApp.with(this)
+                               .load(uri)
+                               .placeholder(com.autohub.skln.R.drawable.default_pic)
+                               .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                               .skipMemoryCache(true)
 
-                            .into(mBinding.profilePicture)
-                    uploadImage(uri)
+                               .into(mBinding.profilePicture)
+                       uploadImage(uri)
 
-                }
+                   }*/
+
+        onpenImagePickerDialog()
     }
 
 
-    /*  private fun showOccupation() {
-          var items = getResources().getStringArray(R.array.occupation_arrays).toList()
+    private fun onpenImagePickerDialog() {
+        val mBuilder = androidx.appcompat.app.AlertDialog.Builder(this)
 
-          val namesArr = items.toTypedArray()
-          val booleans = BooleanArray(items.size)
-          val selectedOccupation = ArrayList<String>()
+        val options = arrayOf("Gallery", "Camera")
+        mBuilder.setSingleChoiceItems(options, 0, null)
+        mBuilder.setTitle("Choose from")
+                .setPositiveButton("Ok") { dialog, which ->
 
-          val title: String
-          title = "Choose Occupation"
-          AlertDialog.Builder(this)
-                  .setMultiChoiceItems(namesArr, booleans
-                  ) { _, i, b ->
-                      if (b) {
-                          selectedOccupation.add(items[i])
-                      } else {
-                          selectedOccupation.remove(items[i])
-                      }
-                  }
-                  .setTitle(title)
-                  .setPositiveButton("OK") { dialog, _ ->
-                      dialog.dismiss()
-                      var selectedSubString = ""
-                      for (i in selectedOccupation.indices) {
-                          selectedSubString += if (i == selectedOccupation.size - 1) {
-                              selectedOccupation[i]
-                          } else {
-                              selectedOccupation[i] + ","
-                          }
-                      }
-                      mBinding.selectOccupation.text = selectedSubString
+                    if ((dialog as AlertDialog).listView.checkedItemPosition == 0) {
+                        if (ActivityCompat.checkSelfPermission(this,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 200)
+                        } else {
+                            pickImageSingle()
+                        }
+                    } else {
 
-                  }
-                  .show()
+                        if (ActivityCompat.checkSelfPermission(this,
+                                        Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(this,
+                                    arrayOf(Manifest.permission.CAMERA), 100)
 
-      }*/
+                        } else {
+                            takePicture()
+                        }
+
+                    }
+
+                }
+
+        val mDialog = mBuilder.create()
+        mDialog.show()
+
+    }
+
+    private fun takePicture() {
+        isTakePicture = true
+        cameraPicker = CameraImagePicker(this)
+        cameraPicker.setDebugglable(true)
+        cameraPicker.setCacheLocation(CacheLocation.EXTERNAL_STORAGE_APP_DIR)
+        cameraPicker.setImagePickerCallback(this)
+        cameraPicker.shouldGenerateMetadata(true)
+        cameraPicker.shouldGenerateThumbnails(true)
+        cameraPicker.pickImage()
+    }
+
+    private fun pickImageSingle() {
+        isTakePicture = false
+        imagePicker = ImagePicker(this)
+        imagePicker.setFolderName("Random")
+        imagePicker.setRequestId(1234)
+        //imagePicker.ensureMaxSize(500, 500)
+        imagePicker.shouldGenerateMetadata(true)
+        imagePicker.shouldGenerateThumbnails(true)
+        imagePicker.setImagePickerCallback(this)
+        val bundle = Bundle()
+        bundle.putInt("android.intent.extras.CAMERA_FACING", 1)
+        imagePicker.pickImage()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == Picker.PICK_IMAGE_DEVICE) run {
+            if (imagePicker == null) {
+                imagePicker = ImagePicker(this)
+                imagePicker.setImagePickerCallback(this)
+            }
+            imagePicker.submit(data)
+        } else if (requestCode == Picker.PICK_IMAGE_CAMERA) run {
+            if (cameraPicker == null) {
+                cameraPicker = CameraImagePicker(this)
+                cameraPicker.setImagePickerCallback(this)
+                //cameraPicker.reinitialize(pickerPath);
+            }
+            cameraPicker.submit(data)
+        }
+
+    }
+
+
+    override fun onImagesChosen(list: MutableList<ChosenImage>?) {
+        val chosenImage = list!!.get(0)
+
+        if (chosenImage.originalPath.contains("content:")) {
+            if (isTakePicture) {
+                imageuri = Uri.fromFile(File(chosenImage.originalPath))
+
+            } else {
+                imageuri = Uri.parse(chosenImage.originalPath)
+
+            }
+        } else {
+            isTakePicture = true
+            imageuri = Uri.fromFile(File(chosenImage.originalPath))
+
+        }
+
+
+        GlideApp.with(this)
+                .load(imageuri)
+                .placeholder(com.autohub.skln.R.drawable.default_pic)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
+                .skipMemoryCache(true)
+                .into(mBinding.profilePicture)
+
+        if (imageuri != null) {
+            if (isTakePicture) {
+                uploadImage(imageuri!!)
+            } else {
+                uploadGalleryImage(imageuri!!)
+
+
+            }
+        }
+
+    }
+
+
+    override fun onError(p0: String?) {
+    }
+
 
     fun onBackClick() {
         onBackPressed()
@@ -456,28 +573,8 @@ class EditProfileActivity : BaseActivity() {
         finish()
     }
 
-    private fun setupProfile() {
-        val ref = FirebaseStorage.getInstance().reference.child("tutor/" +
-                "j9MtRdT5L0g62QiQ7z514z0hQz52"/*firebaseAuth.currentUser!!.uid*/ + ".jpg")
-        GlideApp.with(this)
-                .load(ref)
-                .placeholder(com.autohub.skln.R.drawable.default_pic)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                .skipMemoryCache(true)
-
-                .into(mBinding.profilePicture)
-    }
-
-    private fun setUpUserInfo() {
-        firebaseStore.collection(getString(R.string.db_root_tutors)).document("j9MtRdT5L0g62QiQ7z514z0hQz52"/*firebaseAuth.currentUser!!.uid*/).get()
-                .addOnSuccessListener { documentSnapshot ->
-                    val user = documentSnapshot.toObject(User::class.java)
-//                    mUserViewModel!!.user = user!!
-                }
-                .addOnFailureListener { e -> showSnackError(e.message) }
-    }
-
-
+   /*Upload picture on fire store storage and get url
+   * */
     private fun uploadImage(uri: Uri) {
         showLoading()
         val file = File(uri.path!!)
@@ -493,10 +590,11 @@ class EditProfileActivity : BaseActivity() {
                 picRef.downloadUrl.addOnSuccessListener {
                     profilePictureUri = it.toString()
                 }
+                Toast.makeText(this, "Profile Picture uploaded successfully!", Toast.LENGTH_LONG).show()
                 hideLoading()
             }.addOnFailureListener { e ->
                 hideLoading()
-                Toast.makeText(this, "Upload Failed -> $e", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Upload Failed $e", Toast.LENGTH_LONG).show()
             }
 
         } catch (e: FileNotFoundException) {
@@ -509,92 +607,121 @@ class EditProfileActivity : BaseActivity() {
     }
 
 
-    private fun editBio(bio: String) {
-        val user = HashMap<String, Any>()
-        user[AppConstants.KEY_BIODATA] = bio
+    private fun uploadGalleryImage(uri: Uri) {
+        var size = 0
+        showLoading()
 
-        FirebaseFirestore.getInstance().collection(getString(R.string.db_root_tutors)).document(FirebaseAuth.getInstance().currentUser!!.uid).set(user, SetOptions.merge())
-                .addOnSuccessListener {
-                    //                    mUserViewModel!!.bioData = bio
+        uri.let { returnUri ->
+            contentResolver.query(returnUri, null, null, null, null)
+        }?.use { cursor ->
+            size = cursor.getColumnIndex(OpenableColumns.SIZE)
+            cursor.moveToFirst()
+        }
+
+        try {
+            var inputStream = contentResolver.openInputStream(uri)
+            val path = "student/"
+            val pathString = path + firebaseAuth.currentUser!!.uid + ".jpg"
+            val picRef = FirebaseStorage.getInstance().reference.child(pathString)
+            val uploadTask = picRef.putStream(inputStream!!)
+            uploadTask.addOnSuccessListener {
+                picRef.downloadUrl.addOnSuccessListener {
+                    profilePictureUri = it.toString()
                 }
-                .addOnFailureListener { }
-    }
+                Toast.makeText(this, "Profile Picture uploaded successfully!", Toast.LENGTH_LONG).show()
+                hideLoading()
+            }.addOnFailureListener { e ->
+                hideLoading()
+                Toast.makeText(this, "Upload Failed $e", Toast.LENGTH_LONG).show()
+            }
 
-
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1122 && resultCode == Activity.RESULT_OK && data != null) {
-            val croppedUri = data.getParcelableExtra<Uri>("_cropped_uri_")
-            val originalUri = data.getParcelableExtra<Uri>("_original_uri_")
-            Log.d(">>>RegisterAcRes", croppedUri!!.toString() + " , " + originalUri!!.toString())
-            mBinding.profilePicture.setImageURI(croppedUri)
-            mBinding.profilePicture.tag = croppedUri.path
-            // uploadImage(croppedUri)
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+            hideLoading()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            hideLoading()
         }
     }
 
     fun makeSaveRequest() {
         if (isVerified()) {
-            showLoading()
-
-            val tutor = TutorData()
-
-            tutor.qualification?.currentOccupation = mBinding.selectOccupation.text.toString()
-            tutor.qualification?.experience = mBinding.teachingExperience.text.toString()
-            tutor.qualification?.qualification = mBinding.qualification.text.toString()
-            tutor.qualification?.qualificationArea = mBinding.areaOfQualification.text.toString()
-            tutor.qualification?.targetBoard = mBinding.targetedBoard.text.toString()
-            tutor.personInfo?.biodata = mBinding.bio.text.toString()
-            if (profilePictureUri.trim().isNotEmpty()) {
-                tutor.personInfo?.accountPicture = profilePictureUri
-            } else {
-                profilePictureUri = tutorData?.personInfo?.accountPicture!!
-            }
-
-            Log.e("tutor", tutor.toString())
-            firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).update(
-                    "qualification.currentOccupation", tutor.qualification?.currentOccupation,
-                    "qualification.experience", tutor.qualification?.experience,
-                    "qualification.qualification", tutor.qualification?.qualification,
-                    "qualification.qualificationArea", tutor.qualification?.qualificationArea,
-                    "qualification.targetBoard", tutor.qualification?.targetBoard,
-                    "personInfo.biodata", tutor.personInfo?.biodata,
-                    "personInfo.accountPicture", tutor.personInfo?.accountPicture).addOnSuccessListener {
-                hideLoading()
-                showSnackError("Your profile is updated successfully!!")
-            }.addOnFailureListener { e ->
-                hideLoading()
-                showSnackError(e.toString())
-            }
+            updateTutorData()
         }
     }
 
-    private fun isVerified(): Boolean {
-        if (mBinding.classToTeach.text.isEmpty()) {
-            showSnackError("Please select classes you teach.")
-            return false
-        } else if (subject_to_taught.text.isEmpty()) {
-            showSnackError("Please select subjects you teach.")
-            return false
+    /*Update tutor data on update button click
+    * */
+    private fun updateTutorData() {
+        showLoading()
 
-        } else if (select_occupation.text.isEmpty()) {
-            showSnackError("Please select your occupation.")
-            return false
+        val tutor = TutorData()
 
-        } else if (teaching_experience.text.isEmpty()) {
-            showSnackError("Please select your teaching experience.")
-            return false
-
-        } else if (qualification.text.isEmpty()) {
-            showSnackError("Please select your qualification.")
-            return false
-
-        }else if (bio.text.isEmpty()) {
-            showSnackError("Please add Bio.")
-            return false
-
+        tutor.qualification?.currentOccupation = mBinding.selectOccupation.text.toString()
+        tutor.qualification?.experience = mBinding.teachingExperience.text.toString()
+        tutor.qualification?.qualification = mBinding.qualification.text.toString()
+        tutor.qualification?.qualificationArea = mBinding.areaOfQualification.text.toString()
+        tutor.qualification?.targetBoard = mBinding.targetedBoard.text.toString()
+        tutor.personInfo?.biodata = mBinding.bio.text.toString()
+        if (profilePictureUri.trim().isNotEmpty()) {
+            tutor.personInfo?.accountPicture = profilePictureUri
         } else {
-            return true
+            profilePictureUri = tutorData?.personInfo?.accountPicture!!
+        }
+
+        Log.e("tutor", tutor.toString())
+        firebaseStore.collection(getString(R.string.db_root_tutors)).document(appPreferenceHelper.getuserID()).update(
+                "qualification.currentOccupation", tutor.qualification?.currentOccupation,
+                "qualification.experience", tutor.qualification?.experience,
+                "qualification.qualification", tutor.qualification?.qualification,
+                "qualification.qualificationArea", tutor.qualification?.qualificationArea,
+                "qualification.targetBoard", tutor.qualification?.targetBoard,
+                "personInfo.biodata", tutor.personInfo?.biodata,
+                "personInfo.accountPicture", tutor.personInfo?.accountPicture).addOnSuccessListener {
+            hideLoading()
+            showSnackError("Your profile is updated successfully!!")
+        }.addOnFailureListener { e ->
+            hideLoading()
+            showSnackError(e.toString())
+        }
+
+    }
+
+
+    private fun isVerified(): Boolean {
+        when {
+            mBinding.classToTeach.text.isEmpty() -> {
+                showSnackError("Please select classes you teach.")
+                return false
+            }
+            subject_to_taught.text.isEmpty() -> {
+                showSnackError("Please select subjects you teach.")
+                return false
+
+            }
+            select_occupation.text.isEmpty() -> {
+                showSnackError("Please select your occupation.")
+                return false
+
+            }
+            teaching_experience.text.isEmpty() -> {
+                showSnackError("Please select your teaching experience.")
+                return false
+
+            }
+            qualification.text.isEmpty() -> {
+                showSnackError("Please select your qualification.")
+                return false
+
+            }
+            bio.text.isEmpty() -> {
+                showSnackError("Please add Bio.")
+                return false
+
+            }
+            else -> {
+                return true
+            }
         }
     }
 }

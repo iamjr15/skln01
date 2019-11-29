@@ -24,6 +24,9 @@ class ExploreBaseFragment : Fragment() {
 
         return view
     }
+/*
+* Navigate user to Explore Screen
+* */
 
     fun showExploreFragment(subjectName: String = "") {
         exploreTutorsFragment = ExploreTutorsFragment()
@@ -40,7 +43,9 @@ class ExploreBaseFragment : Fragment() {
                 .replace(com.autohub.studentmodule.R.id.explorecontainer, exploreTutorsFragment!!).commit()
     }
 
-
+    /*
+    *Navigate user to Request Detail Screen
+    * */
     fun showRequestDetailFragment(bundle: Bundle) {
         exploreTutorsFragment = null
         bundle.putBoolean("isMyRequest", false)

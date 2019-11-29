@@ -16,8 +16,8 @@ import com.autohub.skln.BaseActivity
 import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.ui.dashboard.home.HomeBaseFragment
-import com.autohub.tutormodule.ui.dashboard.listner.ClassRequestListener
-import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
+import com.autohub.tutormodule.ui.dashboard.listener.ClassRequestListener
+import com.autohub.tutormodule.ui.dashboard.listener.HomeListener
 import com.autohub.tutormodule.ui.dashboard.profile.ProfileFragment
 import com.autohub.tutormodule.ui.dashboard.requests.RequestBaseFragment
 import com.autohub.tutormodule.ui.dashboard.schedule.ScheduleFragment
@@ -33,7 +33,7 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
     private lateinit var scheduleFragment: ScheduleFragment
     private var profileFragment: ProfileFragment = ProfileFragment()
     private lateinit var sectionsPagerAdapter: SectionsPagerAdapter
-    private var PermissionsRequest: Int = 13
+    private var permissionRequest: Int = 13
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,15 +77,13 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
             }
         })
 
-
-
         for (tab in mTabs) {
             tab.setOnClickListener { mViewPager.currentItem = mTabs.indexOf(tab) }
         }
 
         tab_item_home.setOnClickListener {
             if (homeBaseFragment.homeFragment == null) {
-                homeBaseFragment.showHomefragment()
+                homeBaseFragment.showHomeFragment()
             }
             setStatusBarColor(R.drawable.white_header)
 
@@ -109,10 +107,10 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CALL_PHONE)) {
-
+                 showSnackError("You need to grant Phone call permissions from settings.")
             } else {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE),
-                        PermissionsRequest)
+                        permissionRequest)
             }
         }
     }
@@ -209,13 +207,16 @@ class DashboardActivity : BaseActivity(), HomeListener, ClassRequestListener {
 
     override fun onBackPressed() {
 
-        if (mViewPager.currentItem == 0) {
-
-            super.onBackPressed()
-        } else {
-            mViewPager.currentItem = 0
-
+        when (mViewPager.currentItem) {
+            0 -> {
+                homeBaseFragment.backPressed()
+            }
+            2 -> {
+                requestBaseFragment.backPressed()
+            }
+            else -> {
+                super.onBackPressed()
+            }
         }
-
     }
 }

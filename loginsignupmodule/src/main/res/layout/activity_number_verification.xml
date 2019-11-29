@@ -81,7 +81,7 @@
                         android:maxLines="1"
                         android:padding="5dp"
                         android:textAlignment="viewStart"
-                        tools:ignore="Autofill" />
+                        tools:ignore="Autofill,LabelFor" />
 
                     <ImageButton
                         android:id="@+id/btngetotp"

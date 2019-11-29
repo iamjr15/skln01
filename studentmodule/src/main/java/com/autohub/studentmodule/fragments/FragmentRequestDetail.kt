@@ -67,6 +67,11 @@ class FragmentRequestDetail : BaseFragment() {
 
     }
 
+    /*
+    * Navigate user to Google Map with perticular Lat lang of Tutor
+    *
+    * */
+
     private fun openMap() {
         val uri =
                 Uri.parse("geo:<${mTutor!!.location!!.latitude}>,<${mTutor!!.location!!.longitude}>?q=<${mTutor?.location!!
@@ -109,7 +114,9 @@ class FragmentRequestDetail : BaseFragment() {
 
     }
 
-
+    /*
+    * Fetch perticular Tutor Detail
+    * */
     private fun fetchTutor() {
         // get Document id from tutor id first
         val root = getString(R.string.db_root_tutors)
@@ -131,12 +138,14 @@ class FragmentRequestDetail : BaseFragment() {
                                     showSnackError(e.message)
                                 }
                     }
-
-
                 }
     }
 
-
+    /*
+    *
+    * Change request status from pending to cancel
+    *
+    * */
     private fun changeStatus(requestStatus: String) {
         showLoading()
         val map = HashMap<String, String>()
@@ -144,7 +153,6 @@ class FragmentRequestDetail : BaseFragment() {
         val dbRoot = getString(R.string.db_root_batchRequests)
         firebaseStore.collection(dbRoot).document(batchRequestViewModel!!.mRequestId!!).set(map, SetOptions.merge()).addOnSuccessListener {
             hideLoading()
-
             homeListner.onClassRequestDeleted(isMyRequest)
 
         }.addOnFailureListener { hideLoading() }

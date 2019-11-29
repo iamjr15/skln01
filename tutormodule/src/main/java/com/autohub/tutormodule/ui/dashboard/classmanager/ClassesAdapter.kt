@@ -2,7 +2,6 @@ package com.autohub.tutormodule.ui.dashboard.classmanager
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,9 +9,11 @@ import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ItemTutorManageClassesBinding
+import com.autohub.tutormodule.ui.utils.AppConstants.DateFormatInput
+import com.autohub.tutormodule.ui.utils.AppConstants.DateFormatOutput
 import com.autohub.tutormodule.ui.utils.AppUtils
 
-class ClassesAdaptor(var context: Context, var listener: Listener) : RecyclerView.Adapter<ClassesAdaptor.Holder>() {
+class ClassesAdapter(var context: Context, var listener: Listener) : RecyclerView.Adapter<ClassesAdapter.Holder>() {
 
     private var batchesList: List<BatchesModel> = ArrayList()
     lateinit var mBinding: ItemTutorManageClassesBinding
@@ -31,12 +32,10 @@ class ClassesAdaptor(var context: Context, var listener: Listener) : RecyclerVie
         mBinding.className.text = batchesList[position].grade?.name?.replace("_", " ") + " | " + batchesList[position].subject?.name
         mBinding.studentsCount.text = batchesList[position].enrolledStudentsId.size.toString() + " students"
 
-        mBinding.time.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
-                "EEE, d MMM yyyy HH:mm:ss z",
+        mBinding.time.text = AppUtils.uTCToLocal(DateFormatInput, DateFormatOutput,
                 batchesList[position].timing?.startTime!!.toDate().toString()).toString() + " - " +
-                AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
-                        "EEE, d MMM yyyy HH:mm:ss z",
-                        batchesList[position].timing?.endTime!!.toDate().toString()).toString() +" | "+
+                AppUtils.uTCToLocal(DateFormatInput, DateFormatOutput,
+                        batchesList[position].timing?.endTime!!.toDate().toString()).toString() + " | " +
                 batchesList[position].selectedDays.joinToString(" , ")
 
         if (batchesList[position].status.equals(AppConstants.STATUS_ACTIVE)) {
@@ -46,20 +45,24 @@ class ClassesAdaptor(var context: Context, var listener: Listener) : RecyclerVie
             mBinding.toggleButton.isChecked = false
         }
 
-        mBinding.toggleButton.setOnClickListener {
 
-            if (mBinding.toggleButton.isChecked){
-                listener.updateStatusOfBatches(AppConstants.STATUS_CANCELLED, batchesList[position], position)
+        /* Update status in database on toggle button state changes
+        * */
+        mBinding.toggleButton.setOnCheckedChangeListener { buttonView, isChecked ->
 
-            }else{
+            if (isChecked) {
                 listener.updateStatusOfBatches(AppConstants.STATUS_ACTIVE, batchesList[position], position)
+
+            } else {
+                listener.updateStatusOfBatches(AppConstants.STATUS_CANCELLED, batchesList[position], position)
 
             }
         }
 
-
+       /*Open batch options fragment
+       * */
         holder.itemView.setOnClickListener {
-            listener.openEditSchedule(batchesList[position])
+            listener.openBatchOptionsFragment(batchesList[position])
         }
 
     }
@@ -82,7 +85,7 @@ class ClassesAdaptor(var context: Context, var listener: Listener) : RecyclerVie
 }
 
 interface Listener {
-    fun openEditSchedule(batch: BatchesModel)
+    fun openBatchOptionsFragment(batch: BatchesModel)
     fun updateStatusOfBatches(status: String, batchesModel: BatchesModel, position: Int)
 
 }

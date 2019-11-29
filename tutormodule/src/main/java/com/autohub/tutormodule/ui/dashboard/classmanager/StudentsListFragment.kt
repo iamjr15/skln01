@@ -18,7 +18,7 @@ import com.autohub.tutormodule.databinding.FragmentStudentsListBinding
  */
 class StudentsListFragment : BaseFragment() {
 
-    private lateinit var mAdapter: StudentListAdaptor
+    private lateinit var mAdapter: StudentListAdapter
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -31,13 +31,14 @@ class StudentsListFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentStudentsListBinding.bind(view)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//        binding.recyclerView.setEmptyView(binding.rrempty)
-        mAdapter = StudentListAdaptor(requireContext())
+        mAdapter = StudentListAdapter(requireContext())
         binding.recyclerView.adapter = mAdapter
 
         fetchGrades()
     }
 
+    /*Fetch list of grades from database
+    * */
     private fun fetchGrades() {
         showLoading()
         firebaseStore.collection(getString(R.string.db_root_grades)).get()
@@ -52,6 +53,8 @@ class StudentsListFragment : BaseFragment() {
                 }
     }
 
+    /*Fetch list of Students from database
+    * */
     private fun fetchStudents(grades: MutableList<GradeData>) {
         firebaseStore.collection(getString(R.string.db_root_students)).get()
                 .addOnSuccessListener { documentSnapshot ->
@@ -59,7 +62,7 @@ class StudentsListFragment : BaseFragment() {
                     val students = documentSnapshot.toObjects(UserModel::class.java)
                     for (i in 0 until students.size) {
                         for (j in 0 until grades.size) {
-                            if (students[i].academicInfo?.selectedClass == grades[j].id) {
+                            if (students[i].academicInfo?.selectedGrad == grades[j].id) {
                                 students[i].className = grades[j].grade?.trim()
                             }
                         }

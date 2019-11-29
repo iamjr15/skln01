@@ -25,17 +25,17 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/name"
-                style="@style/ryan_kils"
+                style="@style/text_style_semi_bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:textSize="13sp"
-                tools:text="Imran" />
+                />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/class_name"
-                style="@style/ryan_kils"
+                style="@style/text_style_semi_bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -47,7 +47,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/subject"
-                style="@style/ryan_kils"
+                style="@style/text_style_semi_bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -63,7 +63,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="12dp"
-                android:src="@drawable/arrow_next" />
+                android:src="@drawable/ic_arrow_right" />
 
         </LinearLayout>
 

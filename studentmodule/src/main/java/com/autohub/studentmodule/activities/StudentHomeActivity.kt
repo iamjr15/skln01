@@ -30,6 +30,8 @@ import kotlin.collections.ArrayList
  */
 
 class StudentHomeActivity : BaseActivity(), HomeListners {
+
+
     override fun updateScheduleFragment() {
         myClassesFragment.updateSchedules()
     }
@@ -40,6 +42,7 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     var user: UserModel? = null
     var userimagePath: String? = ""
 
+
     override fun onClassRequestSelectListner(requestViewModel: BatchRequestViewModel) {
         val bundle = Bundle()
         bundle.putParcelable(AppConstants.KEY_DATA, requestViewModel)
@@ -47,7 +50,10 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         setStatusBarColor(com.autohub.skln.R.drawable.bg_purple_blue)
     }
 
-
+    /*
+    * Navigate user to Explore screen with perticular subject selection
+    *
+    * */
     override fun onAcadmicsSelect(user: UserModel, subjectName: String) {
 
         if (explorebaseFragment!!.exploreTutorsFragment == null) {
@@ -149,14 +155,21 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
     }
 
-
+    /*
+    * Set all student Detail for future use in app
+    * */
     private fun getUserInfo() {
         firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     user = documentSnapshot.toObject(UserModel::class.java)!!
-                    val geopoints = ((documentSnapshot.data!!["personInfo"] as HashMap<*, *>)["location"]) as GeoPoint
-                    user!!.personInfo!!.latitude = geopoints.latitude
-                    user!!.personInfo!!.longitude = geopoints.longitude
+
+                    if ((documentSnapshot.data!!["personInfo"] as HashMap<*, *>)["location"] != null) {
+                        val geopoints = ((documentSnapshot.data!!["personInfo"] as HashMap<*, *>)["location"]) as GeoPoint
+                        user!!.personInfo!!.latitude = geopoints.latitude
+                        user!!.personInfo!!.longitude = geopoints.longitude
+                    }
+
+
                     this.user = user
                     userimagePath = user!!.personInfo!!.accountPicture
                     user!!.id = documentSnapshot.id
@@ -178,7 +191,9 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
 
     }
 
-
+    /*
+    * Fetch subject and Grades data for later use in app
+    * */
     private fun getAppData() {
         gradesDataList = ArrayList()
         subjectDataList = ArrayList()
@@ -252,6 +267,12 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
         }
     }
 
+
+    /*
+    * if there is TUROR_REQUEST then we need to navigate on Request Detail screen
+    *
+    * */
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
@@ -275,14 +296,13 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
                     userimagePath = bundle.getString("imageUrl")
                     updateUserProfileImage()
                 }
-
             }
-
-
         }
-
     }
 
+    /*
+    * Update user profile pic on all screens
+    * */
     private fun updateUserProfileImage() {
         fragmentProfile.setProfileImage()
         explorebaseFragment!!.exploreTutorsFragment!!.setupProfile()
@@ -292,12 +312,10 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
     override fun onClassRequestDeleted(isMyRequest: Boolean) {
         if (isMyRequest) {
             fragmentClassRequests.showRequestFragmentClass()
-
         } else {
             explorebaseFragment!!.showExploreFragment()
 
         }
-
     }
 
 

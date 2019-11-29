@@ -1,4 +1,4 @@
-package com.autohub.tutormodule.ui.dashboard.listner
+package com.autohub.tutormodule.ui.dashboard.listener
 
 interface ClassRequestListener {
 

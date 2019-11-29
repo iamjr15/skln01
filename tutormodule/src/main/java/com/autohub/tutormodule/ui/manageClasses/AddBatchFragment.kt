@@ -18,7 +18,8 @@ import com.autohub.skln.models.tutor.TutorData
 import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorAddBatchBinding
-import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
+import com.autohub.tutormodule.ui.dashboard.listener.HomeListener
+import com.autohub.tutormodule.ui.utils.AppConstants.DateFormatInput
 import com.autohub.tutormodule.ui.utils.AppUtils
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
@@ -43,7 +44,7 @@ class AddBatchFragment : BaseFragment() {
     private var selectedSubPosition: Int = 0
     private var selectedClassPosition: Int = 0
     private var counter = 0
-    lateinit var tutorData: TutorData
+    private lateinit var tutorData: TutorData
     lateinit var batch: BatchesModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -88,12 +89,12 @@ class AddBatchFragment : BaseFragment() {
     private fun setData() {
         mBinding.batchName.setText(batch.title.toString())
 
-        mBinding.startTime.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
+        mBinding.startTime.text = AppUtils.uTCToLocal(DateFormatInput,
                 "EEE, d MMM yyyy kk:mm:ss z",
                 batch.timing?.startTime!!.toDate().toString()).toString()
 
 
-        mBinding.endTime.text = AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
+        mBinding.endTime.text = AppUtils.uTCToLocal(DateFormatInput,
                 "EEE, d MMM yyyy kk:mm:ss z",
                 batch.timing?.endTime!!.toDate().toString()).toString()
 
@@ -145,7 +146,7 @@ class AddBatchFragment : BaseFragment() {
         showDialog(items, mBinding.selectSubject, "Select Subject", selectedSub)
     }
 
-    /*Fetch gardes and students data and them in an array
+    /*Fetch grades and students data and them in an array
         * */
     private fun fetchData() {
         showLoading()
@@ -222,8 +223,9 @@ class AddBatchFragment : BaseFragment() {
                 (((Math.random() * 9000) + 1000).toInt())
 
         if (!isAddBatch) {
-            batchesModel.documentId = batch.documentId;
-            firebaseStore.collection(getString(R.string.db_root_batches)).document(batch.documentId!!).update(
+            batchesModel.documentationId = batch.documentationId
+            firebaseStore.collection(getString(R.string.db_root_batches)).document(batch.documentationId!!).
+                    update(
                     "title", batchesModel.title,
                     "timing.startTime", batchesModel.timing?.startTime,
                     "timing.startTime", batchesModel.timing?.endTime,
@@ -241,7 +243,7 @@ class AddBatchFragment : BaseFragment() {
         } else {
             firebaseStore.collection(getString(R.string.db_root_batches)).add(batchesModel).
                     addOnSuccessListener {
-                batchesModel.documentId = it.id
+                batchesModel.documentationId = it.id
                 hideLoading()
                 showSnackError("Batch Added successfully!!")
 
@@ -295,7 +297,7 @@ class AddBatchFragment : BaseFragment() {
         var indexSelected = -1
         if (selectedItems.size > 0) {
             for (i in namesArr.indices) {
-                if (namesArr[i].equals(selectedItems[0])) {
+                if (namesArr[i] == selectedItems[0]) {
                     indexSelected = i
                     break
                 } else {
@@ -329,34 +331,42 @@ class AddBatchFragment : BaseFragment() {
                 .show()
     }
 
-    /*Add validation to check if all fiels are filled
+    /*Add validation to check if all fields are filled
         * */
     private fun isVerified(): Boolean {
-        if (mBinding.batchName.text.isEmpty()) {
-            showSnackError("Please add name of batch.")
-            return false
-        } else if (mBinding.startTime.text.isEmpty()) {
-            showSnackError("Please select Start Time.")
-            return false
+        when {
+            mBinding.batchName.text.isEmpty() -> {
+                showSnackError("Please add name of batch.")
+                return false
+            }
+            mBinding.startTime.text.isEmpty() -> {
+                showSnackError("Please select Start Time.")
+                return false
 
-        } else if (mBinding.endTime.text.isEmpty()) {
-            showSnackError("Please select End Time.")
-            return false
+            }
+            mBinding.endTime.text.isEmpty() -> {
+                showSnackError("Please select End Time.")
+                return false
 
-        } else if (mBinding.selectClass.text.isEmpty()) {
-            showSnackError("Please select Class.")
-            return false
+            }
+            mBinding.selectClass.text.isEmpty() -> {
+                showSnackError("Please select Class.")
+                return false
 
-        } else if (mBinding.selectSubject.text.isEmpty()) {
-            showSnackError("Please select Subject.")
-            return false
+            }
+            mBinding.selectSubject.text.isEmpty() -> {
+                showSnackError("Please select Subject.")
+                return false
 
-        } else if (counter == 0) {
-            showSnackError("Please select day(s).")
-            return false
-        } else {
-            return true
+            }
+            counter == 0 -> {
+                showSnackError("Please select day(s).")
+                return false
+            }
+            else -> {
+                return true
 
+            }
         }
     }
 
@@ -384,10 +394,5 @@ class AddBatchFragment : BaseFragment() {
                 onDaySelected(mBinding.sun)
             }
         }
-    }
-
-
-    companion object {
-        fun newInstance(): AddBatchFragment = AddBatchFragment()
     }
 }

@@ -1,5 +1,6 @@
 package com.autohub.tutormodule.ui.dashboard.profile
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -37,12 +38,29 @@ class ProfileFragment : BaseFragment() {
             startActivity(intent)
         }
 
+        /*Log out from app and clear preferences
+        * */
         mBinding.logout.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            appPreferenceHelper.tutorSignUpComplete = false
+            val dialogBuilder = AlertDialog.Builder(requireContext())
 
-            ActivityUtils.launchActivity(requireContext(), OnBoardActivity::class.java)
-            requireActivity().finishAffinity()
+            dialogBuilder.setMessage("Are you sure, you want to logout ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes") { dialog, id ->
+                        FirebaseAuth.getInstance().signOut()
+                        appPreferenceHelper.tutorSignUpComplete = false
+
+                        ActivityUtils.launchActivity(requireContext(), OnBoardActivity::class.java)
+                        requireActivity().finishAffinity()
+                    }
+
+                    .setNegativeButton("Cancel") { dialog, id ->
+                        dialog.cancel()
+                    }
+
+            val alert = dialogBuilder.create()
+            alert.setTitle("Log Out")
+            alert.show()
+
         }
     }
 
@@ -78,9 +96,5 @@ class ProfileFragment : BaseFragment() {
                     hideLoading()
                     showSnackError(e.message)
                 }
-    }
-
-    companion object {
-        fun newInstance(): ProfileFragment = ProfileFragment()
     }
 }

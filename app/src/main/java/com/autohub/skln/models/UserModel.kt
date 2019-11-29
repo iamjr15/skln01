@@ -127,9 +127,9 @@ data class UserModel(var academicInfo: AcademicInformation? = AcademicInformatio
 
 
     fun getClassesWithAffix(): String {
-        if (TextUtils.isEmpty(academicInfo!!.selectedClass)) return ""
+        if (TextUtils.isEmpty(academicInfo!!.selectedGrad)) return ""
         val builder = StringBuilder()
-        val classes = academicInfo!!.selectedClass!!.split(",")
+        val classes = academicInfo!!.selectedGrad!!.split(",")
         for (clazz in classes) {
             var value = clazz.trim({ it <= ' ' })
             builder.append(value).append(CommonUtils.getClassSuffix(Integer.parseInt(value))).append(", ")

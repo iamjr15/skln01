@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.autohub.skln.fragment.BaseFragment
@@ -36,7 +35,6 @@ class PendingRequestFragment : BaseFragment() {
     private lateinit var tutorData: TutorData
     private val selectedBatch = ArrayList<String>()
     private val batchNames = ArrayList<String>()
-    private lateinit var selectedBatchId: String
     private var selectedPosition: Int = -1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -219,7 +217,7 @@ class PendingRequestFragment : BaseFragment() {
         var indexSelected = -1
         if (selectedItems.size > 0) {
             for (i in namesArr.indices) {
-                if (namesArr[i].equals(selectedItems[0])) {
+                if (namesArr[i] == selectedItems[0]) {
                     indexSelected = i
                     break
                 } else {

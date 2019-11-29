@@ -1,6 +1,7 @@
 package com.autohub.tutormodule.ui.manageClasses
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,7 @@ import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentTutorBatchOptionsBinding
-import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
+import com.autohub.tutormodule.ui.dashboard.listener.HomeListener
 
 
 class BatchOptionsFragment : BaseFragment() {
@@ -27,9 +28,20 @@ class BatchOptionsFragment : BaseFragment() {
 
         batchData = arguments?.getParcelable("batch")!!
 
-        mBinding.batchCode.text = "Batch CODE : " + batchData.batchCode
+        mBinding.batchCode.text = getString(R.string.batch_code) + batchData.batchCode
         mBinding.batchName.text = batchData.title
         mBinding.className.text = batchData.grade?.name?.replace("_", " ") + " | " + batchData.subject?.name
+
+        mBinding.batchCode.setOnClickListener {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "Hi ,Below is your Batch Code for " +
+                        batchData.title.toString().toUpperCase() + " Batch.\n\n" + batchData.batchCode)
+                type = "text/plain"
+            }
+            val shareIntent = Intent.createChooser(sendIntent, "Share Batch Code.")
+            startActivity(shareIntent)
+        }
     }
 
 
@@ -49,10 +61,5 @@ class BatchOptionsFragment : BaseFragment() {
     fun openEditScheduleScreen() {
         homeListener.showAddBatchFragment(false, batchData)
 
-    }
-
-
-    companion object {
-        fun newInstance(): BatchOptionsFragment = BatchOptionsFragment()
     }
 }

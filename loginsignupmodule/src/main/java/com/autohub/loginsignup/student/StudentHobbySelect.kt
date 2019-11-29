@@ -28,7 +28,20 @@ import java.util.*
  */
 class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
     private lateinit var manager: SplitInstallManager
-    lateinit var hobbyDataList: ArrayList<SubjectsModel>
+
+
+    /*
+    * List conatins only selected Hobbies Id
+    *
+    * */
+    private var selectedHobbies: ArrayList<SubjectsModel> = ArrayList()
+    private var mBinding: ActivityStudentHobbySelectBinding? = null
+    private var fragmentsList: ArrayList<Fragment> = ArrayList()
+
+    /*
+    * List contain all data regarding Hobbies
+    * */
+    private lateinit var hobbyDataList: ArrayList<SubjectsModel>
 
 
     override fun selectedClass(position: Int, isSecondSelected: Boolean, selectedClass: Any) {
@@ -58,15 +71,16 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
 
                     }
                 }
-
-
             }
         }
     }
 
-
+    /*
+    * Fetch Subjects whose hobbies status is true from Firebase FireStore
+    *
+    * */
     private fun fetchobbies() {
-        var listData: ArrayList<SubjectsModel> = arrayListOf()
+        val listData: ArrayList<SubjectsModel> = arrayListOf()
         firebaseStore.collection("subjects").whereEqualTo("grades.hobbies", true).get().addOnCompleteListener {
 
             if (it.isSuccessful) {
@@ -85,10 +99,15 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
     }
 
 
+    /*
+    * Add images with firebase Hobbies data for reflecting it on UI
+    *
+    * */
+
     private fun insertHobbiesData(listData: ArrayList<SubjectsModel>) {
         hobbyDataList = ArrayList()
 
-        var hobbiesDataMap: HashMap<String, SubjectsData> = HashMap()
+        val hobbiesDataMap: HashMap<String, SubjectsData> = HashMap()
 
         hobbiesDataMap[HOBBY_GUITAR] = SubjectsData(R.color.guitar, com.autohub.skln.R.drawable.guitar, false, HOBBY_GUITAR)
         hobbiesDataMap[HOBBY_KEYBOARD] = SubjectsData(R.color.keyboard, com.autohub.skln.R.drawable.piano, false, HOBBY_KEYBOARD)
@@ -112,10 +131,6 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
         showView()
     }
 
-    private var selectedHobbies: ArrayList<SubjectsModel> = ArrayList()
-    private var mBinding: ActivityStudentHobbySelectBinding? = null
-    private var fragmentsList: ArrayList<Fragment> = ArrayList()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -129,7 +144,7 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
 
     }
 
-    fun showView() {
+    private fun showView() {
         val countList: ArrayList<String> = ArrayList()
         countList.add("1")
         countList.add("2")
@@ -189,6 +204,13 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
     }
 
 
+    /*
+    *
+    * Save selected hobbies in Studentsubject collection in firebase
+    * Download Student module and navigate user to Student Home Screen
+    *
+    * */
+
     fun onNextClick() {
 
         if (selectedHobbies.size == 0) {
@@ -199,13 +221,13 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
 
 
         showLoading()
-        var batch: WriteBatch = firebaseStore.batch()
+        val batch: WriteBatch = firebaseStore.batch()
         for (i in selectedHobbies) {
-            var map: HashMap<String, String> = HashMap()
+            val map: HashMap<String, Any> = HashMap()
             map["category"] = "hobby"
-            map["isFavourite"] = "false"
-            map["isLeastFavourite"] = "false"
-            map["isHobby"] = "true"
+            map["isFavourite"] = false
+            map["isLeastFavourite"] = false
+            map["isHobby"] = true
 
             map["id"] = firebaseAuth.currentUser!!.uid + "_" + i.id
             map["studentId"] = firebaseAuth.currentUser!!.uid
@@ -222,20 +244,19 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
 
         batch.commit().addOnCompleteListener {
             if (it.isSuccessful) {
-                saveData()
+                hideLoading()
+                appPreferenceHelper.setStudentSignupComplete(true)
+                loadAndLaunchModule(LoginActivity.STUDENT_FEATURE, "studentmodule")
+
             }
 
         }.addOnFailureListener {
 
             showSnackError(it.message)
         }
-
-
-
-        saveData()
     }
 
-    fun saveData() {
+    private fun saveData() {
         val stringBuilder = StringBuilder()
         if (selectedHobbies.size > 0) {
             stringBuilder.append(selectedHobbies[0].id)
@@ -283,9 +304,6 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
                 }
 
     }
-
-
-
 
 
 }

@@ -10,10 +10,12 @@ import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.skln.utills.AppConstants
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ItemScheduleViewBinding
+import com.autohub.tutormodule.ui.utils.AppConstants.DateFormatInput
+import com.autohub.tutormodule.ui.utils.AppConstants.DateFormatOutput
 import com.autohub.tutormodule.ui.utils.AppUtils
 
-class ScheduleAdaptor(var context: Context)
-    : RecyclerView.Adapter<ScheduleAdaptor.Holder>() {
+class ScheduleAdapter(var context: Context)
+    : RecyclerView.Adapter<ScheduleAdapter.Holder>() {
 
     private var batchList: List<BatchesModel> = ArrayList()
     lateinit var mBinding: ItemScheduleViewBinding
@@ -27,23 +29,21 @@ class ScheduleAdaptor(var context: Context)
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        mBinding.batchName.text = batchList[position].title+" - "+ AppUtils.getClassName(batchList[position].grade?.name?.split("_")?.get(1)?.trim()!!)
+        mBinding.batchName.text = batchList[position].title + " - " + AppUtils.getClassName(batchList[position].grade?.name?.split("_")?.get(1)?.trim()!!)
 
         mBinding.time.text = AppUtils.uTCToLocal(
-                "EEE MMM dd HH:mm:ss z yyyy",
-                "EEE, d MMM yyyy HH:mm:ss z",
+                DateFormatInput, DateFormatOutput,
                 batchList[position].timing?.startTime!!.toDate().toString()).toString() + " - " +
-                AppUtils.uTCToLocal("EEE MMM dd HH:mm:ss z yyyy",
-                        "EEE, d MMM yyyy HH:mm:ss z",
+                AppUtils.uTCToLocal(DateFormatInput, DateFormatOutput,
                         batchList[position].timing?.endTime!!.toDate().toString()).toString()
 
         mBinding.activeButton.text = batchList[position].status
 
         if (batchList[position].status == AppConstants.STATUS_ACTIVE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                mBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.skyblue, null))
+                mBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.skyBlue, null))
             } else {
-                mBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.skyblue))
+                mBinding.cardView.setCardBackgroundColor(context.resources.getColor(R.color.skyBlue))
             }
             mBinding.activeButton.background = context.resources.getDrawable(com.autohub.skln.R.drawable.selector_green_round, null)
         }

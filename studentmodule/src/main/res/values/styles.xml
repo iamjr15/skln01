@@ -1,11 +1,6 @@
 <resources>
 
 
-
-
-
-
-
     <!-- Text style for "science." -->
     <!-- Add this snippet to styles.xml. -->
     <style name="science">
@@ -16,7 +11,6 @@
     </style>
 
 
-
     <!-- Text style for "keyboard." -->
     <!-- Add this snippet to styles.xml. -->
     <style name="keyboard">
@@ -25,8 +19,6 @@
         <item name="android:fontFamily">@font/montserrat_bold</item>
 
     </style>
-
-
 
 
     <style name="tab_item_text_style">
@@ -242,9 +234,6 @@
     </style>
 
 
-
-
-
     <!-- Text style for "signup" -->
     <!-- Add this snippet to styles.xml. -->
 
@@ -425,4 +414,4 @@
     </style>
 
 
-    </resources>
+</resources>

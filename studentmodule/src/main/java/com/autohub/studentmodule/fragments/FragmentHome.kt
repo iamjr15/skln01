@@ -22,7 +22,6 @@ import com.autohub.studentmodule.adaptors.HobbiesAdaptor
 import com.autohub.studentmodule.databinding.FragmentStudentHomeBinding
 import com.autohub.studentmodule.listners.HomeListners
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.google.firebase.storage.FirebaseStorage
 
 /**
  * Created by Vt Netzwelt
@@ -76,9 +75,8 @@ class FragmentHome : BaseFragment() {
 
         if (userimagePath != null && userimagePath != "") {
 
-            val ref = FirebaseStorage.getInstance().reference.child(userimagePath)
             GlideApp.with(this)
-                    .load(ref)
+                    .load(userimagePath)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
                     .skipMemoryCache(true)
                     .placeholder(com.autohub.skln.R.drawable.default_pic)
@@ -107,10 +105,14 @@ class FragmentHome : BaseFragment() {
                 .addOnFailureListener { e -> showSnackError(e.message) }
     }
 
+    /*
+    * get student subjects as per 1-10 or 11-12
+    *
+    * */
     private fun setSubjects(user: UserModel) {
         var grade: String
 
-        firebaseStore.collection("grades").whereEqualTo("id", user.academicInfo!!.selectedClass).get().addOnSuccessListener {
+        firebaseStore.collection("grades").whereEqualTo("id", user.academicInfo!!.selectedGrad).get().addOnSuccessListener {
 
             it.forEach {
                 grade = it.getString("grade")!!
@@ -122,6 +124,9 @@ class FragmentHome : BaseFragment() {
 
     }
 
+    /*
+    * get Student Hobbies
+    * */
     private fun setHobbies(user: UserModel) {
         hobbiesAdaptor!!.setData(user.getHobbies())
     }

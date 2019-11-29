@@ -12,11 +12,11 @@ import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.ItemTutorRequestBinding
 import com.autohub.tutormodule.ui.utils.AppUtils
 
-class RequestsAdaptor(var context: Context, val listener: Listener)
-    : RecyclerView.Adapter<RequestsAdaptor.Holder>() {
+class RequestsAdapter(var context: Context, val listener: Listener)
+    : RecyclerView.Adapter<RequestsAdapter.Holder>() {
 
     private var requestsList: List<BatchRequestData> = ArrayList()
-    lateinit var itemRequestBinding: ItemTutorRequestBinding
+    private lateinit var itemRequestBinding: ItemTutorRequestBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         itemRequestBinding = DataBindingUtil.inflate(

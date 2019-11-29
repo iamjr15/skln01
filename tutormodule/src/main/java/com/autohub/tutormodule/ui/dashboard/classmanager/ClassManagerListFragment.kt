@@ -3,7 +3,6 @@ package com.autohub.tutormodule.ui.dashboard.classmanager
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +12,8 @@ import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.models.batches.BatchesModel
 import com.autohub.tutormodule.R
 import com.autohub.tutormodule.databinding.FragmentClassManagerListBinding
-import com.autohub.tutormodule.ui.dashboard.listner.HomeListener
+import com.autohub.tutormodule.ui.dashboard.listener.HomeListener
 import java.text.SimpleDateFormat
-import java.time.DayOfWeek
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -24,8 +22,8 @@ import kotlin.collections.ArrayList
  */
 
 class ClassManagerListFragment(val type: String) : BaseFragment(), Listener {
-    private var mBinding: FragmentClassManagerListBinding? = null
-    private var adaptor: ClassesAdaptor? = null
+    private lateinit var mBinding: FragmentClassManagerListBinding
+    private var adapter: ClassesAdapter? = null
     private lateinit var homeListener: HomeListener
     private lateinit var recyclerViewData: MutableList<BatchesModel>
 
@@ -38,11 +36,14 @@ class ClassManagerListFragment(val type: String) : BaseFragment(), Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding = FragmentClassManagerListBinding.bind(view)
-        mBinding!!.classesrecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        adaptor = ClassesAdaptor(requireContext(), this)
-        mBinding!!.classesrecycleview.adapter = adaptor
-        fetchBatches()
+        mBinding.classesRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        adapter = ClassesAdapter(requireContext(), this)
+        mBinding.classesRecyclerView.adapter = adapter
 
+        mBinding.swipeRefresh.setOnRefreshListener {
+            fetchBatches(true)
+        }
+        fetchBatches(false)
     }
 
     override fun onAttach(context: Context) {
@@ -50,13 +51,15 @@ class ClassManagerListFragment(val type: String) : BaseFragment(), Listener {
         homeListener = context as HomeListener
     }
 
-    private fun fetchBatches() {
+    /*Fetch batches and filter them according to their type
+    * */
+    private fun fetchBatches(refresh: Boolean) {
         firebaseStore.collection(getString(R.string.db_root_batches))
                 .get().addOnSuccessListener { documentSnapshot ->
                     recyclerViewData = ArrayList()
                     recyclerViewData = documentSnapshot.toObjects(BatchesModel::class.java)
                     for (i in 0 until recyclerViewData.size) {
-                        recyclerViewData[i].documentId = documentSnapshot.documents[i].id
+                        recyclerViewData[i].documentationId = documentSnapshot.documents[i].id
                     }
 
                     if (type == "Today") {
@@ -67,26 +70,36 @@ class ClassManagerListFragment(val type: String) : BaseFragment(), Listener {
                                 arrayList.add(recyclerViewData[i])
                             }
 
-                        adaptor?.setData(arrayList)
+                        adapter?.setData(arrayList)
 
                     } else {
-                        adaptor?.setData(recyclerViewData)
+                        adapter?.setData(recyclerViewData)
 
+                    }
+
+                    if (refresh){
+                        mBinding.swipeRefresh.isRefreshing = false
                     }
                 }
                 .addOnFailureListener { e ->
+                    if (refresh){
+                        mBinding.swipeRefresh.isRefreshing = false
+                    }
                     showSnackError(e.message)
                 }
     }
 
-    override fun openEditSchedule(batch: BatchesModel) {
+    override fun openBatchOptionsFragment(batch: BatchesModel) {
         homeListener.showBatchOptionsFragment(batch)
     }
 
+    /**
+     * Update status of batches on change of toggle button state
+     */
     override fun updateStatusOfBatches(status: String, batchesModel: BatchesModel, position: Int) {
         showLoading()
-        firebaseStore.collection(getString(R.string.db_root_batches)).document(batchesModel.documentId!!)
-                .update("status", status).addOnSuccessListener { documentSnapshot ->
+        firebaseStore.collection(getString(R.string.db_root_batches)).document(batchesModel.documentationId!!)
+                .update("status", status).addOnSuccessListener {
                     hideLoading()
                 }
                 .addOnFailureListener { e ->

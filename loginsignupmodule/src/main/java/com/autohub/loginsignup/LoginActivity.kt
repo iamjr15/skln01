@@ -21,6 +21,7 @@ import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuth
 
 /**
  * Created by Vt Netzwelt
@@ -30,13 +31,11 @@ class LoginActivity : BaseActivity() {
     private lateinit var manager: SplitInstallManager
     private lateinit var credential: AuthCredential
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         manager = SplitInstallManagerFactory.create(this)
         mBinding!!.callback = this
-
 
         mBinding!!.usertype.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.radiostudent) {
@@ -68,8 +67,6 @@ class LoginActivity : BaseActivity() {
 
             mBinding!!.rrtutorpass.visibility = View.GONE
             mBinding!!.rrstudentpass.visibility = View.VISIBLE
-
-
         } else {
             mBinding!!.rrtutorpass.visibility = View.VISIBLE
             mBinding!!.rrstudentpass.visibility = View.GONE
@@ -112,11 +109,9 @@ class LoginActivity : BaseActivity() {
 
     }
 
-    fun validateStudentField(): Boolean {
-        val email: Editable
+    private fun validateStudentField(): Boolean {
+        val email: Editable = mBinding!!.edtemail.text!!
 
-
-        email = mBinding!!.edtemail.text!!
 
         if (email == null) {
             mBinding!!.edtemail.error = resources.getString(R.string.enter_email)
@@ -143,17 +138,14 @@ class LoginActivity : BaseActivity() {
         if (password.length < 6) {
             mBinding!!.edtPassword.error = resources.getString(R.string.passwordweak)
             mBinding!!.edtPassword.requestFocus()
-            // showSnackError(R.string.enter_password)
             return false
         }
         return true
     }
 
-    fun validateTutorFields(): Boolean {
-        val email: Editable
+    private fun validateTutorFields(): Boolean {
+        val email: Editable = mBinding!!.edtloginid.text!!
 
-
-        email = mBinding!!.edtloginid.text!!
 
         if (email == null) {
             mBinding!!.edtloginid.error = resources.getString(R.string.enter_email)
@@ -190,14 +182,13 @@ class LoginActivity : BaseActivity() {
 
     private fun validateUserCredentials() {
 
-        if (mBinding!!.radiostudent.isChecked) {
-            credential = EmailAuthProvider.getCredential(mBinding!!.edtemail.text.toString().trim(),
+        credential = if (mBinding!!.radiostudent.isChecked) {
+            EmailAuthProvider.getCredential(mBinding!!.edtemail.text.toString().trim(),
                     mBinding!!.edtPassword.text.toString().trim())
         } else {
-            credential = EmailAuthProvider.getCredential(mBinding!!.edtloginid.text.toString().trim(),
+            EmailAuthProvider.getCredential(mBinding!!.edtloginid.text.toString().trim(),
                     mBinding!!.edtTutorPassword.text.toString().trim())
         }
-
 
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener {
@@ -228,8 +219,6 @@ class LoginActivity : BaseActivity() {
 
 
     private fun moveNext() {
-
-
         if (mBinding!!.radiostudent.isChecked) {
             Toast.makeText(this, getString(R.string.student_verify), Toast.LENGTH_SHORT).show()
             loadAndLaunchModule(STUDENT_FEATURE, "studentmodule")
@@ -252,19 +241,48 @@ class LoginActivity : BaseActivity() {
         if (mBinding!!.radiostudent.isChecked) {
             firebaseStore.collection(getString(R.string.db_root_students)).whereEqualTo(AppConstants.KEY_USER_ID, firebaseAuth.currentUser!!.uid)
                     .get().addOnSuccessListener {
-                        it.forEach {
-                            appPreferenceHelper.setUserId(it.id)
-                            moveNext()
+
+                        if (it.size() > 0) {
+                            it.forEach {
+                                appPreferenceHelper.setUserId(it.id)
+                                moveNext()
+                            }
+
+                        } else {
+
+                            showSnackError("Wrong Credentials!")
+                            FirebaseAuth.getInstance().signOut()
                         }
+
+
+                    }.addOnFailureListener()
+                    {
+                        showSnackError(it.message)
+
+                        FirebaseAuth.getInstance().signOut()
+
+
                     }
+
         } else {
             firebaseStore.collection(getString(R.string.db_root_tutors)).whereEqualTo(AppConstants.KEY_USER_ID, firebaseAuth.currentUser?.uid)
                     .get().addOnSuccessListener {
-                        it.forEach {
-                            appPreferenceHelper.setUserId(it.id)
-                            moveNext()
+                        if (it.size() > 0) {
+                            it.forEach {
+                                appPreferenceHelper.setUserId(it.id)
+                                moveNext()
+                            }
+                        } else {
+                            showSnackError("Wrong Credentials!")
+                            FirebaseAuth.getInstance().signOut()
                         }
+
+                    }.addOnFailureListener()
+                    {
+                        showSnackError(it.message)
+                        FirebaseAuth.getInstance().signOut()
                     }
+
         }
 
     }
