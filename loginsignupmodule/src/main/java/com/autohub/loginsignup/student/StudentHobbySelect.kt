@@ -256,54 +256,6 @@ class StudentHobbySelect : BaseActivity(), ClassSelectionListner {
         }
     }
 
-    private fun saveData() {
-        val stringBuilder = StringBuilder()
-        if (selectedHobbies.size > 0) {
-            stringBuilder.append(selectedHobbies[0].id)
-            for (i in 1 until selectedHobbies.size) {
-                stringBuilder.append(", ").append(selectedHobbies[i].id)
-            }
-        }
-
-        if (stringBuilder.isEmpty()) {
-            showSnackError(R.string.choose_hobbies)
-            return
-        }
-
-
-        val user = HashMap<String, Any>()
-        user[KEY_STDT_HOBBIES] = stringBuilder.toString().split(",")
-
-        val user1 = HashMap<String, Any>()
-        user1[KEY_PHONE_NUMBER] = appPreferenceHelper.userPhone
-
-
-        firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).set(
-                mapOf(
-                        KEY_ACADEMICINFO to user
-                )
-                , SetOptions.merge())
-                .addOnSuccessListener {
-                    firebaseStore.collection(getString(R.string.db_root_all_users)).document().set(user1, SetOptions.merge())
-
-
-                            .addOnSuccessListener {
-                                hideLoading()
-                                appPreferenceHelper.setStudentSignupComplete(true)
-                                loadAndLaunchModule(LoginActivity.STUDENT_FEATURE, "studentmodule")
-
-                            }
-                            .addOnFailureListener { e ->
-                                hideLoading()
-                                showSnackError(e.message)
-                            }
-                }
-                .addOnFailureListener { e ->
-                    hideLoading()
-                    showSnackError(e.message)
-                }
-
-    }
 
 
 }

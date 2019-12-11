@@ -3,12 +3,12 @@ package com.autohub.skln.models;
 /**
  * Created by Vt Netzwelt
  */
-public class AcadmicsData {
+public class AcademicData {
     private int color;
     private String classname;
     private int icon;
 
-    public AcadmicsData(int color, String classname, int icon) {
+    public AcademicData(int color, String classname, int icon) {
         this.color = color;
         this.classname = classname;
         this.icon = icon;

@@ -33,7 +33,7 @@ class StudentProfileFragment : BaseFragment() {
     private var mStorageReference: StorageReference? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(com.autohub.studentmodule.R.layout.fragment_student_profile, container, false)
+        return inflater.inflate(R.layout.fragment_student_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,9 +73,9 @@ class StudentProfileFragment : BaseFragment() {
     private fun showLogoutPopup() {
         val alert = AlertDialog.Builder(activity!!)
         alert.setMessage(getString(R.string.areyousure_msg))
-                .setPositiveButton("Logout", DialogInterface.OnClickListener { dialog, which ->
+                .setPositiveButton("Logout") { dialog, which ->
                     logout() // Last step. Logout function
-                }).setNegativeButton("Cancel", null)
+                }.setNegativeButton("Cancel", null)
 
         val alert1 = alert.create()
         alert1.show()
@@ -96,7 +96,7 @@ class StudentProfileFragment : BaseFragment() {
 
     private fun setupProfile() {
 
-        firebaseStore.collection(getString(com.autohub.studentmodule.R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
+        firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).get()
                 .addOnSuccessListener { documentSnapshot ->
                     val user: UserModel = documentSnapshot.toObject(UserModel::class.java)!!
                     (context as StudentHomeActivity).userimagePath = user.personInfo!!.accountPicture

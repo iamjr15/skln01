@@ -65,7 +65,7 @@ data class TutorData(var academicInfo: TutorAcademicInfo? = TutorAcademicInfo(),
         val builder = StringBuilder()
         val classes = classToTeach!!.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
         for (clazz in classes) {
-            var value = clazz.trim({ it <= ' ' })
+            val value = clazz.trim({ it <= ' ' })
             builder.append(value).append(CommonUtils.getClassSuffix(Integer.parseInt(value))).append(", ")
         }
         return builder.substring(0, builder.length - 2)

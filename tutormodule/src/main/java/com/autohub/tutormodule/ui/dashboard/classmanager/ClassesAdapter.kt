@@ -38,12 +38,7 @@ class ClassesAdapter(var context: Context, var listener: Listener) : RecyclerVie
                         batchesList[position].timing?.endTime!!.toDate().toString()).toString() + " | " +
                 batchesList[position].selectedDays.joinToString(" , ")
 
-        if (batchesList[position].status.equals(AppConstants.STATUS_ACTIVE)) {
-            mBinding.toggleButton.isChecked = true
-
-        } else {
-            mBinding.toggleButton.isChecked = false
-        }
+        mBinding.toggleButton.isChecked = batchesList[position].status.equals(AppConstants.STATUS_ACTIVE)
 
 
         /* Update status in database on toggle button state changes

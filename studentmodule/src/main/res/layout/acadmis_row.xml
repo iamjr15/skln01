@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="acadmicdata"
-            type="com.autohub.skln.models.AcadmicsData" />
+            name="academicdata"
+            type="com.autohub.skln.models.AcademicData" />
 
         <variable
             name="itemClickListener"
@@ -20,7 +20,7 @@
 
         android:layout_height="wrap_content"
         android:layout_marginEnd="9dp"
-        android:onClick="@{() -> itemClickListener.onClick(acadmicdata)}"
+        android:onClick="@{() -> itemClickListener.onClick(academicdata)}"
 
         android:orientation="horizontal">
 
@@ -28,7 +28,7 @@
             android:id="@+id/rr"
             android:layout_width="118dp"
             android:layout_height="116dp"
-            android:background="@drawable/acadmic_rowbg_drawable"
+            android:background="@drawable/academic_rowbg_drawable"
 
             android:paddingStart="10dp"
             android:paddingEnd="10dp"

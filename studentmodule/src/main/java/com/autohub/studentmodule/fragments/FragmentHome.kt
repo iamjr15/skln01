@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.autohub.skln.fragment.BaseFragment
 import com.autohub.skln.listeners.ItemClickListener
-import com.autohub.skln.models.AcadmicsData
+import com.autohub.skln.models.AcademicData
 import com.autohub.skln.models.HobbiesData
 import com.autohub.skln.models.UserModel
 import com.autohub.skln.utills.ActivityUtils
@@ -17,7 +17,7 @@ import com.autohub.skln.utills.GlideApp
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.activities.AddClassActivity
 import com.autohub.studentmodule.activities.StudentHomeActivity
-import com.autohub.studentmodule.adaptors.AcadmicsAdaptor
+import com.autohub.studentmodule.adaptors.AcademicAdaptor
 import com.autohub.studentmodule.adaptors.HobbiesAdaptor
 import com.autohub.studentmodule.databinding.FragmentStudentHomeBinding
 import com.autohub.studentmodule.listners.HomeListners
@@ -28,11 +28,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
  */
 class FragmentHome : BaseFragment() {
     private var mBinding: FragmentStudentHomeBinding? = null
-    private var acadmicsAdaptor: AcadmicsAdaptor? = null
+    private var academicAdaptor: AcademicAdaptor? = null
     private var hobbiesAdaptor: HobbiesAdaptor? = null
     private lateinit var homeListner: HomeListners
     private lateinit var user: UserModel
-    private val acadmicClickListener = ItemClickListener<AcadmicsData> {
+    private val acadmicClickListener = ItemClickListener<AcademicData> {
         homeListner.onAcadmicsSelect(user, it.classname)
     }
 
@@ -54,8 +54,8 @@ class FragmentHome : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinding = FragmentStudentHomeBinding.bind(view)
         mBinding!!.acadmicrecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        acadmicsAdaptor = AcadmicsAdaptor(requireContext(), acadmicClickListener)
-        mBinding!!.acadmicrecycleview.adapter = acadmicsAdaptor
+        academicAdaptor = AcademicAdaptor(requireContext(), acadmicClickListener)
+        mBinding!!.acadmicrecycleview.adapter = academicAdaptor
 
         mBinding!!.hobbiesrecycleview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         hobbiesAdaptor = HobbiesAdaptor(requireContext(), hobbiesClickListener)
@@ -117,7 +117,7 @@ class FragmentHome : BaseFragment() {
             it.forEach {
                 grade = it.getString("grade")!!
 
-                acadmicsAdaptor!!.setData(user.getAcadmics(grade))
+                academicAdaptor!!.setData(user.getAcadmics(grade))
             }
         }
 
