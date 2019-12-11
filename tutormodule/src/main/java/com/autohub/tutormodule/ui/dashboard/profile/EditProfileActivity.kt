@@ -441,7 +441,7 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
 
 
     private fun onpenImagePickerDialog() {
-        val mBuilder = androidx.appcompat.app.AlertDialog.Builder(this)
+        val mBuilder = AlertDialog.Builder(this)
 
         val options = arrayOf("Gallery", "Camera")
         mBuilder.setSingleChoiceItems(options, 0, null)
@@ -525,11 +525,11 @@ class EditProfileActivity : BaseActivity(), ImagePickerCallback {
         val chosenImage = list!!.get(0)
 
         if (chosenImage.originalPath.contains("content:")) {
-            if (isTakePicture) {
-                imageuri = Uri.fromFile(File(chosenImage.originalPath))
+            imageuri = if (isTakePicture) {
+                Uri.fromFile(File(chosenImage.originalPath))
 
             } else {
-                imageuri = Uri.parse(chosenImage.originalPath)
+                Uri.parse(chosenImage.originalPath)
 
             }
         } else {

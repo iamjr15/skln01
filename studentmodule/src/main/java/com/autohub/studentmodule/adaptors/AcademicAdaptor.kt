@@ -10,7 +10,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.autohub.skln.listeners.ItemClickListener
-import com.autohub.skln.models.AcadmicsData
+import com.autohub.skln.models.AcademicData
 import com.autohub.studentmodule.R
 import com.autohub.studentmodule.databinding.AcadmisRowBinding
 
@@ -19,34 +19,34 @@ import com.autohub.studentmodule.databinding.AcadmisRowBinding
  */
 
 
-class AcadmicsAdaptor(var context: Context, private var mItemClickListener: ItemClickListener<AcadmicsData>)
-    : RecyclerView.Adapter<AcadmicsAdaptor.Holder>() {
+class AcademicAdaptor(var context: Context, private var mItemClickListener: ItemClickListener<AcademicData>)
+    : RecyclerView.Adapter<AcademicAdaptor.Holder>() {
 
-    private var acadmicDataList: List<AcadmicsData> = ArrayList()
+    private var academicDataList: List<AcademicData> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val acadmicrowbinding: AcadmisRowBinding =
+        val academicrowbinding: AcadmisRowBinding =
                 DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
                         R.layout.acadmis_row, parent, false
                 )
 
 
-        return Holder(acadmicrowbinding)
+        return Holder(academicrowbinding)
     }
 
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
         holder.countriesRowBinding.itemClickListener = mItemClickListener
-        acadmicDataList[position].let {
+        academicDataList[position].let {
             with(holder.countriesRowBinding)
             {
-                acadmicdata = it
+                academicdata = it
                 img.setImageResource(it.icon)
                 txt.text = it.classname + "."
 
-                val unwrappedDrawable = ContextCompat.getDrawable(context, com.autohub.skln.R.drawable.acadmic_rowbg_drawable)
+                val unwrappedDrawable = ContextCompat.getDrawable(context, com.autohub.skln.R.drawable.academic_rowbg_drawable)
                 val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
                 DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(context, it.color))
                 rr.background = wrappedDrawable
@@ -56,11 +56,11 @@ class AcadmicsAdaptor(var context: Context, private var mItemClickListener: Item
     }
 
     override fun getItemCount(): Int {
-        return acadmicDataList.size
+        return academicDataList.size
     }
 
-    fun setData(acadmicDataList: List<AcadmicsData>) {
-        this.acadmicDataList = acadmicDataList
+    fun setData(academicDataList: List<AcademicData>) {
+        this.academicDataList = academicDataList
         notifyDataSetChanged()
     }
 

@@ -30,7 +30,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_marginTop="12dp"
-                    android:src="@drawable/ic_flash" />
+                    android:src="@drawable/ic_flash"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/request_status"

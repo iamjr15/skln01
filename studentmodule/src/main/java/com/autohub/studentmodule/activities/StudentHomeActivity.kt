@@ -170,7 +170,6 @@ class StudentHomeActivity : BaseActivity(), HomeListners {
                     }
 
 
-                    this.user = user
                     userimagePath = user!!.personInfo!!.accountPicture
                     user!!.id = documentSnapshot.id
                     hideLoading()

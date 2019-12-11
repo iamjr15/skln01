@@ -247,53 +247,6 @@ class StudentSubjectSelectSeniorActivity : BaseActivity(), ClassSelectionListner
     }
 
 
-    private fun saveData() {
-        val stringBuilder = StringBuilder()
-        if (selectedSubjects.size > 0) {
-            stringBuilder.append(selectedSubjects[0].id)
-            for (i in 1 until selectedSubjects.size) {
-                stringBuilder.append(", ").append(selectedSubjects[i].id)
-            }
-        }
-
-        if (stringBuilder.isEmpty()) {
-            showSnackError(R.string.choose_subjects)
-            return
-        }
-
-
-        val user = HashMap<String, Any>()
-        if (mFavoriteOrLeast)
-            user[KEY_STDT_FAVORITE_CLASSES] = stringBuilder.toString().split(",")
-        else
-            user[KEY_STDT_LEAST_FAV_CLASSES] = stringBuilder.toString().split(",")
-
-
-
-        firebaseStore.collection(getString(R.string.db_root_students)).document(appPreferenceHelper.getuserID()).set(
-                mapOf(
-                        KEY_ACADEMICINFO to user
-                )
-                , SetOptions.merge()
-        )
-                .addOnSuccessListener {
-                    hideLoading()
-                    val i: Intent
-                    if (mFavoriteOrLeast) {
-                        i = Intent(this@StudentSubjectSelectSeniorActivity, StudentSubjectSelectSeniorActivity::class.java)
-                        i.putExtra("favorite_or_least", false)
-                    } else {
-                        i = Intent(this@StudentSubjectSelectSeniorActivity, StudentHobbySelect::class.java)
-                    }
-                    startActivity(i)
-                }
-                .addOnFailureListener { e ->
-                    hideLoading()
-                    showSnackError(e.message)
-                }
-
-
-    }
 
 
 }

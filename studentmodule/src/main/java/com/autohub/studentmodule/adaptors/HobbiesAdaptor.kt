@@ -43,7 +43,7 @@ class HobbiesAdaptor(var context: Context, private var mItemClickListener: ItemC
                 img.setImageResource(it.icon)
                 txt.text = it.hobbyName + "."
 
-                val unwrappedDrawable = ContextCompat.getDrawable(context, com.autohub.skln.R.drawable.acadmic_rowbg_drawable)
+                val unwrappedDrawable = ContextCompat.getDrawable(context, com.autohub.skln.R.drawable.academic_rowbg_drawable)
                 val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
                 DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(context,it.color)/* it.color*/)
                 rr.background = unwrappedDrawable

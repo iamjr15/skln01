@@ -22,8 +22,8 @@ import java.util.Map;
 
 public class User implements Parcelable, AppConstants {
     private static final HashMap<String, Integer> FAVORITE_CLASSES = new HashMap<>();
-    private static final HashMap<String, AcadmicsData> ACADMICS_DATA_HASH_MAP = new HashMap<>();
-    private static final HashMap<String, AcadmicsData> ACADMICS_SENIORDATA_HASH_MAP = new HashMap<>();
+    private static final HashMap<String, AcademicData> ACADMICS_DATA_HASH_MAP = new HashMap<>();
+    private static final HashMap<String, AcademicData> ACADMICS_SENIORDATA_HASH_MAP = new HashMap<>();
     private static final HashMap<String, HobbiesData> HOBBIES_DATA_HASH_MAP = new HashMap<>();
 
     static {
@@ -43,39 +43,39 @@ public class User implements Parcelable, AppConstants {
 
 
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_SCIENCE,
-                new AcadmicsData(R.color.science, SUBJECT_SCIENCE, R.drawable.microscope));
+                new AcademicData(R.color.science, SUBJECT_SCIENCE, R.drawable.microscope));
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_ENGLISH,
-                new AcadmicsData(R.color.english, SUBJECT_ENGLISH, R.drawable.noun));
+                new AcademicData(R.color.english, SUBJECT_ENGLISH, R.drawable.noun));
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_MATHS,
-                new AcadmicsData(R.color.math, SUBJECT_MATHS, R.drawable.geometry));
+                new AcademicData(R.color.math, SUBJECT_MATHS, R.drawable.geometry));
 
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_SOCIAL_STUDIES,
-                new AcadmicsData(R.color.socialstudies, SUBJECT_SOCIAL_STUDIES, R.drawable.strike));
+                new AcademicData(R.color.socialstudies, SUBJECT_SOCIAL_STUDIES, R.drawable.strike));
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_LANGUAGES,
-                new AcadmicsData(R.color.language, SUBJECT_LANGUAGES, R.drawable.language));
+                new AcademicData(R.color.language, SUBJECT_LANGUAGES, R.drawable.language));
         ACADMICS_DATA_HASH_MAP.put(SUBJECT_COMPUTER_SCIENCE,
-                new AcadmicsData(R.color.computerscience, SUBJECT_COMPUTER_SCIENCE, R.drawable.informatic));
+                new AcademicData(R.color.computerscience, SUBJECT_COMPUTER_SCIENCE, R.drawable.informatic));
 
 
         ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_ENGLISH,
-                new AcadmicsData(R.color.english, SUBJECT_ENGLISH, R.drawable.noun));
+                new AcademicData(R.color.english, SUBJECT_ENGLISH, R.drawable.noun));
         ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_MATHS,
-                new AcadmicsData(R.color.math, SUBJECT_MATHS, R.drawable.geometry));
+                new AcademicData(R.color.math, SUBJECT_MATHS, R.drawable.geometry));
         ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_COMPUTER_SCIENCE,
-                new AcadmicsData(R.color.computerscience, SUBJECT_COMPUTER_SCIENCE, R.drawable.informatic));
+                new AcademicData(R.color.computerscience, SUBJECT_COMPUTER_SCIENCE, R.drawable.informatic));
 
         ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_PHYSICS,
-                new AcadmicsData(R.color.physics, SUBJECT_PHYSICS, R.drawable.physics));
+                new AcademicData(R.color.physics, SUBJECT_PHYSICS, R.drawable.physics));
         ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_BIOLOGY,
-                new AcadmicsData(R.color.biology, SUBJECT_BIOLOGY, R.drawable.microscope));
+                new AcademicData(R.color.biology, SUBJECT_BIOLOGY, R.drawable.microscope));
         ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_CHEMISTRY,
-                new AcadmicsData(R.color.chemistry, SUBJECT_CHEMISTRY, R.drawable.test_tube));
+                new AcademicData(R.color.chemistry, SUBJECT_CHEMISTRY, R.drawable.test_tube));
         ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_BUSINESS,
-                new AcadmicsData(R.color.business, SUBJECT_BUSINESS, R.drawable.rupee));
+                new AcademicData(R.color.business, SUBJECT_BUSINESS, R.drawable.rupee));
         ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_ACCOUNTANCY,
-                new AcadmicsData(R.color.account, SUBJECT_ACCOUNTANCY, R.drawable.accounting));
+                new AcademicData(R.color.account, SUBJECT_ACCOUNTANCY, R.drawable.accounting));
         ACADMICS_SENIORDATA_HASH_MAP.put(SUBJECT_ECONOMICS,
-                new AcadmicsData(R.color.economics, SUBJECT_ECONOMICS, com.autohub.skln.R.drawable.rating));
+                new AcademicData(R.color.economics, SUBJECT_ECONOMICS, com.autohub.skln.R.drawable.rating));
 
 
         HOBBIES_DATA_HASH_MAP.put(HOBBY_DANCE, new HobbiesData(R.color.dance, HOBBY_DANCE, R.drawable.dancing, false));
@@ -286,23 +286,23 @@ public class User implements Parcelable, AppConstants {
     }
 
 
-    public List<AcadmicsData> getAcadmics() {
+    public List<AcademicData> getAcadmics() {
 
         boolean isSeniorClass = studentClass.equals(CLASS_11) || studentClass.equals(CLASS_12);
-        List<AcadmicsData> acadmicsDataList = new ArrayList<>();
-//        if (TextUtils.isEmpty(favoriteClasses)) return acadmicsDataList;
+        List<AcademicData> academicDataList = new ArrayList<>();
+//        if (TextUtils.isEmpty(favoriteClasses)) return academicDataList;
 //        String[] subjects = favoriteClasses.split(",");
 
         if (isSeniorClass) {
-            for (Map.Entry<String, AcadmicsData> entry : ACADMICS_SENIORDATA_HASH_MAP.entrySet()) {
-                acadmicsDataList.add(ACADMICS_SENIORDATA_HASH_MAP.get(entry.getKey()));
+            for (Map.Entry<String, AcademicData> entry : ACADMICS_SENIORDATA_HASH_MAP.entrySet()) {
+                academicDataList.add(ACADMICS_SENIORDATA_HASH_MAP.get(entry.getKey()));
             }
 
 
         } else {
 
-            for (Map.Entry<String, AcadmicsData> entry : ACADMICS_DATA_HASH_MAP.entrySet()) {
-                acadmicsDataList.add(ACADMICS_DATA_HASH_MAP.get(entry.getKey()));
+            for (Map.Entry<String, AcademicData> entry : ACADMICS_DATA_HASH_MAP.entrySet()) {
+                academicDataList.add(ACADMICS_DATA_HASH_MAP.get(entry.getKey()));
             }
         }
 
@@ -311,17 +311,17 @@ public class User implements Parcelable, AppConstants {
        /* for (String subj : subjects) {
 //            if (ACADMICS_DATA_HASH_MAP.containsKey(subj.trim()))
             if (isSeniorClass) {
-                acadmicsDataList.add(ACADMICS_SENIORDATA_HASH_MAP.get(subj.trim()));
+                academicDataList.add(ACADMICS_SENIORDATA_HASH_MAP.get(subj.trim()));
 
             } else {
-                acadmicsDataList.add(ACADMICS_SENIORDATA_HASH_MAP.get(subj.trim()));
+                academicDataList.add(ACADMICS_SENIORDATA_HASH_MAP.get(subj.trim()));
 
             }
 
         }*/
 
 
-        return acadmicsDataList;
+        return academicDataList;
     }
 
 

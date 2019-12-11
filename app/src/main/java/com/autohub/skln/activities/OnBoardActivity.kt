@@ -21,7 +21,6 @@ class OnBoardActivity : BaseActivity() {
     private var mBinding: ActivityOnBoardBinding? = null
     private lateinit var manager: SplitInstallManager
 
-    private var cameraPicker: CameraImagePicker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,31 +40,27 @@ class OnBoardActivity : BaseActivity() {
 
     private fun checkPrefrences() {
         if (firebaseAuth.currentUser != null) {
-            if (appPreferenceHelper.studentSignUpComplete) {
-                Intent().setClassName(BuildConfig.APPLICATION_ID, STUDENTHOMEACTIVITY_PATH)
+            when {
+                appPreferenceHelper.studentSignUpComplete -> Intent().setClassName(BuildConfig.APPLICATION_ID, STUDENTHOMEACTIVITY_PATH)
                         .also {
 
                             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(it)
                             finish()
                         }
-            } else if (appPreferenceHelper.tutorSignUpComplete) {
-                Intent().setClassName(BuildConfig.APPLICATION_ID, TUTOR_HOME_ACTIVITY_PATH)
+                appPreferenceHelper.tutorSignUpComplete -> Intent().setClassName(BuildConfig.APPLICATION_ID, TUTOR_HOME_ACTIVITY_PATH)
                         .also {
 
                             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(it)
                             finish()
                         }
-            } else {
-
-                Intent().setClassName(BuildConfig.APPLICATION_ID, STUDENTCLASSACTIVITY_PATH)
+                else -> Intent().setClassName(BuildConfig.APPLICATION_ID, STUDENTCLASSACTIVITY_PATH)
                         .also {
                             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(it)
                             finish()
                         }
-
             }
         }
     }
