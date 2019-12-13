@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android" tools:keep="@drawable/acadmic_rowbg_drawable">
+<selector xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:keep="@drawable/academic_rowbg_drawable">
     <!-- Style for "rectangle_" -->
     <!-- Add this snippet to layer-list xml in drawable. -->
     <item >

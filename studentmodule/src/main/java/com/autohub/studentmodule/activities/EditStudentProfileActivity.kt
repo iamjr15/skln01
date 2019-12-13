@@ -126,7 +126,7 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
 
                         val idsofSubjectsList = subjectDataList.map { it.id }
                         val idsofFavtSubjectsList = favleastsubjectsDataList.map { it.id }
-                        var idsofLestFavtSubjectsList = favleastsubjectsDataList.map { it.id }
+                        val idsofLestFavtSubjectsList = favleastsubjectsDataList.map { it.id }
 
 
                         val hobbiesBuilder = StringBuilder()
@@ -142,7 +142,7 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
                             val studentSubjectsModel = document.toObject(StudentSubjectsModel::class.java)
                             studentSubjectsDataList.add(studentSubjectsModel)
 
-                            var subjectId = studentSubjectsModel.subjectId
+                            val subjectId = studentSubjectsModel.subjectId
 
 
 
@@ -717,17 +717,17 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
     private fun createBatchesForSubject(selectedSubjects: List<String>, value: Int) {
 
 
-        var batch: WriteBatch = firebaseStore.batch()
+        val batch: WriteBatch = firebaseStore.batch()
         for (i in selectedSubjects) {
             var name = ""
-            var idsList = subjectDataList.map { it.id }
+            val idsList = subjectDataList.map { it.id }
             if (idsList.contains(i)) {
                 val index = idsList.indexOf(i)
                 name = subjectDataList[index].name!!
             }
 
 
-            var map: HashMap<String, Any> = HashMap()
+            val map: HashMap<String, Any> = HashMap()
 
 
             when (value) {
@@ -840,7 +840,7 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
     }
 
     private fun onpenImagePickerDialog() {
-        val mBuilder = androidx.appcompat.app.AlertDialog.Builder(this)
+        val mBuilder = AlertDialog.Builder(this)
 
         val options = arrayOf("Gallery", "Camera")
         mBuilder.setSingleChoiceItems(options, 0, null)
@@ -929,11 +929,11 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
         if (chosenImage.originalPath.contains("content:")) {
             isContent = true
 
-            if (isTakePicture) {
-                imageuri = Uri.fromFile(File(chosenImage.originalPath))
+            imageuri = if (isTakePicture) {
+                Uri.fromFile(File(chosenImage.originalPath))
 
             } else {
-                imageuri = Uri.parse(chosenImage.originalPath)
+                Uri.parse(chosenImage.originalPath)
 
             }
         } else {
@@ -958,26 +958,6 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
 
 
     /*
-    * Show Dialog for adding pic from Camera/Gallery
-    * */
-    private fun addPicture() {
-        /* TedBottomPicker.with(this)
-                 .show { uri ->
-                     GlideApp.with(this)
-                             .load(uri)
-                             .placeholder(com.autohub.skln.R.drawable.default_pic)
-                             .diskCacheStrategy(DiskCacheStrategy.NONE)  // disable caching of glide
-                             .skipMemoryCache(true)
-                             .into(mBinding!!.profilePicture)
-
-                     imageuri = uri
-
-                 }*/
-
-    }
-
-
-    /*
     * Upload user image on Firebase Storage and get the Download URL
     * */
     private fun uploadImage(uri: Uri) {
@@ -995,7 +975,7 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
             val uploadTask = picRef.putBytes(bytes)
             uploadTask.addOnSuccessListener {
                 picRef.downloadUrl.addOnSuccessListener {
-                    var profilePictureUri = it.toString()
+                    val profilePictureUri = it.toString()
                     saveUserPhotoOnFirestore(profilePictureUri)
                 }
 
@@ -1049,7 +1029,7 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
         }
 
         try {
-            var inputStream = contentResolver.openInputStream(uri)
+            val inputStream = contentResolver.openInputStream(uri)
             val path = "student/"
             val pathString = path + firebaseAuth.currentUser!!.uid + ".jpg"
             val picRef = FirebaseStorage.getInstance().reference.child(pathString)
@@ -1057,7 +1037,7 @@ class EditStudentProfileActivity : BaseActivity(), ImagePickerCallback {
             uploadTask.addOnSuccessListener {
 
                 picRef.downloadUrl.addOnSuccessListener {
-                    var profilePictureUri = it.toString()
+                    val profilePictureUri = it.toString()
                     saveUserPhotoOnFirestore(profilePictureUri)
                 }
             }.addOnFailureListener { e ->

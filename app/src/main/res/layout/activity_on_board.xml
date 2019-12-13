@@ -74,9 +74,10 @@
                 <RelativeLayout
                     android:layout_width="42dp"
                     android:layout_height="42dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_gravity="end|right|top"
-                    android:background="@drawable/onboardrect_drawable">
+                    android:background="@drawable/onboardrect_drawable"
+                    tools:ignore="RtlHardcoded">
 
                     <TextView
                         style="@style/s"
