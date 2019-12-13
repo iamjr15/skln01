@@ -79,7 +79,7 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 
-    api 'com.kbeanie:multipicker:1.1.31@aar'
+    api 'com.kbeanie:multipicker:1.6@aar'
     api 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
 
 
